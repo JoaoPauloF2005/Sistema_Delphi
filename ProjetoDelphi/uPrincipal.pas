@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB;
 
 type
   TfrmPrincipal = class(TForm)
@@ -34,6 +34,7 @@ type
     { Private declarations }
     oCliente: TCliente;
     TeclaEnter:TMREnter;
+    procedure AtualizacaoBancoDados(aForm: TfrmAtualizaDB);
   public
     { Public declarations }
   end;
@@ -76,6 +77,9 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
+  frmAtualizaDB :=TfrmAtualizaDB.Create(Self);
+  frmAtualizaDB.Show;
+  frmAtualizaDB.Refresh;
   dtmPrincipal := TdtmPrincipal.Create(Self);
   with dtmPrincipal.ConexaoDB do begin
     SQLHourGlass:=True;
@@ -88,11 +92,44 @@ begin
     Database:='vendas';
     Connected:=True;
   end;
-
+  AtualizacaoBancoDados(frmAtualizaDB);
+  frmAtualizaDB.Free;
   TeclaEnter:= TMREnter.Create(Self);
   TeclaEnter.FocusEnabled:=true;
   TeclaEnter.FocusColor:=clInfoBk;
 
+end;
+
+procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
+begin
+  aForm.chkConexao.Checked := True;
+  aForm.Refresh;
+  Sleep(100);
+
+  dtmPrincipal.QryScriptCategorias.ExecSQL;
+  aForm.chkCategoria.Checked := True;
+  aForm.Refresh;
+  Sleep(100);
+
+   dtmPrincipal.QryScriptProdutos.ExecSQL;
+  aForm.chkProduto.Checked := True;
+  aForm.Refresh;
+  Sleep(100);
+
+  dtmPrincipal.QryScriptClientes.ExecSQL;
+  aForm.chkCliente.Checked := True;
+  aForm.Refresh;
+  Sleep(100);
+
+  dtmPrincipal.QryScriptVendas.ExecSQL;
+  aForm.chkVendas.Checked := True;
+  aForm.Refresh;
+  Sleep(100);
+
+  dtmPrincipal.QryScriptItensVenda.ExecSQL;
+  aForm.chkItensVenda.Checked := True;
+  aForm.Refresh;
+  Sleep(100);
 end;
 
 procedure TfrmPrincipal.mnuFecharClick(Sender: TObject);
