@@ -1,0 +1,298 @@
+unit uTelaHeranca;
+
+interface
+
+uses
+  // Módulos e bibliotecas utilizados, incluindo componentes visuais e banco de dados
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum;
+
+type
+  // Definição de uma classe de formulário chamada TfrmTelaHeranca, que será herdada por outras telas
+  TfrmTelaHeranca = class(TForm)
+    // Declaração de componentes visuais usados no formulário
+    pgcPrincipal: TPageControl; // Controle de abas para alternar entre telas
+    pnlRodape: TPanel; // Painel no rodapé do formulário
+    tabListagem: TTabSheet; // Aba que exibe a lista de dados
+    tabManutencao: TTabSheet; // Aba para manutenção (inserção/edição de dados)
+    pnlListagemTopo: TPanel; // Painel superior na aba de listagem
+    mskPesquisar: TMaskEdit; // Campo para entrada de texto de pesquisa
+    btnPesquisar: TButton; // Botão para executar a pesquisa
+    grdListagem: TDBGrid; // Grade para exibir os dados
+    btnNovo: TBitBtn; // Botão para adicionar um novo registro
+    btnAlterar: TBitBtn; // Botão para alterar um registro selecionado
+    btnCancelar: TBitBtn; // Botão para cancelar a operação
+    btnGravar: TBitBtn; // Botão para gravar (salvar) um registro
+    btnApagar: TBitBtn; // Botão para apagar um registro selecionado
+    btnFechar: TBitBtn; // Botão para fechar o formulário
+    btnNavigator: TDBNavigator; // Componente de navegação pelos registros
+    QryListagem: TZQuery; // Query para realizar operações de banco de dados
+    dtsListagem: TDataSource; // Fonte de dados que conecta o grid à query
+    lblIndice: TLabel; // Rótulo que exibe o campo usado para ordenar os dados
+
+    // Declaração de métodos que tratam eventos (como cliques em botões)
+    procedure FormCreate(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnApagarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure grdListagemTitleClick(Column: TColumn);
+    procedure mskPesquisarChange(Sender: TObject);
+    procedure FormDblClick(Sender: TObject);
+    procedure grdListagemDblClick(Sender: TObject);
+
+  private
+    // Métodos privados que controlam a interface e funcionalidades
+    procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TBitBtn; Navegador: TDBNavigator;
+              pgcPrincipal: TPageControl; Flag: Boolean);
+    procedure ControlarIndiceTab(pgcPrincipal: TPageControl; Indice: Integer);
+    function RetornarCampoTraduzido(Campo: string): string;
+    procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
+    function ExisteCampoObrigatorio: Boolean;
+    procedure DesabilitarEditPK;
+    procedure LimparEdits;
+
+  public
+    // Variáveis públicas acessíveis por outras classes
+    IndiceAtual: string; // Variável que guarda o campo usado para ordenar a listagem
+    EstadoDoCadastro: TEstadoDoCadastro; // Indica o estado atual do cadastro (inserir, alterar, etc.)
+    function Apagar: Boolean; virtual; // Função para apagar um registro
+    function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; virtual; // Função para gravar um registro
+  end;
+
+var
+  frmTelaHeranca: TfrmTelaHeranca; // Instância do formulário
+
+implementation
+
+{$R *.dfm} // Associa o arquivo de design visual (DFM) ao código
+
+{$region 'OBSERVAÇÕES'}
+// Comentários sobre o código: Tags para identificar campos de chave primária e obrigatórios
+// TAG:1 - CHAVE PRIMARIA PK
+// TAG:2 - CAMPOS OBRIGATORIOS
+{$ENDREGION}
+
+{$region 'FUNÇÕES E PROCEDURES'}
+
+// Controla a habilitação/desabilitação dos botões conforme o estado do cadastro
+procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar: TBitBtn;
+  Navegador: TDBNavigator; pgcPrincipal: TPageControl; Flag: Boolean);
+begin
+  // Se "Flag" for true, habilita os botões de navegação; caso contrário, desabilita
+  btnNovo.Enabled := Flag;
+  btnApagar.Enabled := Flag;
+  btnAlterar.Enabled := Flag;
+  Navegador.Enabled := Flag;
+  pgcPrincipal.Pages[0].TabVisible := Flag; // Aba de listagem visível
+  btnCancelar.Enabled := not Flag; // Botão cancelar fica visível se estiver alterando/inserindo
+  btnGravar.Enabled := not Flag; // Botão gravar fica visível se estiver alterando/inserindo
+end;
+
+// Alterna entre as abas do PageControl conforme o índice passado
+procedure TfrmTelaHeranca.ControlarIndiceTab(pgcPrincipal: TPageControl; Indice: Integer);
+begin
+  if (pgcPrincipal.Pages[Indice].TabVisible) then
+    pgcPrincipal.TabIndex := Indice; // Muda para a aba correspondente
+end;
+
+// Função que retorna o nome do campo traduzido (usado nos títulos da grid)
+function TfrmTelaHeranca.RetornarCampoTraduzido(Campo: string): string;
+var
+  i: Integer;
+begin
+  // Procura o campo passado como argumento e retorna seu rótulo de exibição
+  for i := 0 to QryListagem.Fields.Count - 1 do
+  begin
+    if LowerCase(QryListagem.Fields[i].FieldName) = LowerCase(Campo) then
+    begin
+      Result := QryListagem.Fields[i].DisplayLabel;
+      Break;
+    end;
+  end;
+end;
+
+// Exibe o nome do campo ordenado no label de índice
+procedure TfrmTelaHeranca.ExibirLabelIndice(Campo: string; aLabel: TLabel);
+begin
+  aLabel.Caption := RetornarCampoTraduzido(Campo);
+end;
+
+// Verifica se existem campos obrigatórios não preenchidos
+function TfrmTelaHeranca.ExisteCampoObrigatorio: Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  // Verifica se há campos obrigatórios (Tag = 2) não preenchidos
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if (Components[i] is TLabeledEdit) and (TLabeledEdit(Components[i]).Tag = 2) and
+      (TLabeledEdit(Components[i]).Text = EmptyStr) then
+    begin
+      MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption + ' é um campo obrigatório', mtInformation, [mbOK], 0);
+      TLabeledEdit(Components[i]).SetFocus; // Foco no campo obrigatório não preenchido
+      Result := True;
+      Break;
+    end;
+  end;
+end;
+
+// Desabilita o campo de chave primária (Tag = 1)
+procedure TfrmTelaHeranca.DesabilitarEditPK;
+var
+  i: Integer;
+begin
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if (Components[i] is TLabeledEdit) and (TLabeledEdit(Components[i]).Tag = 1) then
+    begin
+      TLabeledEdit(Components[i]).Enabled := False; // Desabilita o campo
+      Break;
+    end;
+  end;
+end;
+
+// Limpa todos os campos de texto (Edits) no formulário
+procedure TfrmTelaHeranca.LimparEdits;
+var
+  i: Integer;
+begin
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if (Components[i] is TLabeledEdit) then
+      TLabeledEdit(Components[i]).Text := EmptyStr // Limpa o campo TLabeledEdit
+    else if (Components[i] is TEdit) then
+      TEdit(Components[i]).Text := ''; // Limpa o campo TEdit
+  end;
+end;
+
+{$endregion}
+
+{$REGION 'MÉTODOS VIRTUAIS'}
+
+// Método virtual para apagar um registro (pode ser sobrescrito em subclasses)
+function TfrmTelaHeranca.Apagar: Boolean;
+begin
+  ShowMessage('DELETADO'); // Simulação de exclusão
+  Result := True;
+end;
+
+// Método virtual para gravar um registro (pode ser sobrescrito em subclasses)
+function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  ShowMessage('GRAVADO'); // Simulação de gravação
+  Result := True;
+end;
+
+{$endregion}
+
+// Tratamento de eventos de clique e formatação
+procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
+begin
+  EstadoDoCadastro := ecNenhum; // Inicializa o estado do cadastro como nenhum
+end;
+
+// Evento para fechar o formulário
+procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
+begin
+  Close; // Fecha o formulário
+end;
+
+// Evento de clique no botão "Novo", muda para aba de manutenção
+procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
+begin
+  EstadoDoCadastro := ecInserir; // Muda o estado do cadastro para inserção
+  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, False);
+  ControlarIndiceTab(pgcPrincipal, 1); // Abre a aba de manutenção
+  LimparEdits; // Limpa os campos de entrada
+end;
+
+// Evento de clique no botão "Cancelar"
+procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
+begin
+  EstadoDoCadastro := ecNenhum; // Reseta o estado do cadastro
+  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, True);
+  ControlarIndiceTab(pgcPrincipal, 0); // Volta para a aba de listagem
+end;
+
+// Evento de clique no botão "Gravar"
+procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
+begin
+  if ExisteCampoObrigatorio then
+    Exit; // Se há campos obrigatórios vazios, exibe aviso e sai da função
+
+  Gravar(EstadoDoCadastro); // Grava os dados
+  EstadoDoCadastro := ecNenhum; // Reseta o estado do cadastro
+  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, True);
+  ControlarIndiceTab(pgcPrincipal, 0); // Volta para a aba de listagem
+end;
+
+// Evento de clique no botão "Apagar"
+procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
+begin
+  Apagar; // Apaga o registro
+end;
+
+// Evento de clique no botão "Alterar"
+procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
+begin
+  EstadoDoCadastro := ecAlterar; // Muda o estado do cadastro para alteração
+  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, False);
+  ControlarIndiceTab(pgcPrincipal, 1); // Abre a aba de manutenção
+end;
+
+// Evento ao exibir o formulário
+procedure TfrmTelaHeranca.FormShow(Sender: TObject);
+begin
+  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, True);
+  ControlarIndiceTab(pgcPrincipal, 0); // Inicia na aba de listagem
+end;
+
+// Evento ao fechar o formulário
+procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree; // Libera a memória do formulário ao fechar
+end;
+
+// Evento de clique no título da grid (para ordenar por coluna)
+procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
+begin
+  // Atualiza a ordenação pela coluna clicada
+  IndiceAtual := Column.FieldName;
+  QryListagem.Close;
+  QryListagem.SQL.Text := 'SELECT * FROM SuaTabela ORDER BY ' + IndiceAtual;
+  QryListagem.Open;
+
+  // Atualiza o label de índice
+  ExibirLabelIndice(IndiceAtual, lblIndice);
+end;
+
+// Evento para mudança no campo de pesquisa
+procedure TfrmTelaHeranca.mskPesquisarChange(Sender: TObject);
+begin
+  // Atualiza a query conforme o texto digitado na pesquisa
+  QryListagem.Close;
+  QryListagem.SQL.Text := 'SELECT * FROM SuaTabela WHERE SeuCampo LIKE ' + QuotedStr('%' + mskPesquisar.Text + '%');
+  QryListagem.Open;
+end;
+
+// Evento de clique duplo no formulário
+procedure TfrmTelaHeranca.FormDblClick(Sender: TObject);
+begin
+  ShowMessage('Formulário clicado duas vezes');
+end;
+
+// Evento de clique duplo na grid
+procedure TfrmTelaHeranca.grdListagemDblClick(Sender: TObject);
+begin
+  btnAlterarClick(Sender); // Abre a tela de alteração ao clicar duas vezes no registro
+end;
+
+end.
+

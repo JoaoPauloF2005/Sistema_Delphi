@@ -1,0 +1,17 @@
+object dtmPrincipal: TdtmPrincipal
+  OldCreateOrder = False
+  Height = 224
+  Width = 608
+  object ConexaoDB: TZConnection
+    ControlsCodePage = cCP_UTF16
+    Catalog = ''
+    HostName = ''
+    Port = 0
+    Database = ''
+    User = ''
+    Password = ''
+    Protocol = ''
+    Left = 35
+    Top = 40
+  end
+end
