@@ -10,12 +10,17 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 982
     Height = 396
-    ExplicitWidth = 887
-    ExplicitHeight = 370
+    ActivePage = tabManutencao
+    ExplicitWidth = 982
+    ExplicitHeight = 396
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 974
+      ExplicitHeight = 368
       inherited pnlListagemTopo: TPanel
         Width = 974
-        ExplicitWidth = 879
+        ExplicitWidth = 974
       end
       inherited grdListagem: TDBGrid
         Width = 974
@@ -45,9 +50,10 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitTop = 22
-      ExplicitWidth = 879
-      ExplicitHeight = 342
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 974
+      ExplicitHeight = 368
       object Label1: TLabel
         Left = 611
         Top = 80
@@ -190,11 +196,11 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pnlRodape: TPanel
     Top = 396
     Width = 982
-    ExplicitTop = 370
-    ExplicitWidth = 887
+    ExplicitTop = 396
+    ExplicitWidth = 982
     inherited btnFechar: TBitBtn
       Left = 889
-      ExplicitLeft = 794
+      ExplicitLeft = 889
     end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()

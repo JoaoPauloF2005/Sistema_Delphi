@@ -7,7 +7,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit;
-
+  
 type
   // Definição de uma classe de formulário chamada TfrmTelaHeranca
   TfrmTelaHeranca = class(TForm)
@@ -55,6 +55,7 @@ type
     function ExisteCampoObrigatorio: Boolean;
     procedure DesabilitarEditPK;
     procedure LimparEdits;
+    procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
   public
     // Variáveis públicas
     IndiceAtual:string; // Variável para armazenar o índice atual de ordenação
@@ -69,7 +70,7 @@ var
 implementation
 
 {$R *.dfm} // Diretiva que associa o arquivo de design visual (DFM) ao código
- {$region 'OBSERVAÇÕES'}
+ 		{$region 'OBSERVAÇÕES'}
  //TAG:1 - CHAVE PRIMARIA PK
  //TAG:2 - CAMPOS OBRIGATORIOS
  {$ENDREGION }
@@ -115,7 +116,6 @@ begin
 end;
 
 function TfrmTelaHeranca.ExisteCampoObrigatorio:Boolean;
-var i:Integer;
 begin
   Result:=False;
   for i := 0 to ComponentCount -1 do begin
@@ -330,5 +330,13 @@ begin
   QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey]);
 end;
 
-end.
+procedure TfrmTelaHeranca.BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
+begin
+  	//bloqueia o CTRL + DEL
+    if (Shift = [ssCtrl]) and (Key = 46) then
+    	Key := 0;
+end;
+
+
+
 

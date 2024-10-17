@@ -15,7 +15,9 @@ uses
   cCadCliente in 'classes\cCadCliente.pas',
   uCadProduto in 'cadastro\uCadProduto.pas' {frmCadProduto},
   cCadProduto in 'classes\cCadProduto.pas',
-  ufrmAtualizaDB in 'datamodule\ufrmAtualizaDB.pas' {frmAtualizaDB};
+  ufrmAtualizaDB in 'datamodule\ufrmAtualizaDB.pas' {frmAtualizaDB},
+  uDTMVenda in 'datamodule\uDTMVenda.pas' {dtmVenda: TDataModule},
+  uProVenda in 'processo\uProVenda.pas' {frmProVenda};
 
 {$R *.res}
 

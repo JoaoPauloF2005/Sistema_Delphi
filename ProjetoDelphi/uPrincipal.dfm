@@ -19,7 +19,7 @@ object frmPrincipal: TfrmPrincipal
   TextHeight = 13
   object mainPrincipal: TMainMenu
     Left = 689
-    Top = 8
+    Top = 6
     object CADASTRO1: TMenuItem
       Caption = 'CADASTRO'
       object CLIENTE1: TMenuItem
@@ -49,6 +49,7 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'MOVIMENTA'#199#195'O'
       object VENDAS1: TMenuItem
         Caption = 'VENDAS'
+        OnClick = VENDAS1Click
       end
     end
     object RELATRIOS1: TMenuItem

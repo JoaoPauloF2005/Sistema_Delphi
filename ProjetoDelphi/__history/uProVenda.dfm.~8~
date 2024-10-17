@@ -1,0 +1,143 @@
+inherited frmProVenda: TfrmProVenda
+  Caption = 'Vendas'
+  ClientHeight = 609
+  ClientWidth = 914
+  ExplicitWidth = 920
+  ExplicitHeight = 638
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcPrincipal: TPageControl
+    Width = 914
+    Height = 554
+    ActivePage = tabManutencao
+    ExplicitWidth = 914
+    ExplicitHeight = 554
+    inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 1265
+      ExplicitHeight = 676
+      inherited pnlListagemTopo: TPanel
+        Width = 906
+      end
+      inherited grdListagem: TDBGrid
+        Width = 906
+        Height = 463
+        DataSource = dtsListagem
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'vendaId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'clienteId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'dataVenda'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'totalVenda'
+            Visible = True
+          end>
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      Caption = 'N'#250'mero Venda'
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 1265
+      ExplicitHeight = 676
+      object Label4: TLabel
+        Left = 165
+        Top = 25
+        Width = 33
+        Height = 13
+        Caption = 'Cliente'
+      end
+      object edtVendaId: TLabeledEdit
+        Left = 11
+        Top = 40
+        Width = 121
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'C'#243'digo'
+        Enabled = False
+        MaxLength = 10
+        NumbersOnly = True
+        ReadOnly = True
+        TabOrder = 0
+      end
+      object lkpCliente: TDBLookupComboBox
+        Left = 165
+        Top = 40
+        Width = 344
+        Height = 21
+        KeyField = 'categoriaId'
+        ListField = 'descricao'
+        TabOrder = 1
+      end
+    end
+  end
+  inherited pnlRodape: TPanel
+    Top = 554
+    Width = 914
+    inherited btnFechar: TBitBtn
+      Left = 821
+    end
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited QryListagem: TZQuery
+    SQL.Strings = (
+      'SELECT vendas.vendaId'
+      '       ,vendas.clienteId'
+      '       ,clientes.nome'
+      '       ,vendas.dataVenda'
+      '       ,vendas.totalVenda'
+      '   FROM vendas'
+      '   INNER JOIN clientes ON  clientes.clienteId = vendas.clienteId')
+    Top = 33
+    object QryListagemvendaId: TIntegerField
+      DisplayLabel = 'N'#250'mero Venda'
+      FieldName = 'vendaId'
+      ReadOnly = True
+    end
+    object QryListagemclienteId: TIntegerField
+      DisplayLabel = 'Cod. Cliente'
+      FieldName = 'clienteId'
+      Required = True
+    end
+    object QryListagemnome: TWideStringField
+      DisplayLabel = 'Nome do Cliente'
+      FieldName = 'nome'
+      Size = 60
+    end
+    object QryListagemdataVenda: TDateTimeField
+      DisplayLabel = 'Data de Venda'
+      FieldName = 'dataVenda'
+      Required = True
+    end
+    object QryListagemtotalVenda: TFloatField
+      DisplayLabel = 'Total da Venda'
+      FieldName = 'totalVenda'
+      Required = True
+    end
+  end
+  inherited dtsListagem: TDataSource
+    DataSet = QryListagem
+    Left = 821
+  end
+end
