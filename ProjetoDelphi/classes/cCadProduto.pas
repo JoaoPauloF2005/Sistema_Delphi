@@ -63,8 +63,8 @@ function TProduto.Apagar: Boolean;
 var Qry:TZQuery;
 begin
   if MessageDlg('Apagar o Registro: '+#13+#13+
-                'C?digo: '+IntToStr(F_produtoId)+#13+
-                'Descri??o: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
+                'Código: '+IntToStr(F_produtoId)+#13+
+                'Descrição: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
      Result:=false;
      abort;
   end;

@@ -14,8 +14,6 @@ inherited frmProVenda: TfrmProVenda
     ExplicitWidth = 914
     ExplicitHeight = 554
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 906
       ExplicitHeight = 526
       inherited pnlListagemTopo: TPanel
@@ -85,7 +83,7 @@ inherited frmProVenda: TfrmProVenda
         MaxLength = 10
         NumbersOnly = True
         ReadOnly = True
-        TabOrder = 1
+        TabOrder = 0
       end
       object lkpCliente: TDBLookupComboBox
         Left = 165
@@ -95,7 +93,7 @@ inherited frmProVenda: TfrmProVenda
         KeyField = 'clienteId'
         ListField = 'nome'
         ListSource = dtmVenda.dtsCliente
-        TabOrder = 2
+        TabOrder = 1
       end
       object edtDataNascimento: TDateEdit
         Left = 571
@@ -106,7 +104,7 @@ inherited frmProVenda: TfrmProVenda
         DialogTitle = 'Selecione a Data'
         NumGlyphs = 2
         CalendarStyle = csDialog
-        TabOrder = 3
+        TabOrder = 2
       end
       object Panel1: TPanel
         Left = 0
@@ -122,7 +120,7 @@ inherited frmProVenda: TfrmProVenda
           Height = 327
           Align = alClient
           TabOrder = 0
-          object DBGrid1: TDBGrid
+          object dbGriditensVenda: TDBGrid
             Left = 1
             Top = 1
             Width = 902
@@ -232,11 +230,11 @@ inherited frmProVenda: TfrmProVenda
             Caption = 'Total do Produto'
           end
           object edtQuantidade: TCurrencyEdit
-            Left = 317
+            Left = 314
             Top = 19
             Width = 121
             Height = 21
-            TabOrder = 0
+            TabOrder = 2
           end
           object CurrencyEdit1: TCurrencyEdit
             Left = 451
@@ -244,7 +242,7 @@ inherited frmProVenda: TfrmProVenda
             Width = 121
             Height = 21
             DisplayFormat = ' ,0.00;- ,0.00'
-            TabOrder = 1
+            TabOrder = 3
           end
           object CurrencyEdit2: TCurrencyEdit
             Left = 586
@@ -256,7 +254,7 @@ inherited frmProVenda: TfrmProVenda
             ParentBiDiMode = False
             ParentColor = True
             ReadOnly = True
-            TabOrder = 2
+            TabOrder = 0
           end
           object BitBtn1: TBitBtn
             Left = 717
@@ -327,7 +325,7 @@ inherited frmProVenda: TfrmProVenda
               FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
               FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
               00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
-            TabOrder = 3
+            TabOrder = 1
             TabStop = False
             OnClick = btnApagarClick
           end
@@ -341,7 +339,8 @@ inherited frmProVenda: TfrmProVenda
         KeyField = 'produtoId'
         ListField = 'nome'
         ListSource = dtmVenda.dtsProdutos
-        TabOrder = 0
+        TabOrder = 3
+        TabStop = False
       end
     end
   end

@@ -26,7 +26,7 @@ type
     Panel4: TPanel;
     edtValor: TCurrencyEdit;
     Label2: TLabel;
-    DBGrid1: TDBGrid;
+    dbGriditensVenda: TDBGrid;
     lkpProduto: TDBLookupComboBox;
     Label1: TLabel;
     edtQuantidade: TCurrencyEdit;

@@ -42,8 +42,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure grdListagemTitleClick(Column: TColumn);
     procedure mskPesquisarChange(Sender: TObject);
-    procedure FormDblClick(Sender: TObject);
     procedure grdListagemDblClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     // Variáveis e métodos privados
     // Métodos privados para controlar botões e abas
@@ -55,13 +55,13 @@ type
     function ExisteCampoObrigatorio: Boolean;
     procedure DesabilitarEditPK;
     procedure LimparEdits;
-    procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
   public
     // Variáveis públicas
     IndiceAtual:string; // Variável para armazenar o índice atual de ordenação
     EstadoDoCadastro:TEstadoDoCadastro; // Variável que armazena o estado atual do cadastro (inserir, alterar, etc.)
     function Apagar:Boolean; virtual;
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; virtual;
+    procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
   end;
 
 var
@@ -116,21 +116,21 @@ begin
 end;
 
 function TfrmTelaHeranca.ExisteCampoObrigatorio:Boolean;
+var i:Integer;
 begin
   Result:=False;
-  for i := 0 to ComponentCount -1 do begin
-    if(Components[i] is TLabeledEdit) then begin
-      if (TLabeledEdit(Components[i]).Tag = 2) and
-            (TLabeledEdit(Components[i]).Text=EmptyStr) then begin
-            MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption +
-              ' é um campo obrigatório',mtInformation,[mbOK],0);
-              TLabeledEdit(Components[i]).SetFocus;
-              Result:=True;
-              Break;
-            end;
+  for I := 0 to ComponentCount -1 do begin
+    if (Components[i] is TLabeledEdit) then begin
+       if (TLabeledEdit(Components[i]).Tag = 2) and (TLabeledEdit(Components[i]).Text = EmptyStr) then begin
+          MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption + ' é um campo obrigatório' ,mtInformation,[mbOK],0);
+          TLabeledEdit(Components[i]).SetFocus;
+          Result:=True;
+          Break;
+       end;
     end;
   end;
 end;
+
 
 procedure TfrmTelaHeranca.DesabilitarEditPK;
 var i:Integer;
@@ -281,9 +281,9 @@ begin
                         dgCancelOnExit,dgTitleClick,dgTitleHotTrack]
 end;
 
-procedure TfrmTelaHeranca.FormDblClick(Sender: TObject);
+procedure TfrmTelaHeranca.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-
+	BloqueiaCTRL_DEL_DBGrid(Key, Shift);
 end;
 
 // Ação executada quando o formulário é mostrado
@@ -339,4 +339,4 @@ end;
 
 
 
-
+end .
