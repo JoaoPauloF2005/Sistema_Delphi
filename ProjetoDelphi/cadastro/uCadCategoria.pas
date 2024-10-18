@@ -12,26 +12,26 @@ type
   // Declaração do formulário TfrmCadCategoria, que herda de TfrmTelaHeranca
   TfrmCadCategoria = class(TfrmTelaHeranca)
     // Campos do banco de dados vinculados à query
-    intgrfldQryListagemcategoriaId: TIntegerField;  // Campo para o ID da categoria
-    wdstrngfldQryListagemdescricao: TWideStringField;  // Campo para a descrição da categoria
-    edtCategoriaId: TLabeledEdit;  // Campo de texto para o ID da categoria
-    edtDescricao: TLabeledEdit;    // Campo de texto para a descrição da categoria
+    intgrfldQryListagemcategoriaId : TIntegerField;  // Campo para o ID da categoria
+    wdstrngfldQryListagemdescricao : TWideStringField;  // Campo para a descrição da categoria
+    edtCategoriaId : TLabeledEdit;  // Campo de texto para o ID da categoria
+    edtDescricao : TLabeledEdit;    // Campo de texto para a descrição da categoria
     // Eventos do formulário
-    procedure FormCreate(Sender: TObject);  // Evento ao criar o formulário
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnAlterarClick(Sender: TObject);
+    procedure FormCreate(Sender : TObject);  // Evento ao criar o formulário
+    procedure FormClose(Sender : TObject; var Action : TCloseAction);
+    procedure btnAlterarClick(Sender : TObject);
 
   private
     { Declarações privadas }
-    oCategoria: TCategoria;  // Objeto da classe TCategoria que faz operações no banco de dados
-    function Apagar: Boolean; override;  // Função para apagar um registro (sobrescrita)
-    function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; override;  // Função para salvar (sobrescrita)
+    oCategoria : TCategoria;  // Objeto da classe TCategoria que faz operações no banco de dados
+    function Apagar : Boolean; override;  // Função para apagar um registro (sobrescrita)
+    function Gravar(EstadoDoCadastro : TEstadoDoCadastro): Boolean; override;  // Função para salvar (sobrescrita)
   public
     { Declarações públicas }
   end;
 
 var
-  frmCadCategoria: TfrmCadCategoria;
+  frmCadCategoria : TfrmCadCategoria;
 
 implementation
 
@@ -66,11 +66,11 @@ begin
 end;
 {$ENDREGION}
 
-procedure TfrmCadCategoria.btnAlterarClick(Sender: TObject);
+procedure TfrmCadCategoria.btnAlterarClick(Sender : TObject);
 begin
   if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then begin
-    edtCategoriaId.Text:=IntToStr(oCategoria.codigo);
-    edtDescricao.Text:=oCategoria.descricao;
+    edtCategoriaId.Text := IntToStr(oCategoria.codigo);
+    edtDescricao.Text := oCategoria.descricao;
   end
   else begin
     btnCancelar.Click;
@@ -82,7 +82,7 @@ end;
 
 
 
-procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action : TCloseAction);
 begin
   inherited;  // Chama o método herdado da classe base
 

@@ -10,7 +10,6 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 914
     Height = 554
-    ActivePage = tabManutencao
     ExplicitWidth = 914
     ExplicitHeight = 554
     inherited tabListagem: TTabSheet
@@ -53,8 +52,6 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 906
       ExplicitHeight = 526
       object Label4: TLabel
@@ -64,7 +61,7 @@ inherited frmProVenda: TfrmProVenda
         Height = 13
         Caption = 'Cliente'
       end
-      object edtDataVenda: TLabel
+      object TLabel
         Left = 571
         Top = 31
         Width = 56
@@ -72,7 +69,7 @@ inherited frmProVenda: TfrmProVenda
         Caption = 'Data Venda'
       end
       object edtVendaId: TLabeledEdit
-        Left = 11
+        Left = 3
         Top = 44
         Width = 121
         Height = 21
@@ -95,7 +92,7 @@ inherited frmProVenda: TfrmProVenda
         ListSource = dtmVenda.dtsCliente
         TabOrder = 1
       end
-      object edtDataNascimento: TDateEdit
+      object edtDataVenda: TDateEdit
         Left = 571
         Top = 44
         Width = 121
@@ -112,21 +109,23 @@ inherited frmProVenda: TfrmProVenda
         Width = 906
         Height = 425
         Align = alBottom
-        TabOrder = 4
+        TabOrder = 3
         object Panel2: TPanel
           Left = 1
           Top = 56
           Width = 904
           Height = 327
           Align = alClient
-          TabOrder = 0
+          TabOrder = 1
           object dbGriditensVenda: TDBGrid
             Left = 1
             Top = 1
             Width = 902
             Height = 325
+            TabStop = False
             Align = alClient
             DataSource = dtmVenda.dtsItensVenda
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit]
             TabOrder = 0
             TitleFont.Charset = DEFAULT_CHARSET
             TitleFont.Color = clWindowText
@@ -176,7 +175,7 @@ inherited frmProVenda: TfrmProVenda
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 1
+          TabOrder = 0
           object Label2: TLabel
             Left = 675
             Top = 11
@@ -184,11 +183,12 @@ inherited frmProVenda: TfrmProVenda
             Height = 13
             Caption = 'Valor da Venda'
           end
-          object edtValor: TCurrencyEdit
+          object edtValorTotal: TCurrencyEdit
             Left = 765
             Top = 8
             Width = 121
             Height = 21
+            TabStop = False
             ParentColor = True
             ReadOnly = True
             TabOrder = 0
@@ -229,22 +229,24 @@ inherited frmProVenda: TfrmProVenda
             Height = 13
             Caption = 'Total do Produto'
           end
-          object edtQuantidade: TCurrencyEdit
-            Left = 314
+          object edtValorUnitario: TCurrencyEdit
+            Left = 312
             Top = 19
             Width = 121
             Height = 21
-            TabOrder = 2
+            TabOrder = 1
           end
-          object CurrencyEdit1: TCurrencyEdit
-            Left = 451
+          object edtQuantidade: TCurrencyEdit
+            Left = 453
             Top = 19
             Width = 121
             Height = 21
             DisplayFormat = ' ,0.00;- ,0.00'
-            TabOrder = 3
+            TabOrder = 2
+            OnEnter = edtQuantidadeEnter
+            OnExit = edtQuantidadeExit
           end
-          object CurrencyEdit2: TCurrencyEdit
+          object edtTotalProduto: TCurrencyEdit
             Left = 586
             Top = 19
             Width = 121
@@ -254,9 +256,9 @@ inherited frmProVenda: TfrmProVenda
             ParentBiDiMode = False
             ParentColor = True
             ReadOnly = True
-            TabOrder = 0
+            TabOrder = 3
           end
-          object BitBtn1: TBitBtn
+          object btnAdicionar: TBitBtn
             Left = 717
             Top = 19
             Width = 90
@@ -290,9 +292,9 @@ inherited frmProVenda: TfrmProVenda
               17BF6F17FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
               00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
             TabOrder = 4
-            OnClick = btnNovoClick
+            OnClick = btnAdicionarClick
           end
-          object BitBtn2: TBitBtn
+          object btnRemover: TBitBtn
             Left = 813
             Top = 19
             Width = 84
@@ -325,22 +327,22 @@ inherited frmProVenda: TfrmProVenda
               FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
               FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
               00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
-            TabOrder = 1
+            TabOrder = 5
             TabStop = False
             OnClick = btnApagarClick
           end
+          object lkpProduto: TDBLookupComboBox
+            Left = 0
+            Top = 19
+            Width = 296
+            Height = 21
+            KeyField = 'produtoId'
+            ListField = 'nome'
+            ListSource = dtmVenda.dtsProdutos
+            TabOrder = 0
+            OnExit = lkpProdutoExit
+          end
         end
-      end
-      object lkpProduto: TDBLookupComboBox
-        Left = 3
-        Top = 121
-        Width = 296
-        Height = 21
-        KeyField = 'produtoId'
-        ListField = 'nome'
-        ListSource = dtmVenda.dtsProdutos
-        TabOrder = 3
-        TabStop = False
       end
     end
   end
@@ -349,6 +351,10 @@ inherited frmProVenda: TfrmProVenda
     Width = 914
     ExplicitTop = 554
     ExplicitWidth = 914
+    inherited btnAlterar: TBitBtn
+      Left = 91
+      ExplicitLeft = 91
+    end
     inherited btnFechar: TBitBtn
       Left = 821
       ExplicitLeft = 821

@@ -17,7 +17,8 @@ uses
   cCadProduto in 'classes\cCadProduto.pas',
   ufrmAtualizaDB in 'datamodule\ufrmAtualizaDB.pas' {frmAtualizaDB},
   uDTMVenda in 'datamodule\uDTMVenda.pas' {dtmVenda: TDataModule},
-  uProVenda in 'processo\uProVenda.pas' {frmProVenda};
+  uProVenda in 'processo\uProVenda.pas' {frmProVenda},
+  cProVenda in 'classes\cProVenda.pas';
 
 {$R *.res}
 

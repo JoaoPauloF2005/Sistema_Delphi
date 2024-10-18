@@ -11,9 +11,14 @@ inherited frmCadCategoria: TfrmCadCategoria
     Width = 982
     Height = 396
     ActivePage = tabListagem
+    ExplicitWidth = 982
+    ExplicitHeight = 396
     inherited tabListagem: TTabSheet
+      ExplicitWidth = 974
+      ExplicitHeight = 368
       inherited pnlListagemTopo: TPanel
         Width = 974
+        ExplicitWidth = 974
       end
       inherited btnPesquisar: TButton
         Top = 20
@@ -41,6 +46,8 @@ inherited frmCadCategoria: TfrmCadCategoria
     inherited tabManutencao: TTabSheet
       ExplicitLeft = -256
       ExplicitTop = -36
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object edtCategoriaId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -71,13 +78,15 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pnlRodape: TPanel
     Top = 396
     Width = 982
+    ExplicitTop = 396
+    ExplicitWidth = 982
     inherited btnGravar: TBitBtn
       Left = 268
       ExplicitLeft = 268
     end
     inherited btnFechar: TBitBtn
       Left = 888
-      ExplicitLeft = 1179
+      ExplicitLeft = 888
     end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
