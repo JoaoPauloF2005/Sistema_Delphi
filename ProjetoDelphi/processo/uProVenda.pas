@@ -48,6 +48,10 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarItemClick(Sender: TObject);
     procedure dbGridItensVendaDblClick(Sender: TObject);
+    procedure dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
+    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
   private
     { Private declarations }
   	dtmVenda: TdtmVenda;
@@ -76,7 +80,7 @@ implementation
 {$REGION 'Override'}
 function TfrmProVenda.Apagar: Boolean;
 begin
-	if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
+	if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVenda.cdsItensVenda) then begin
  		Result:=oVenda.Apagar;
   end;
 
@@ -100,6 +104,23 @@ begin
   	Result := oVenda.Atualizar;
 end;
 
+
+procedure TfrmProVenda.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  // Aplica a cor de fundo personalizada para linha selecionada
+  if gdSelected in State then
+    grdListagem.Canvas.Brush.Color := RGB(190, 223, 241)  // Beau Blue
+  else
+    grdListagem.Canvas.Brush.Color := clWindow;  // Cor padrão de fundo
+    grdListagem.Canvas.Font.Color := clBlack;   // Cor do texto preta
+
+  // Preenche o retângulo da célula
+  grdListagem.Canvas.FillRect(Rect);
+
+  // Exibe o texto da célula alinhado
+  grdListagem.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
+end;
 
 procedure TfrmProVenda.lkpProdutoExit(Sender: TObject);
 begin
@@ -157,7 +178,7 @@ end;
 
 procedure TfrmProVenda.btnAlterarClick(Sender: TObject);
 begin
-  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
+  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVenda.cdsItensVenda) then begin
      edtVendaId.Text     := IntToStr(oVenda.VendaId);
      lkpCliente.KeyValue := oVenda.ClienteId;
      edtDataVenda.Date   := oVenda.DataVenda;
@@ -215,14 +236,28 @@ begin
 
 end;
 
+procedure TfrmProVenda.dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  if gdSelected in State then
+  begin
+    // Define a cor de fundo e da fonte para a linha selecionada
+    dbGridItensVenda.Canvas.Brush.Color := $F1DFBE;  // Cor de fundo branco
+    dbGridItensVenda.Canvas.Font.Color := clBlack;   // Cor do texto preta
+  end
+  else
+    dbGridItensVenda.Canvas.Brush.Color := clWindow;  // Cor normal de fundo
+
+  dbGridItensVenda.Canvas.FillRect(Rect);  // Preenche a célula
+  dbGridItensVenda.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
+end;
+
 procedure TfrmProVenda.dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
 	Shift: TShiftState);
 begin
   	inherited;
     BloqueiaCTRL_DEL_DBGrid(Key, Shift);
 end;
-
-
 
 procedure TfrmProVenda.edtQuantidadeExit(Sender: TObject);
 begin

@@ -77,7 +77,6 @@ inherited frmProVenda: TfrmProVenda
         Top = 44
         Width = 121
         Height = 21
-        TabStop = False
         EditLabel.Width = 70
         EditLabel.Height = 13
         EditLabel.Caption = 'N'#250'mero Venda'
@@ -399,7 +398,7 @@ inherited frmProVenda: TfrmProVenda
       Size = 60
     end
     object QryListagemdataVenda: TDateTimeField
-      DisplayLabel = 'Data de Venda'
+      DisplayLabel = 'Data Venda'
       FieldName = 'dataVenda'
       Required = True
     end

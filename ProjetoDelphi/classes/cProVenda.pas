@@ -33,7 +33,7 @@ type
     function Inserir(cds:TClientDataSet):Boolean;
     function Atualizar:Boolean;
     function Apagar:Boolean;
-    function Selecionar(id:Integer):Boolean;
+    function Selecionar(id:Integer; var cds:TClientDataSet):Boolean;
   published
     property VendaId:Integer     read F_vendaId    write F_vendaId;
     property ClienteId:Integer   read F_clienteId  write F_clienteId;
@@ -207,7 +207,7 @@ begin
   end;
 end;
 
-function TVenda.Selecionar(id: Integer): Boolean;
+function TVenda.Selecionar(id: Integer; var cds:TClientDataSet): Boolean;
 var Qry:TZQuery;
 begin
   try
@@ -229,6 +229,43 @@ begin
       Self.F_clienteId  := Qry.FieldByName('clienteId').AsInteger;
       Self.F_dataVenda  := Qry.FieldByName('dataVenda').AsDateTime;
       Self.F_totalVenda := Qry.FieldByName('totalVenda').AsFloat;
+
+      {$REGION 'SELECIONAR na tabela VendasItens'}
+      //Apaga o ClientDataSet Caso esteja com Registro
+      cds.First;
+      while not cds.Eof do begin
+        cds.Delete;
+      end;
+
+      //Seleciona os Itens do Banco de Dados com a propriedade F_VendaId
+      Qry.Close;
+      Qry.SQL.Clear;
+      Qry.SQL.Add('SELECT VendasItens.ProdutoID, '+
+                  '       Produtos.Nome, '+
+                  '       VendasItens.ValorUnitario, '+
+                  '       VendasItens.Quantidade, '+
+                  '       VendasItens.TotalProduto '+
+                  '  FROM VendasItens  '+
+                  '       INNER JOIN produtos On Produtos.produtoId = VendasItens.produtoId '+
+                  ' WHERE VendasItens.VendaID=:VendaID ');
+      Qry.ParamByName('VendaID').AsInteger    := Self.F_vendaId;
+      Qry.Open;
+
+       //Pega da Query e Coloca no ClientDataSet
+      Qry.First;
+      while not Qry.Eof do begin
+        cds.Append;
+        cds.FieldByName('produtoId').AsInteger       := Qry.FieldByName('ProdutoID').AsInteger;
+        cds.FieldByName('nomeProduto').AsString      := Qry.FieldByName('Nome').AsString;
+        cds.FieldByName('valorUnitario').AsFloat     := Qry.FieldByName('ValorUnitario').AsFloat;
+        cds.FieldByName('quantidade').AsFloat        := Qry.FieldByName('Quantidade').AsFloat;
+        cds.FieldByName('valorTotalProduto').AsFloat := Qry.FieldByName('TotalProduto').AsFloat;
+        cds.Post;
+        Qry.Next;
+      end;
+
+      {$endRegion}
+
 		Except
       Result := false;
     End;

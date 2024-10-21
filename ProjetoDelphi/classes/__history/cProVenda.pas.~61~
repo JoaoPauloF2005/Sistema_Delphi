@@ -24,15 +24,16 @@ type
     F_clienteId : Integer;
     F_dataVenda : TDateTime;
     F_totalVenda : Double;
+    function InserirItens(cds: TClientDataSet; IdVenda: Integer): Boolean;
 
 
   public
     constructor Create(aConexao:TZConnection);
     destructor Destroy; override;
-    function Inserir:Integer;
+    function Inserir(cds:TClientDataSet):Boolean;
     function Atualizar:Boolean;
     function Apagar:Boolean;
-    function Selecionar(id:Integer):Boolean;
+    function Selecionar(id:Integer; var cds:TClientDataSet):Boolean;
   published
     property VendaId:Integer     read F_vendaId    write F_vendaId;
     property ClienteId:Integer   read F_clienteId  write F_clienteId;
@@ -131,7 +132,7 @@ begin
   end;
 end;
 
-function TVenda.Inserir : Integer;
+function TVenda.Inserir(cds: TClientDataSet) : Boolean;
 var Qry:TZQuery;
     IdVendaGerado : Integer;
 begin
@@ -158,6 +159,14 @@ begin
       //Id da tabela Master (Venda)
       IdVendaGerado := Qry.FieldByName('ID').AsInteger;
 
+      {$REGION 'Gravar na tabela VendasItens'}
+      cds.First;
+      while not cds.Eof do begin
+        InserirItens(cds, IdVendaGerado);
+        cds.Next;
+      end;
+      {$ENDREGION}
+
       ConexaoDB.Commit;
     Except
       ConexaoDB.Rollback;
@@ -170,7 +179,35 @@ begin
   end;
 end;
 
-function TVenda.Selecionar(id: Integer): Boolean;
+function TVenda.InserirItens(cds:TClientDataSet; IdVenda:Integer):Boolean;
+var Qry:TZQuery;
+begin
+  try
+    Result:=true;
+    Qry:=TZQuery.Create(nil);
+    Qry.Connection:=ConexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('INSERT INTO VendasItens ( VendaID, ProdutoID, ValorUnitario, Quantidade, TotalProduto) '+
+                '                 VALUES (:VendaID,:ProdutoID,:ValorUnitario,:Quantidade,:TotalProduto) ');
+
+    Qry.ParamByName('VendaID').AsInteger    := IdVenda;
+    Qry.ParamByName('ProdutoID').AsInteger  := cds.FieldByName('produtoId').AsInteger;
+    Qry.ParamByName('ValorUnitario').AsFloat:= cds.FieldByName('valorUnitario').AsFloat;
+    Qry.ParamByName('Quantidade').AsFloat   := cds.FieldByName('quantidade').AsFloat;
+    Qry.ParamByName('TotalProduto').AsFloat := cds.FieldByName('valorTotalProduto').AsFloat;
+    try
+    	Qry.ExecSQL;
+		Except
+      Result:=false;
+    End;
+
+  finally
+    if Assigned(Qry) then
+       FreeAndNil(Qry);
+  end;
+end;
+
+function TVenda.Selecionar(id: Integer; var cds:TClientDataSet): Boolean;
 var Qry:TZQuery;
 begin
   try
@@ -192,6 +229,8 @@ begin
       Self.F_clienteId  := Qry.FieldByName('clienteId').AsInteger;
       Self.F_dataVenda  := Qry.FieldByName('dataVenda').AsDateTime;
       Self.F_totalVenda := Qry.FieldByName('totalVenda').AsFloat;
+
+
 		Except
       Result := false;
     End;

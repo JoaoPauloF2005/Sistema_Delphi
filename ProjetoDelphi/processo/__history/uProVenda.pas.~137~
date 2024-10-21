@@ -48,6 +48,8 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarItemClick(Sender: TObject);
     procedure dbGridItensVendaDblClick(Sender: TObject);
+    procedure dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
   private
     { Private declarations }
   	dtmVenda: TdtmVenda;
@@ -76,7 +78,7 @@ implementation
 {$REGION 'Override'}
 function TfrmProVenda.Apagar: Boolean;
 begin
-	if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
+	if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVenda.cdsItensVenda) then begin
  		Result:=oVenda.Apagar;
   end;
 
@@ -94,7 +96,7 @@ begin
     oVenda.TotalVenda		:= edtValorTotal.Value;
 
   if(EstadoDoCadastro = ecInserir)then
-  	Result := oVenda.Inserir
+  	Result := oVenda.Inserir(dtmVenda.cdsItensVenda)
   else
   if(EstadoDoCadastro = ecAlterar)then
   	Result := oVenda.Atualizar;
@@ -157,7 +159,7 @@ end;
 
 procedure TfrmProVenda.btnAlterarClick(Sender: TObject);
 begin
-  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
+  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVenda.cdsItensVenda) then begin
      edtVendaId.Text     := IntToStr(oVenda.VendaId);
      lkpCliente.KeyValue := oVenda.ClienteId;
      edtDataVenda.Date   := oVenda.DataVenda;
@@ -213,6 +215,22 @@ begin
   inherited;
   CarregarRegistroSelecionado;
 
+end;
+
+procedure TfrmProVenda.dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  if gdSelected in State then
+  begin
+    // Define a cor de fundo e da fonte para a linha selecionada
+    dbGridItensVenda.Canvas.Brush.Color := clWhite;  // Cor de fundo branco
+    dbGridItensVenda.Canvas.Font.Color := clBlack;   // Cor do texto preta
+  end
+  else
+    dbGridItensVenda.Canvas.Brush.Color := clWindow;  // Cor normal de fundo
+
+  dbGridItensVenda.Canvas.FillRect(Rect);  // Preenche a célula
+  dbGridItensVenda.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
 end;
 
 procedure TfrmProVenda.dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;

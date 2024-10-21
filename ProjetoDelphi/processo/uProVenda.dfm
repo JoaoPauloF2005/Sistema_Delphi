@@ -1,15 +1,16 @@
 inherited frmProVenda: TfrmProVenda
   Caption = 'Vendas'
   ClientHeight = 609
-  ClientWidth = 914
+  ClientWidth = 911
   Position = poScreenCenter
-  ExplicitWidth = 920
+  ExplicitWidth = 917
   ExplicitHeight = 638
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 914
+    Width = 911
     Height = 554
+    ActivePage = tabListagem
     ExplicitWidth = 914
     ExplicitHeight = 554
     inherited tabListagem: TTabSheet
@@ -18,13 +19,14 @@ inherited frmProVenda: TfrmProVenda
       ExplicitWidth = 906
       ExplicitHeight = 526
       inherited pnlListagemTopo: TPanel
-        Width = 906
+        Width = 903
         ExplicitWidth = 906
       end
       inherited grdListagem: TDBGrid
-        Width = 906
+        Width = 903
         Height = 463
         DataSource = dtsListagem
+        OnDrawColumnCell = grdListagemDrawColumnCell
         Columns = <
           item
             Expanded = False
@@ -34,6 +36,7 @@ inherited frmProVenda: TfrmProVenda
           item
             Expanded = False
             FieldName = 'clienteId'
+            Width = 76
             Visible = True
           end
           item
@@ -49,6 +52,7 @@ inherited frmProVenda: TfrmProVenda
           item
             Expanded = False
             FieldName = 'totalVenda'
+            Width = 160
             Visible = True
           end>
       end
@@ -110,32 +114,35 @@ inherited frmProVenda: TfrmProVenda
       object Panel1: TPanel
         Left = 0
         Top = 101
-        Width = 906
+        Width = 903
         Height = 425
         Align = alBottom
         TabOrder = 3
+        ExplicitWidth = 906
         object Panel2: TPanel
           Left = 1
           Top = 56
-          Width = 904
+          Width = 901
           Height = 327
           Align = alClient
           TabOrder = 1
+          ExplicitWidth = 904
           object dbGridItensVenda: TDBGrid
             Left = 1
             Top = 1
-            Width = 902
+            Width = 899
             Height = 325
             TabStop = False
             Align = alClient
             DataSource = dtmVenda.dtsItensVenda
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit]
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit]
             TabOrder = 0
             TitleFont.Charset = DEFAULT_CHARSET
             TitleFont.Color = clWindowText
             TitleFont.Height = -11
             TitleFont.Name = 'Tahoma'
             TitleFont.Style = []
+            OnDrawColumnCell = dbGridItensVendaDrawColumnCell
             OnDblClick = dbGridItensVendaDblClick
             Columns = <
               item
@@ -163,7 +170,7 @@ inherited frmProVenda: TfrmProVenda
               item
                 Expanded = False
                 FieldName = 'valorTotalProduto'
-                Width = 193
+                Width = 189
                 Visible = True
               end>
           end
@@ -171,7 +178,7 @@ inherited frmProVenda: TfrmProVenda
         object Panel3: TPanel
           Left = 1
           Top = 383
-          Width = 904
+          Width = 901
           Height = 41
           Align = alBottom
           Font.Charset = DEFAULT_CHARSET
@@ -181,6 +188,7 @@ inherited frmProVenda: TfrmProVenda
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
+          ExplicitWidth = 904
           object Label2: TLabel
             Left = 675
             Top = 11
@@ -202,10 +210,11 @@ inherited frmProVenda: TfrmProVenda
         object Panel4: TPanel
           Left = 1
           Top = 1
-          Width = 904
+          Width = 901
           Height = 55
           Align = alTop
           TabOrder = 2
+          ExplicitWidth = 904
           object Label1: TLabel
             Left = 5
             Top = 3
@@ -352,7 +361,7 @@ inherited frmProVenda: TfrmProVenda
   end
   inherited pnlRodape: TPanel
     Top = 554
-    Width = 914
+    Width = 911
     ExplicitTop = 554
     ExplicitWidth = 914
     inherited btnAlterar: TBitBtn
@@ -364,7 +373,7 @@ inherited frmProVenda: TfrmProVenda
       ExplicitTop = 15
     end
     inherited btnFechar: TBitBtn
-      Left = 821
+      Left = 818
       ExplicitLeft = 821
     end
     inherited btnNavigator: TDBNavigator

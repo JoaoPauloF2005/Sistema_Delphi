@@ -44,6 +44,8 @@ type
     procedure mskPesquisarChange(Sender: TObject);
     procedure grdListagemDblClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
   private
     // Variáveis e métodos privados
     // Métodos privados para controlar botões e abas
@@ -316,6 +318,23 @@ end;
 procedure TfrmTelaHeranca.grdListagemDblClick(Sender: TObject);
 begin
   btnAlterar.Click;
+end;
+
+procedure TfrmTelaHeranca.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  // Aplica a cor de fundo personalizada para linha selecionada
+  if gdSelected in State then
+    grdListagem.Canvas.Brush.Color := RGB(190, 223, 241)  // Beau Blue
+  else
+    grdListagem.Canvas.Brush.Color := clWindow;  // Cor padrão de fundo
+    grdListagem.Canvas.Font.Color := clBlack;   // Cor do texto preta
+
+  // Preenche o retângulo da célula
+  grdListagem.Canvas.FillRect(Rect);
+
+  // Exibe o texto da célula alinhado
+  grdListagem.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
 end;
 
 procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
