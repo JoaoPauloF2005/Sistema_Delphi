@@ -31,7 +31,7 @@ type
     edtValorUnitario: TCurrencyEdit;
     edtQuantidade: TCurrencyEdit;
     edtTotalProduto: TCurrencyEdit;
-    btnRemover: TBitBtn;
+    btnApagarItem: TBitBtn;
     Label3: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -45,6 +45,11 @@ type
     procedure lkpProdutoExit(Sender: TObject);
     procedure edtQuantidadeExit(Sender: TObject);
     procedure edtQuantidadeEnter(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnApagarItemClick(Sender: TObject);
+
+
   private
     { Private declarations }
   	dtmVenda: TdtmVenda;
@@ -53,6 +58,8 @@ type
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):boolean; override;
     function TotalizarProduto(valorUnitario, Quantidade: Double): Double;
     procedure LimparComponenteItem;
+    procedure LimparCds;
+    procedure CarregarRegistroSelecionado;
 
   public
       { Public declarations }
@@ -145,6 +152,7 @@ begin
 
 end;
 
+
 procedure TfrmProVenda.LimparComponenteItem;
 begin
   	lkpProduto.KeyValue			:= null;
@@ -164,6 +172,13 @@ begin
       edtDataVenda.Date			:= oVenda.DataVenda;
       edtValorTotal.Value		:= OVenda.TotalVenda;
     end;
+end;
+
+
+procedure TfrmProVenda.LimparCds;
+begin
+	while not dtmVenda.CdsItensVenda.Eof	do
+  	dtmVenda.cdsItensVenda.Delete;
 end;
 
 procedure TfrmProVenda.edtQuantidadeEnter(Sender: TObject);
@@ -194,11 +209,42 @@ begin
   inherited;
 end;
 
+
+procedure TfrmProVenda.btnApagarItemClick(Sender: TObject);
+begin
+  inherited;
+
+  if lkpProduto.KeyValue=Null then begin
+     MessageDlg('Selecione o Produto a ser excluído' ,mtInformation,[mbOK],0);
+     dbgridItensVenda.SetFocus;
+     abort;
+  end;
+
+  if dtmVenda.cdsItensVenda.Locate('produtoId', lkpProduto.KeyValue, []) then begin
+     dtmVenda.cdsItensVenda.Delete;
+     LimparComponenteItem;
+  end;
+
+end;
+
+procedure TfrmProVenda.btnCancelarClick(Sender: TObject);
+begin
+  inherited;
+	LimparCds;
+end;
+
+procedure TfrmProVenda.btnGravarClick(Sender: TObject);
+begin
+  inherited;
+	LimparCds;
+end;
+
 procedure TfrmProVenda.btnNovoClick(Sender: TObject);
 begin
   inherited;
   edtDataVenda.Date:=Date;
   lkpCliente.SetFocus;
+  LimparCds;
 end;
 
 procedure TfrmProVenda.dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
@@ -227,6 +273,14 @@ begin
   oVenda:=TVenda.Create(dtmPrincipal.ConexaoDB);
 
   IndiceAtual:='clienteId';
+end;
+
+procedure TfrmProVenda.CarregarRegistroSelecionado;
+begin
+  lkpProduto.KeyValue			:= dtmVenda.cdsItensVenda.FieldByName('produto').AsString;
+  edtQuantidade.Value			:= dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat;
+  edtValorUnitario.Value	:= dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat;
+  edtTotalProduto.Value		:= dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat;
 end;
 
 end.

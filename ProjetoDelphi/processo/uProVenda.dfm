@@ -13,6 +13,8 @@ inherited frmProVenda: TfrmProVenda
     ExplicitWidth = 914
     ExplicitHeight = 554
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 906
       ExplicitHeight = 526
       inherited pnlListagemTopo: TPanel
@@ -52,6 +54,8 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 906
       ExplicitHeight = 526
       object Label4: TLabel
@@ -294,7 +298,7 @@ inherited frmProVenda: TfrmProVenda
             TabOrder = 4
             OnClick = btnAdicionarClick
           end
-          object btnRemover: TBitBtn
+          object btnApagarItem: TBitBtn
             Left = 813
             Top = 19
             Width = 84
@@ -329,7 +333,7 @@ inherited frmProVenda: TfrmProVenda
               00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
             TabOrder = 5
             TabStop = False
-            OnClick = btnApagarClick
+            OnClick = btnApagarItemClick
           end
           object lkpProduto: TDBLookupComboBox
             Left = 0
@@ -354,6 +358,10 @@ inherited frmProVenda: TfrmProVenda
     inherited btnAlterar: TBitBtn
       Left = 91
       ExplicitLeft = 91
+    end
+    inherited btnApagar: TBitBtn
+      Top = 15
+      ExplicitTop = 15
     end
     inherited btnFechar: TBitBtn
       Left = 821

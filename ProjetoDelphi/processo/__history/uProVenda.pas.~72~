@@ -1,0 +1,188 @@
+unit uProVenda;
+
+interface
+
+uses
+  // Importa bibliotecas necessárias para o projeto
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, uDTMConexao, uDTMVenda,
+  RxToolEdit, RxCurrEdit, uEnum, cProVenda;
+
+type
+  // Define a classe do formulário herdando de TfrmTelaHeranca
+  TfrmProVenda = class(TfrmTelaHeranca)
+    // Definição dos campos vinculados à consulta de vendas
+    QryListagemvendaId: TIntegerField;
+    QryListagemclienteId: TIntegerField;
+    QryListagemnome: TWideStringField;
+    QryListagemdataVenda: TDateTimeField;
+    QryListagemtotalVenda: TFloatField;
+
+    // Definição dos componentes visuais
+    edtVendaId: TLabeledEdit; // Campo para exibir o ID da venda
+    lkpCliente: TDBLookupComboBox; // Lookup para selecionar o cliente
+    Label4: TLabel; // Rótulo de texto
+    edtDataVenda: TDateEdit; // Campo para selecionar a data da venda
+    Panel1, Panel2, Panel3, Panel4: TPanel; // Painéis para organizar layout
+    edtValorTotal: TCurrencyEdit; // Campo para valor total da venda
+    Label2: TLabel; // Rótulo
+    dbGriditensVenda: TDBGrid; // Grid para exibir itens da venda
+    lkpProduto: TDBLookupComboBox; // Lookup para selecionar o produto
+    Label1: TLabel; // Rótulo
+    edtValorUnitario: TCurrencyEdit; // Campo para valor unitário do produto
+    edtQuantidade: TCurrencyEdit; // Campo para quantidade de produtos
+    edtTotalProduto: TCurrencyEdit; // Campo para valor total do produto
+    btnRemover: TBitBtn; // Botão para remover itens
+    Label3, Label5, Label6: TLabel; // Rótulos
+
+    // Declaração dos eventos do formulário
+    procedure FormCreate(Sender: TObject); // Ao criar o formulário
+    procedure FormClose(Sender: TObject; var Action: TCloseAction); // Ao fechar o formulário
+    procedure dbgridItensVendaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); // Evento de teclado
+    procedure btnAlterarClick(Sender: TObject); // Botão de alterar
+    procedure btnNovoClick(Sender: TObject); // Botão de novo
+    procedure btnAdicionarClick(Sender: TObject); // Adicionar produto
+    procedure lkpProdutoExit(Sender: TObject); // Ao sair do campo do produto
+    procedure edtQuantidadeExit(Sender: TObject); // Ao sair do campo quantidade
+    procedure edtQuantidadeEnter(Sender: TObject); // Ao entrar no campo quantidade
+    procedure btnCancelarClick(Sender: TObject); // Cancelar operação
+    procedure btnGravarClick(Sender: TObject); // Gravar venda
+    procedure btnApagarClick(Sender: TObject); // Apagar item
+
+  private
+    // Declarações privadas (acesso restrito dentro da classe)
+    dtmVenda: TdtmVenda; // Instância do módulo de dados da venda
+    oVenda: TVenda; // Objeto de venda
+
+    // Funções e procedimentos privados
+    function Apagar: Boolean; override; // Função para apagar a venda
+    function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; override; // Função para gravar venda
+    function TotalizarProduto(valorUnitario, Quantidade: Double): Double; // Calcula total do produto
+    procedure LimparComponenteItem; // Limpa os campos do produto
+    procedure LimparCds; // Limpa o dataset de itens
+    procedure CarregarRegistroSelecionado; // Carrega o registro selecionado
+  public
+    // Declarações públicas (acesso de fora da classe)
+  end;
+
+var
+  frmProVenda: TfrmProVenda; // Instância global do formulário
+
+implementation
+
+{$R *.dfm} // Vincula o formulário ao arquivo DFM
+
+{$REGION 'Override'}
+function TfrmProVenda.Apagar: Boolean;
+begin
+  // Verifica se a venda foi selecionada e apaga
+  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then
+    Result := oVenda.Apagar;
+end;
+
+function TfrmProVenda.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  // Atribui o ID da venda ou define como 0 se estiver vazio
+  if edtVendaId.Text <> EmptyStr then
+    oVenda.VendaId := StrToInt(edtVendaId.Text)
+  else
+    oVenda.VendaId := 0;
+
+  // Atribui valores aos campos da venda
+  oVenda.ClienteId := lkpCliente.KeyValue;
+  oVenda.DataVenda := edtDataVenda.Date;
+  oVenda.TotalVenda := edtValorTotal.Value;
+
+  // Grava conforme o estado do cadastro (inserir ou alterar)
+  if EstadoDoCadastro = ecInserir then
+    Result := oVenda.Inserir
+  else if EstadoDoCadastro = ecAlterar then
+    Result := oVenda.Atualizar;
+end;
+
+procedure TfrmProVenda.lkpProdutoExit(Sender: TObject);
+begin
+  inherited;
+  // Carrega o valor unitário do produto e define quantidade inicial como 1
+  edtValorUnitario.Value := dtmVenda.QryProdutos.FieldByName('valor').AsFloat;
+  edtQuantidade.Value := 1;
+  // Calcula o total do produto
+  edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
+end;
+
+{$ENDREGION}
+
+procedure TfrmProVenda.btnAdicionarClick(Sender: TObject);
+begin
+  // Valida se o produto foi selecionado
+  if lkpProduto.KeyValue = Null then
+  begin
+    MessageDlg('Produto é um campo obrigatório', mtInformation, [mbOK], 0);
+    lkpProduto.SetFocus;
+    Abort;
+  end;
+
+  // Valida se o valor unitário é maior que 0
+  if edtValorUnitario.Value <= 0 then
+  begin
+    MessageDlg('Valor Unitário não pode ser zero', mtInformation, [mbOK], 0);
+    edtValorUnitario.SetFocus;
+    Abort;
+  end;
+
+  // Valida se a quantidade é maior que 0
+  if edtQuantidade.Value <= 0 then
+  begin
+    MessageDlg('Quantidade não pode ser zero', mtInformation, [mbOK], 0);
+    edtQuantidade.SetFocus;
+    Abort;
+  end;
+
+  // Verifica se o produto já foi selecionado anteriormente
+  if dtmVenda.cdsItensVenda.Locate('produtoId', lkpProduto.KeyValue, []) then
+  begin
+    MessageDlg('Este Produto já foi selecionado', mtInformation, [mbOK], 0);
+    lkpProduto.SetFocus;
+    Abort;
+  end;
+
+  // Calcula o total do produto e adiciona ao dataset
+  edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
+  dtmVenda.cdsItensVenda.Append;
+  dtmVenda.cdsItensVenda.FieldByName('produtoId').AsString := lkpProduto.KeyValue;
+  dtmVenda.cdsItensVenda.FieldByName('nomeProduto').AsString := dtmVenda.QryProdutos.FieldByName('nome').AsString;
+  dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat := edtQuantidade.Value;
+  dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat := edtValorUnitario.Value;
+  dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat := edtTotalProduto.Value;
+  dtmVenda.cdsItensVenda.Post;
+  LimparComponenteItem;
+  lkpProduto.SetFocus;
+end;
+
+procedure TfrmProVenda.LimparComponenteItem;
+begin
+  // Limpa os campos de produto
+  lkpProduto.KeyValue := Null;
+  edtQuantidade.Value := 0;
+  edtValorUnitario.Value := 0;
+  edtTotalProduto.Value := 0;
+end;
+
+function TfrmProVenda.TotalizarProduto(valorUnitario, Quantidade: Double): Double;
+begin
+  // Calcula o total do produto
+  Result := valorUnitario * Quantidade;
+end;
+
+procedure TfrmProVenda.FormCreate(Sender: TObject);
+begin
+  inherited;
+  // Inicializa o módulo de dados e o objeto de venda
+  dtmVenda := TdtmVenda.Create(Self);
+  oVenda := TVenda.Create(dtmPrincipal.ConexaoDB);
+  IndiceAtual := 'clienteId';
+end;
+
+end.
+

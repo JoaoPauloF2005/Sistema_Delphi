@@ -1,240 +1,209 @@
-unit cCadCliente;
+unit cCadCliente;  // Declara a unidade (módulo) que contém a classe TCliente.
 
 interface
 
-uses System.Classes,
-     Vcl.Controls,
-     Vcl.ExtCtrls,
-     Vcl.Dialogs,
-     ZAbstractConnection,
-     ZConnection,
-     ZAbstractRODataset,
-     ZAbstractDataset,
-     ZDataset,
-     System.SysUtils;
+uses
+  System.Classes,          // Permite o uso de classes básicas do Delphi.
+  Vcl.Controls,            // Contém controles visuais da VCL.
+  Vcl.ExtCtrls,            // Permite o uso de painéis e controles avançados.
+  Vcl.Dialogs,             // Utiliza caixas de diálogo.
+  ZAbstractConnection,     // Permite trabalhar com conexões abstratas.
+  ZConnection,             // Trabalha com a conexão ao banco de dados usando Zeos.
+  ZAbstractRODataset,      // Dataset apenas de leitura.
+  ZAbstractDataset,        // Classe base para Datasets.
+  ZDataset,                // Componente de dataset para execução de SQL.
+  System.SysUtils;         // Funções utilitárias do sistema, como manipulação de strings e datas.
 
 type
+  // Declaração da classe TCliente, que encapsula operações de um cliente.
   TCliente = class
   private
-    ConexaoDB:TZConnection;
-    F_clienteId:Integer;  //Int
-    F_nome:String; //VarChar
-    F_endereco: string;
-    F_cidade:String;
-    F_bairro: String;
-    F_estado: string;
-    F_cep: String;
-    F_telefone: string;
-    F_email: string;
-    F_dataNascimento: TDateTime;
+    ConexaoDB: TZConnection;  // Armazena a conexão com o banco de dados.
+    F_clienteId: Integer;      // ID do cliente.
+    F_nome: String;            // Nome do cliente.
+    F_endereco: String;        // Endereço do cliente.
+    F_cidade: String;          // Cidade do cliente.
+    F_bairro: String;          // Bairro do cliente.
+    F_estado: String;          // Estado do cliente.
+    F_cep: String;             // CEP do cliente.
+    F_telefone: String;        // Telefone do cliente.
+    F_email: String;           // E-mail do cliente.
+    F_dataNascimento: TDateTime; // Data de nascimento do cliente.
 
   public
-    constructor Create(aConexao:TZConnection);
-    destructor Destroy; override;
-    function Inserir:Boolean;
-    function Atualizar:Boolean;
-    function Apagar:Boolean;
-    function Selecionar(id:Integer):Boolean;
+    constructor Create(aConexao: TZConnection); // Construtor para inicializar a conexão.
+    destructor Destroy; override;               // Destrutor para liberar recursos.
+    function Inserir: Boolean;                  // Insere um novo cliente no banco.
+    function Atualizar: Boolean;                // Atualiza os dados de um cliente.
+    function Apagar: Boolean;                   // Exclui um cliente do banco.
+    function Selecionar(id: Integer): Boolean;  // Seleciona um cliente pelo ID.
+
   published
-    property codigo        :Integer    read F_clienteId      write F_clienteId;
-    property nome          :string     read F_nome           write F_nome;
-    property endereco      :string     read F_endereco       write F_endereco;
-    property cidade        :string     read F_cidade         write F_cidade;
-    property bairro        :string     read F_bairro         write F_bairro;
-    property estado        :string     read F_estado         write F_Estado;
-    property cep           :string     read F_cep            write F_Cep;
-    property telefone      :string     read F_telefone       write F_telefone;
-    property email         :string     read F_email          write F_email;
-    property dataNascimento:TDateTime  read F_dataNascimento write F_dataNascimento;
+    // Propriedades para acessar e modificar os campos privados.
+    property codigo: Integer read F_clienteId write F_clienteId;
+    property nome: string read F_nome write F_nome;
+    property endereco: string read F_endereco write F_endereco;
+    property cidade: string read F_cidade write F_cidade;
+    property bairro: string read F_bairro write F_bairro;
+    property estado: string read F_estado write F_estado;
+    property cep: string read F_cep write F_cep;
+    property telefone: string read F_telefone write F_telefone;
+    property email: string read F_email write F_email;
+    property dataNascimento: TDateTime read F_dataNascimento write F_dataNascimento;
   end;
 
 implementation
 
-
-{ TCategoria }
+{ TCliente }
 
 {$region 'Constructor and Destructor'}
-constructor TCliente.Create(aConexao:TZConnection);
+constructor TCliente.Create(aConexao: TZConnection);
 begin
-  ConexaoDB:=aConexao;
+  ConexaoDB := aConexao;  // Inicializa a conexão recebida por parâmetro.
 end;
 
 destructor TCliente.Destroy;
 begin
-
-  inherited;
+  inherited;  // Garante que o destrutor da classe base também seja executado.
 end;
-{$endRegion}
+{$endregion}
 
 {$region 'CRUD'}
 function TCliente.Apagar: Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;  // Declara uma variável para armazenar a query.
 begin
-  if MessageDlg('Apagar o Registro: '+#13+#13+
-                'Código: '+IntToStr(F_clienteId)+#13+
-                'Descrição: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
-     Result:=false;
-     abort;
+  // Exibe uma mensagem de confirmação antes de apagar o registro.
+  if MessageDlg('Apagar o Registro: ' + #13#13 +
+                'Código: ' + IntToStr(F_clienteId) + #13 +
+                'Descrição: ' + F_nome, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+  begin
+    Result := False;  // Cancela a operação se o usuário escolher "Não".
+    Abort;  // Aborta a execução.
   end;
 
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
-    Qry.SQL.Clear;
-    Qry.SQL.Add('DELETE FROM clientes '+
-                ' WHERE clienteId=:clienteId ');
-    Qry.ParamByName('clienteId').AsInteger :=F_clienteId;
-    Try
-      ConexaoDB.StartTransaction;
-      Qry.ExecSQL;
-      ConexaoDB.Commit;
-    Except
-      ConexaoDB.Rollback;
-      Result:=false;
-    End;
+    Result := True;  // Define o resultado como verdadeiro por padrão.
+    Qry := TZQuery.Create(nil);  // Cria a query.
+    Qry.Connection := ConexaoDB;  // Associa a conexão.
+    Qry.SQL.Clear;  // Limpa comandos SQL anteriores.
+    Qry.SQL.Add('DELETE FROM clientes WHERE clienteId=:clienteId');  // SQL de exclusão.
+    Qry.ParamByName('clienteId').AsInteger := F_clienteId;  // Define o parâmetro.
 
+    try
+      ConexaoDB.StartTransaction;  // Inicia uma transação.
+      Qry.ExecSQL;  // Executa o comando SQL.
+      ConexaoDB.Commit;  // Confirma a transação.
+    except
+      ConexaoDB.Rollback;  // Desfaz a transação em caso de erro.
+      Result := False;
+    end;
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    FreeAndNil(Qry);  // Libera a memória alocada para a query.
   end;
 end;
 
 function TCliente.Atualizar: Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;
 begin
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Result := True;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('UPDATE clientes '+
-                '   SET nome            =:nome '+
-                '       ,endereco       =:endereco '+
-                '       ,cidade         =:cidade '+
-                '       ,bairro         =:bairro '+
-                '       ,estado         =:estado '+
-                '       ,cep            =:cep '+
-                '       ,telefone       =:telefone '+
-                '       ,email          =:email '+
-                '       ,dataNascimento =:dataNascimento '+
-                ' WHERE clienteId=:clienteId ');
-    Qry.ParamByName('clienteId').AsInteger       :=Self.F_clienteId;
-    Qry.ParamByName('nome').AsString             :=Self.F_nome;
-    Qry.ParamByName('endereco').AsString         :=Self.F_endereco;
-    Qry.ParamByName('cidade').AsString           :=Self.F_cidade;
-    Qry.ParamByName('bairro').AsString           :=Self.F_bairro;
-    Qry.ParamByName('estado').AsString           :=Self.F_estado;
-    Qry.ParamByName('cep').AsString              :=Self.F_cep;
-    Qry.ParamByName('telefone').AsString         :=Self.F_telefone;
-    Qry.ParamByName('email').AsString            :=Self.F_email;
-    Qry.ParamByName('dataNascimento').AsDateTime :=Self.F_dataNascimento;
+    Qry.SQL.Add('UPDATE clientes SET nome=:nome, endereco=:endereco, cidade=:cidade, ' +
+                'bairro=:bairro, estado=:estado, cep=:cep, telefone=:telefone, ' +
+                'email=:email, dataNascimento=:dataNascimento WHERE clienteId=:clienteId');
 
+    // Atribui valores aos parâmetros da query.
+    Qry.ParamByName('clienteId').AsInteger := F_clienteId;
+    Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('endereco').AsString := F_endereco;
+    Qry.ParamByName('cidade').AsString := F_cidade;
+    Qry.ParamByName('bairro').AsString := F_bairro;
+    Qry.ParamByName('estado').AsString := F_estado;
+    Qry.ParamByName('cep').AsString := F_cep;
+    Qry.ParamByName('telefone').AsString := F_telefone;
+    Qry.ParamByName('email').AsString := F_email;
+    Qry.ParamByName('dataNascimento').AsDateTime := F_dataNascimento;
 
-    Try
+    try
       ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       ConexaoDB.Commit;
-    Except
+    except
       ConexaoDB.Rollback;
-      Result:=false;
-    End;
-
+      Result := False;
+    end;
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    FreeAndNil(Qry);
   end;
 end;
 
 function TCliente.Inserir: Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;
 begin
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Result := True;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('INSERT INTO clientes (nome, '+
-                '                      endereco, '+
-                '                      cidade,  '+
-                '                      bairro,  '+
-                '                      estado, '+
-                '                      cep, '+
-                '                      telefone, '+
-                '                      email, '+
-                '                      datanascimento) '+
-                ' VALUES              (:nome, '+
-                '                      :endereco, '+
-                '                      :cidade,  '+
-                '                      :bairro,  '+
-                '                      :estado, '+
-                '                      :cep, '+
-                '                      :telefone, '+
-                '                      :email, '+
-                '                      :datanascimento)' );
+    Qry.SQL.Add('INSERT INTO clientes (nome, endereco, cidade, bairro, estado, cep, telefone, ' +
+                'email, datanascimento) VALUES (:nome, :endereco, :cidade, :bairro, :estado, ' +
+                ':cep, :telefone, :email, :datanascimento)');
 
-    Qry.ParamByName('nome').AsString             :=Self.F_nome;
-    Qry.ParamByName('endereco').AsString         :=Self.F_endereco;
-    Qry.ParamByName('cidade').AsString           :=Self.F_cidade;
-    Qry.ParamByName('bairro').AsString           :=Self.F_bairro;
-    Qry.ParamByName('estado').AsString           :=Self.F_estado;
-    Qry.ParamByName('cep').AsString              :=Self.F_cep;
-    Qry.ParamByName('telefone').AsString         :=Self.F_telefone;
-    Qry.ParamByName('email').AsString            :=Self.F_email;
-    Qry.ParamByName('dataNascimento').AsDateTime :=Self.F_dataNascimento;
+    // Define os valores dos parâmetros.
+    Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('endereco').AsString := F_endereco;
+    Qry.ParamByName('cidade').AsString := F_cidade;
+    Qry.ParamByName('bairro').AsString := F_bairro;
+    Qry.ParamByName('estado').AsString := F_estado;
+    Qry.ParamByName('cep').AsString := F_cep;
+    Qry.ParamByName('telefone').AsString := F_telefone;
+    Qry.ParamByName('email').AsString := F_email;
+    Qry.ParamByName('dataNascimento').AsDateTime := F_dataNascimento;
 
-    Try
+    try
       ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       ConexaoDB.Commit;
-    Except
+    except
       ConexaoDB.Rollback;
-      Result:=false;
-    End;
-
+      Result := False;
+    end;
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    FreeAndNil(Qry);
   end;
 end;
 
 function TCliente.Selecionar(id: Integer): Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;
 begin
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Result := True;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('SELECT clienteId,'+
-                '       nome, '+
-                '       endereco, '+
-                '       cidade, '+
-                '       bairro, '+
-                '       estado, '+
-                '       cep, '+
-                '       telefone, '+
-                '       email, '+
-                '       datanascimento '+
-                '  FROM clientes '+
-                ' WHERE clienteId=:clienteId');
-    Qry.ParamByName('clienteId').AsInteger:=id;
-    Try
+    Qry.SQL.Add('SELECT * FROM clientes WHERE clienteId=:clienteId');
+    Qry.ParamByName('clienteId').AsInteger := id;
+
+    try
       Qry.Open;
 
-      Self.F_clienteId     := Qry.FieldByName('clienteId').AsInteger;
-      Self.F_nome          := Qry.FieldByName('nome').AsString;
-      Self.F_endereco      := Qry.FieldByName('endereco').AsString;
-      Self.F_cidade        := Qry.FieldByName('cidade').AsString;
-      Self.F_bairro        := Qry.FieldByName('bairro').AsString;
-      Self.F_estado        := Qry.FieldByName('estado').AsString;
-      Self.F_cep           := Qry.FieldByName('cep').AsString;
-      Self.F_telefone      := Qry.FieldByName('telefone').AsString;
-      Self.F_email         := Qry.FieldByName('email').AsString;
-      Self.F_dataNascimento:= Qry.FieldByName('datanascimento').AsDateTime;
+      // Atribui os valores retornados para os atributos da classe.
+      F_clienteId := Qry.FieldByName('clienteId').AsInteger;
+      F_nome := Qry.FieldByName('nome').AsString;
+      F_endereco := Qry.FieldByName('endereco').AsString;
+      F_cidade := Qry.FieldByName('cidade').AsString;
+      F_bairro := Qry.FieldByName('bairro').AsString;
+      F_estado := Qry.FieldByName('estado').AsString;
+      F_cep := Qry.FieldByName('cep').AsString;
+      F_telefone := Qry.FieldByName('telefone').AsString;
+      F_email := Qry.FieldByName('email').AsString;
+      F_dataNascimento := Qry.FieldByName('datanascimento').AsDateTime;
+    except
+      Result := False;
 
-    Except
-      Result:=false;
+
     End;
 
   finally
