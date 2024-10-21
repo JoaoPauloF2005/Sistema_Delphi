@@ -25,13 +25,14 @@ type
     F_dataVenda : TDateTime;
     F_totalVenda : Double;
     function InserirItens(cds: TClientDataSet; IdVenda: Integer): Boolean;
+    function ApagaItens(cds: TClientDataSet): Boolean;
 
 
   public
     constructor Create(aConexao:TZConnection);
     destructor Destroy; override;
-    function Inserir(cds:TClientDataSet):Boolean;
-    function Atualizar:Boolean;
+    function Inserir(cds : TClientDataSet) : Boolean;
+    function Atualizar(cds : TClientDataSet) : Boolean;
     function Apagar:Boolean;
     function Selecionar(id:Integer; var cds:TClientDataSet):Boolean;
   published
@@ -100,11 +101,12 @@ begin
   end;
 end;
 
-function TVenda.Atualizar: Boolean;
+function TVenda.Atualizar(cds:TClientDataSet): Boolean;
 var Qry:TZQuery;
 begin
   try
     Result:=true;
+    ConexaoDB.StartTransaction;
     ConexaoDB.StartTransaction;
     Qry := TZQuery.Create(nil);
     Qry.Connection:=ConexaoDB;
@@ -120,16 +122,66 @@ begin
     Qry.ParamByName('totalVenda').AsFloat   :=Self.F_totalVenda;
 
     Try
-      //Update
+      //Update Vendas
       Qry.ExecSQL;
+
+
     Except
       Result := false;
+      ConexaoDB.Rollback;
+    End;
+
+    ConexaoDB.Commit;
+
+  finally
+    if Assigned(Qry) then
+       FreeAndNil(Qry);
+  end;
+end;
+
+function TVenda.ApagaItens(cds:TClientDataSet): Boolean;
+var
+ Qry:TZQuery;
+begin
+  try
+    Result:=true;
+    Qry:=TZQuery.Create(nil);
+    Qry.Connection:=ConexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(' DELETE '+
+                '   FROM VendasItens '+
+                '  WHERE VendaId=:VendaId '+
+                '    AND produtoId NOT IN ('+InNot(cds)+') ');
+    Qry.ParamByName('vendaId').AsInteger    :=Self.F_vendaId;
+
+    Try
+
+      Qry.ExecSQL;
+
+    Except
+
+      Result:=false;
     End;
 
   finally
     if Assigned(Qry) then
        FreeAndNil(Qry);
   end;
+end;
+
+function TVenda.InNot(cds:TClientDataSet):string;
+var sInNot:string;
+begin
+  sInNot := EmptyStr;
+  cds.First;
+  while not cds.Eof do begin
+    if sInNot = EmptyStr then
+    	 sInNot := cds.FieldByName('produtoId').AnsiString
+    else
+    	sInNot := sInNot +', '+cds.FieldByName('produtoId').AsString
+  	cds.Next;
+  end;
+	Result
 end;
 
 function TVenda.Inserir(cds: TClientDataSet) : Boolean;

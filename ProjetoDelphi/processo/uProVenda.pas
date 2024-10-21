@@ -296,10 +296,7 @@ end;
 function TfrmProVenda.TotalizarProduto(valorUnitario, Quantidade : Double) : 	Double;
 begin
 	result := valorUnitario  * Quantidade;
-
-
 end;
-
 
 procedure TfrmProVenda.LimparComponenteItem;
 begin
@@ -311,6 +308,7 @@ end;
 
 procedure TfrmProVenda.LimparCds;
 begin
+	dtmVenda.cdsItensVenda.First;
 	while not dtmVenda.CdsItensVenda.Eof	do
   	dtmVenda.cdsItensVenda.Delete;
 end;
