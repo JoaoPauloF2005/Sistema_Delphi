@@ -76,11 +76,6 @@
       DisplayLabel = 'Total do Produto'
       FieldName = 'valorTotalProduto'
     end
-    object cdsItensVendavalorTotalVenda: TAggregateField
-      FieldName = 'valorTotalVenda'
-      DisplayName = ''
-      Expression = 'SUM(ValorTotalProduto)'
-    end
   end
   object dtsItensVenda: TDataSource
     DataSet = cdsItensVenda

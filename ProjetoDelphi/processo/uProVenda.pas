@@ -1,4 +1,4 @@
-unit uProVenda;
+ï»¿unit uProVenda;
 
 interface
 
@@ -25,7 +25,7 @@ type
     Panel4: TPanel;
     edtValorTotal: TCurrencyEdit;
     Label2: TLabel;
-    dbGriditensVenda: TDBGrid;
+    dbGridItensVenda: TDBGrid;
     lkpProduto: TDBLookupComboBox;
     Label1: TLabel;
     edtValorUnitario: TCurrencyEdit;
@@ -37,19 +37,17 @@ type
     Label6: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure dbgridItensVendaKeyDown(Sender: TObject; var Key: Word;
+    procedure dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure btnAdicionarClick(Sender: TObject);
     procedure lkpProdutoExit(Sender: TObject);
     procedure edtQuantidadeExit(Sender: TObject);
-    procedure edtQuantidadeEnter(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarItemClick(Sender: TObject);
-
-
+    procedure dbGridItensVendaDblClick(Sender: TObject);
   private
     { Private declarations }
   	dtmVenda: TdtmVenda;
@@ -60,6 +58,7 @@ type
     procedure LimparComponenteItem;
     procedure LimparCds;
     procedure CarregarRegistroSelecionado;
+    function TotalizarVenda: Double;
 
   public
       { Public declarations }
@@ -105,9 +104,11 @@ end;
 procedure TfrmProVenda.lkpProdutoExit(Sender: TObject);
 begin
   inherited;
-  edtValorUnitario.Value := dtmVenda.QryProdutos.FieldByName('valor').AsFloat;
-  edtQuantidade.Value := 1;
-  edtTotalProduto.Value:=TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
+ 	if lkpProduto.KeyValue <> Null then begin
+    edtValorUnitario.Value := dtmVenda.QryProdutos.FieldByName('valor').AsFloat;
+    edtQuantidade.Value := 1;
+    edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
+  end;
 end;
 
 {$ENDREGION}
@@ -115,25 +116,25 @@ end;
 procedure TfrmProVenda.btnAdicionarClick(Sender: TObject);
 begin
 	if lkpProduto.KeyValue = Null then begin
-    MessageDlg('Produto é um campo obrigatório' ,mtInformation, [mbOK], 0);
+    MessageDlg('Produto Ã© um campo obrigatÃ³rio' ,mtInformation, [mbOK], 0);
     lkpProduto.SetFocus;
     Abort;
   end;
 
   if edtValorUnitario.Value <= 0 then begin
-    MessageDlg('Valor Unitário não pode ser zero' ,mtInformation, [mbOK], 0);
+    MessageDlg('Valor UnitÃ¡rio nÃ£o pode ser zero' ,mtInformation, [mbOK], 0);
     edtValorUnitario.SetFocus;
     Abort;
   end;
 
   if edtQuantidade.Value <= 0 then begin
-    	MessageDlg('Quantidade não pode ser zero' ,mtInformation, [mbOK], 0);
+    	MessageDlg('Quantidade nÃ£o pode ser zero' ,mtInformation, [mbOK], 0);
       edtQuantidade.SetFocus;
       Abort;
   end;
 
   if dtmVenda.cdsItensVenda.Locate('produtoId', lkpProduto.KeyValue, []) then begin
-    MessageDlg('Este Produto já foi selecionado' ,mtInformation, [mbOK], 0);
+    MessageDlg('Este Produto jÃ¡ foi selecionado' ,mtInformation, [mbOK], 0);
     lkpProduto.SetFocus;
     abort;
   end;
@@ -143,64 +144,24 @@ begin
   dtmVenda.cdsItensVenda.Append;
   dtmVenda.cdsItensVenda.FieldByName('produtoId').AsString := lkpProduto.KeyValue;
   dtmVenda.cdsItensVenda.FieldByName('nomeProduto').AsString := dtmVenda.QryProdutos.FieldByName('nome').AsString;
-  dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat := edtQuantidade.Value;
   dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat := edtValorUnitario.Value;
+  dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat := edtQuantidade.Value;
   dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat := edtTotalProduto.Value;
   dtmVenda.cdsItensVenda.Post;
+  edtValorTotal.Value	:= TotalizarVenda;
   LimparComponenteItem;
   lkpProduto.SetFocus;
 
 end;
 
 
-procedure TfrmProVenda.LimparComponenteItem;
-begin
-  	lkpProduto.KeyValue			:= null;
-    edtQuantidade.Value			:= 0;
-    edtValorUnitario.Value  := 0;
-    edtTotalProduto.Value		:= 0;
-end;
-
-function TfrmProVenda.TotalizarProduto(valorUnitario, Quantidade : Double) : 	Double;
-begin
-	Result := valorUnitario  * Quantidade;
-
-	if
-  	oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
-      edtVendaId.Text    		:= IntToStr(oVenda.VendaId);
-      lkpCliente.KeyValue   := oVenda.ClienteId;
-      edtDataVenda.Date			:= oVenda.DataVenda;
-      edtValorTotal.Value		:= OVenda.TotalVenda;
-    end;
-end;
-
-
-procedure TfrmProVenda.LimparCds;
-begin
-	while not dtmVenda.CdsItensVenda.Eof	do
-  	dtmVenda.cdsItensVenda.Delete;
-end;
-
-procedure TfrmProVenda.edtQuantidadeEnter(Sender: TObject);
-begin
-  inherited;
-  edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
-end;
-
-procedure TfrmProVenda.edtQuantidadeExit(Sender: TObject);
-begin
-  inherited;
-  edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
-
-end;
-
 procedure TfrmProVenda.btnAlterarClick(Sender: TObject);
 begin
   if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
-     edtVendaId.Text     :=IntToStr(oVenda.VendaId);
-     lkpCliente.KeyValue :=oVenda.ClienteId;
-     edtDataVenda.Date   :=oVenda.DataVenda;
-     edtValorTotal.Value :=oVenda.TotalVenda;
+     edtVendaId.Text     := IntToStr(oVenda.VendaId);
+     lkpCliente.KeyValue := oVenda.ClienteId;
+     edtDataVenda.Date   := oVenda.DataVenda;
+     edtValorTotal.Value := oVenda.TotalVenda;
   end
   else begin
     btnCancelar.Click;
@@ -214,9 +175,9 @@ procedure TfrmProVenda.btnApagarItemClick(Sender: TObject);
 begin
   inherited;
 
-  if lkpProduto.KeyValue=Null then begin
-     MessageDlg('Selecione o Produto a ser excluído' ,mtInformation,[mbOK],0);
-     dbgridItensVenda.SetFocus;
+  if lkpProduto.KeyValue = Null then begin
+     MessageDlg('Selecione o Produto a ser excluÃ­do' ,mtInformation,[mbOK],0);
+     dbGridItensVenda.SetFocus;
      abort;
   end;
 
@@ -224,7 +185,7 @@ begin
      dtmVenda.cdsItensVenda.Delete;
      LimparComponenteItem;
   end;
-
+		edtValorTotal.Value	:= TotalizarVenda;
 end;
 
 procedure TfrmProVenda.btnCancelarClick(Sender: TObject);
@@ -242,9 +203,16 @@ end;
 procedure TfrmProVenda.btnNovoClick(Sender: TObject);
 begin
   inherited;
-  edtDataVenda.Date:=Date;
+  edtDataVenda.Date := Date;
   lkpCliente.SetFocus;
   LimparCds;
+end;
+
+procedure TfrmProVenda.dbGridItensVendaDblClick(Sender: TObject);
+begin
+  inherited;
+  CarregarRegistroSelecionado;
+
 end;
 
 procedure TfrmProVenda.dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
@@ -255,6 +223,13 @@ begin
 end;
 
 
+
+procedure TfrmProVenda.edtQuantidadeExit(Sender: TObject);
+begin
+  inherited;
+  edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
+
+end;
 
 procedure TfrmProVenda.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -269,20 +244,51 @@ end;
 procedure TfrmProVenda.FormCreate(Sender: TObject);
 begin
   inherited;
-  dtmVenda:=TdtmVenda.Create(Self);
-  oVenda:=TVenda.Create(dtmPrincipal.ConexaoDB);
+  dtmVenda := TdtmVenda.Create(Self);
+  oVenda := TVenda.Create(dtmPrincipal.ConexaoDB);
 
-  IndiceAtual:='clienteId';
+  IndiceAtual:='nome';
 end;
 
 procedure TfrmProVenda.CarregarRegistroSelecionado;
 begin
-  lkpProduto.KeyValue			:= dtmVenda.cdsItensVenda.FieldByName('produto').AsString;
-  edtQuantidade.Value			:= dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat;
+  lkpProduto.KeyValue			:= dtmVenda.cdsItensVenda.FieldByName('produtoId').AsString;
   edtValorUnitario.Value	:= dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat;
-  edtTotalProduto.Value		:= dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat;
+  edtQuantidade.Value			:= dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat;
+	edtTotalProduto.Value		:= dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat;
 end;
 
+function TfrmProVenda.TotalizarProduto(valorUnitario, Quantidade : Double) : 	Double;
+begin
+	result := valorUnitario  * Quantidade;
+
+
+end;
+
+
+procedure TfrmProVenda.LimparComponenteItem;
+begin
+  	lkpProduto.KeyValue			:= null;
+    edtQuantidade.Value			:= 0;
+    edtValorUnitario.Value  := 0;
+    edtTotalProduto.Value		:= 0;
+end;
+
+procedure TfrmProVenda.LimparCds;
+begin
+	while not dtmVenda.CdsItensVenda.Eof	do
+  	dtmVenda.cdsItensVenda.Delete;
+end;
+
+function TfrmProVenda.TotalizarVenda : Double;
+begin
+  result := 0;
+  dtmVenda.cdsItensVenda.First;
+  while not dtmVenda.cdsItensVenda.Eof do begin
+    result := result + dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat;
+    dtmVenda.cdsItensVenda.Next;
+  end;
+end;
 end.
 
 

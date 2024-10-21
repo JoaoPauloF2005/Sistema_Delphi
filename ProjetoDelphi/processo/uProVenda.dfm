@@ -121,7 +121,7 @@ inherited frmProVenda: TfrmProVenda
           Height = 327
           Align = alClient
           TabOrder = 1
-          object dbGriditensVenda: TDBGrid
+          object dbGridItensVenda: TDBGrid
             Left = 1
             Top = 1
             Width = 902
@@ -136,6 +136,7 @@ inherited frmProVenda: TfrmProVenda
             TitleFont.Height = -11
             TitleFont.Name = 'Tahoma'
             TitleFont.Style = []
+            OnDblClick = dbGridItensVendaDblClick
             Columns = <
               item
                 Expanded = False
@@ -247,7 +248,6 @@ inherited frmProVenda: TfrmProVenda
             Height = 21
             DisplayFormat = ' ,0.00;- ,0.00'
             TabOrder = 2
-            OnEnter = edtQuantidadeEnter
             OnExit = edtQuantidadeExit
           end
           object edtTotalProduto: TCurrencyEdit
@@ -398,7 +398,7 @@ inherited frmProVenda: TfrmProVenda
       Size = 60
     end
     object QryListagemdataVenda: TDateTimeField
-      DisplayLabel = 'Data de Venda'
+      DisplayLabel = 'Data Venda'
       FieldName = 'dataVenda'
       Required = True
     end
