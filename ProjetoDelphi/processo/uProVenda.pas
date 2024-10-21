@@ -94,7 +94,7 @@ begin
     oVenda.TotalVenda		:= edtValorTotal.Value;
 
   if(EstadoDoCadastro = ecInserir)then
-  	Result := oVenda.Inserir
+  	Result := oVenda.Inserir(dtmVenda.cdsItensVenda)
   else
   if(EstadoDoCadastro = ecAlterar)then
   	Result := oVenda.Atualizar;

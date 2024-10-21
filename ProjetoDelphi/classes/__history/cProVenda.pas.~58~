@@ -19,17 +19,17 @@ uses System.Classes,
 type
   TVenda = class
   private
-    ConexaoDB:TZConnection;
-    F_vendaId:Integer;
-    F_clienteId:Integer;
-    F_dataVenda:TDateTime;
-    F_totalVenda: Double;
+    ConexaoDB : TZConnection;
+    F_vendaId : Integer;
+    F_clienteId : Integer;
+    F_dataVenda : TDateTime;
+    F_totalVenda : Double;
 
 
   public
     constructor Create(aConexao:TZConnection);
     destructor Destroy; override;
-      function Inserir:Boolean;
+    function Inserir(cds:TClientDataSet):Boolean;
     function Atualizar:Boolean;
     function Apagar:Boolean;
     function Selecionar(id:Integer):Boolean;
@@ -48,7 +48,7 @@ implementation
 {$region 'Constructor and Destructor'}
 constructor TVenda.Create(aConexao:TZConnection);
 begin
-  ConexaoDB:=aConexao;
+  ConexaoDB := aConexao;
 end;
 
 destructor TVenda.Destroy;
@@ -64,7 +64,7 @@ var
 	Qry:TZQuery;
 begin
   if MessageDlg('Apagar o Registro: '+#13+#13+
-                'Venda Nº: '+IntToStr(VendaId),mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
+                'Venda Nº: '+IntToStr(VendaId),mtConfirmation,[mbYes, mbNo],0) = mrNo then begin
      Result:=false;
      abort;
   end;
@@ -78,14 +78,14 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add('DELETE FROM vendasItens '+
                 ' WHERE vendaId=:vendaId ');
-    Qry.ParamByName('vendaId').AsInteger :=VendaId;
+    Qry.ParamByName('vendaId').AsInteger := VendaId;
     Try
       Qry.ExecSQL;
       //Apaga a Tabela Master
       Qry.SQL.Clear;
       Qry.SQL.Add('DELETE FROM vendas '+
                   ' WHERE vendaId=:vendaId ');
-      Qry.ParamByName('vendaId').AsInteger :=VendaId;
+      Qry.ParamByName('vendaId').AsInteger := VendaId;
       Qry.ExecSQL;
       ConexaoDB.Commit;
     Except
@@ -105,7 +105,7 @@ begin
   try
     Result:=true;
     ConexaoDB.StartTransaction;
-    Qry:=TZQuery.Create(nil);
+    Qry := TZQuery.Create(nil);
     Qry.Connection:=ConexaoDB;
     Qry.SQL.Clear;
     Qry.SQL.Add('UPDATE vendas '+
@@ -122,7 +122,7 @@ begin
       //Update
       Qry.ExecSQL;
     Except
-      Result:=false;
+      Result := false;
     End;
 
   finally
@@ -131,12 +131,12 @@ begin
   end;
 end;
 
-function TVenda.Inserir: Boolean;
+function TVenda.Inserir(cds: TClientDataSet) : Boolean;
 var Qry:TZQuery;
-    IdVendaGerado:Integer;
+    IdVendaGerado : Integer;
 begin
   try
-  	Result:=True;
+  	Result := True;
     ConexaoDB.StartTransaction;
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
@@ -161,7 +161,7 @@ begin
       ConexaoDB.Commit;
     Except
       ConexaoDB.Rollback;
-      Result:=false;
+      Result := false;
     End;
 
   finally
@@ -174,7 +174,7 @@ function TVenda.Selecionar(id: Integer): Boolean;
 var Qry:TZQuery;
 begin
   try
-    Result:=true;
+    Result := true;
     Qry:=TZQuery.Create(nil);
     Qry.Connection:=ConexaoDB;
     Qry.SQL.Clear;
@@ -184,7 +184,7 @@ begin
                 '      ,totalVenda '+
                 '  FROM vendas '+
                 ' WHERE vendaId=:vendaId');
-    Qry.ParamByName('vendaId').AsInteger:=id;
+    Qry.ParamByName('vendaId').AsInteger := id;
     Try
       Qry.Open;
 
@@ -193,7 +193,7 @@ begin
       Self.F_dataVenda  := Qry.FieldByName('dataVenda').AsDateTime;
       Self.F_totalVenda := Qry.FieldByName('totalVenda').AsFloat;
 		Except
-      Result:=false;
+      Result := false;
     End;
 
   finally

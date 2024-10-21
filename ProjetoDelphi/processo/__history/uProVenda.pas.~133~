@@ -144,8 +144,8 @@ begin
   dtmVenda.cdsItensVenda.Append;
   dtmVenda.cdsItensVenda.FieldByName('produtoId').AsString := lkpProduto.KeyValue;
   dtmVenda.cdsItensVenda.FieldByName('nomeProduto').AsString := dtmVenda.QryProdutos.FieldByName('nome').AsString;
-  dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat := edtQuantidade.Value;
   dtmVenda.cdsItensVenda.FieldByName('valorUnitario').AsFloat := edtValorUnitario.Value;
+  dtmVenda.cdsItensVenda.FieldByName('quantidade').AsFloat := edtQuantidade.Value;
   dtmVenda.cdsItensVenda.FieldByName('valorTotalProduto').AsFloat := edtTotalProduto.Value;
   dtmVenda.cdsItensVenda.Post;
   edtValorTotal.Value	:= TotalizarVenda;
@@ -262,13 +262,7 @@ function TfrmProVenda.TotalizarProduto(valorUnitario, Quantidade : Double) : 	Do
 begin
 	result := valorUnitario  * Quantidade;
 
-	if
-  	oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger) then begin
-      edtVendaId.Text    		:= IntToStr(oVenda.VendaId);
-      lkpCliente.KeyValue   := oVenda.ClienteId;
-      edtDataVenda.Date			:= oVenda.DataVenda;
-      edtValorTotal.Value		:= OVenda.TotalVenda;
-  end;
+
 end;
 
 
