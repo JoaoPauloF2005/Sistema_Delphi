@@ -244,12 +244,18 @@
   object QryCliente: TZQuery
     Connection = dtmPrincipal.ConexaoDB
     SQL.Strings = (
-      'SELECT clientes.clienteId,'
-      '       clientes.Nome,'
-      '       Clientes.email,'
-      '       clientes.telefone'
+      'SELECT clienteId,'
+      '       nome,'
+      '       cep,'
+      '       endereco,'
+      '       bairro,'
+      '       cidade,'
+      '       estado,'
+      '       email,'
+      '       telefone,'
+      '       dataNascimento'
       '  FROM clientes'
-      '  ORDER BY clientes.Nome')
+      'ORDER BY nome')
     Params = <>
     Left = 403
     Top = 350

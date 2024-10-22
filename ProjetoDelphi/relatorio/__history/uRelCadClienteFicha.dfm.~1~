@@ -243,6 +243,7 @@
   end
   object QryCliente: TZQuery
     Connection = dtmPrincipal.ConexaoDB
+    Active = True
     SQL.Strings = (
       'SELECT clientes.clienteId,'
       '       clientes.Nome,'

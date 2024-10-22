@@ -1,7 +1,7 @@
-﻿object frmRelCategoria: TfrmRelCategoria
+﻿object frmRelCadClienteFicha: TfrmRelCadClienteFicha
   Left = 0
   Top = 0
-  Caption = 'frmRelCategoria'
+  Caption = 'frmRelCadClienteFicha'
   ClientHeight = 740
   ClientWidth = 819
   Color = clBtnFace
@@ -20,7 +20,7 @@
     Top = -7
     Width = 794
     Height = 1123
-    DataSource = dtsCategorias
+    DataSource = dtsCliente
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
@@ -35,9 +35,9 @@
       object RLLabel1: TRLLabel
         Left = 3
         Top = 15
-        Width = 245
+        Width = 179
         Height = 24
-        Caption = 'Listagem de Categorias'
+        Caption = 'Ficha de Clientes'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -21
@@ -46,7 +46,7 @@
         ParentFont = False
       end
       object RLDraw1: TRLDraw
-        Left = 359
+        Left = 0
         Top = 45
         Width = 359
         Height = 12
@@ -55,7 +55,7 @@
         Pen.Width = 2
       end
       object RLDraw2: TRLDraw
-        Left = 0
+        Left = 359
         Top = 45
         Width = 359
         Height = 12
@@ -135,19 +135,38 @@
       object RLDBText1: TRLDBText
         Left = 0
         Top = 0
-        Width = 67
+        Width = 52
         Height = 16
-        DataField = 'categoriaId'
-        DataSource = dtsCategorias
+        DataField = 'clienteId'
+        DataSource = dtsCliente
         Text = ''
       end
       object RLDBText2: TRLDBText
         Left = 68
         Top = 0
-        Width = 60
+        Width = 38
         Height = 16
-        DataField = 'descricao'
-        DataSource = dtsCategorias
+        DataField = 'Nome'
+        DataSource = dtsCliente
+        Text = ''
+      end
+      object RLDBText3: TRLDBText
+        Left = 340
+        Top = 0
+        Width = 35
+        Height = 16
+        DataField = 'email'
+        DataSource = dtsCliente
+        Text = ''
+      end
+      object RLDBText4: TRLDBText
+        Left = 669
+        Top = 0
+        Width = 49
+        Height = 16
+        Alignment = taRightJustify
+        DataField = 'telefone'
+        DataSource = dtsCliente
         Text = ''
       end
     end
@@ -170,9 +189,9 @@
       object RLLabel5: TRLLabel
         Left = 68
         Top = -1
-        Width = 66
+        Width = 41
         Height = 16
-        Caption = 'Descri'#231#227'o'
+        Caption = 'Nome'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -193,28 +212,67 @@
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object RLLabel6: TRLLabel
+        Left = 340
+        Top = 0
+        Width = 39
+        Height = 16
+        Caption = 'Email'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel7: TRLLabel
+        Left = 658
+        Top = 0
+        Width = 60
+        Height = 16
+        Alignment = taRightJustify
+        Caption = 'Telefone'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
     end
   end
-  object QryCategorias: TZQuery
+  object QryCliente: TZQuery
     Connection = dtmPrincipal.ConexaoDB
+    Active = True
     SQL.Strings = (
-      'Select categoriaId,'
-      '       descricao'
-      '  from categorias')
+      'SELECT clientes.clienteId,'
+      '       clientes.Nome,'
+      '       Clientes.email,'
+      '       clientes.telefone'
+      '  FROM clientes'
+      '  ORDER BY clientes.Nome')
     Params = <>
     Left = 403
     Top = 350
-    object QryCategoriascategoriaId: TIntegerField
-      FieldName = 'categoriaId'
+    object QryClienteclienteId: TIntegerField
+      FieldName = 'clienteId'
       ReadOnly = True
     end
-    object QryCategoriasdescricao: TWideStringField
-      FieldName = 'descricao'
-      Size = 30
+    object QryClienteNome: TWideStringField
+      FieldName = 'Nome'
+      Size = 60
+    end
+    object QryClienteemail: TWideStringField
+      FieldName = 'email'
+      Size = 100
+    end
+    object QryClientetelefone: TWideStringField
+      FieldName = 'telefone'
+      Size = 14
     end
   end
-  object dtsCategorias: TDataSource
-    DataSet = QryCategorias
+  object dtsCliente: TDataSource
+    DataSet = QryCliente
     Left = 497
     Top = 351
   end
