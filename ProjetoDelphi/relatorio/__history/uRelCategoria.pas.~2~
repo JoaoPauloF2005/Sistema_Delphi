@@ -1,0 +1,25 @@
+unit uRelCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset;
+
+type
+  TfrmRelCategoria = class(TForm)
+    ZQuery1: TZQuery;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCategoria: TfrmRelCategoria;
+
+implementation
+
+{$R *.dfm}
+
+end.

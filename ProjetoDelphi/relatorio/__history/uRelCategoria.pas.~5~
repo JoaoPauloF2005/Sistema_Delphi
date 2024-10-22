@@ -1,0 +1,32 @@
+unit uRelCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, RLReport;
+
+type
+  TfrmRelCategoria = class(TForm)
+    QryCategorias: TZQuery;
+    dtsCategorias: TDataSource;
+    QryCategoriascategoriaId: TIntegerField;
+    QryCategoriasdescricao: TWideStringField;
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    RLLabel1: TRLLabel;
+    RLDraw1: TRLDraw;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCategoria: TfrmRelCategoria;
+
+implementation
+
+{$R *.dfm}
+
+end.

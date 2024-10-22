@@ -54,6 +54,10 @@ object frmPrincipal: TfrmPrincipal
     end
     object RELATRIOS1: TMenuItem
       Caption = 'RELAT'#211'RIOS'
+      object CATEGORIA2: TMenuItem
+        Caption = 'CATEGORIA'
+        OnClick = CATEGORIA2Click
+      end
       object CLIENTE2: TMenuItem
         Caption = 'CLIENTE'
       end

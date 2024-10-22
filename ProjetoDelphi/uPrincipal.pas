@@ -25,6 +25,7 @@ type
     PRODUTO2: TMenuItem;
     N4: TMenuItem;
     VENDAPORDATA1: TMenuItem;
+    CATEGORIA2: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -32,6 +33,7 @@ type
     procedure CLIENTE1Click(Sender: TObject);
     procedure PRODUTO1Click(Sender: TObject);
     procedure VENDAS1Click(Sender: TObject);
+    procedure CATEGORIA2Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -46,34 +48,41 @@ var
 
 implementation
 
-uses uCadCategoria, uCadCliente, uCadProduto, uProVenda;
+uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria;
 {$R *.dfm}
 
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
-  frmCadCategoria:=TfrmCadCategoria.Create(Self);
+  frmCadCategoria := TfrmCadCategoria.Create(Self);
   frmCadCategoria.ShowModal;
   frmCadCategoria.Release;
 end;
 
+procedure TfrmPrincipal.CATEGORIA2Click(Sender: TObject);
+begin
+	frmRelCategoria := TfrmRelCategoria.Create(Self);
+  frmRelCategoria.Relatorio.PreviewModal;
+  frmRelCategoria.Release;
+end;
+
 procedure TfrmPrincipal.CLIENTE1Click(Sender: TObject);
 begin
-   frmCadCliente:=TfrmCadCliente.Create(Self);
+   frmCadCliente := TfrmCadCliente.Create(Self);
    frmCadCliente.ShowModal;
    frmCadCliente.Release;
 end;
 
 procedure TfrmPrincipal.PRODUTO1Click(Sender: TObject);
 begin
-    frmCadProduto:=TfrmCadProduto.Create(Self);
+    frmCadProduto := TfrmCadProduto.Create(Self);
     frmCadProduto.ShowModal;
     frmCadProduto.Release;
 end;
 
 procedure TfrmPrincipal.VENDAS1Click(Sender: TObject);
 begin
-  frmProVenda:=TfrmProVenda.Create(Self);
+  frmProVenda := TfrmProVenda.Create(Self);
   frmProVenda.ShowModal;
   frmProVenda.Release;
 end;
@@ -118,12 +127,12 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
-  frmAtualizaDB :=TfrmAtualizaDB.Create(Self);
+  frmAtualizaDB := TfrmAtualizaDB.Create(Self);
   frmAtualizaDB.Show;
   frmAtualizaDB.Refresh;
   dtmPrincipal := TdtmPrincipal.Create(Self);
   with dtmPrincipal.ConexaoDB do begin
-    SQLHourGlass:=True;
+    SQLHourGlass := True;
     Protocol := 'mssql';
     LibraryLocation:='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\ntwdblib.dll';
     HostName:='.\SERVERCURSO';
@@ -131,13 +140,13 @@ begin
     User:='sa';
     Password:='domtec02';
     Database:='vendas';
-    Connected:=True;
+    Connected := True;
   end;
   AtualizacaoBancoDados(frmAtualizaDB);
   frmAtualizaDB.Free;
-  TeclaEnter:= TMREnter.Create(Self);
-  TeclaEnter.FocusEnabled:=true;
-  TeclaEnter.FocusColor:=clInfoBk;
+  TeclaEnter := TMREnter.Create(Self);
+  TeclaEnter.FocusEnabled := true;
+  TeclaEnter.FocusColor := clInfoBk;
 
 end;
 
@@ -146,7 +155,4 @@ begin
   //Close;
   Application.Terminate;
 end;
-
-
-
 end.
