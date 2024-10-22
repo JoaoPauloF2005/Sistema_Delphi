@@ -14,7 +14,8 @@ uses System.Classes,
      System.SysUtils,
      Data.DB,
      uEnum,
-     Datasnap.DBClient;
+     Datasnap.DBClient,
+     cControleEstoque;
 
 type
   TVenda = class
@@ -29,6 +30,8 @@ type
     function InNot(cds: TClientDataSet): string;
     function EsteItemExiste(vendaId, produtoId: Integer): Boolean;
     function AtualizarItem(cds: TClientDataSet): Boolean;
+    procedure RetornarEstoque(sCodigo: String; Acao: TAcaoExcluirEstoque);
+    procedure BaixarEstoque(produtoId: Integer; Quantidade: Double);
 
 
   public
@@ -164,6 +167,7 @@ var Qry:TZQuery;
 begin
   try
     Result := true;
+    RetornarEstoque(cds.FieldByName('produtoId').AsString,	aeeAlterar);
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
@@ -180,6 +184,7 @@ begin
 
     Try
       Qry.ExecSQL;
+      BaixarEstoque(cds.FieldByName('produtoId').AsInteger, cds.FieldByName('quantidade').AsFloat);
 
     Except
       ConexaoDB.Rollback;
@@ -228,24 +233,30 @@ end;
 function TVenda.ApagarItens(cds:TClientDataSet): Boolean;
 var
  Qry:TZQuery;
+ sCodNoCds:String;
 begin
   try
     Result := true;
+    //Pega os codigos que estão no Cliente para Selecionar o In Not no Banco de Dados
+    sCodNoCds := InNot(cds);
+
+    //Retorna ao Estoque
+    RetornarEstoque(sCodNoCds, aeeApagar);
+
     Qry := TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
     Qry.SQL.Add(' DELETE '+
                 '   FROM VendasItens '+
                 '  WHERE VendaId = :VendaId '+
-                '    AND produtoId NOT IN ('+InNot(cds)+') ');
+                '    AND produtoId NOT IN ('+sCodNoCds+') ');
     Qry.ParamByName('vendaId').AsInteger := Self.F_vendaId;
 
     Try
-
+     	ConexaoDB.StartTransaction;
       Qry.ExecSQL;
-
     Except
-
+    	ConexaoDB.Rollback;
       Result := false;
     End;
 
@@ -328,13 +339,14 @@ begin
     Qry.SQL.Add('INSERT INTO VendasItens ( VendaID, ProdutoID, ValorUnitario, Quantidade, TotalProduto) '+
                 '                 VALUES (:VendaID, :ProdutoID, :ValorUnitario, :Quantidade, :TotalProduto) ');
 
-    Qry.ParamByName('VendaID').AsInteger    := IdVenda;
-    Qry.ParamByName('ProdutoID').AsInteger  := cds.FieldByName('produtoId').AsInteger;
-    Qry.ParamByName('ValorUnitario').AsFloat:= cds.FieldByName('valorUnitario').AsFloat;
-    Qry.ParamByName('Quantidade').AsFloat   := cds.FieldByName('quantidade').AsFloat;
-    Qry.ParamByName('TotalProduto').AsFloat := cds.FieldByName('valorTotalProduto').AsFloat;
+    Qry.ParamByName('VendaID').AsInteger     := IdVenda;
+    Qry.ParamByName('ProdutoID').AsInteger   := cds.FieldByName('produtoId').AsInteger;
+    Qry.ParamByName('ValorUnitario').AsFloat := cds.FieldByName('valorUnitario').AsFloat;
+    Qry.ParamByName('Quantidade').AsFloat    := cds.FieldByName('quantidade').AsFloat;
+    Qry.ParamByName('TotalProduto').AsFloat  := cds.FieldByName('valorTotalProduto').AsFloat;
     try
     	Qry.ExecSQL;
+    	BaixarEstoque(cds.FieldByName('produtoId').AsInteger, cds.FieldByName('quantidade').AsFloat);
 		Except
       Result := false;
     End;
@@ -413,6 +425,57 @@ begin
     if Assigned(Qry) then
        FreeAndNil(Qry);
   end;
+end;
+
+{$endregion}
+
+{$region 'Controle de Estoque'}
+//UTILIZAR NO UPDATE E DELETE
+Procedure TVenda.RetornarEstoque(sCodigo:String; Acao:TAcaoExcluirEstoque);
+var Qry:TZQuery;
+    oControleEstoque:TControleEstoque;
+begin
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(   ' SELECT produtoId, quantidade '+
+                   '   FROM VendasItens '+
+                   '  WHERE VendaId=:vendaId ');
+    if Acao = aeeApagar then
+       Qry.SQL.Add('  AND produtoId NOT IN ('+sCodigo+') ')
+    else
+       Qry.SQL.Add('  AND produtoId = ('+sCodigo+') ');
+
+    Qry.ParamByName('vendaId').AsInteger := Self.F_vendaId;
+    Try
+      oControleEstoque := TControleEstoque.Create(ConexaoDB);
+      Qry.Open;
+      Qry.First;
+      while not Qry.Eof do begin
+         oControleEstoque.ProdutoId  := Qry.FieldByName('produtoId').AsInteger;
+         oControleEstoque.Quantidade := Qry.FieldByName('quantidade').AsFloat;
+         oControleEstoque.RetornarEstoque;
+         Qry.Next;
+      end;
+    Finally
+      if Assigned(oControleEstoque) then
+         FreeAndNil(oControleEstoque);
+    End;
+end;
+
+//INSERT
+Procedure TVenda.BaixarEstoque(produtoId:Integer; Quantidade:Double);
+var oControleEstoque:TControleEstoque;
+begin
+    Try
+      oControleEstoque:=TControleEstoque.Create(ConexaoDB);
+      oControleEstoque.ProdutoId  := produtoId;
+      oControleEstoque.Quantidade := Quantidade;
+      oControleEstoque.BaixarEstoque;
+    Finally
+      if Assigned(oControleEstoque) then
+         FreeAndNil(oControleEstoque);
+    End;
 end;
 
 {$endregion}

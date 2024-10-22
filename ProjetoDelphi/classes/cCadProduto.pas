@@ -75,7 +75,7 @@ begin
     Qry.Connection:=ConexaoDB;
     Qry.SQL.Clear;
     Qry.SQL.Add('DELETE FROM produtos '+
-                ' WHERE produtoId=:produtoId ');
+                ' WHERE produtoId =:produtoId ');
     Qry.ParamByName('produtoId').AsInteger :=F_produtoId;
     Try
       ConexaoDB.StartTransaction;
