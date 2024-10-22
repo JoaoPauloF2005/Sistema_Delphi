@@ -1,28 +1,30 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uEnum.pas',0,1,1,33,10,0,0,,
-File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,1,5,141,0,0,,
-File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCategoria.pas',0,1,225,1,232,0,0,{{60,0}
-File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas',0,1,33,46,53,0,0,,
-File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,91,51,111,0,0,{{58,0}
-File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas',0,1,27,46,49,0,0,,{1
-File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,19,49,38,0,0,{{40,0}
-File_7=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Buttons.pas',0,1,144,1,163,0,0,,
-File_8=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\dsnap\Datasnap.DBClient.pas',0,1,733,1,745,0,0,,
-File_9=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',0,1,31,45,60,0,0,{{48,0}
+File_0=TSourceModule,'C:\Componentes\unrxlib_275_u_1_0_22\units\RxCurrEdit.pas',0,1,679,1,710,0,0,,
+File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.Variants.pas',0,1,881,1,905,0,0,,
+File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uEnum.pas',0,1,1,33,10,0,0,,
+File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,1,5,141,0,0,,
+File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCategoria.pas',0,1,225,1,232,0,0,{{60,0}
+File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas',0,1,33,46,53,0,0,,
+File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,91,51,111,0,0,{{58,0}
+File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas',0,1,27,46,49,0,0,,{1
+File_8=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,19,49,38,0,0,{{40,0}
+File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Buttons.pas',0,1,144,1,163,0,0,,
+File_10=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\dsnap\Datasnap.DBClient.pas',0,1,733,1,745,0,0,,
+File_11=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',0,1,31,45,60,0,0,{{48,0}
 
 [Modules]
-Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
-Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
+Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
 Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas
 Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
 Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\ufrmAtualizaDB.pas
 Count=5
 EditWindowCount=1
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas]
 ModuleType=TSourceModule
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas]
@@ -36,7 +38,7 @@ ModuleType=TSourceModule
 
 [EditWindow0]
 ViewCount=5
-CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
 View0=0
 View1=1
 View2=2
@@ -60,13 +62,13 @@ BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1896
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=00000800010100000000620E00000000000001680700000000000001000000002B10000009000000446F636B53697465330100000000921900001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=00000800010100000000791200000000000001680700000000000001000000002B10000009000000446F636B53697465330100000000D72000001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=2000
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=00000800010100000000620E00000000000001D00700000000000001000000002B10000009000000446F636B536974653201000000009219000009000000446F636B5369746534FFFFFFFF
-BottomPanelSize=2213
+RightPanelData=00000800010100000000791200000000000001D00700000000000001000000002B10000009000000446F636B53697465320100000000D720000009000000446F636B5369746534FFFFFFFF
+BottomPanelSize=352
 BottomPanelClients=MessageView,DockSite1
-BottomPanelData=0000080001020100000009000000446F636B5369746531974500000000000002A5080000000000000100000000974500000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomPanelData=0000080001020100000009000000446F636B536974653197450000000000000260010000000000000100000000974500000F0000004D65737361676556696577466F726DFFFFFFFF
 BottomMiddlePanelSize=0
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel
 BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E6756696577961D00000000000002FB06000000000000FFFFFFFF
@@ -74,22 +76,22 @@ BottomMiddelPanelData=0000080001020200000009000000446F636B5369746530100000004772
 [View0]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
-CursorX=9
-CursorY=285
-TopLine=265
+CursorX=53
+CursorY=97
+TopLine=75
 LeftCol=1
 Elisions=
-Bookmarks={1,299,1}
+Bookmarks={1,295,1}
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
 
 [View1]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
-CursorX=11
-CursorY=73
-TopLine=132
+CursorX=1
+CursorY=163
+TopLine=156
 LeftCol=1
-Elisions={{48,0},{59,11},{'Constructor and Destructor'}}
+Elisions=
 Bookmarks=
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
 
@@ -109,7 +111,7 @@ CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas
 CursorX=1
 CursorY=1
-TopLine=1
+TopLine=40
 LeftCol=121
 Elisions=
 Bookmarks=
@@ -154,9 +156,10 @@ Dockable=1
 StayOnTop=0
 
 [Breakpoints]
-Count=2
+Count=3
 Breakpoint0='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',71,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint1='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas',290,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint1='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas',186,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint2='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas',163,'',0,1,'',1,0,0,'',1,'','','',0,''
 
 [EmbarcaderoWin32Debugger_AddressBreakpoints]
 Count=0
@@ -227,12 +230,12 @@ State=0
 Left=0
 Top=18
 Width=10021
-Height=2141
+Height=194
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10021
-ClientHeight=2141
-TBDockHeight=2141
+ClientHeight=194
+TBDockHeight=194
 LRDockWidth=2766
 Dockable=1
 StayOnTop=0
@@ -246,11 +249,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=2345
+Height=4293
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=2345
+ClientHeight=4293
 TBDockHeight=7151
 LRDockWidth=2000
 Dockable=1
@@ -303,11 +306,11 @@ State=0
 Left=0
 Top=465
 Width=1896
-Height=2345
+Height=4293
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1896
-ClientHeight=2345
+ClientHeight=4293
 TBDockHeight=8595
 LRDockWidth=1896
 Dockable=1
@@ -826,11 +829,11 @@ State=0
 Left=0
 Top=465
 Width=2000
-Height=2345
+Height=4293
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=2345
+ClientHeight=4293
 TBDockHeight=8595
 LRDockWidth=2000
 Dockable=1

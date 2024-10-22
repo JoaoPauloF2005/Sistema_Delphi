@@ -101,7 +101,7 @@ begin
   	Result := oVenda.Inserir(dtmVenda.cdsItensVenda)
   else
   if(EstadoDoCadastro = ecAlterar)then
-  	Result := oVenda.Atualizar;
+  	Result := oVenda.Atualizar(dtmVenda.cdsItensVenda);
 end;
 
 

@@ -23,7 +23,6 @@ inherited frmProVenda: TfrmProVenda
         Width = 903
         Height = 463
         DataSource = dtsListagem
-        OnDrawColumnCell = grdListagemDrawColumnCell
         Columns = <
           item
             Expanded = False
