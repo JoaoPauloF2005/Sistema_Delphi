@@ -26,6 +26,7 @@ type
     N4: TMenuItem;
     VENDAPORDATA1: TMenuItem;
     CATEGORIA2: TMenuItem;
+    FICHADECLIENTE1: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -35,6 +36,7 @@ type
     procedure VENDAS1Click(Sender: TObject);
     procedure CATEGORIA2Click(Sender: TObject);
     procedure CLIENTE2Click(Sender: TObject);
+    procedure FICHADECLIENTE1Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -49,7 +51,7 @@ var
 
 implementation
 
-uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente;
+uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha;
 {$R *.dfm}
 
 
@@ -125,6 +127,13 @@ begin
   aForm.chkItensVenda.Checked := True;
   aForm.Refresh;
   Sleep(100);
+end;
+
+procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
+begin
+	frmRelCadClienteFicha := TfrmRelCadClienteFicha.Create(Self);
+  frmRelCadClienteFicha.Relatorio.PreviewModal;
+  frmRelCadClienteFicha.Release;
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);

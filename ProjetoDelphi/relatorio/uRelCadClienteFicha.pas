@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, RLReport,
-  RLFilters, RLPDFFilter;
+  RLFilters, RLPDFFilter, Vcl.Imaging.pngimage;
 
 type
   TfrmRelCadClienteFicha = class(TForm)
@@ -14,10 +14,8 @@ type
     Relatorio: TRLReport;
     Cabecalho: TRLBand;
     RLLabel1: TRLLabel;
-    RLDraw1: TRLDraw;
     RLPDFFilter1: TRLPDFFilter;
     Rodapé: TRLBand;
-    RLDraw2: TRLDraw;
     RLDraw3: TRLDraw;
     RLSystemInfo1: TRLSystemInfo;
     RLSystemInfo2: TRLSystemInfo;
@@ -55,6 +53,10 @@ type
     RLDBText9: TRLDBText;
     RLLabel13: TRLLabel;
     RLDBText10: TRLDBText;
+    RLDraw4: TRLDraw;
+    RLDraw1: TRLDraw;
+    RLImage1: TRLImage;
+    RLAngleLabel1: TRLAngleLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
