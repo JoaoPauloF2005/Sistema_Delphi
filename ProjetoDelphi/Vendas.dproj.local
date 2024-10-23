@@ -16,8 +16,8 @@
     <Transaction>2024/10/09 15:45:50.000.458,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas</Transaction>
     <Transaction>2024/10/09 15:45:50.000.458,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.dfm</Transaction>
     <Transaction>2024/10/09 16:41:28.000.352,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
-    <Transaction>2024/10/09 16:42:38.000.768,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.dfm</Transaction>
     <Transaction>2024/10/09 16:42:38.000.768,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas</Transaction>
+    <Transaction>2024/10/09 16:42:38.000.768,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.dfm</Transaction>
     <Transaction>2024/10/10 09:13:32.000.915,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/10 09:15:19.000.431,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm</Transaction>
     <Transaction>2024/10/10 09:15:19.000.431,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
@@ -27,12 +27,12 @@
     <Transaction>2024/10/11 13:29:51.000.821,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/11 13:30:42.000.868,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCategoria.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/14 13:44:14.000.387,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
-    <Transaction>2024/10/14 13:44:46.000.749,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.dfm</Transaction>
     <Transaction>2024/10/14 13:44:46.000.749,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas</Transaction>
+    <Transaction>2024/10/14 13:44:46.000.749,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.dfm</Transaction>
     <Transaction>2024/10/15 07:51:45.000.066,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas=</Transaction>
     <Transaction>2024/10/15 07:52:35.000.911,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
-    <Transaction>2024/10/15 07:53:34.000.231,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm</Transaction>
     <Transaction>2024/10/15 07:53:34.000.231,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/10/15 07:53:34.000.231,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm</Transaction>
     <Transaction>2024/10/15 08:41:43.000.007,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/15 08:41:58.000.555,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cCadCliente.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/15 09:40:06.000.868,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas</Transaction>
@@ -61,20 +61,23 @@
     <Transaction>2024/10/22 10:40:57.000.676,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cControleEstoque.pas</Transaction>
     <Transaction>2024/10/22 14:24:27.000.993,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/22 14:25:59.000.132,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
-    <Transaction>2024/10/22 14:26:17.000.244,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.dfm</Transaction>
     <Transaction>2024/10/22 14:26:17.000.244,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas</Transaction>
+    <Transaction>2024/10/22 14:26:17.000.244,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.dfm</Transaction>
     <Transaction>2024/10/22 16:02:12.000.259,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.dfm</Transaction>
     <Transaction>2024/10/22 16:02:12.000.259,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas</Transaction>
     <Transaction>2024/10/22 16:04:14.000.601,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas</Transaction>
     <Transaction>2024/10/22 16:42:07.000.302,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.dfm</Transaction>
     <Transaction>2024/10/22 16:42:07.000.302,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas</Transaction>
     <Transaction>2024/10/22 16:43:50.000.616,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas</Transaction>
-    <Transaction>2024/10/23 13:00:05.000.078,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas</Transaction>
     <Transaction>2024/10/23 13:00:05.000.078,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.dfm</Transaction>
+    <Transaction>2024/10/23 13:00:05.000.078,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas</Transaction>
     <Transaction>2024/10/23 13:01:31.000.877,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas</Transaction>
     <Transaction>2024/10/23 14:06:24.117,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas</Transaction>
     <Transaction>2024/10/23 15:12:02.934,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
-    <Transaction>2024/10/23 15:14:48.749,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
     <Transaction>2024/10/23 15:14:48.749,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.dfm</Transaction>
+    <Transaction>2024/10/23 15:14:48.749,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/10/23 16:13:28.135,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.dfm=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.dfm</Transaction>
+    <Transaction>2024/10/23 16:13:28.135,C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas</Transaction>
+    <Transaction>2024/10/23 16:22:18.850,=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas</Transaction>
   </Transactions>
 </BorlandProject>
