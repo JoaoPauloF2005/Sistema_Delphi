@@ -27,6 +27,7 @@ type
     VENDAPORDATA1: TMenuItem;
     CATEGORIA2: TMenuItem;
     FICHADECLIENTE1: TMenuItem;
+    PRODUTOPORCATEGORIA1: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -38,6 +39,8 @@ type
     procedure CLIENTE2Click(Sender: TObject);
     procedure FICHADECLIENTE1Click(Sender: TObject);
     procedure PRODUTO2Click(Sender: TObject);
+    procedure PRODUTOPORCATEGORIA1Click(Sender: TObject);
+    procedure VENDAPORDATA1Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -52,7 +55,7 @@ var
 
 implementation
 
-uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto;
+uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData;
 {$R *.dfm}
 
 
@@ -86,9 +89,9 @@ end;
 
 procedure TfrmPrincipal.PRODUTO1Click(Sender: TObject);
 begin
-    frmCadProduto := TfrmCadProduto.Create(Self);
-    frmCadProduto.ShowModal;
-    frmCadProduto.Release;
+  frmCadProduto := TfrmCadProduto.Create(Self);
+  frmCadProduto.ShowModal;
+  frmCadProduto.Release;
 end;
 
 procedure TfrmPrincipal.PRODUTO2Click(Sender: TObject);
@@ -96,6 +99,23 @@ begin
 	frmRelCadProduto := TfrmRelCadProduto.Create(Self);
   frmRelCadProduto.Relatorio.PreviewModal;
   frmRelCadProduto.Release;
+end;
+
+procedure TfrmPrincipal.PRODUTOPORCATEGORIA1Click(Sender: TObject);
+begin
+  frmRelCadProdutoComGrupoCategoria := TfrmRelCadProdutoComGrupoCategoria.Create(Self);
+  frmRelCadProdutoComGrupoCategoria.Relatorio.PreviewModal;
+  frmRelCadProdutoComGrupoCategoria.Release;
+end;
+
+procedure TfrmPrincipal.VENDAPORDATA1Click(Sender: TObject);
+begin
+	Try
+    frmSelecionarData  := TfrmSelecionarData.Create(Self);
+    frmSelecionarData.ShowModal;
+  Finally
+    frmSelecionarData.Release;
+  End;
 end;
 
 procedure TfrmPrincipal.VENDAS1Click(Sender: TObject);
@@ -116,7 +136,7 @@ begin
   aForm.Refresh;
   Sleep(100);
 
-   dtmPrincipal.QryScriptProdutos.ExecSQL;
+  dtmPrincipal.QryScriptProdutos.ExecSQL;
   aForm.chkProduto.Checked := True;
   aForm.Refresh;
   Sleep(100);
