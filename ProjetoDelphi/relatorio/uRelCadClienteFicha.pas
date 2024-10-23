@@ -27,8 +27,6 @@ type
     RLBand1: TRLBand;
     RLDBText1: TRLDBText;
     RLDBText2: TRLDBText;
-    RLBand2: TRLBand;
-    RLPanel1: TRLPanel;
     RLLabel5: TRLLabel;
     QryClienteclienteId: TIntegerField;
     QryClienteNome: TWideStringField;
@@ -45,6 +43,18 @@ type
     QryClienteestado: TWideStringField;
     QryClientedataNascimento: TDateTimeField;
     RLLabel4: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLDBText5: TRLDBText;
+    RLDBText6: TRLDBText;
+    RLLabel9: TRLLabel;
+    RLDBText7: TRLDBText;
+    RLLabel10: TRLLabel;
+    RLLabel11: TRLLabel;
+    RLDBText8: TRLDBText;
+    RLLabel12: TRLLabel;
+    RLDBText9: TRLDBText;
+    RLLabel13: TRLLabel;
+    RLDBText10: TRLDBText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private

@@ -27,6 +27,7 @@ type
     edtCidade: TLabeledEdit;
     edtBairro: TLabeledEdit;
     edtEmail: TLabeledEdit;
+    edtEstado: TLabeledEdit;
     edtCEP: TMaskEdit;
     Label1: TLabel;
     edtTelefone: TMaskEdit;
@@ -37,6 +38,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
+
   private
     { Private declarations }
     oCliente:TCliente;
@@ -79,6 +81,7 @@ begin
   oCliente.cidade         :=edtCidade.Text;
   oCliente.telefone       :=edtTelefone.Text;
   oCliente.email          :=edtEmail.Text;
+  oCliente.estado					:=edtEstado.Text;
   oCliente.dataNascimento :=edtDataNascimento.Date;
 
   if (EstadoDoCadastro=ecInserir) then
@@ -91,15 +94,16 @@ end;
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
 begin
   if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then begin
-     edtClienteId.Text:=IntToStr(oCliente.codigo);
-     edtNome.Text     :=oCliente.nome;
-     edtCEP.Text      :=oCliente.cep;
-     edtEndereco.Text :=oCliente.endereco;
-     edtBairro.Text   :=oCliente.bairro;
-     edtCidade.Text   :=oCliente.cidade;
-     edtTelefone.Text :=oCliente.telefone;
-     edtEmail.Text    :=oCliente.email;
-     edtDataNascimento.Date:=oCliente.dataNascimento;
+     edtClienteId.Text := IntToStr(oCliente.codigo);
+     edtNome.Text     := oCliente.nome;
+     edtCEP.Text      := oCliente.cep;
+     edtEndereco.Text := oCliente.endereco;
+     edtBairro.Text   := oCliente.bairro;
+     edtCidade.Text   := oCliente.cidade;
+     edtTelefone.Text := oCliente.telefone;
+     edtEmail.Text    := oCliente.email;
+     edtEstado.Text		:= oCliente.estado;
+		 edtDataNascimento.Date := oCliente.dataNascimento;
 
   end
   else begin
@@ -118,6 +122,8 @@ begin
   edtDataNascimento.Date:=Date;
   edtNome.SetFocus;
 end;
+
+
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin

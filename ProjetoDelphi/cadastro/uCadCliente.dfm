@@ -10,9 +10,12 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 982
     Height = 396
+    ActivePage = tabManutencao
     ExplicitWidth = 982
     ExplicitHeight = 396
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 974
       ExplicitHeight = 368
       inherited pnlListagemTopo: TPanel
@@ -47,6 +50,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitTop = 22
       ExplicitWidth = 974
       ExplicitHeight = 368
       object Label1: TLabel
@@ -58,7 +62,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object Label2: TLabel
         Left = 611
-        Top = 187
+        Top = 232
         Width = 42
         Height = 13
         Caption = 'Telefone'
@@ -152,12 +156,12 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtTelefone: TMaskEdit
         Left = 611
-        Top = 202
+        Top = 247
         Width = 248
         Height = 21
         EditMask = '(99) 9999-9999;1;_'
         MaxLength = 14
-        TabOrder = 6
+        TabOrder = 7
         Text = '(  )     -    '
       end
       object edtEmail: TLabeledEdit
@@ -173,7 +177,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 7
+        TabOrder = 6
       end
       object edtDataNascimento: TDateEdit
         Left = 11
@@ -185,6 +189,21 @@ inherited frmCadCliente: TfrmCadCliente
         NumGlyphs = 2
         CalendarStyle = csDialog
         TabOrder = 8
+      end
+      object edtEstado: TLabeledEdit
+        Left = 611
+        Top = 202
+        Width = 248
+        Height = 21
+        BiDiMode = bdLeftToRight
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Estado'
+        MaxLength = 2
+        ParentBiDiMode = False
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 9
       end
     end
   end
@@ -215,7 +234,7 @@ inherited frmCadCliente: TfrmCadCliente
       #9#9'dataNascimento'
       'from clientes')
     Left = 623
-    Top = 33
+    Top = 30
     object QryListagemclienteId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'clienteId'
