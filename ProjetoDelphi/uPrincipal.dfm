@@ -71,6 +71,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object PRODUTO2: TMenuItem
         Caption = 'PRODUTO'
+        OnClick = PRODUTO2Click
       end
       object N4: TMenuItem
         Caption = '-'

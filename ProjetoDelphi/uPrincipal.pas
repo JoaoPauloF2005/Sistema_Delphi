@@ -37,6 +37,7 @@ type
     procedure CATEGORIA2Click(Sender: TObject);
     procedure CLIENTE2Click(Sender: TObject);
     procedure FICHADECLIENTE1Click(Sender: TObject);
+    procedure PRODUTO2Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -51,7 +52,7 @@ var
 
 implementation
 
-uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha;
+uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto;
 {$R *.dfm}
 
 
@@ -88,6 +89,13 @@ begin
     frmCadProduto := TfrmCadProduto.Create(Self);
     frmCadProduto.ShowModal;
     frmCadProduto.Release;
+end;
+
+procedure TfrmPrincipal.PRODUTO2Click(Sender: TObject);
+begin
+	frmRelCadProduto := TfrmRelCadProduto.Create(Self);
+  frmRelCadProduto.Relatorio.PreviewModal;
+  frmRelCadProduto.Release;
 end;
 
 procedure TfrmPrincipal.VENDAS1Click(Sender: TObject);

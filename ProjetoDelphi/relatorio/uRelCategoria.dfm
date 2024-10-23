@@ -200,7 +200,8 @@
     SQL.Strings = (
       'Select categoriaId,'
       '       descricao'
-      '  from categorias')
+      '  from categorias'
+      'ORDER BY descricao')
     Params = <>
     Left = 403
     Top = 350
