@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/06/18 09:52:51.000.581,=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2024/06/18 09:54:32.000.072,=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2024/06/18 10:06:18.000.780,=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2024/07/02 09:03:51.000.171,=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2024/07/02 09:13:55.000.012,C:\Users\devmv\Documents\Projetos\criptografia\uCriptografia.dfm=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>2024/07/02 09:13:55.000.012,C:\Users\devmv\Documents\Projetos\criptografia\uCriptografia.pas=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2024/07/02 09:14:31.000.922,C:\Users\devmv\Documents\Projetos\criptografia\Criptografia.dproj=C:\Users\devmv\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

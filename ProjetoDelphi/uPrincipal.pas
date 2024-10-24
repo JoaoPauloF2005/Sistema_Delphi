@@ -28,6 +28,8 @@ type
     CATEGORIA2: TMenuItem;
     FICHADECLIENTE1: TMenuItem;
     PRODUTOPORCATEGORIA1: TMenuItem;
+    USURIO1: TMenuItem;
+    N5: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -41,6 +43,7 @@ type
     procedure PRODUTO2Click(Sender: TObject);
     procedure PRODUTOPORCATEGORIA1Click(Sender: TObject);
     procedure VENDAPORDATA1Click(Sender: TObject);
+    procedure USURIO1Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -55,7 +58,8 @@ var
 
 implementation
 
-uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData;
+uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
+  uCadUsuario;
 {$R *.dfm}
 
 
@@ -108,6 +112,13 @@ begin
   frmRelCadProdutoComGrupoCategoria.Release;
 end;
 
+procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
+begin
+	frmCadUsuario := TfrmCadUsuario.Create(Self);
+  frmCadUsuario.ShowModal;
+  frmCadUsuario.Release;
+end;
+
 procedure TfrmPrincipal.VENDAPORDATA1Click(Sender: TObject);
 begin
 	Try
@@ -137,32 +148,39 @@ procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
 begin
   aForm.chkConexao.Checked := True;
   aForm.Refresh;
-  Sleep(100);
+  Sleep(50);
 
   dtmPrincipal.QryScriptCategorias.ExecSQL;
   aForm.chkCategoria.Checked := True;
   aForm.Refresh;
-  Sleep(100);
+  Sleep(50);
 
   dtmPrincipal.QryScriptProdutos.ExecSQL;
   aForm.chkProduto.Checked := True;
   aForm.Refresh;
-  Sleep(100);
+  Sleep(50);
 
   dtmPrincipal.QryScriptClientes.ExecSQL;
   aForm.chkCliente.Checked := True;
   aForm.Refresh;
-  Sleep(100);
+  Sleep(50);
 
   dtmPrincipal.QryScriptVendas.ExecSQL;
   aForm.chkVendas.Checked := True;
   aForm.Refresh;
-  Sleep(100);
+  Sleep(50);
 
   dtmPrincipal.QryScriptItensVenda.ExecSQL;
   aForm.chkItensVenda.Checked := True;
   aForm.Refresh;
-  Sleep(100);
+  Sleep(50);
+
+  dtmPrincipal.QryScriptUsuarios.ExecSQL;
+  aForm.chkUsuarios.Checked := True;
+  aForm.Refresh;
+  Sleep(50);
+
+
 end;
 
 procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);

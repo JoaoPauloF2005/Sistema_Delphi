@@ -13,6 +13,7 @@ type
     QryScriptProdutos: TZQuery;
     QryScriptVendas: TZQuery;
     QryScriptItensVenda: TZQuery;
+    QryScriptUsuarios: TZQuery;
   private
     { Private declarations }
   public

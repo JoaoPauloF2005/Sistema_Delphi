@@ -180,6 +180,16 @@
             <Form>frmRelVendaPorData</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="heranca\uFuncaoCriptografia.pas"/>
+        <DCCReference Include="cadastro\uCadUsuario.pas">
+            <Form>frmCadUsuario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="classes\cCadUsuario.pas"/>
+        <DCCReference Include="login\uLogin.pas">
+            <Form>frmLogin</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
