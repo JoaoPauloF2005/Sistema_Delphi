@@ -10,14 +10,14 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 554
-    ExplicitWidth = 914
+    ExplicitWidth = 911
     ExplicitHeight = 554
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 906
+      ExplicitWidth = 903
       ExplicitHeight = 526
       inherited pnlListagemTopo: TPanel
         Width = 903
-        ExplicitWidth = 906
+        ExplicitWidth = 903
       end
       inherited grdListagem: TDBGrid
         Width = 903
@@ -54,7 +54,7 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 906
+      ExplicitWidth = 903
       ExplicitHeight = 526
       object Label4: TLabel
         Left = 165
@@ -112,7 +112,6 @@ inherited frmProVenda: TfrmProVenda
         Height = 425
         Align = alBottom
         TabOrder = 3
-        ExplicitWidth = 906
         object Panel2: TPanel
           Left = 1
           Top = 56
@@ -120,7 +119,6 @@ inherited frmProVenda: TfrmProVenda
           Height = 327
           Align = alClient
           TabOrder = 1
-          ExplicitWidth = 904
           object dbGridItensVenda: TDBGrid
             Left = 1
             Top = 1
@@ -182,7 +180,6 @@ inherited frmProVenda: TfrmProVenda
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 904
           object Label2: TLabel
             Left = 675
             Top = 11
@@ -208,7 +205,6 @@ inherited frmProVenda: TfrmProVenda
           Height = 55
           Align = alTop
           TabOrder = 2
-          ExplicitWidth = 904
           object Label1: TLabel
             Left = 5
             Top = 3
@@ -357,7 +353,7 @@ inherited frmProVenda: TfrmProVenda
     Top = 554
     Width = 911
     ExplicitTop = 554
-    ExplicitWidth = 914
+    ExplicitWidth = 911
     inherited btnAlterar: TBitBtn
       Left = 91
       ExplicitLeft = 91
@@ -368,7 +364,7 @@ inherited frmProVenda: TfrmProVenda
     end
     inherited btnFechar: TBitBtn
       Left = 818
-      ExplicitLeft = 821
+      ExplicitLeft = 818
     end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()

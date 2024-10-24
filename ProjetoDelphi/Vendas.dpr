@@ -24,9 +24,10 @@ uses
   uRelCadProduto in 'relatorio\uRelCadProduto.pas' {frmRelCadProduto},
   uRelCadCliente in 'relatorio\uRelCadCliente.pas' {frmRelCadCliente},
   uRelCategoria in 'relatorio\uRelCategoria.pas' {frmRelCategoria},
-  uRelVendaPorData in 'relatorio\uRelVendaPorData.pas' {frmRelVendaPorData},
+  uRelProVenda in 'relatorio\uRelProVenda.pas' {frmRelProVenda},
   uSelecionarData in 'relatorio\uSelecionarData.pas' {frmSelecionarData},
-  uRelCadProdutoComGrupoCategoria in 'relatorio\uRelCadProdutoComGrupoCategoria.pas' {frmRelCadProdutoComGrupoCategoria};
+  uRelCadProdutoComGrupoCategoria in 'relatorio\uRelCadProdutoComGrupoCategoria.pas' {frmRelCadProdutoComGrupoCategoria},
+  uRelVendaPorData in 'relatorio\uRelVendaPorData.pas' {frmRelVendaPorData};
 
 {$R *.res}
 

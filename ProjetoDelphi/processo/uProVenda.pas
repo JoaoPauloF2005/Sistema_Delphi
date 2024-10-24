@@ -74,6 +74,9 @@ var
 
 implementation
 
+uses
+  uRelProVenda;
+
 {$R *.dfm}
 
 
@@ -98,10 +101,24 @@ begin
     oVenda.TotalVenda		:= edtValorTotal.Value;
 
   if(EstadoDoCadastro = ecInserir)then
-  	Result := oVenda.Inserir(dtmVenda.cdsItensVenda)
+  	oVenda.VendaId := oVenda.Inserir(dtmVenda.cdsItensVenda)
   else
   if(EstadoDoCadastro = ecAlterar)then
-  	Result := oVenda.Atualizar(dtmVenda.cdsItensVenda);
+  	oVenda.Atualizar(dtmVenda.cdsItensVenda);
+
+  frmRelProVenda := TfrmRelProVenda.Create(Self);
+  frmRelProVenda.QryVenda.Close;
+  frmRelProVenda.QryVenda.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+  frmRelProVenda.QryVenda.Open;
+
+  frmRelProVenda.QryVendasItens.Close;
+  frmRelProVenda.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+  frmRelProVenda.QryVendasItens.Open;
+
+	frmRelProVenda.Relatorio.PreviewModal;
+  frmRelProVenda.Release;
+
+  Result := true;
 end;
 
 
