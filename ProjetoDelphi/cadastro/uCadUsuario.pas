@@ -105,6 +105,7 @@ begin
      Result := oUsuario.Inserir
   else if EstadoDoCadastro = ecAlterar then
      Result := oUsuario.Atualizar;
-  end;
+end;
+
 
 end.

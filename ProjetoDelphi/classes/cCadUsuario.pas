@@ -219,12 +219,12 @@ end;
 
 function TUsuario.getSenha: String;
 begin
-  Result := Criptografar(Self.F_senha);
+  Result := Descriptografar(Self.F_senha);
 end;
 
 procedure TUsuario.setSenha(const Value: String);
 begin
-  Self.F_senha := Descriptografar(Value);
+  Self.F_senha := Criptografar(Value);
 end;
 {$endregion}
 
@@ -233,31 +233,23 @@ function TUsuario.Logar(aUsuario:String; aSenha:String):Boolean;
 var Qry:TZQuery;
 begin
   try
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('SELECT usuarioId, '+
-                '       nome, '+
-                '       senha '+
-                '  FROM usuarios '+
-                ' WHERE nome =:nome '+
-                '   AND senha=:Senha');
-    Qry.ParamByName('nome').AsString :=aUsuario;
-    Qry.ParamByName('senha').AsString:=Criptografar(aSenha);
+    Qry.SQL.Add('SELECT COUNT(usuarioId) AS Qtde '+
+    						' FROM usuarios '+
+                ' WHERE nome = :nome AND senha = :Senha');
+    Qry.ParamByName('nome').AsString := aUsuario;
+    Qry.ParamByName('senha').AsString := Criptografar(aSenha);
     Try
       Qry.Open;
 
-      if Qry.FieldByName('usuarioId').AsInteger>0 then begin
-         result := true;
-         F_usuarioId:= Qry.FieldByName('usuarioId').AsInteger;
-         F_nome     := Qry.FieldByName('nome').AsString;
-         F_senha    := Qry.FieldByName('senha').AsString;
-      end
+      if Qry.FieldByName('Qtde').AsInteger > 0 then
+      		Result := True
       else
          result := false;
-
     Except
-      Result:=false;
+      Result := false;
     End;
 
   finally

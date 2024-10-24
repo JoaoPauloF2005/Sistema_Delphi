@@ -1,58 +1,45 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas',0,1,64,33,80,0,0,,
-File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas',0,1,1,1,1,0,0,,
-File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas',0,1,61,1,61,0,0,,
-File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\ufrmAtualizaDB.pas',0,1,1,17,10,0,0,,
-File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas',0,1,179,28,116,0,0,{{59,0}
-File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,10188,1,10213,0,0,,
-File_6=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,17383,1,17408,0,0,,
-File_7=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas',0,1,7371,1,7395,0,0,{{1747,4}
-File_8=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,5264,1,5287,0,0,{{1656,4}
-File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Buttons.pas',0,1,1960,1,1983,0,0,,
+File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas',0,1,13,15,52,0,0,,
+File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,63,47,89,0,0,,{1,96,1}
+File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas',0,1,1,1,1,0,0,,
+File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas',0,1,1,1,1,0,0,,
+File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas',0,1,1,31,5,0,0,,
+File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas',0,1,64,33,80,0,0,,
+File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas',0,1,1,1,1,0,0,,
+File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\ufrmAtualizaDB.pas',0,1,1,17,10,0,0,,
+File_8=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas',0,1,179,28,116,0,0,{{59,0}
+File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,10188,1,10213,0,0,,
+File_10=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,17383,1,17408,0,0,,
+File_11=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas',0,1,7371,1,7395,0,0,{{1747,4}
+File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,5264,1,5287,0,0,{{1656,4}
 
 [Modules]
-Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas
-Module1=dfm.frmRelVendaPorData.QryVenda.SQL
+Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
 Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas
-Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas
-Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
-Module6=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas
-Count=7
+Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelProVenda.pas
+Count=4
 EditWindowCount=1
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas]
 ModuleType=TSourceModule
 
-[dfm.frmRelVendaPorData.QryVenda.SQL]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas]
 ModuleType=TSourceModule
-FileSystem=Delphi.TStringsFileSystem
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelProVenda.pas]
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=7
-CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas
+ViewCount=4
+CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
 View0=0
 View1=1
 View2=2
 View3=3
-View4=4
-View5=5
-View6=6
 PercentageSizes=1
 Create=1
 Visible=1
@@ -85,79 +72,46 @@ BottomMiddelPanelData=0000080001020200000009000000446F636B5369746530100000004772
 [View0]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-CursorX=19
-CursorY=120
-TopLine=102
+CursorX=14
+CursorY=133
+TopLine=129
 LeftCol=1
 Elisions=
 Bookmarks={1,96,1}
-EditViewName=Borland.FormDesignerView
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas
-CursorX=15
-CursorY=52
-TopLine=19
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+CursorX=9
+CursorY=111
+TopLine=79
 LeftCol=1
 Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas
+Bookmarks={1,345,1}
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
 
 [View2]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
-CursorX=47
-CursorY=89
-TopLine=63
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
+CursorX=31
+CursorY=319
+TopLine=284
 LeftCol=1
-Elisions=
-Bookmarks={1,96,1}
-EditViewName=Borland.FormDesignerView
+Elisions={{56,0},{67,11},{'Constructor and Destructor'}}{{69,0},{231,3},{'CRUD'}}{{310,6},{316,17},{'Gravar na tabela VendasItens'}}{{383,6},{418,17},{'SELECIONAR na tabela VendasItens'}}{{432,0},{481,11},{'Controle de Estoque'}}
+Bookmarks=
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cProVenda.pas
 
 [View3]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas
-CursorX=11
-CursorY=71
-TopLine=60
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelProVenda.pas
+CursorX=19
+CursorY=92
+TopLine=39
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
-
-[View4]
-CustomEditViewType=TEditView
-Module=dfm.frmRelVendaPorData.QryVenda.SQL
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=dfm.frmRelVendaPorData.QryVenda.SQL
-
-[View5]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas
-
-[View6]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas
-CursorX=31
-CursorY=5
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas
 
 [UndockedDesigner]
 Count=0
@@ -353,8 +307,8 @@ SplitPos=111
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=Active,CustomHint
-ExpandedItems=Font=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,RealBounds=0,DataSource=0,InsideMargins=0,Options=0,Background=0,Borders=0,Degrade=0,Anchors=0,Behavior=0,Connection=0,Brush=0,Pen=1,HorzScrollBar=0,PageSetup=0,PreviewOptions=0,BorderIcons=0,Constraints=0,GlassFrame=0,Padding=0,StyleElements=0,Touch=0,VertScrollBar=0,Weekends=0,ShowRecordTypes=0,DataSet=0,AllowedBands=0,Value=0
+SelectedItem=Name,
+ExpandedItems=Anchors=0,BorderIcons=0,"LiveBindings Designer=0",Constraints=0,Font=0,GlassFrame=0,HorzScrollBar=0,LiveBindings=0,Margins=0,Menu=0,Padding=0,StyleElements=0,Touch=0,VertScrollBar=0,Connection=0,Options=0,ShowRecordTypes=0,Behavior=0,Borders=0,DataSource=0,Degrade=0,InsideMargins=0,RealBounds=0,AllowedBands=0,Background=0,CompositeOptions=0,PageSetup=0,PreviewOptions=0,ProviderFlags=0,Value=0,TitleFont=0
 
 [ClassBrowserTool]
 PercentageSizes=1
