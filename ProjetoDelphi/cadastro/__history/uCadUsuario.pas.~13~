@@ -71,7 +71,7 @@ begin
   if edtUsuarioId.Text <> EmptyStr then
      oUsuario.codigo := StrToInt(edtUsuarioId.Text)
   else
-     oUsuario.codigo := 0;
+     oUsuario.codigo:=0;
 
   oUsuario.nome := edtNome.Text;
   oUsuario.senha := edtSenha.Text;
