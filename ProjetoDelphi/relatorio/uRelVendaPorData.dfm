@@ -17,7 +17,7 @@
   TextHeight = 13
   object Relatorio: TRLReport
     Left = 2
-    Top = -9
+    Top = -10
     Width = 794
     Height = 1123
     DataSource = dtsVenda
@@ -66,7 +66,7 @@
     end
     object Rodapé: TRLBand
       Left = 38
-      Top = 210
+      Top = 262
       Width = 718
       Height = 39
       BandType = btFooter
@@ -132,7 +132,6 @@
       Top = 95
       Width = 718
       Height = 115
-      DataFields = 'categoriaId'
       object RLBand3: TRLBand
         Left = 0
         Top = 0
@@ -268,24 +267,25 @@
           Alignment = taRightJustify
           DataField = 'totalVenda'
           DataSource = dtsVenda
+          DisplayMask = '#0.00'
           Info = riSum
           Text = ''
           Transparent = False
         end
         object RLDraw4: TRLDraw
-          Left = 336
+          Left = 489
           Top = 4
-          Width = 382
+          Width = 229
           Height = 9
           DrawKind = dkLine
         end
         object RLLabel4: TRLLabel
-          Left = 336
+          Left = 497
           Top = 16
-          Width = 243
+          Width = 98
           Height = 16
           Alignment = taRightJustify
-          Caption = 'Quantidade de Estoque por Categoria'
+          Caption = 'Total por Data:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -294,6 +294,48 @@
           ParentFont = False
           Transparent = False
         end
+      end
+    end
+    object RLBand5: TRLBand
+      Left = 38
+      Top = 210
+      Width = 718
+      Height = 52
+      BandType = btSummary
+      object RLDBResult2: TRLDBResult
+        Left = 613
+        Top = 24
+        Width = 105
+        Height = 16
+        Alignment = taRightJustify
+        DataField = 'totalVenda'
+        DataSource = dtsVenda
+        DisplayMask = '#0.00'
+        Info = riSum
+        Text = ''
+        Transparent = False
+      end
+      object RLDraw5: TRLDraw
+        Left = 489
+        Top = 12
+        Width = 229
+        Height = 9
+        DrawKind = dkLine
+      end
+      object RLLabel5: TRLLabel
+        Left = 507
+        Top = 27
+        Width = 79
+        Height = 16
+        Alignment = taRightJustify
+        Caption = 'Total Geral:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
       end
     end
   end
@@ -364,7 +406,7 @@
   object dtsVenda: TDataSource
     DataSet = QryVenda
     Left = 497
-    Top = 351
+    Top = 350
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 

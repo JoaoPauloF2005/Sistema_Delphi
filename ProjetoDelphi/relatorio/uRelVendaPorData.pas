@@ -46,6 +46,10 @@ type
     QryVendanome: TWideStringField;
     QryVendadataVenda: TDateTimeField;
     QryVendatotalVenda: TFloatField;
+    RLBand5: TRLBand;
+    RLDBResult2: TRLDBResult;
+    RLDraw5: TRLDraw;
+    RLLabel5: TRLLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
