@@ -55,7 +55,7 @@ var
 
 implementation
 
-uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData;
+uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData;
 {$R *.dfm}
 
 
@@ -113,8 +113,16 @@ begin
 	Try
     frmSelecionarData  := TfrmSelecionarData.Create(Self);
     frmSelecionarData.ShowModal;
+
+    frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+    frmRelVendaPorData.QryVenda.Close;
+    frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
+    frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
+    frmRelVendaPorData.QryVenda.Open;
+    frmRelVendaPorData.Relatorio.PreviewModal;
   Finally
     frmSelecionarData.Release;
+    frmRelVendaPorData.Release;
   End;
 end;
 

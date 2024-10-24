@@ -16,7 +16,7 @@
   PixelsPerInch = 96
   TextHeight = 13
   object Relatorio: TRLReport
-    Left = 2
+    Left = 8
     Top = -10
     Width = 794
     Height = 1123
@@ -132,6 +132,7 @@
       Top = 95
       Width = 718
       Height = 115
+      DataFields = 'dataVenda'
       object RLBand3: TRLBand
         Left = 0
         Top = 0
@@ -250,6 +251,7 @@
           Alignment = taRightJustify
           DataField = 'totalVenda'
           DataSource = dtsVenda
+          DisplayMask = '#0.00'
           Text = ''
         end
       end
@@ -324,7 +326,7 @@
       end
       object RLLabel5: TRLLabel
         Left = 507
-        Top = 27
+        Top = 24
         Width = 79
         Height = 16
         Alignment = taRightJustify
@@ -341,7 +343,6 @@
   end
   object QryVenda: TZQuery
     Connection = dtmPrincipal.ConexaoDB
-    Active = True
     SQL.Strings = (
       'SELECT vendas.vendaId,'
       '       vendas.clienteId,'
