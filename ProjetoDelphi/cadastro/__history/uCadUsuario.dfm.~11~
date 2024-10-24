@@ -11,16 +11,9 @@ inherited frmCadUsuario: TfrmCadUsuario
     Width = 762
     Height = 316
     ActivePage = tabManutencao
-    ExplicitWidth = 762
-    ExplicitHeight = 316
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 754
-      ExplicitHeight = 288
       inherited pnlListagemTopo: TPanel
         Width = 754
-        ExplicitWidth = 754
       end
       inherited grdListagem: TDBGrid
         Width = 754
@@ -43,8 +36,8 @@ inherited frmCadUsuario: TfrmCadUsuario
     inherited tabManutencao: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
-      ExplicitWidth = 754
-      ExplicitHeight = 288
+      ExplicitWidth = 1265
+      ExplicitHeight = 676
       object edtUsuarioId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -64,9 +57,9 @@ inherited frmCadUsuario: TfrmCadUsuario
         Top = 87
         Width = 710
         Height = 21
-        EditLabel.Width = 36
+        EditLabel.Width = 27
         EditLabel.Height = 13
-        EditLabel.Caption = 'Usu'#225'rio'
+        EditLabel.Caption = 'Nome'
         MaxLength = 50
         TabOrder = 1
       end
@@ -87,11 +80,9 @@ inherited frmCadUsuario: TfrmCadUsuario
   inherited pnlRodape: TPanel
     Top = 316
     Width = 762
-    ExplicitTop = 316
-    ExplicitWidth = 762
     inherited btnFechar: TBitBtn
       Left = 672
-      ExplicitLeft = 672
+      ExplicitLeft = 701
     end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
@@ -111,7 +102,7 @@ inherited frmCadUsuario: TfrmCadUsuario
       ReadOnly = True
     end
     object QryListagemnome: TWideStringField
-      DisplayLabel = 'Usu'#225'rio'
+      DisplayLabel = 'Nome'
       FieldName = 'nome'
       Required = True
       Size = 50
