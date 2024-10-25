@@ -170,39 +170,6 @@ begin
     	FreeAndNil(oAtualizarMSSQL);
   end;
 
-
-
-{  dtmPrincipal.QryScriptCategorias.ExecSQL;
-  aForm.chkCategoria.Checked := True;
-  aForm.Refresh;
-  Sleep(50);
-
-  dtmPrincipal.QryScriptProdutos.ExecSQL;
-  aForm.chkProduto.Checked := True;
-  aForm.Refresh;
-  Sleep(50);
-
-  dtmPrincipal.QryScriptClientes.ExecSQL;
-  aForm.chkCliente.Checked := True;
-  aForm.Refresh;
-  Sleep(50);
-
-  dtmPrincipal.QryScriptVendas.ExecSQL;
-  aForm.chkVendas.Checked := True;
-  aForm.Refresh;
-  Sleep(50);
-
-  dtmPrincipal.QryScriptItensVenda.ExecSQL;
-  aForm.chkItensVenda.Checked := True;
-  aForm.Refresh;
-  Sleep(50);
-
-  dtmPrincipal.QryScriptUsuarios.ExecSQL;
-  aForm.chkUsuarios.Checked := True;
-  aForm.Refresh;
-  Sleep(50);
-
-}
 end;
 
 procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
@@ -229,7 +196,7 @@ begin
   dtmPrincipal := TdtmPrincipal.Create(Self);
   with dtmPrincipal.ConexaoDB do
   begin
-    SQLHourGlass := False;
+    SQLHourGlass := True;
     Protocol := 'mssql';
     LibraryLocation:='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\ntwdblib.dll';
     HostName := '.\SERVERCURSO';
