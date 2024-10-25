@@ -50,7 +50,8 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitTop = 22
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 974
       ExplicitHeight = 368
       object Label1: TLabel
@@ -161,7 +162,7 @@ inherited frmCadCliente: TfrmCadCliente
         Height = 21
         EditMask = '(99) 9999-9999;1;_'
         MaxLength = 14
-        TabOrder = 7
+        TabOrder = 8
         Text = '(  )     -    '
       end
       object edtEmail: TLabeledEdit
@@ -177,7 +178,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 6
+        TabOrder = 7
       end
       object edtDataNascimento: TDateEdit
         Left = 11
@@ -188,7 +189,7 @@ inherited frmCadCliente: TfrmCadCliente
         DialogTitle = 'Selecione a Data'
         NumGlyphs = 2
         CalendarStyle = csDialog
-        TabOrder = 8
+        TabOrder = 9
       end
       object edtEstado: TLabeledEdit
         Left = 611
@@ -203,7 +204,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 9
+        TabOrder = 6
       end
     end
   end

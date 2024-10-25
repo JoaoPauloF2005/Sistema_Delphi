@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls, ZDbcIntfs;
+  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados;
 
 
 type
@@ -159,12 +159,20 @@ end;
 
 
 procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
+var oAtualizarMSSQL: TAtualizaBancoDadosMSSQL;
 begin
-  aForm.chkConexao.Checked := True;
   aForm.Refresh;
-  Sleep(50);
+  try
+    oAtualizarMSSQL := TAtualizaBancoDadosMSSQL.Create(dtmPrincipal.ConexaoDB);
+    oAtualizarMSSQL.AtualizarBancoDeDadosMSSQL;
+  finally
+  	if Assigned(oAtualizarMSSQL) then
+    	FreeAndNil(oAtualizarMSSQL);
+  end;
 
-  dtmPrincipal.QryScriptCategorias.ExecSQL;
+
+
+{  dtmPrincipal.QryScriptCategorias.ExecSQL;
   aForm.chkCategoria.Checked := True;
   aForm.Refresh;
   Sleep(50);
@@ -194,7 +202,7 @@ begin
   aForm.Refresh;
   Sleep(50);
 
-
+}
 end;
 
 procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
@@ -219,13 +227,13 @@ begin
   frmAtualizaDB.Show;
   frmAtualizaDB.Refresh;
   dtmPrincipal := TdtmPrincipal.Create(Self);
-  with dtmPrincipal.ConexaoDB do begin
-    SQLHourGlass := True;
+  with dtmPrincipal.ConexaoDB do
+  begin
+    SQLHourGlass := False;
     Protocol := 'mssql';
     LibraryLocation:='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\ntwdblib.dll';
     HostName := '.\SERVERCURSO';
-    Port := 1433
-    ;
+    Port := 1433;
     User := 'sa';
     Password := 'domtec02';
     Database := 'vendas';
