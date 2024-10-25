@@ -55,6 +55,21 @@ object frmAlterarSenha: TfrmAlterarSenha
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblUsuarioLogado: TLabel
+    Left = 8
+    Top = 3
+    Width = 425
+    Height = 19
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'XXXXXXXXXXXXXXXXXXXXXXX'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object edtSenhaAtual: TEdit
     Left = 211
     Top = 42

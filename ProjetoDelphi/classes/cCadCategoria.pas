@@ -95,10 +95,12 @@ begin
     Qry.ParamByName('categoriaId').AsInteger :=F_categoriaId;
 
     try
+    	ConexaoDB.StartTransaction;
       Qry.ExecSQL;
+      ConexaoDB.Commit;
     except
+    	ConexaoDB.Rollback;
       Result:=False;
-
     end;
 
   finally
@@ -127,10 +129,12 @@ begin
     Qry.ParamByName('descricao').AsString := Self.F_descricao;
 
     try
-      Qry.ExecSQL; // Executa a consulta SQL
+    	ConexaoDB.StartTransaction;
+      Qry.ExecSQL;   // Executa a consulta SQL
+      ConexaoDB.Commit;
     except
-      Result := False; // Retorna False em caso de erro
-      Exit; // Interrompe a execução
+    	ConexaoDB.Rollback;
+      Result:=False;
     end;
 
   finally
@@ -160,10 +164,12 @@ begin
     Qry.ParamByName('descricao').AsString := Self.F_descricao;
 
     try
-      Qry.ExecSQL; // Executa a consulta SQL
+    	ConexaoDB.StartTransaction;
+      Qry.ExecSQL;   // Executa a consulta SQL
+      ConexaoDB.Commit;
     except
-      Result := False; // Retorna False em caso de erro
-      Exit; // Interrompe a execução
+    	ConexaoDB.Rollback;
+      Result:=False;
     end;
 
   finally

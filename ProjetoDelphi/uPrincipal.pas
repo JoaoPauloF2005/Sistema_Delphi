@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, ZDbcIntfs;
 
 
 type
@@ -223,11 +223,14 @@ begin
     SQLHourGlass := True;
     Protocol := 'mssql';
     LibraryLocation:='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\ntwdblib.dll';
-    HostName:='.\SERVERCURSO';
-    Port:=1433  ;
-    User:='sa';
-    Password:='domtec02';
-    Database:='vendas';
+    HostName := '.\SERVERCURSO';
+    Port := 1433
+    ;
+    User := 'sa';
+    Password := 'domtec02';
+    Database := 'vendas';
+    AutoCommit := True;
+    TransactIsolationLevel := tiReadCommitted;
     Connected := True;
   end;
   AtualizacaoBancoDados(frmAtualizaDB);

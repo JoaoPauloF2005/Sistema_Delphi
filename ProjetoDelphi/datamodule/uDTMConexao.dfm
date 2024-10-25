@@ -5,6 +5,7 @@ object dtmPrincipal: TdtmPrincipal
   object ConexaoDB: TZConnection
     ControlsCodePage = cCP_UTF16
     Catalog = ''
+    TransactIsolationLevel = tiReadCommitted
     Connected = True
     HostName = '.\SERVERCURSO'
     Port = 1433

@@ -16,6 +16,7 @@ type
     Label3: TLabel;
     btnAlterar: TBitBtn;
     btnFechar: TBitBtn;
+    lblUsuarioLogado: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -54,7 +55,7 @@ begin
       end;
     end
     else begin
-      MessageDlg('Senhas digitadas não coincidem,',mtinformation,[mbok],0);
+      MessageDlg('Senhas digitadas não coincidem',mtinformation,[mbok],0);
       edtSenhaNova.SetFocus;
     end;
 
@@ -74,6 +75,7 @@ begin
   edtSenhaAtual.Clear;
   edtSenhaNova.Clear;
   edtRepetirNovaSenha.Clear;
+  lblUsuarioLogado.Caption := 'Usuário: ' +oUsuarioLogado.nome;
 end;
 
 procedure TfrmAlterarSenha.FormShow(Sender: TObject);
