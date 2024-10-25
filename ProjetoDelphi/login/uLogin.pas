@@ -32,7 +32,7 @@ var
 
 implementation
 
-uses cCadUsuario, uDTMConexao;
+uses cCadUsuario, uDTMConexao, uPrincipal;
 
 {$R *.dfm}
 
@@ -42,6 +42,9 @@ begin
   Try
     oUsuario := TUsuario.Create(dtmPrincipal.ConexaoDB);
     if oUsuario.Logar(edtUsuario.Text,edtSenha.Text) then begin
+       oUsuarioLogado.codigo	:= oUsuario.codigo;
+       oUsuarioLogado.nome		:= oUsuario.nome;
+       oUsuarioLogado.senha		:= oUsuario.senha;
     	 FecharFormulario //Fecha o Formulario do Login
     end
     else begin

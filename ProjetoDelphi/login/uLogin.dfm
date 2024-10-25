@@ -20,7 +20,7 @@ object frmLogin: TfrmLogin
   TextHeight = 13
   object Label1: TLabel
     Left = 30
-    Top = 50
+    Top = 49
     Width = 83
     Height = 19
     Caption = 'USU'#193'RIO:'
@@ -33,7 +33,7 @@ object frmLogin: TfrmLogin
   end
   object Label2: TLabel
     Left = 50
-    Top = 95
+    Top = 94
     Width = 62
     Height = 19
     Caption = 'SENHA:'
@@ -46,7 +46,7 @@ object frmLogin: TfrmLogin
   end
   object edtUsuario: TEdit
     Left = 117
-    Top = 46
+    Top = 45
     Width = 207
     Height = 27
     Font.Charset = DEFAULT_CHARSET
@@ -59,7 +59,7 @@ object frmLogin: TfrmLogin
   end
   object edtSenha: TEdit
     Left = 117
-    Top = 91
+    Top = 90
     Width = 207
     Height = 27
     Font.Charset = DEFAULT_CHARSET
@@ -72,7 +72,7 @@ object frmLogin: TfrmLogin
   end
   object btnFechar: TBitBtn
     Left = 117
-    Top = 135
+    Top = 134
     Width = 97
     Height = 25
     Caption = 'FECHAR'
@@ -104,12 +104,12 @@ object frmLogin: TfrmLogin
       D363C4D7244E6EFF00FFFF00FF244E6E244E6E244E6E244E6E244E6E244E6E24
       4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
     ParentDoubleBuffered = True
-    TabOrder = 2
+    TabOrder = 3
     OnClick = btnFecharClick
   end
   object btnAcessar: TBitBtn
     Left = 227
-    Top = 135
+    Top = 134
     Width = 97
     Height = 25
     Caption = 'ACESSAR'
@@ -141,7 +141,7 @@ object frmLogin: TfrmLogin
       75C3C7C4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBACEC089DBA268DB8959
       D97851D46F55CE7371C986AFC6B3FF00FFFF00FFFF00FFFF00FF}
     ParentDoubleBuffered = True
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnAcessarClick
   end
 end

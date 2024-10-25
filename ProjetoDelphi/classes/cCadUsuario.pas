@@ -24,6 +24,7 @@ type
     function getSenha: String;
     procedure setSenha(const Value: String);
 
+
   public
     constructor Create(aConexao:TZConnection);
     destructor Destroy; override;
@@ -33,7 +34,7 @@ type
     function Selecionar(id:Integer):Boolean;
     function Logar(aUsuario, aSenha: String): Boolean;
     function UsuarioExiste(aUsuario: String): Boolean;
-
+    function AlterarSenha: Boolean;
 
   published
     property codigo        :Integer    read F_usuarioId      write F_usuarioId;
@@ -233,23 +234,31 @@ function TUsuario.Logar(aUsuario:String; aSenha:String):Boolean;
 var Qry:TZQuery;
 begin
   try
-    Qry := TZQuery.Create(nil);
-    Qry.Connection := ConexaoDB;
+    Qry:=TZQuery.Create(nil);
+    Qry.Connection:=ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('SELECT COUNT(usuarioId) AS Qtde '+
-    						' FROM usuarios '+
-                ' WHERE nome = :nome AND senha = :Senha');
-    Qry.ParamByName('nome').AsString := aUsuario;
-    Qry.ParamByName('senha').AsString := Criptografar(aSenha);
+    Qry.SQL.Add('SELECT usuarioId, '+
+                '       nome, '+
+                '       senha '+
+                '  FROM usuarios '+
+                ' WHERE nome =:nome '+
+                '   AND senha=:Senha');
+    Qry.ParamByName('nome').AsString :=aUsuario;
+    Qry.ParamByName('senha').AsString:=Criptografar(aSenha);
     Try
       Qry.Open;
 
-      if Qry.FieldByName('Qtde').AsInteger > 0 then
-      		Result := True
+      if Qry.FieldByName('usuarioId').AsInteger>0 then begin
+         result := true;
+         F_usuarioId:= Qry.FieldByName('usuarioId').AsInteger;
+         F_nome     := Qry.FieldByName('nome').AsString;
+         F_senha    := Qry.FieldByName('senha').AsString;
+      end
       else
          result := false;
+
     Except
-      Result := false;
+      Result:=false;
     End;
 
   finally
@@ -258,5 +267,38 @@ begin
   end;
 end;
 {$endregion}
+
+{$region 'ALTERAÇÃO DE SENHA'}
+function TUsuario.AlterarSenha: Boolean;
+var Qry:TZQuery;
+begin
+  try
+    Result := true;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('UPDATE usuarios '+
+                '   SET senha = :senha '+
+                ' WHERE usuarioId = :usuarioId ');
+    Qry.ParamByName('usuarioId').AsInteger := Self.F_usuarioId;
+    Qry.ParamByName('senha').AsString := Self.F_Senha;
+
+    Try
+      ConexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      ConexaoDB.Commit;
+    Except
+      ConexaoDB.Rollback;
+      Result := false;
+    End;
+
+  finally
+    if Assigned(Qry) then
+       FreeAndNil(Qry);
+  end;
+end;
+
+{$endregion}
+
 
 end.

@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
+  Vcl.ComCtrls;
 
 
 type
@@ -30,6 +31,8 @@ type
     PRODUTOPORCATEGORIA1: TMenuItem;
     USURIO1: TMenuItem;
     N5: TMenuItem;
+    ALTERARSENHA1: TMenuItem;
+    StbPrincipal: TStatusBar;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -45,6 +48,7 @@ type
     procedure VENDAPORDATA1Click(Sender: TObject);
     procedure USURIO1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ALTERARSENHA1Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -55,12 +59,13 @@ type
   end;
 
 var
-  frmPrincipal: TfrmPrincipal;
+  frmPrincipal : TfrmPrincipal;
+  oUsuarioLogado : TUsuarioLogado;
 
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin;
+  uCadUsuario, uLogin, uAlterarSenha;
 {$R *.dfm}
 
 
@@ -145,6 +150,14 @@ begin
   frmProVenda.Release;
 end;
 
+procedure TfrmPrincipal.ALTERARSENHA1Click(Sender: TObject);
+begin
+	frmAlterarSenha := TfrmAlterarSenha.Create(Self);
+  frmAlterarSenha.ShowModal;
+  frmAlterarSenha.Release;
+end;
+
+
 procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
 begin
   aForm.chkConexao.Checked := True;
@@ -193,8 +206,11 @@ end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-      FreeAndNil(TeclaEnter);
-      FreeAndNil(dtmPrincipal);
+	FreeAndNil(TeclaEnter);
+  FreeAndNil(dtmPrincipal);
+
+  if Assigned (oUsuarioLogado) then
+     FreeAndNil(oUsuarioLogado);
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
@@ -224,9 +240,15 @@ end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
-	frmLogin := TfrmLogin.Create(Self);
-  frmLogin.ShowModal;
-  frmLogin.Release;
+	try
+    oUsuarioLogado := TUsuarioLogado.Create;
+
+    frmLogin := TfrmLogin.Create(Self);
+    frmLogin.ShowModal;
+  finally
+  	frmLogin.Release;
+    StbPrincipal.Panels[0].Text := 'USUÁRIO: '+oUsuarioLogado.nome;
+  end;
 end;
 
 procedure TfrmPrincipal.mnuFecharClick(Sender: TObject);
