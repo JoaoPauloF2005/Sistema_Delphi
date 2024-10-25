@@ -17,7 +17,7 @@ uses System.Classes,
      cCadUsuario;
 
 type
-  TAtualizacaoCampoMSSQL = class(TAtualizaBancoDados)
+  TAtualizacaoTabelaMSSQL = class(TAtualizaBancoDados)
 
   private
     function TabelaExiste(aNomeTabela: String): Boolean;
@@ -40,7 +40,7 @@ implementation
 
 { TAtualizacaoCampoMSSQL }
 
-constructor TAtualizacaoCampoMSSQL.Create(aConexao: TZConnection);
+constructor TAtualizacaoTabelaMSSQL.Create(aConexao: TZConnection);
 begin
 	ConexaoDB := aConexao;
   Categoria;
@@ -51,13 +51,13 @@ begin
   Usuario;
 end;
 
-destructor TAtualizacaoCampoMSSQL.Destroy;
+destructor TAtualizacaoTabelaMSSQL.Destroy;
 begin
 
   inherited;
 end;
 
-function TAtualizacaoCampoMSSQL.TabelaExiste(aNomeTabela: String): Boolean;
+function TAtualizacaoTabelaMSSQL.TabelaExiste(aNomeTabela: String): Boolean;
 Var Qry:TZQuery;
 Begin
   Try
@@ -79,7 +79,7 @@ Begin
   End;
 end;
 
-procedure TAtualizacaoCampoMSSQL.Categoria;
+procedure TAtualizacaoTabelaMSSQL.Categoria;
 begin
 	if not TabelaExiste('categorias') then
   begin
@@ -93,7 +93,7 @@ begin
   end;
 end;
 
-procedure TAtualizacaoCampoMSSQL.Cliente;
+procedure TAtualizacaoTabelaMSSQL.Cliente;
 begin
   if not TabelaExiste('clientes') then
   begin
@@ -115,7 +115,7 @@ begin
   end;
 end;
 
-procedure TAtualizacaoCampoMSSQL.Produto;
+procedure TAtualizacaoTabelaMSSQL.Produto;
 begin
   if not TabelaExiste('produtos') then
   begin
@@ -135,7 +135,7 @@ begin
   end;
 end;
 
-procedure TAtualizacaoCampoMSSQL.Vendas;
+procedure TAtualizacaoTabelaMSSQL.Vendas;
 begin
 	if not TabelaExiste('vendas') then
   begin
@@ -154,7 +154,7 @@ begin
   end;
 end;
 
-procedure TAtualizacaoCampoMSSQL.VendasItens;
+procedure TAtualizacaoTabelaMSSQL.VendasItens;
 begin
 	if not TabelaExiste('vendasItens') then
   begin
@@ -173,7 +173,7 @@ begin
   end;
 end;
 
-procedure TAtualizacaoCampoMSSQL.Usuario;
+procedure TAtualizacaoTabelaMSSQL.Usuario;
 Var oUsuario:TUsuario;
 begin
   if not TabelaExiste('usuarios') then

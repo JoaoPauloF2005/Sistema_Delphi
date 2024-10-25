@@ -3,8 +3,8 @@ object frmAtualizaDB: TfrmAtualizaDB
   Top = 0
   BorderStyle = bsNone
   Caption = 'frmAtualizaDB'
-  ClientHeight = 69
-  ClientWidth = 472
+  ClientHeight = 268
+  ClientWidth = 651
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object frmAtualizaDB: TfrmAtualizaDB
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 472
-    Height = 69
+    Width = 651
+    Height = 268
     Align = alClient
     BevelOuter = bvLowered
     BevelWidth = 3
@@ -28,22 +28,22 @@ object frmAtualizaDB: TfrmAtualizaDB
     Color = clBackground
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 75
     object Panel2: TPanel
       Left = 6
       Top = 6
-      Width = 460
-      Height = 57
+      Width = 639
+      Height = 256
       Align = alClient
       BevelOuter = bvNone
       Color = clWhite
       Enabled = False
       ParentBackground = False
       TabOrder = 0
-      ExplicitHeight = 95
+      ExplicitLeft = 75
+      ExplicitTop = 43
       object Label1: TLabel
-        Left = 39
-        Top = 15
+        Left = 11
+        Top = 8
         Width = 387
         Height = 25
         Caption = 'Atualiza'#231#227'o Banco de Dados. AGUARDE...'
