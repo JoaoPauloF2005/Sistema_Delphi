@@ -32,7 +32,7 @@ type
       function Atualizar: Boolean;
       function Apagar: Boolean;
       function Selecionar(id:Integer): Boolean;
-      function ChaveExiste(aChave: string): Boolean;
+      function ChaveExiste(aChave: string; aId:Integer = 0): Boolean;
       class procedure CriarAcoes (aNomeForm: TFormClass; aConexao: TZConnection); static;
       
     published
@@ -108,7 +108,7 @@ begin
        FreeAndNil(Qry);
   end;
 end;
-function TAcaoAcesso.ChaveExiste(aChave: string): Boolean;
+function TAcaoAcesso.ChaveExiste(aChave: string; aId: Integer): Boolean;
 var Qry:TZQuery;
 begin
   try
@@ -118,6 +118,13 @@ begin
     Qry.SQL.Add('SELECT COUNT(acaoAcessoId) AS Qtde '+
                 '  FROM acaoAcesso '+
                 ' WHERE chave = :chave ');
+
+    if aId > 0 then
+    begin
+      Qry.SQL.Add(' AND acaoAcessoId <> :acaoAcessoId');
+      Qry.ParamByName('acaoAcessoId').AsInteger := aId;
+    end;
+
     Qry.ParamByName('chave').AsString := aChave;
     Try
       Qry.Open;
@@ -196,7 +203,7 @@ begin
         begin
           if TBitBtn(aForm.Components[i]).Tag = 99 then
           begin
-            oAcaoAcesso.descricao := StringReplace(TBitBtn(aForm.Components[i]).Caption, '&', '', [rfReplaceAll]);
+            oAcaoAcesso.descricao :='    - BOTÃO ' +StringReplace(TBitBtn(aForm.Components[i]).Caption, '&', '', [rfReplaceAll]);
             oAcaoAcesso.chave	:= aForm.Name+'_'+TBitBtn(aForm.Components[i]).Name;
             if not oAcaoAcesso.ChaveExiste(oAcaoAcesso.chave) then
             	oAcaoAcesso.Inserir;

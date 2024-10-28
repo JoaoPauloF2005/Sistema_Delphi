@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso;
+  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport;
 
 
 type
@@ -52,12 +52,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
-    procedure CriarForm(aNomeForm: TFormClass);
+
   private
     { Private declarations }
     oCliente: TCliente;
     TeclaEnter:TMREnter;
     procedure AtualizacaoBancoDados(aForm: TfrmAtualizaDB);
+    procedure CriarForm(aNomeForm: TFormClass);
+    procedure CriarRelatorio(aNomeForm: TFormClass);
   public
     { Public declarations }
   end;
@@ -80,9 +82,7 @@ end;
 
 procedure TfrmPrincipal.CATEGORIA2Click(Sender: TObject);
 begin
-	frmRelCadCategoria := TfrmRelCadCategoria.Create(Self);
-  frmRelCadCategoria.Relatorio.PreviewModal;
-  frmRelCadCategoria.Release;
+  CriarRelatorio(TfrmRelCadCategoria);
 end;
 
 procedure TfrmPrincipal.CLIENTE1Click(Sender: TObject);
@@ -92,9 +92,7 @@ end;
 
 procedure TfrmPrincipal.CLIENTE2Click(Sender: TObject);
 begin
-	frmRelCadCliente := TfrmRelCadCliente.Create(Self);
-  frmRelCadCliente.Relatorio.PreviewModal;
-  frmRelCadCliente.Release;
+  CriarRelatorio(TfrmRelCadCliente);
 end;
 
 procedure TfrmPrincipal.PRODUTO1Click(Sender: TObject);
@@ -104,16 +102,12 @@ end;
 
 procedure TfrmPrincipal.PRODUTO2Click(Sender: TObject);
 begin
-	frmRelCadProduto := TfrmRelCadProduto.Create(Self);
-  frmRelCadProduto.Relatorio.PreviewModal;
-  frmRelCadProduto.Release;
+  CriarRelatorio(TfrmRelCadProduto);
 end;
 
 procedure TfrmPrincipal.PRODUTOPORCATEGORIA1Click(Sender: TObject);
 begin
-  frmRelCadProdutoComGrupoCategoria := TfrmRelCadProdutoComGrupoCategoria.Create(Self);
-  frmRelCadProdutoComGrupoCategoria.Relatorio.PreviewModal;
-  frmRelCadProdutoComGrupoCategoria.Release;
+  CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
 end;
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
@@ -173,9 +167,7 @@ end;
 
 procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
 begin
-	frmRelCadClienteFicha := TfrmRelCadClienteFicha.Create(Self);
-  frmRelCadClienteFicha.Relatorio.PreviewModal;
-  frmRelCadClienteFicha.Release;
+  CriarRelatorio(TfrmRelCadClienteFicha);
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -276,6 +268,24 @@ begin
   finally
   	if Assigned(form) then
     	form.Release;
+  end;
+end;
+
+procedure TfrmPrincipal.CriarRelatorio(aNomeForm: TFormClass);
+var form: TForm;
+		aRelatorio:TRLReport;
+    i:Integer;
+
+begin
+	try
+    form := aNomeForm.Create(Application);
+    for i := 0 to form.ComponentCount -1 do
+    begin
+      TRLReport(form.Components[i]).PreviewModal;
+      Break;
+    end;
+  finally
+
   end;
 end;
 end.
