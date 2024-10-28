@@ -77,6 +77,11 @@ begin
   begin
     ExecutaDiretoBancoDeDados('ALTER TABLE categorias ADD teste varchar(30) NULL');
   end;
+
+  if CampoExisteNaTabela('categorias', 'teste') then
+  begin
+    ExecutaDiretoBancoDeDados('ALTER TABLE categorias DROP COLUMN teste' );
+  end;
 end;
 
 end.

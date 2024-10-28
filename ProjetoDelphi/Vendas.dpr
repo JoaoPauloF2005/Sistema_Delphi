@@ -36,7 +36,10 @@ uses
   cUsuarioLogado in 'classes\cUsuarioLogado.pas',
   cAtualizacaoBancoDeDados in 'classes\cAtualizacaoBancoDeDados.pas',
   cAtualizacaoTabelaMSSQL in 'classes\cAtualizacaoTabelaMSSQL.pas',
-  cAtualizacaoCampoMSSQL in 'classes\cAtualizacaoCampoMSSQL.pas';
+  cAtualizacaoCampoMSSQL in 'classes\cAtualizacaoCampoMSSQL.pas',
+  cArquivoIni in 'classes\cArquivoIni.pas',
+  cAcaoAcesso in 'classes\cAcaoAcesso.pas',
+  uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso};
 
 {$R *.res}
 
