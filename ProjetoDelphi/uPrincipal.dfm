@@ -59,6 +59,13 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'A'#199#195'O ACESSO'
         OnClick = AOACESSO1Click
       end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object USURIOSVSAES1: TMenuItem
+        Caption = 'USU'#193'RIOS VS A'#199#213'ES'
+        OnClick = USURIOSVSAES1Click
+      end
       object N6: TMenuItem
         Caption = '-'
       end

@@ -35,6 +35,8 @@ type
     StbPrincipal: TStatusBar;
     AOACESSO1: TMenuItem;
     N6: TMenuItem;
+    USURIOSVSAES1: TMenuItem;
+    N7: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -52,6 +54,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
+    procedure USURIOSVSAES1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -71,7 +74,7 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes;
 {$R *.dfm}
 
 
@@ -113,6 +116,11 @@ end;
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
 begin
   CriarForm(TfrmCadUsuario);
+end;
+
+procedure TfrmPrincipal.USURIOSVSAES1Click(Sender: TObject);
+begin
+	CriarForm(TfrmUsuarioVsAcoes);
 end;
 
 procedure TfrmPrincipal.VENDAPORDATA1Click(Sender: TObject);
@@ -231,8 +239,10 @@ begin
       TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
 
+      TAcaoAcesso.PreencherUsuariosVSAcoes(dtmPrincipal.ConexaoDB);
 
       frmAtualizaDB.Free;
+
       TeclaEnter := TMREnter.Create(Self);
       TeclaEnter.FocusEnabled := true;
       TeclaEnter.FocusColor := clInfoBk;

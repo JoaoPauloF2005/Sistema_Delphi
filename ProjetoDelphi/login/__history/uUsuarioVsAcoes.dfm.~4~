@@ -1,0 +1,53 @@
+object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
+  Left = 0
+  Top = 0
+  Caption = 'Usu'#225'rio VS A'#231#245'es'
+  ClientHeight = 737
+  ClientWidth = 1038
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel3: TPanel
+    Left = 0
+    Top = 696
+    Width = 1038
+    Height = 41
+    Align = alBottom
+    TabOrder = 0
+    ExplicitLeft = 488
+    ExplicitTop = 213
+    ExplicitWidth = 185
+  end
+  object Panel2: TPanel
+    Left = 342
+    Top = 0
+    Width = 696
+    Height = 696
+    Align = alClient
+    TabOrder = 1
+    ExplicitLeft = 359
+    ExplicitWidth = 679
+    object Splitter1: TSplitter
+      Left = 1
+      Top = 1
+      Width = 2
+      Height = 694
+      ExplicitLeft = 6
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 342
+    Height = 696
+    Align = alLeft
+    TabOrder = 2
+  end
+end

@@ -39,7 +39,8 @@ uses
   cAtualizacaoCampoMSSQL in 'classes\cAtualizacaoCampoMSSQL.pas',
   cArquivoIni in 'classes\cArquivoIni.pas',
   cAcaoAcesso in 'classes\cAcaoAcesso.pas',
-  uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso};
+  uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso},
+  uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes};
 
 {$R *.res}
 
@@ -47,5 +48,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TfrmUsuarioVsAcoes, frmUsuarioVsAcoes);
   Application.Run;
 end.
