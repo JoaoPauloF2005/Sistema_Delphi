@@ -25,15 +25,16 @@ type
     edtNome: TLabeledEdit;
     edtEndereco: TLabeledEdit;
     edtCidade: TLabeledEdit;
-    edtBairro: TLabeledEdit;
     edtEmail: TLabeledEdit;
-    edtEstado: TLabeledEdit;
     edtCEP: TMaskEdit;
     Label1: TLabel;
     edtTelefone: TMaskEdit;
     Label2: TLabel;
     Label3: TLabel;
     edtDataNascimento: TDateEdit;
+    edtEstado: TComboBox;
+    edtBairro: TLabeledEdit;
+    Label4: TLabel;
     procedure btnAlterarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -138,6 +139,38 @@ begin
   oCliente:=TCliente.Create(dtmPrincipal.ConexaoDB);
 
   IndiceAtual:='nome';
+
+    // Adicionando as siglas dos estados ao ComboBox
+  edtEstado.Items.Add('AC'); // Acre
+  edtEstado.Items.Add('AL'); // Alagoas
+  edtEstado.Items.Add('AP'); // Amapá
+  edtEstado.Items.Add('AM'); // Amazonas
+  edtEstado.Items.Add('BA'); // Bahia
+  edtEstado.Items.Add('CE'); // Ceará
+  edtEstado.Items.Add('DF'); // Distrito Federal
+  edtEstado.Items.Add('ES'); // Espírito Santo
+  edtEstado.Items.Add('GO'); // Goiás
+  edtEstado.Items.Add('MA'); // Maranhão
+  edtEstado.Items.Add('MT'); // Mato Grosso
+  edtEstado.Items.Add('MS'); // Mato Grosso do Sul
+  edtEstado.Items.Add('MG'); // Minas Gerais
+  edtEstado.Items.Add('PA'); // Pará
+  edtEstado.Items.Add('PB'); // Paraíba
+  edtEstado.Items.Add('PR'); // Paraná
+  edtEstado.Items.Add('PE'); // Pernambuco
+  edtEstado.Items.Add('PI'); // Piauí
+  edtEstado.Items.Add('RJ'); // Rio de Janeiro
+  edtEstado.Items.Add('RN'); // Rio Grande do Norte
+  edtEstado.Items.Add('RS'); // Rio Grande do Sul
+  edtEstado.Items.Add('RO'); // Rondônia
+  edtEstado.Items.Add('RR'); // Roraima
+  edtEstado.Items.Add('SC'); // Santa Catarina
+  edtEstado.Items.Add('SP'); // São Paulo
+  edtEstado.Items.Add('SE'); // Sergipe
+  edtEstado.Items.Add('TO'); // Tocantins
+
+  // Define o ComboBox como DropDownList para impedir edição
+  edtEstado.Style := csDropDownList;
 
 end;
 

@@ -51,7 +51,7 @@ inherited frmCadCliente: TfrmCadCliente
     end
     inherited tabManutencao: TTabSheet
       ExplicitLeft = 4
-      ExplicitTop = 24
+      ExplicitTop = 22
       ExplicitWidth = 974
       ExplicitHeight = 368
       object Label1: TLabel
@@ -74,6 +74,13 @@ inherited frmCadCliente: TfrmCadCliente
         Width = 81
         Height = 13
         Caption = 'Data Nascimento'
+      end
+      object Label4: TLabel
+        Left = 611
+        Top = 183
+        Width = 33
+        Height = 13
+        Caption = 'Estado'
       end
       object edtNome: TLabeledEdit
         Left = 11
@@ -124,21 +131,6 @@ inherited frmCadCliente: TfrmCadCliente
         ParentShowHint = False
         ShowHint = False
         TabOrder = 3
-      end
-      object edtBairro: TLabeledEdit
-        Left = 611
-        Top = 150
-        Width = 248
-        Height = 21
-        BiDiMode = bdLeftToRight
-        EditLabel.Width = 28
-        EditLabel.Height = 13
-        EditLabel.Caption = 'Bairro'
-        MaxLength = 30
-        ParentBiDiMode = False
-        ParentShowHint = False
-        ShowHint = False
-        TabOrder = 4
       end
       object edtCidade: TLabeledEdit
         Left = 11
@@ -191,20 +183,28 @@ inherited frmCadCliente: TfrmCadCliente
         CalendarStyle = csDialog
         TabOrder = 9
       end
-      object edtEstado: TLabeledEdit
+      object edtEstado: TComboBox
         Left = 611
         Top = 202
         Width = 248
         Height = 21
+        Style = csDropDownList
+        TabOrder = 6
+      end
+      object edtBairro: TLabeledEdit
+        Left = 611
+        Top = 150
+        Width = 248
+        Height = 21
         BiDiMode = bdLeftToRight
-        EditLabel.Width = 33
+        EditLabel.Width = 28
         EditLabel.Height = 13
-        EditLabel.Caption = 'Estado'
-        MaxLength = 2
+        EditLabel.Caption = 'Bairro'
+        MaxLength = 30
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 6
+        TabOrder = 4
       end
     end
   end

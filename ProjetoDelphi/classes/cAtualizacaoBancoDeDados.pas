@@ -38,6 +38,8 @@ End;
 
 implementation
 
+uses cAtualizacaoTabelaMSSQL, cAtualizacaoCampoMSSQL;
+
 { TAtualizaBancoDados }
 
 constructor TAtualizaBancoDados.Create(aConexao: TZConnection);
@@ -71,7 +73,8 @@ end;
 
 function TAtualizaBancoDadosMSSQL.AtualizarBancoDeDadosMSSQL: Boolean;
 var oAtualizarDB:TAtualizaBancoDados;
-    oTabela: TAtualizaBancoDadosMSSQL;
+    oTabela: TAtualizacaoTabelaMSSQL;
+    oCampo : TAtualizacaoCampoMSSQL;
 
 begin
   Try
@@ -79,7 +82,8 @@ begin
     oAtualizarDB := TAtualizaBancoDados.Create(ConexaoDB);
 
     //Sub-Class de Atualização
-    oTabela := TAtualizaBancoDadosMSSQL.Create(ConexaoDB);
+    oTabela := TAtualizacaoTabelaMSSQL.Create(ConexaoDB);
+    oCampo := TAtualizacaoCampoMSSQL.Create(ConexaoDB);
 
   Finally
   	if	Assigned(oAtualizarDB) then

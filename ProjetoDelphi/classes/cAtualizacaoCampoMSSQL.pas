@@ -20,7 +20,7 @@ type
 
   private
     function CampoExisteNaTabela(aNomeTabela, aCampo: String): Boolean;
-
+    procedure Versao1;
   protected
 
   public
@@ -44,13 +44,13 @@ Begin
     Qry.SQL.Add(' SELECT COUNT(COLUMN_NAME) AS Qtde ');
     Qry.SQL.Add('   FROM INFORMATION_SCHEMA.COLUMNS ');
     Qry.SQL.Add('  WHERE TABLE_NAME =:Tabela ');
-    Qry.SQL.Add('    AND COLUMN_NAME=:Campo ');
+    Qry.SQL.Add('    AND COLUMN_NAME =:Campo ');
     Qry.ParamByName('Tabela').AsString := aNomeTabela;
     Qry.ParamByName('Campo').AsString := aCampo;
     Qry.Open;
 
     if Qry.FieldByName('Qtde').AsInteger > 0 then
-       Result:=True;
+       Result := True;
 
   Finally
     Qry.Close;
@@ -62,12 +62,21 @@ end;
 constructor TAtualizacaoCampoMSSQL.Create(aConexao: TZConnection);
 begin
 	ConexaoDB := aConexao;
+  Versao1;
 end;
 
 destructor TAtualizacaoCampoMSSQL.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TAtualizacaoCampoMSSQL.Versao1;
+begin
+	if not CampoExisteNaTabela('categorias', 'teste') then
+  begin
+    ExecutaDiretoBancoDeDados('ALTER TABLE categorias ADD teste varchar(30) NULL');
+  end;
 end;
 
 end.
