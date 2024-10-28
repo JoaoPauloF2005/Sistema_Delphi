@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados;
+  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso;
 
 
 type
@@ -68,12 +68,13 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso;
 {$R *.dfm}
 
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
+	TAcaoAcesso.CriarAcoes(TfrmCadCategoria, dtmPrincipal.ConexaoDB);
   frmCadCategoria := TfrmCadCategoria.Create(Self);
   frmCadCategoria.ShowModal;
   frmCadCategoria.Release;
@@ -81,9 +82,9 @@ end;
 
 procedure TfrmPrincipal.CATEGORIA2Click(Sender: TObject);
 begin
-	frmRelCategoria := TfrmRelCategoria.Create(Self);
-  frmRelCategoria.Relatorio.PreviewModal;
-  frmRelCategoria.Release;
+	frmRelCadCategoria := TfrmRelCadCategoria.Create(Self);
+  frmRelCadCategoria.Relatorio.PreviewModal;
+  frmRelCadCategoria.Release;
 end;
 
 procedure TfrmPrincipal.CLIENTE1Click(Sender: TObject);
@@ -164,8 +165,8 @@ end;
 procedure TfrmPrincipal.AOACESSO1Click(Sender: TObject);
 begin
   frmCadAcaoAcesso := TfrmCadAcaoAcesso.Create(Self);
-  TfrmCadAcaoAcesso.ShowModal;
-  TfrmCadAcaoAcesso.Release;
+  frmCadAcaoAcesso.ShowModal;
+  frmCadAcaoAcesso.Release;
 end;
 
 procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
@@ -235,6 +236,22 @@ begin
         Connected := True;
       end;
       AtualizacaoBancoDados(frmAtualizaDB);
+
+      TAcaoAcesso.CriarAcoes(TfrmCadCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadCliente,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadProduto,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadUsuario,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadAcaoAcesso,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmAlterarSenha,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmProVenda,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelVendaPorData,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadClienteFicha,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadCliente,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadProdutoComGrupoCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
+
+
       frmAtualizaDB.Free;
       TeclaEnter := TMREnter.Create(Self);
       TeclaEnter.FocusEnabled := true;

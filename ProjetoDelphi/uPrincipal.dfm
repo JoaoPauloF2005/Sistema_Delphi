@@ -30,7 +30,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object mainPrincipal: TMainMenu
     Left = 689
-    Top = 5
+    Top = 4
     object CADASTRO1: TMenuItem
       Caption = 'CADASTRO'
       object CLIENTE1: TMenuItem

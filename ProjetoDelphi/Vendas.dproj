@@ -161,7 +161,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="relatorio\uRelCategoria.pas">
-            <Form>frmRelCategoria</Form>
+            <Form>frmRelCadCategoria</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="relatorio\uRelProVenda.pas">

@@ -8,7 +8,7 @@ uses
   RLFilters, RLPDFFilter;
 
 type
-  TfrmRelCadCategoria = class(TForm)
+  TfrmRelCategoria = class(TForm)
     QryCategorias: TZQuery;
     dtsCategorias: TDataSource;
     QryCategoriascategoriaId: TIntegerField;
@@ -42,18 +42,18 @@ type
   end;
 
 var
-  frmRelCadCategoria: TfrmRelCadCategoria;
+  frmRelCategoria: TfrmRelCategoria;
 
 implementation
 
 {$R *.dfm}
 
-procedure TfrmRelCadCategoria.FormCreate(Sender: TObject);
+procedure TfrmRelCategoria.FormCreate(Sender: TObject);
 begin
 	QryCategorias.Open;
 end;
 
-procedure TfrmRelCadCategoria.FormDestroy(Sender: TObject);
+procedure TfrmRelCategoria.FormDestroy(Sender: TObject);
 begin
 	QryCategorias.Close;
 end;

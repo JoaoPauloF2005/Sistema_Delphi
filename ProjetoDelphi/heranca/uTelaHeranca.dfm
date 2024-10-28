@@ -3,8 +3,8 @@ object frmTelaHeranca: TfrmTelaHeranca
   Top = 0
   BorderStyle = bsDialog
   Caption = 'INFORME AQUI O T'#205'TULO'
-  ClientHeight = 759
-  ClientWidth = 1273
+  ClientHeight = 674
+  ClientWidth = 1024
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,20 +22,25 @@ object frmTelaHeranca: TfrmTelaHeranca
   object pgcPrincipal: TPageControl
     Left = 0
     Top = 0
-    Width = 1273
-    Height = 704
+    Width = 1024
+    Height = 619
     ActivePage = tabListagem
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1273
+    ExplicitHeight = 704
     object tabListagem: TTabSheet
       Caption = 'Listagem'
+      ExplicitWidth = 1265
+      ExplicitHeight = 676
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 1265
+        Width = 1016
         Height = 63
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1265
         object lblIndice: TLabel
           Left = 11
           Top = 2
@@ -55,6 +60,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         OnChange = mskPesquisarChange
       end
       object btnPesquisar: TButton
+        Tag = 99
         Left = 437
         Top = 21
         Width = 122
@@ -68,8 +74,8 @@ object frmTelaHeranca: TfrmTelaHeranca
       object grdListagem: TDBGrid
         Left = 0
         Top = 63
-        Width = 1265
-        Height = 613
+        Width = 1016
+        Height = 528
         Align = alClient
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         TabOrder = 3
@@ -86,19 +92,24 @@ object frmTelaHeranca: TfrmTelaHeranca
     object tabManutencao: TTabSheet
       Caption = 'Manuten'#231#227'o'
       ImageIndex = 1
+      ExplicitWidth = 1265
+      ExplicitHeight = 676
     end
   end
   object pnlRodape: TPanel
     Left = 0
-    Top = 704
-    Width = 1273
+    Top = 619
+    Width = 1024
     Height = 55
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 704
+    ExplicitWidth = 1273
     DesignSize = (
-      1273
+      1024
       55)
     object btnNovo: TBitBtn
+      Tag = 99
       Left = 4
       Top = 16
       Width = 81
@@ -135,6 +146,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       OnClick = btnNovoClick
     end
     object btnAlterar: TBitBtn
+      Tag = 99
       Left = 92
       Top = 16
       Width = 81
@@ -207,6 +219,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       OnClick = btnCancelarClick
     end
     object btnGravar: TBitBtn
+      Tag = 99
       Left = 269
       Top = 16
       Width = 81
@@ -243,6 +256,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       OnClick = btnGravarClick
     end
     object btnApagar: TBitBtn
+      Tag = 99
       Left = 357
       Top = 16
       Width = 81
@@ -279,7 +293,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       OnClick = btnApagarClick
     end
     object btnFechar: TBitBtn
-      Left = 1180
+      Left = 931
       Top = 16
       Width = 75
       Height = 25
@@ -314,6 +328,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
       TabOrder = 5
       OnClick = btnFecharClick
+      ExplicitLeft = 1180
     end
     object btnNavigator: TDBNavigator
       Left = 444

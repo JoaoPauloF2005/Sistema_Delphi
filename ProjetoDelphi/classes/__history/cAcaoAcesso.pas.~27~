@@ -196,7 +196,7 @@ begin
         begin
           if TBitBtn(aForm.Components[i]).Tag = 99 then
           begin
-            oAcaoAcesso.descricao := StringReplace(TBitBtn(aForm.Components[i]).Caption, '&', '', [rfReplaceAll]);
+            oAcaoAcesso.descricao := TBitBtn(aForm.Components[i]).Caption;
             oAcaoAcesso.chave	:= aForm.Name+'_'+TBitBtn(aForm.Components[i]).Name;
             if not oAcaoAcesso.ChaveExiste(oAcaoAcesso.chave) then
             	oAcaoAcesso.Inserir;

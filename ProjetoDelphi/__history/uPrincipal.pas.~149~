@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados;
+  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso;
 
 
 type
@@ -33,6 +33,8 @@ type
     N5: TMenuItem;
     ALTERARSENHA1: TMenuItem;
     StbPrincipal: TStatusBar;
+    AOACESSO1: TMenuItem;
+    N6: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -49,6 +51,7 @@ type
     procedure USURIO1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ALTERARSENHA1Click(Sender: TObject);
+    procedure AOACESSO1Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -65,12 +68,13 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso;
 {$R *.dfm}
 
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
+	TAcaoAcesso.CriarAcoes(TfrmCadCategoria, dtmPrincipal.ConexaoDB);
   frmCadCategoria := TfrmCadCategoria.Create(Self);
   frmCadCategoria.ShowModal;
   frmCadCategoria.Release;
@@ -78,9 +82,9 @@ end;
 
 procedure TfrmPrincipal.CATEGORIA2Click(Sender: TObject);
 begin
-	frmRelCategoria := TfrmRelCategoria.Create(Self);
-  frmRelCategoria.Relatorio.PreviewModal;
-  frmRelCategoria.Release;
+	frmRelCadCategoria := TfrmRelCategoria.Create(Self);
+  frmRelCadCategoria.Relatorio.PreviewModal;
+  frmRelCadCategoria.Release;
 end;
 
 procedure TfrmPrincipal.CLIENTE1Click(Sender: TObject);
@@ -158,6 +162,13 @@ begin
 end;
 
 
+procedure TfrmPrincipal.AOACESSO1Click(Sender: TObject);
+begin
+  frmCadAcaoAcesso := TfrmCadAcaoAcesso.Create(Self);
+  frmCadAcaoAcesso.ShowModal;
+  frmCadAcaoAcesso.Release;
+end;
+
 procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
 var oAtualizarMSSQL: TAtualizaBancoDadosMSSQL;
 begin
@@ -217,14 +228,30 @@ begin
         LibraryLocation:='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\ntwdblib.dll';
         HostName := TArquivoIni.LerIni('SERVER', 'HostName');
         Port := StrToInt(TArquivoIni.LerIni('SERVER', 'Port'));
-        User := 'sa';
-        Password := 'domtec02';
-        Database := 'vendas ';
+        User := TArquivoIni.LerIni('SERVER', 'User');;
+        Password := TArquivoIni.LerIni('SERVER', 'Password');
+        Database := TArquivoIni.LerIni('SERVER', 'DataBase');
         AutoCommit := True;
         TransactIsolationLevel := tiReadCommitted;
         Connected := True;
       end;
       AtualizacaoBancoDados(frmAtualizaDB);
+
+       TAcaoAcesso.CriarAcoes(TfrmCadCategoria,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadCliente,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadProduto,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadUsuario,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadAcaoAcesso,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmAlterarSenha,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmProVenda,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelVendaPorData,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(frmRelCadClienteFicha,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(frmRelCadCliente,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(frmRelCadProdutoComGrupoCategoria,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(frmRelCadProduto,DtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(frmRelCadCategoria,DtmPrincipal.ConexaoDB);
+
+
       frmAtualizaDB.Free;
       TeclaEnter := TMREnter.Create(Self);
       TeclaEnter.FocusEnabled := true;

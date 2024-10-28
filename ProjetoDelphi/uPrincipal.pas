@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados;
+  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso;
 
 
 type
@@ -52,6 +52,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
+    procedure CriarForm(aNomeForm: TFormClass);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -74,23 +75,19 @@ uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadC
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
-  frmCadCategoria := TfrmCadCategoria.Create(Self);
-  frmCadCategoria.ShowModal;
-  frmCadCategoria.Release;
+  CriarForm(TfrmCadCategoria);
 end;
 
 procedure TfrmPrincipal.CATEGORIA2Click(Sender: TObject);
 begin
-	frmRelCategoria := TfrmRelCategoria.Create(Self);
-  frmRelCategoria.Relatorio.PreviewModal;
-  frmRelCategoria.Release;
+	frmRelCadCategoria := TfrmRelCadCategoria.Create(Self);
+  frmRelCadCategoria.Relatorio.PreviewModal;
+  frmRelCadCategoria.Release;
 end;
 
 procedure TfrmPrincipal.CLIENTE1Click(Sender: TObject);
 begin
-   frmCadCliente := TfrmCadCliente.Create(Self);
-   frmCadCliente.ShowModal;
-   frmCadCliente.Release;
+   CriarForm(TfrmCadCliente);
 end;
 
 procedure TfrmPrincipal.CLIENTE2Click(Sender: TObject);
@@ -102,9 +99,7 @@ end;
 
 procedure TfrmPrincipal.PRODUTO1Click(Sender: TObject);
 begin
-  frmCadProduto := TfrmCadProduto.Create(Self);
-  frmCadProduto.ShowModal;
-  frmCadProduto.Release;
+  CriarForm(TfrmCadProduto);
 end;
 
 procedure TfrmPrincipal.PRODUTO2Click(Sender: TObject);
@@ -123,9 +118,7 @@ end;
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
 begin
-	frmCadUsuario := TfrmCadUsuario.Create(Self);
-  frmCadUsuario.ShowModal;
-  frmCadUsuario.Release;
+  CriarForm(TfrmCadUsuario);
 end;
 
 procedure TfrmPrincipal.VENDAPORDATA1Click(Sender: TObject);
@@ -155,17 +148,13 @@ end;
 
 procedure TfrmPrincipal.ALTERARSENHA1Click(Sender: TObject);
 begin
-	frmAlterarSenha := TfrmAlterarSenha.Create(Self);
-  frmAlterarSenha.ShowModal;
-  frmAlterarSenha.Release;
+  CriarForm(TfrmAlterarSenha);
 end;
 
 
 procedure TfrmPrincipal.AOACESSO1Click(Sender: TObject);
 begin
-  frmCadAcaoAcesso := TfrmCadAcaoAcesso.Create(Self);
-  frmCadAcaoAcesso.ShowModal;
-  frmCadAcaoAcesso.Release;
+  CriarForm(TfrmCadAcaoAcesso);
 end;
 
 procedure TfrmPrincipal.AtualizacaoBancoDados(aForm:TfrmAtualizaDB);
@@ -235,6 +224,22 @@ begin
         Connected := True;
       end;
       AtualizacaoBancoDados(frmAtualizaDB);
+
+      TAcaoAcesso.CriarAcoes(TfrmCadCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadCliente,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadProduto,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadUsuario,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadAcaoAcesso,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmAlterarSenha,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmProVenda,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelVendaPorData,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadClienteFicha,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadCliente,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadProdutoComGrupoCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
+
+
       frmAtualizaDB.Free;
       TeclaEnter := TMREnter.Create(Self);
       TeclaEnter.FocusEnabled := true;
@@ -259,5 +264,18 @@ procedure TfrmPrincipal.mnuFecharClick(Sender: TObject);
 begin
   //Close;
   Application.Terminate;
+end;
+
+
+procedure TfrmPrincipal.CriarForm(aNomeForm: TFormClass);
+var form: TForm;
+begin
+	try
+    form := aNomeForm.Create(Application);
+    form.ShowModal;
+  finally
+  	if Assigned(form) then
+    	form.Release;
+  end;
 end;
 end.

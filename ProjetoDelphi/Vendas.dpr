@@ -23,7 +23,7 @@ uses
   uRelCadClienteFicha in 'relatorio\uRelCadClienteFicha.pas' {frmRelCadClienteFicha},
   uRelCadProduto in 'relatorio\uRelCadProduto.pas' {frmRelCadProduto},
   uRelCadCliente in 'relatorio\uRelCadCliente.pas' {frmRelCadCliente},
-  uRelCategoria in 'relatorio\uRelCategoria.pas' {frmRelCategoria},
+  uRelCategoria in 'relatorio\uRelCategoria.pas' {frmRelCadCategoria},
   uRelProVenda in 'relatorio\uRelProVenda.pas' {frmRelProVenda},
   uSelecionarData in 'relatorio\uSelecionarData.pas' {frmSelecionarData},
   uRelCadProdutoComGrupoCategoria in 'relatorio\uRelCadProdutoComGrupoCategoria.pas' {frmRelCadProdutoComGrupoCategoria},

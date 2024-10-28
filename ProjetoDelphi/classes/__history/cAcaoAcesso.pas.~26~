@@ -189,20 +189,6 @@ begin
     oAcaoAcesso.chave := aForm.Name;
     if not oAcaoAcesso.ChaveExiste(oAcaoAcesso.chave) then
     	 oAcaoAcesso.Inserir;
-
-       for I := 0 to aForm.ComponentCount -1 do
-       begin
-       	if (aForm.Components[i] is TBitBtn) then
-        begin
-          if TBitBtn(aForm.Components[i]).Tag = 99 then
-          begin
-            oAcaoAcesso.descricao := StringReplace(TBitBtn(aForm.Components[i]).Caption, '&', '', [rfReplaceAll]);
-            oAcaoAcesso.chave	:= aForm.Name+'_'+TBitBtn(aForm.Components[i]).Name;
-            if not oAcaoAcesso.ChaveExiste(oAcaoAcesso.chave) then
-            	oAcaoAcesso.Inserir;
-          end;
-        end;
-       end;
   finally
   	if Assigned(oAcaoAcesso) then
     	FreeAndNil(oAcaoAcesso);
