@@ -48,6 +48,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TfrmUsuarioVsAcoes, frmUsuarioVsAcoes);
   Application.Run;
 end.

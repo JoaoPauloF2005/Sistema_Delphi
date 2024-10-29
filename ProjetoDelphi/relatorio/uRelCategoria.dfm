@@ -1,7 +1,7 @@
 ﻿object frmRelCadCategoria: TfrmRelCadCategoria
   Left = 0
   Top = 0
-  Caption = 'frmRelCadCategoria'
+  Caption = 'Relat'#243'rio de Categoria'
   ClientHeight = 740
   ClientWidth = 819
   Color = clBtnFace

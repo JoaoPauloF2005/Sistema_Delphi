@@ -27,12 +27,8 @@ object frmTelaHeranca: TfrmTelaHeranca
     ActivePage = tabListagem
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1273
-    ExplicitHeight = 704
     object tabListagem: TTabSheet
       Caption = 'Listagem'
-      ExplicitWidth = 1265
-      ExplicitHeight = 676
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
@@ -40,7 +36,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         Height = 63
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 1265
         object lblIndice: TLabel
           Left = 11
           Top = 2
@@ -70,6 +65,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         ParentDoubleBuffered = False
         TabOrder = 2
         Visible = False
+        OnClick = btnPesquisarClick
       end
       object grdListagem: TDBGrid
         Left = 0
@@ -92,8 +88,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     object tabManutencao: TTabSheet
       Caption = 'Manuten'#231#227'o'
       ImageIndex = 1
-      ExplicitWidth = 1265
-      ExplicitHeight = 676
     end
   end
   object pnlRodape: TPanel
@@ -103,8 +97,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     Height = 55
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 704
-    ExplicitWidth = 1273
     DesignSize = (
       1024
       55)
@@ -328,7 +320,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
       TabOrder = 5
       OnClick = btnFecharClick
-      ExplicitLeft = 1180
     end
     object btnNavigator: TDBNavigator
       Left = 444

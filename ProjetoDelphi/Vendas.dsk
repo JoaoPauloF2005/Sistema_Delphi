@@ -1,47 +1,35 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas',0,1,13,47,33,0,0,,
-File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas',0,1,28,17,53,0,0,,
-File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas',0,1,1,1,1,0,0,,
-File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas',0,1,1,1,1,0,0,,
-File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas',0,1,1,1,1,0,0,,
-File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas',0,1,46,48,69,0,0,,
-File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas',0,1,1,22,1,0,0,,
-File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,40,27,87,0,0,{{40,0},{67,11},{'Override'}},
-File_8=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,135,37,173,0,0,{{63,0},{93,11},{'Override'}},{1,97,1}
-File_9=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas',0,1,40,63,85,0,0,,
+File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,7316,50,7330,0,0,,
+File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,5898,1,5924,0,0,{{1656,4},{1674,15},{'TScrollWindow'}},
+File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Buttons.pas',0,1,1960,1,1983,0,0,,
+File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,17383,1,17408,0,0,,
+File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas',0,1,7371,1,7394,0,0,{{1747,4},{1763,15},{'TScrollWindow'}}{{1850,4},{1950,15},{'TMainMenuBarStyleHook'}},
+File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,34,1,1,0,0,{{58,0},{86,11},{'Override'}},
+File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas',0,1,91,24,94,0,0,,
+File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas',0,1,16,1,40,0,0,,
+File_8=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas',0,1,52,1,81,0,0,,
+File_9=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas',0,1,303,15,325,0,0,,{1,338,10}
+File_10=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas',0,1,88,62,111,0,0,,{1,301,5}{2,301,5}{3,212,12}
+File_11=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas',0,1,13,47,33,0,0,,
+File_12=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas',0,1,28,17,53,0,0,,
 
 [Modules]
-Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas
-Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas
-Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
-Count=5
+Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas
+Count=2
 EditWindowCount=1
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas]
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=5
-CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas
+ViewCount=2
+CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas
 View0=0
 View1=1
-View2=2
-View3=3
-View4=4
 PercentageSizes=1
 Create=1
 Visible=1
@@ -61,9 +49,9 @@ TopPanelSize=0
 LeftPanelSize=1896
 LeftPanelClients=PropertyInspector,DockSite3
 LeftPanelData=00000800010100000000791200000000000001680700000000000001000000002B10000009000000446F636B53697465330100000000D72000001100000050726F7065727479496E73706563746F72FFFFFFFF
-RightPanelSize=1911
+RightPanelSize=2000
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=00000800010100000000791200000000000001770700000000000001000000002B10000009000000446F636B53697465320100000000D720000009000000446F636B5369746534FFFFFFFF
+RightPanelData=00000800010100000000791200000000000001D00700000000000001000000002B10000009000000446F636B53697465320100000000D720000009000000446F636B5369746534FFFFFFFF
 BottomPanelSize=352
 BottomPanelClients=MessageView,DockSite1
 BottomPanelData=0000080001020100000009000000446F636B536974653197450000000000000260010000000000000100000000974500000F0000004D65737361676556696577466F726DFFFFFFFF
@@ -73,58 +61,25 @@ BottomMiddelPanelData=0000080001020200000009000000446F636B5369746530100000004772
 
 [View0]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-CursorX=25
-CursorY=235
-TopLine=203
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas
+CursorX=19
+CursorY=94
+TopLine=44
 LeftCol=1
 Elisions=
-Bookmarks={1,293,5}{2,293,5}{3,204,12}
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
+Bookmarks=
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions={{58,0},{86,11},{'Override'}}
-Bookmarks=
-EditViewName=Borland.FormDesignerView
-
-[View2]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-CursorX=7
-CursorY=40
-TopLine=16
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas
+CursorX=20
+CursorY=195
+TopLine=176
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-
-[View3]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
-CursorX=3
-CursorY=81
-TopLine=52
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
-
-[View4]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas
-CursorX=15
-CursorY=325
-TopLine=303
-LeftCol=1
-Elisions=
-Bookmarks={1,338,10}
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas
 
 [UndockedDesigner]
 Count=0
@@ -154,10 +109,11 @@ Dockable=1
 StayOnTop=0
 
 [Breakpoints]
-Count=3
+Count=4
 Breakpoint0='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',65,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint1='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas',107,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint2='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas',140,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint3='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas',265,'',0,1,'',1,0,0,'',1,'','','',0,''
 
 [EmbarcaderoWin32Debugger_AddressBreakpoints]
 Count=0
@@ -208,11 +164,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=2000
 Height=3876
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=3876
 TBDockHeight=5901
 LRDockWidth=2349
@@ -246,11 +202,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=2000
 Height=4293
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=4293
 TBDockHeight=7151
 LRDockWidth=2000
@@ -317,8 +273,8 @@ SplitPos=111
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=Action,Action
-ExpandedItems=Constraints=0,StyleElements=0,Anchors=0,BevelEdges=0,Font=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,EditLabel=1,Touch=0,BorderIcons=0,Connection=0,Options=0,ShowRecordTypes=0,EditLabel.Font=0,ImageMargins=0,HorzScrollBar=0,Menu=0,ActiveControl=0
+SelectedItem=Align,CustomHint
+ExpandedItems=Anchors=0,BorderIcons=0,"LiveBindings Designer=0",Constraints=0,Font=0,GlassFrame=0,HorzScrollBar=0,LiveBindings=0,Margins=0,Menu=0,Padding=0,StyleElements=0,Touch=0,VertScrollBar=0,ProviderFlags=0,Title=0,DataSource=0,Connection=0,Options=0,ActiveControl=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -385,11 +341,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=2000
 Height=3876
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=3876
 TBDockHeight=5959
 LRDockWidth=2510
@@ -609,11 +565,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=2000
 Height=3876
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=3876
 TBDockHeight=4893
 LRDockWidth=7151
@@ -692,11 +648,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=2000
 Height=3876
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=3876
 TBDockHeight=4893
 LRDockWidth=5307
@@ -783,14 +739,14 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=1911
+Width=2000
 Height=4118
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=4118
 TBDockHeight=8595
-LRDockWidth=1911
+LRDockWidth=2000
 Dockable=1
 StayOnTop=0
 TabPosition=1
@@ -831,14 +787,14 @@ Docked=1
 State=0
 Left=0
 Top=465
-Width=1911
+Width=2000
 Height=4293
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=2000
 ClientHeight=4293
 TBDockHeight=8595
-LRDockWidth=1911
+LRDockWidth=2000
 Dockable=1
 StayOnTop=0
 TabPosition=1

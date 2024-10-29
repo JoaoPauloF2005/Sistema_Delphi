@@ -1,7 +1,7 @@
 ﻿object frmRelCadProduto: TfrmRelCadProduto
   Left = 0
   Top = 0
-  Caption = 'frmRelCadProduto'
+  Caption = 'Relat'#243'rio de Cadastro de Produto'
   ClientHeight = 740
   ClientWidth = 819
   Color = clBtnFace

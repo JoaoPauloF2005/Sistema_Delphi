@@ -6,7 +6,8 @@ uses
   // Módulos e bibliotecas que o código utiliza, como componentes visuais, banco de dados, etc.
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit;
+  Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit,
+  ZAbstractConnection, ZConnection;
   
 type
   // Definição de uma classe de formulário chamada TfrmTelaHeranca
@@ -46,6 +47,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure btnPesquisarClick(Sender: TObject);
   private
     // Variáveis e métodos privados
     // Métodos privados para controlar botões e abas
@@ -64,6 +66,7 @@ type
     function Apagar:Boolean; virtual;
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; virtual;
     procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
+    class function TenhoAcesso (aUsuarioId: Integer; aChave: string; aConexao: TZConnection): Boolean; static;
   end;
 
 var
@@ -72,6 +75,9 @@ var
 implementation
 
 {$R *.dfm} // Diretiva que associa o arquivo de design visual (DFM) ao código
+
+uses uPrincipal;
+
  		{$region 'OBSERVAÇÕES'}
  //TAG:1 - CHAVE PRIMARIA PK
  //TAG:2 - CAMPOS OBRIGATORIOS
@@ -109,6 +115,33 @@ begin
       Result:=QryListagem.Fields[i].DisplayLabel;
       Break;
     end;
+  end;
+end;
+
+class function TfrmTelaHeranca.TenhoAcesso(aUsuarioId: Integer; aChave: string; aConexao: TZConnection): Boolean;
+var Qry:TZQuery;
+begin
+	try
+  	Result := True;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := aConexao;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('SELECT usuarioId '+
+    						' FROM usuariosAcaoAcesso '+
+                ' WHERE usuarioId = :usuarioId '+
+                ' AND acaoAcessoId =(SELECT TOP 1 acaoAcessoId FROM acaoAcesso WHERE chave = :chave)'+
+                ' AND ativo = 1');
+    Qry.ParamByName('usuarioId').AsInteger	:= aUsuarioId;
+    Qry.ParamByName('chave').AsString	:= aChave;
+
+    Qry.Open;
+
+    if Qry.IsEmpty then
+    	Result := False;
+  finally
+  	if Assigned(Qry) then
+    	FreeAndNil(Qry);
+
   end;
 end;
 
@@ -194,15 +227,37 @@ end;
 // Ação do botão "Novo" para inserir um novo registro
 procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
 begin
-     // Desabilita alguns botões e altera o estado para "inserir"
-     ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, false);
-     EstadoDoCadastro:=ecInserir;
-     LimparEdits;
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
+    Abort;
+  end;
+
+	// Desabilita alguns botões e altera o estado para "inserir"
+  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, false);
+  EstadoDoCadastro:=ecInserir;
+  LimparEdits;
+end;
+
+procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
+begin
+	if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
+    Abort;
+  end;
+
 end;
 
 // Ação do botão "Alterar" para modificar um registro existente
 procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
+    Abort;
+  end;
+
   // Desabilita alguns botões e altera o estado para "alterar"
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, false);
   EstadoDoCadastro:=ecAlterar;
@@ -211,6 +266,12 @@ end;
 // Ação do botão "Apagar" para Apagar um registro
 procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
 begin
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
+    Abort;
+  end;
+
   Try
     if (Apagar) then begin
     // Restaura a interface ao estado padrão após a exclusão
@@ -240,6 +301,12 @@ end;
 // Ação do botão "Gravar" para salvar um registro no banco de dados
 procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
 begin
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
+    Abort;
+  end;
+
   if (ExisteCampoObrigatorio) then
     Abort;
 
