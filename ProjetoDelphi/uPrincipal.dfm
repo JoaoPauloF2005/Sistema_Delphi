@@ -76,6 +76,9 @@ object frmPrincipal: TfrmPrincipal
       object N2: TMenuItem
         Caption = '-'
       end
+      object ROCARUSURIO1: TMenuItem
+        Caption = 'TROCAR USU'#193'RIO'
+      end
       object mnuFechar: TMenuItem
         Caption = 'FECHAR'
         OnClick = mnuFecharClick

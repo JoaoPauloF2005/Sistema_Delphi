@@ -37,6 +37,7 @@ type
     N6: TMenuItem;
     USURIOSVSAES1: TMenuItem;
     N7: TMenuItem;
+    ROCARUSURIO1: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -55,7 +56,6 @@ type
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
     procedure USURIOSVSAES1Click(Sender: TObject);
-
   private
     { Private declarations }
     oCliente: TCliente;
@@ -112,6 +112,10 @@ procedure TfrmPrincipal.PRODUTOPORCATEGORIA1Click(Sender: TObject);
 begin
   CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
 end;
+
+
+
+
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
 begin

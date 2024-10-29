@@ -74,7 +74,7 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca;
 {$R *.dfm}
 
 
@@ -274,7 +274,14 @@ var form: TForm;
 begin
 	try
     form := aNomeForm.Create(Application);
+    if TfrmTelaHeranca.TenhoAcesso(oUsuarioLogado.codigo, form.Name, dtmPrincipal.ConexaoDB) then
+    begin
     form.ShowModal;
+    end
+    else
+    begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome +' Não tem permissão de Acesso', mtWarning,[mbOK], 0);
+    end;
   finally
   	if Assigned(form) then
     	form.Release;

@@ -10,7 +10,7 @@ object dtmPrincipal: TdtmPrincipal
     Connected = True
     HostName = '.\SERVERCURSO'
     Port = 1433
-    Database = 'dbVendaTeste'
+    Database = 'vendas'
     User = 'sa'
     Password = 'domtec02'
     Protocol = 'mssql'

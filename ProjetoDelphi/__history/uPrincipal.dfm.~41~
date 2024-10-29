@@ -18,9 +18,19 @@ object frmPrincipal: TfrmPrincipal
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object StbPrincipal: TStatusBar
+    Left = 0
+    Top = 329
+    Width = 732
+    Height = 19
+    Panels = <
+      item
+        Width = 150
+      end>
+  end
   object mainPrincipal: TMainMenu
     Left = 689
-    Top = 5
+    Top = 4
     object CADASTRO1: TMenuItem
       Caption = 'CADASTRO'
       object CLIENTE1: TMenuItem
@@ -45,12 +55,30 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'USU'#193'RIO'
         OnClick = USURIO1Click
       end
+      object AOACESSO1: TMenuItem
+        Caption = 'A'#199#195'O ACESSO'
+        OnClick = AOACESSO1Click
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object USURIOSVSAES1: TMenuItem
+        Caption = 'USU'#193'RIOS VS A'#199#213'ES'
+        OnClick = USURIOSVSAES1Click
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
       object ALTERARSENHA1: TMenuItem
         Caption = 'ALTERAR SENHA'
         OnClick = ALTERARSENHA1Click
       end
       object N2: TMenuItem
         Caption = '-'
+      end
+      object ROCARUSURIO1: TMenuItem
+        Caption = 'TROCAR USU'#193'RIO'
+        OnClick = ROCARUSURIO1Click
       end
       object mnuFechar: TMenuItem
         Caption = 'FECHAR'

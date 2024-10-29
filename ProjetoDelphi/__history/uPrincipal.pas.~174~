@@ -37,6 +37,7 @@ type
     N6: TMenuItem;
     USURIOSVSAES1: TMenuItem;
     N7: TMenuItem;
+    ROCARUSURIO1: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -55,6 +56,7 @@ type
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
     procedure USURIOSVSAES1Click(Sender: TObject);
+    procedure ROCARUSURIO1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -112,6 +114,26 @@ procedure TfrmPrincipal.PRODUTOPORCATEGORIA1Click(Sender: TObject);
 begin
   CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
 end;
+
+procedure TfrmPrincipal.ROCARUSURIO1Click(Sender: TObject);
+begin
+  try
+    FreeAndNil(oUsuarioLogado); // Finaliza a sessão do usuário atual.
+
+    frmLogin := TfrmLogin.Create(Self); // Cria a tela de login novamente.
+    if frmLogin.ShowModal = mrOk then  // Exibe a tela de login e aguarda novo login.
+    begin
+      // Caso login seja bem-sucedido, atualiza o status do usuário.
+      oUsuarioLogado := TUsuarioLogado.Create;
+      StbPrincipal.Panels[0].Text := 'USUÁRIO: ' + oUsuarioLogado.nome;
+    end
+    else
+      Application.Terminate; // Fecha a aplicação se o login for cancelado.
+  finally
+    frmLogin.Release; // Libera a memória da tela de login.
+  end;
+end;
+
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
 begin
@@ -275,7 +297,13 @@ begin
 	try
     form := aNomeForm.Create(Application);
     if TfrmTelaHeranca.TenhoAcesso(oUsuarioLogado.codigo, form.Name, dtmPrincipal.ConexaoDB) then
+    begin
     form.ShowModal;
+    end
+    else
+    begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome +' Não tem permissão de Acesso', mtWarning,[mbOK], 0);
+    end;
   finally
   	if Assigned(form) then
     	form.Release;

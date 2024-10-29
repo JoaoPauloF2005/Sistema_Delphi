@@ -74,28 +74,19 @@ end;
 
 procedure TfrmCadUsuario.btnGravarClick(Sender: TObject);
 begin
-  // Se o ID não estiver vazio, é uma atualização
-  if edtUsuarioId.Text <> EmptyStr then
-    oUsuario.codigo := StrToInt(edtUsuarioId.Text)
-  else
-    oUsuario.codigo := 0;
-
-  oUsuario.nome := edtNome.Text;
-  oUsuario.senha := edtSenha.Text;
-
-  // Verifica se o nome do usuário existe, exceto se for o próprio usuário que está sendo alterado
-  if (oUsuario.codigo = 0) and oUsuario.UsuarioExiste(edtNome.Text) then
-  begin
-    MessageDlg('Usuário já cadastrado', mtInformation, [mbOK], 0);
+  if oUsuario.UsuarioExiste(edtNome.Text) then begin
+    MessageDlg('Usuário já cadastrado', mtInformation, [mbok],0);
     edtNome.SetFocus;
-    Abort;
+    abort;
   end;
 
-  // Grava (insere ou altera) os dados
-  if Gravar(TEstadoDoCadastro(ecAlterar)) then
-    MessageDlg('Usuário atualizado com sucesso!', mtInformation, [mbOK], 0)
+  if edtUsuarioId.Text<>EmptyStr then
+     oUsuario.codigo:=StrToInt(edtUsuarioId.Text)
   else
-    MessageDlg('Erro ao atualizar o usuário.', mtError, [mbOK], 0);
+     oUsuario.codigo:=0;
+
+  oUsuario.nome :=edtNome.Text;
+  oUsuario.senha:=edtSenha.Text;
 
   inherited;
 end;

@@ -63,7 +63,7 @@ function TUsuario.Apagar: Boolean;
 var Qry:TZQuery;
 begin
   if MessageDlg('Apagar o Registro: '+#13+#13+
-                'C?digo: '+IntToStr(F_usuarioId)+#13+
+                'Código: '+IntToStr(F_usuarioId)+#13+
                 'Nome: '  +F_nome,mtConfirmation,[mbYes, mbNo],0) = mrNo then begin
      Result:=false;
      abort;
@@ -190,18 +190,22 @@ begin
   try
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
-    Qry.SQL.Text := 'SELECT COUNT(usuarioId) AS Qtde ' +
-                    'FROM usuarios ' +
-                    'WHERE nome = :nome AND usuarioId <> :usuarioId';
+    Qry.SQL.Clear;
+    Qry.SQL.Add('SELECT COUNT(usuarioId) AS Qtde ' +
+                '  FROM usuarios ' +
+                ' WHERE nome = :nome ' +
+                '   AND usuarioId <> :usuarioId');  // Ignora o próprio usuário na alteração.
     Qry.ParamByName('nome').AsString := aUsuario;
-    Qry.ParamByName('usuarioId').AsInteger := Self.F_usuarioId; // Ignorar o próprio usuário
+    Qry.ParamByName('usuarioId').AsInteger := Self.F_usuarioId;
 
     Qry.Open;
-    Result := Qry.FieldByName('Qtde').AsInteger > 0;
+    Result := Qry.FieldByName('Qtde').AsInteger > 0;  // Retorna se há duplicidade.
   finally
     Qry.Free;
   end;
 end;
+
+
 
 
 {$endregion}

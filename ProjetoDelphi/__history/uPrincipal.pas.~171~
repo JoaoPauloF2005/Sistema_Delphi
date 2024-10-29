@@ -35,6 +35,8 @@ type
     StbPrincipal: TStatusBar;
     AOACESSO1: TMenuItem;
     N6: TMenuItem;
+    USURIOSVSAES1: TMenuItem;
+    N7: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -52,6 +54,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
+    procedure USURIOSVSAES1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -71,7 +74,7 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca;
 {$R *.dfm}
 
 
@@ -82,9 +85,7 @@ end;
 
 procedure TfrmPrincipal.CATEGORIA2Click(Sender: TObject);
 begin
-	frmRelCadCategoria := TfrmRelCadCategoria.Create(Self);
-  frmRelCadCategoria.Relatorio.PreviewModal;
-  frmRelCadCategoria.Release;
+  CriarRelatorio(TfrmRelCadCategoria);
 end;
 
 procedure TfrmPrincipal.CLIENTE1Click(Sender: TObject);
@@ -94,9 +95,7 @@ end;
 
 procedure TfrmPrincipal.CLIENTE2Click(Sender: TObject);
 begin
-	frmRelCadCliente := TfrmRelCadCliente.Create(Self);
-  frmRelCadCliente.Relatorio.PreviewModal;
-  frmRelCadCliente.Release;
+  CriarRelatorio(TfrmRelCadCliente);
 end;
 
 procedure TfrmPrincipal.PRODUTO1Click(Sender: TObject);
@@ -106,21 +105,22 @@ end;
 
 procedure TfrmPrincipal.PRODUTO2Click(Sender: TObject);
 begin
-	frmRelCadProduto := TfrmRelCadProduto.Create(Self);
-  frmRelCadProduto.Relatorio.PreviewModal;
-  frmRelCadProduto.Release;
+  CriarRelatorio(TfrmRelCadProduto);
 end;
 
 procedure TfrmPrincipal.PRODUTOPORCATEGORIA1Click(Sender: TObject);
 begin
-  frmRelCadProdutoComGrupoCategoria := TfrmRelCadProdutoComGrupoCategoria.Create(Self);
-  frmRelCadProdutoComGrupoCategoria.Relatorio.PreviewModal;
-  frmRelCadProdutoComGrupoCategoria.Release;
+  CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
 end;
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
 begin
   CriarForm(TfrmCadUsuario);
+end;
+
+procedure TfrmPrincipal.USURIOSVSAES1Click(Sender: TObject);
+begin
+	CriarForm(TfrmUsuarioVsAcoes);
 end;
 
 procedure TfrmPrincipal.VENDAPORDATA1Click(Sender: TObject);
@@ -175,9 +175,7 @@ end;
 
 procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
 begin
-	frmRelCadClienteFicha := TfrmRelCadClienteFicha.Create(Self);
-  frmRelCadClienteFicha.Relatorio.PreviewModal;
-  frmRelCadClienteFicha.Release;
+  CriarRelatorio(TfrmRelCadClienteFicha);
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -241,8 +239,10 @@ begin
       TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
 
+      TAcaoAcesso.PreencherUsuariosVSAcoes(dtmPrincipal.ConexaoDB);
 
       frmAtualizaDB.Free;
+
       TeclaEnter := TMREnter.Create(Self);
       TeclaEnter.FocusEnabled := true;
       TeclaEnter.FocusColor := clInfoBk;
@@ -274,7 +274,14 @@ var form: TForm;
 begin
 	try
     form := aNomeForm.Create(Application);
+    if TfrmTelaHeranca.TenhoAcesso(oUsuarioLogado.codigo, form.Name, dtmPrincipal.ConexaoDB) then
+    begin
     form.ShowModal;
+    end
+    else
+    begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome +' Não tem permissão de Acesso', mtWarning,[mbOK], 0);
+    end;
   finally
   	if Assigned(form) then
     	form.Release;

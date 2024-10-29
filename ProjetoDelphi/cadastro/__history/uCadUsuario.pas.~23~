@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cCadUsuario, uEnum, uDTMConexao;
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,cAcaoAcesso, cCadUsuario, uEnum, uDTMConexao;
 
 type
   TfrmCadUsuario = class(TfrmTelaHeranca)
@@ -44,12 +44,24 @@ begin
   end;
 end;
 
+function TfrmCadUsuario.Gravar(EstadoDoCadastro: TEstadoDoCadastro): boolean;
+begin
+  if EstadoDoCadastro = ecInserir then
+     Result := oUsuario.Inserir
+  else if EstadoDoCadastro = ecAlterar then
+     Result := oUsuario.Atualizar;
+
+  TAcaoAcesso.PreencherUsuariosVsAcoes(dtmPrincipal.ConexaoDB);
+end;
+
+
+
 procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
 begin
   if oUsuario.Selecionar(QryListagem.FieldByName('usuarioID').AsInteger) then begin
-     edtUsuarioId.Text:=IntToStr(oUsuario.codigo);
-     edtNome.Text     :=oUsuario.nome;
-     edtSenha.Text    :=oUsuario.senha;
+     edtUsuarioId.Text := IntToStr(oUsuario.codigo);
+     edtNome.Text := oUsuario.nome;
+     edtSenha.Text := oUsuario.senha;
   end
   else begin
     btnCancelar.Click;
@@ -68,16 +80,17 @@ begin
     abort;
   end;
 
-  if edtUsuarioId.Text <> EmptyStr then
-     oUsuario.codigo := StrToInt(edtUsuarioId.Text)
+  if edtUsuarioId.Text<>EmptyStr then
+     oUsuario.codigo:=StrToInt(edtUsuarioId.Text)
   else
      oUsuario.codigo:=0;
 
-  oUsuario.nome := edtNome.Text;
-  oUsuario.senha := edtSenha.Text;
+  oUsuario.nome :=edtNome.Text;
+  oUsuario.senha:=edtSenha.Text;
 
   inherited;
 end;
+
 
 procedure TfrmCadUsuario.btnNovoClick(Sender: TObject);
 begin
@@ -95,16 +108,9 @@ end;
 procedure TfrmCadUsuario.FormCreate(Sender: TObject);
 begin
   inherited;
-  oUsuario := TUsuario.Create(dtmPrincipal.ConexaoDB)
+  oUsuario := TUsuario.Create(dtmPrincipal.ConexaoDB);
   IndiceAtual := 'nome';
 end;
 
-function TfrmCadUsuario.Gravar(EstadoDoCadastro: TEstadoDoCadastro): boolean;
-begin
-  if EstadoDoCadastro = ecInserir then
-     Result := oUsuario.Inserir
-  else if EstadoDoCadastro = ecAlterar then
-     Result := oUsuario.Atualizar;
-  end;
 
 end.

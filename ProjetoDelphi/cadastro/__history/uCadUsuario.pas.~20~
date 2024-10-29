@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cCadUsuario, uEnum, uDTMConexaoM;
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,cAcaoAcesso, cCadUsuario, uEnum, uDTMConexao;
 
 type
   TfrmCadUsuario = class(TfrmTelaHeranca)
@@ -44,12 +44,24 @@ begin
   end;
 end;
 
+function TfrmCadUsuario.Gravar(EstadoDoCadastro: TEstadoDoCadastro): boolean;
+begin
+  if EstadoDoCadastro = ecInserir then
+     Result := oUsuario.Inserir
+  else if EstadoDoCadastro = ecAlterar then
+     Result := oUsuario.Atualizar;
+
+  TAcaoAcesso.PreencherUsuariosVsAcoes(dtmPrincipal.ConexaoDB);
+end;
+
+
+
 procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
 begin
   if oUsuario.Selecionar(QryListagem.FieldByName('usuarioID').AsInteger) then begin
-     edtUsuarioId.Text:=IntToStr(oUsuario.codigo);
-     edtNome.Text     :=oUsuario.nome;
-     edtSenha.Text    :=oUsuario.senha;
+     edtUsuarioId.Text := IntToStr(oUsuario.codigo);
+     edtNome.Text := oUsuario.nome;
+     edtSenha.Text := oUsuario.senha;
   end
   else begin
     btnCancelar.Click;
@@ -62,22 +74,32 @@ end;
 
 procedure TfrmCadUsuario.btnGravarClick(Sender: TObject);
 begin
-  if oUsuario.UsuarioExiste(edtNome.Text) then begin
-    MessageDlg('Usuário já cadastrado', mtInformation, [mbok],0);
-    edtNome.SetFocus;
-    abort;
-  end;
-
+  // Se o ID não estiver vazio, é uma atualização
   if edtUsuarioId.Text <> EmptyStr then
-     oUsuario.codigo := StrToInt(edtUsuarioId.Text)
+    oUsuario.codigo := StrToInt(edtUsuarioId.Text)
   else
-     oUsuario.codigo:=0;
+    oUsuario.codigo := 0;
 
   oUsuario.nome := edtNome.Text;
   oUsuario.senha := edtSenha.Text;
 
+  // Verifica se o nome do usuário existe, exceto se for o próprio usuário que está sendo alterado
+  if (oUsuario.codigo = 0) and oUsuario.UsuarioExiste(edtNome.Text) then
+  begin
+    MessageDlg('Usuário já cadastrado', mtInformation, [mbOK], 0);
+    edtNome.SetFocus;
+    Abort;
+  end;
+
+  // Grava (insere ou altera) os dados
+  if Gravar(TEstadoDoCadastro(ecAlterar)) then
+    MessageDlg('Usuário atualizado com sucesso!', mtInformation, [mbOK], 0)
+  else
+    MessageDlg('Erro ao atualizar o usuário.', mtError, [mbOK], 0);
+
   inherited;
 end;
+
 
 procedure TfrmCadUsuario.btnNovoClick(Sender: TObject);
 begin
@@ -95,15 +117,9 @@ end;
 procedure TfrmCadUsuario.FormCreate(Sender: TObject);
 begin
   inherited;
-  oUsuario := TUsuario.Create(dtmPrincipal.ConexaoDB)
+  oUsuario := TUsuario.Create(dtmPrincipal.ConexaoDB);
+  IndiceAtual := 'nome';
 end;
 
-function TfrmCadUsuario.Gravar(EstadoDoCadastro: TEstadoDoCadastro): boolean;
-begin
-  if EstadoDoCadastro = ecInserir then
-     Result := oUsuario.Inserir
-  else if EstadoDoCadastro = ecAlterar then
-     Result := oUsuario.Atualizar;
-  end;
 
 end.
