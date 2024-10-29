@@ -56,6 +56,7 @@ type
     procedure ALTERARSENHA1Click(Sender: TObject);
     procedure AOACESSO1Click(Sender: TObject);
     procedure USURIOSVSAES1Click(Sender: TObject);
+    procedure ROCARUSURIO1Click(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -113,9 +114,25 @@ begin
   CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
 end;
 
+procedure TfrmPrincipal.ROCARUSURIO1Click(Sender: TObject);
+begin
+  // Libere o usuário logado atual
+  FreeAndNil(oUsuarioLogado);
 
+  // Crie uma nova instância do formulário de login
+  frmLogin := TfrmLogin.Create(Self);
 
+  try
+    // Exiba o formulário de login
+    frmLogin.ShowModal;
+  finally
+    // Libere o formulário de login após o fechamento
+    frmLogin.Release;
+  end;
 
+  // Atualize a barra de status para refletir a troca de usuário
+  StbPrincipal.Panels[0].Text := 'USUÁRIO: Não Logado';
+end;
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
 begin
@@ -131,17 +148,26 @@ procedure TfrmPrincipal.VENDAPORDATA1Click(Sender: TObject);
 begin
 	Try
     frmSelecionarData  := TfrmSelecionarData.Create(Self);
-    frmSelecionarData.ShowModal;
+    if TfrmTelaHeranca.TenhoAcesso(oUsuarioLogado.codigo, frmSelecionarData.Name, dtmPrincipal.ConexaoDB) then
+    begin
+    	frmSelecionarData.ShowModal;
 
-    frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
-    frmRelVendaPorData.QryVenda.Close;
-    frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
-    frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
-    frmRelVendaPorData.QryVenda.Open;
-    frmRelVendaPorData.Relatorio.PreviewModal;
+    	frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+    	frmRelVendaPorData.QryVenda.Close;
+    	frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
+    	frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
+    	frmRelVendaPorData.QryVenda.Open;
+    	frmRelVendaPorData.Relatorio.PreviewModal;
+    end
+    else begin
+      MessageDlg('Usuario: '+oUsuarioLogado.nome +', não tem permissão de acesso', mtWarning, [mbOK], 0);
+    end;
+
   Finally
-    frmSelecionarData.Release;
-    frmRelVendaPorData.Release;
+    if Assigned(frmSelecionarData) then
+      frmSelecionarData.Release;
+    if Assigned(frmRelVendaPorData) then
+      frmRelVendaPorData.Release;
   End;
 end;
 
@@ -242,6 +268,7 @@ begin
       TAcaoAcesso.CriarAcoes(TfrmRelCadProdutoComGrupoCategoria,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmUsuarioVsAcoes, dtmPrincipal.ConexaoDB);
 
       TAcaoAcesso.PreencherUsuariosVSAcoes(dtmPrincipal.ConexaoDB);
 
@@ -300,13 +327,23 @@ var form: TForm;
 begin
 	try
     form := aNomeForm.Create(Application);
-    for i := 0 to form.ComponentCount -1 do
+    if TfrmTelaHeranca.TenhoAcesso(oUsuarioLogado.codigo, form.Name, dtmPrincipal.ConexaoDB) then
     begin
-      TRLReport(form.Components[i]).PreviewModal;
-      Break;
+    	for i := 0 to form.ComponentCount -1 do
+    	begin
+      	if form.Components[i] is TRLReport then
+      		begin
+      			TRLReport(form.Components[i]).PreviewModal;
+      			Break;
+        	end;
+    	end;
+    end
+    else begin
+    	MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso', mtWarning, [mbOK], 0);
     end;
-  finally
 
-  end;
+  finally
+    if Assigned(form) then
+    end;form.Release;
 end;
 end.

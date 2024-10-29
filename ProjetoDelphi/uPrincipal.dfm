@@ -78,6 +78,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ROCARUSURIO1: TMenuItem
         Caption = 'TROCAR USU'#193'RIO'
+        OnClick = ROCARUSURIO1Click
       end
       object mnuFechar: TMenuItem
         Caption = 'FECHAR'
