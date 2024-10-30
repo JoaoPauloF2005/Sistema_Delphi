@@ -40,7 +40,8 @@ uses
   cArquivoIni in 'classes\cArquivoIni.pas',
   cAcaoAcesso in 'classes\cAcaoAcesso.pas',
   uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso},
-  uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes};
+  uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes},
+  uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule};
 
 {$R *.res}
 
@@ -48,5 +49,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TDTMGrafico, DTMGrafico);
   Application.Run;
 end.

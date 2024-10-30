@@ -1,7 +1,7 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,4,1,1,0,0,{{40,0},{67,11},{'Override'}},
-File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,34,1,1,0,0,{{58,0},{86,11},{'Override'}},
-File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,148,1,1,0,0,{{63,0},{93,11},{'Override'}},{1,97,1}
+File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,4,1,1,0,0,{{40,0}
+File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,34,1,1,0,0,{{58,0}
+File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,148,1,1,0,0,{{63,0}
 File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas',0,1,161,34,169,0,0,,
 File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,7316,50,7330,0,0,,
 File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,5898,1,5924,0,0,{{1656,4}
@@ -12,29 +12,47 @@ File_9=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\c
 File_10=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas',0,1,303,15,325,0,0,,{1
 
 [Modules]
-Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
-Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas
-Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas
-Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas
-Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelProVenda.pas
-Module6=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas
-Module7=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas
-Module8=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas
-Module9=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas
-Module10=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas
-Module11=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
-Module12=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
-Count=13
+Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
+Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas
+Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
+Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uLogin.pas
+Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
+Module6=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+Module7=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas
+Module8=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas
+Module9=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas
+Module10=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelProVenda.pas
+Module11=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas
+Module12=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas
+Module13=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas
+Module14=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas
+Module15=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas
+Count=16
 EditWindowCount=1
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas]
+ModuleType=TSourceModule
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas]
+ModuleType=TSourceModule
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas]
+ModuleType=TSourceModule
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas]
+ModuleType=TSourceModule
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uLogin.pas]
+ModuleType=TSourceModule
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadUsuario.pas]
 ModuleType=TSourceModule
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas]
@@ -61,15 +79,9 @@ ModuleType=TSourceModule
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas]
-ModuleType=TSourceModule
-
 [EditWindow0]
-ViewCount=13
-CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
+ViewCount=16
+CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
 View0=0
 View1=1
 View2=2
@@ -83,6 +95,9 @@ View9=9
 View10=10
 View11=11
 View12=12
+View13=13
+View14=14
+View15=15
 PercentageSizes=1
 Create=1
 Visible=1
@@ -117,11 +132,11 @@ CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
 CursorX=36
 CursorY=74
-TopLine=52
+TopLine=25
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=Borland.FormDesignerView
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
 
 [View1]
 CustomEditViewType=TEditView
@@ -147,6 +162,17 @@ EditViewName=Borland.FormDesignerView
 
 [View3]
 CustomEditViewType=TEditView
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uLogin.pas
+CursorX=1
+CursorY=1
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=Borland.FormDesignerView
+
+[View4]
+CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
 CursorX=11
 CursorY=247
@@ -156,7 +182,7 @@ Elisions={{81,3},{84,13},{'OBSERVAÇÕES'}}{{210,0},{225,11},{'MÉTODOS VIRTUAIS
 Bookmarks=
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
 
-[View4]
+[View5]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadCliente.pas
 CursorX=1
@@ -167,7 +193,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View5]
+[View6]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadClienteFicha.pas
 CursorX=1
@@ -178,7 +204,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View6]
+[View7]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProduto.pas
 CursorX=1
@@ -189,7 +215,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View7]
+[View8]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCadProdutoComGrupoCategoria.pas
 CursorX=1
@@ -200,7 +226,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View8]
+[View9]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelCategoria.pas
 CursorX=1
@@ -211,7 +237,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View9]
+[View10]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelProVenda.pas
 CursorX=1
@@ -222,7 +248,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View10]
+[View11]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uRelVendaPorData.pas
 CursorX=1
@@ -233,7 +259,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View11]
+[View12]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio\uSelecionarData.pas
 CursorX=1
@@ -244,16 +270,38 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View12]
+[View13]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-CursorX=46
-CursorY=287
-TopLine=240
+CursorX=65
+CursorY=204
+TopLine=186
 LeftCol=1
 Elisions=
-Bookmarks={1,308,1}{2,308,1}{3,212,2}
+Bookmarks={1,308,1}{2,308,1}{3,212,1}
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
+
+[View14]
+CustomEditViewType=TEditView
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas
+CursorX=3
+CursorY=14
+TopLine=10
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas
+
+[View15]
+CustomEditViewType=TEditView
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
+CursorX=1
+CursorY=1
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=Borland.FormDesignerView
 
 [UndockedDesigner]
 Count=0
@@ -511,11 +559,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=3876
+Height=7151
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=3876
+ClientHeight=7151
 TBDockHeight=5959
 LRDockWidth=2510
 Dockable=1
@@ -735,11 +783,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=3876
+Height=7151
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=3876
+ClientHeight=7151
 TBDockHeight=4893
 LRDockWidth=7151
 Dockable=1
@@ -818,11 +866,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=3876
+Height=7151
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=3876
+ClientHeight=7151
 TBDockHeight=4893
 LRDockWidth=5307
 Dockable=1

@@ -2,8 +2,8 @@ object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'Menu Principal'
-  ClientHeight = 348
-  ClientWidth = 732
+  ClientHeight = 645
+  ClientWidth = 1110
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,13 +20,107 @@ object frmPrincipal: TfrmPrincipal
   TextHeight = 13
   object StbPrincipal: TStatusBar
     Left = 0
-    Top = 329
-    Width = 732
+    Top = 626
+    Width = 1110
     Height = 19
     Panels = <
       item
         Width = 150
       end>
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 1110
+    Height = 46
+    Align = alTop
+    Alignment = taLeftJustify
+    TabOrder = 1
+    object Label1: TLabel
+      Left = 5
+      Top = 9
+      Width = 122
+      Height = 25
+      Caption = 'DASHBOARD'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Roboto'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object GridPanel1: TGridPanel
+    Left = 0
+    Top = 46
+    Width = 1110
+    Height = 580
+    Align = alClient
+    ColumnCollection = <
+      item
+        Value = 50.000000000000000000
+      end
+      item
+        Value = 50.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = DBChart1
+        Row = 0
+      end>
+    RowCollection = <
+      item
+        Value = 50.000000000000000000
+      end
+      item
+        Value = 50.000000000000000000
+      end>
+    TabOrder = 2
+    object DBChart1: TDBChart
+      Left = 1
+      Top = 1
+      Width = 554
+      Height = 289
+      Title.Text.Strings = (
+        'Produto em Estoque')
+      Align = alClient
+      TabOrder = 0
+      DefaultCanvas = 'TGDIPlusCanvas'
+      ColorPaletteIndex = 13
+      object Series1: TBarSeries
+        Marks.Brush.Gradient.Colors = <
+          item
+            Color = clRed
+          end
+          item
+            Color = 819443
+            Offset = 0.067915690866510540
+          end
+          item
+            Color = clYellow
+            Offset = 1.000000000000000000
+          end>
+        Marks.Brush.Gradient.Direction = gdTopBottom
+        Marks.Brush.Gradient.EndColor = clYellow
+        Marks.Brush.Gradient.MidColor = 819443
+        Marks.Brush.Gradient.StartColor = clRed
+        Marks.Brush.Gradient.Visible = True
+        Marks.Font.Color = 159
+        Marks.Font.Name = 'Tahoma'
+        Marks.Font.Style = [fsBold, fsItalic]
+        Marks.Frame.Color = 33023
+        Marks.RoundSize = 14
+        DataSource = DTMGrafico.QryProdutoEstoque
+        Title = 'ProdutoEstoque'
+        XLabelsSource = 'Label'
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Bar'
+        YValues.Order = loNone
+        YValues.ValueSource = 'Value'
+      end
+    end
   end
   object mainPrincipal: TMainMenu
     Left = 689

@@ -5,7 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
-  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport;
+  Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport, Vcl.ExtCtrls, Vcl.StdCtrls, VclTee.TeeGDIPlus,
+  Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
+  VCLTee.Series;
 
 
 type
@@ -38,6 +40,11 @@ type
     USURIOSVSAES1: TMenuItem;
     N7: TMenuItem;
     ROCARUSURIO1: TMenuItem;
+    Panel1: TPanel;
+    Label1: TLabel;
+    GridPanel1: TGridPanel;
+    DBChart1: TDBChart;
+    Series1: TBarSeries;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -75,9 +82,8 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico;
 {$R *.dfm}
-
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
 begin
@@ -182,7 +188,6 @@ procedure TfrmPrincipal.ALTERARSENHA1Click(Sender: TObject);
 begin
   CriarForm(TfrmAlterarSenha);
 end;
-
 
 procedure TfrmPrincipal.AOACESSO1Click(Sender: TObject);
 begin
@@ -298,7 +303,6 @@ begin
   //Close;
   Application.Terminate;
 end;
-
 
 procedure TfrmPrincipal.CriarForm(aNomeForm: TFormClass);
 var form: TForm;
