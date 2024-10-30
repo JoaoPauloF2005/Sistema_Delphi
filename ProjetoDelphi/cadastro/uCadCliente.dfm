@@ -1,30 +1,30 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 451
+  ClientHeight = 388
   ClientWidth = 982
   Position = poDesktopCenter
   ExplicitWidth = 988
-  ExplicitHeight = 480
+  ExplicitHeight = 417
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
     Width = 982
-    Height = 396
+    Height = 333
     ActivePage = tabManutencao
     ExplicitWidth = 982
-    ExplicitHeight = 396
+    ExplicitHeight = 333
     inherited tabListagem: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
       ExplicitWidth = 974
-      ExplicitHeight = 368
+      ExplicitHeight = 305
       inherited pnlListagemTopo: TPanel
         Width = 974
         ExplicitWidth = 974
       end
       inherited grdListagem: TDBGrid
         Width = 974
-        Height = 305
+        Height = 242
         DataSource = dtsListagem
         Columns = <
           item
@@ -39,52 +39,100 @@ inherited frmCadCliente: TfrmCadCliente
           end
           item
             Expanded = False
-            FieldName = 'cep'
+            FieldName = 'tipoPessoa'
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cpfCnpj'
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'endereco'
             Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cidade'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'bairro'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'estado'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cep'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'telefone'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'email'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'dataNascimento'
+            Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
       ExplicitLeft = 4
-      ExplicitTop = 22
+      ExplicitTop = 24
       ExplicitWidth = 974
-      ExplicitHeight = 368
+      ExplicitHeight = 305
       object Label1: TLabel
-        Left = 611
-        Top = 80
+        Left = 753
+        Top = 125
         Width = 19
         Height = 13
         Caption = 'CEP'
       end
       object Label2: TLabel
-        Left = 611
-        Top = 232
+        Left = 753
+        Top = 233
         Width = 42
         Height = 13
         Caption = 'Telefone'
       end
       object Label3: TLabel
-        Left = 11
-        Top = 280
+        Left = 611
+        Top = 130
         Width = 81
         Height = 13
         Caption = 'Data Nascimento'
       end
       object Label4: TLabel
         Left = 611
-        Top = 183
+        Top = 233
         Width = 33
         Height = 13
         Caption = 'Estado'
       end
+      object TLabel
+        Left = 611
+        Top = 77
+        Width = 20
+        Height = 13
+        Caption = 'Tipo'
+      end
       object edtNome: TLabeledEdit
         Left = 11
-        Top = 96
+        Top = 93
         Width = 579
         Height = 21
         EditLabel.Width = 27
@@ -108,18 +156,18 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 0
       end
       object edtCEP: TMaskEdit
-        Left = 611
-        Top = 96
-        Width = 248
+        Left = 753
+        Top = 144
+        Width = 130
         Height = 21
         EditMask = '99.999-999;1;_'
         MaxLength = 10
-        TabOrder = 2
+        TabOrder = 6
         Text = '  .   -   '
       end
       object edtEndereco: TLabeledEdit
         Left = 11
-        Top = 150
+        Top = 197
         Width = 579
         Height = 21
         BiDiMode = bdLeftToRight
@@ -130,11 +178,11 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 3
+        TabOrder = 7
       end
       object edtCidade: TLabeledEdit
         Left = 11
-        Top = 202
+        Top = 249
         Width = 579
         Height = 21
         BiDiMode = bdLeftToRight
@@ -145,21 +193,21 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 5
+        TabOrder = 9
       end
       object edtTelefone: TMaskEdit
-        Left = 611
-        Top = 247
-        Width = 248
+        Left = 755
+        Top = 249
+        Width = 127
         Height = 21
         EditMask = '(99) 9999-9999;1;_'
         MaxLength = 14
-        TabOrder = 8
+        TabOrder = 11
         Text = '(  )     -    '
       end
       object edtEmail: TLabeledEdit
         Left = 11
-        Top = 247
+        Top = 144
         Width = 579
         Height = 21
         BiDiMode = bdLeftToRight
@@ -170,31 +218,31 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 7
+        TabOrder = 4
       end
       object edtDataNascimento: TDateEdit
-        Left = 11
-        Top = 298
-        Width = 121
+        Left = 611
+        Top = 144
+        Width = 127
         Height = 21
         ClickKey = 114
         DialogTitle = 'Selecione a Data'
         NumGlyphs = 2
         CalendarStyle = csDialog
-        TabOrder = 9
+        TabOrder = 5
       end
       object edtEstado: TComboBox
         Left = 611
-        Top = 202
-        Width = 248
+        Top = 249
+        Width = 127
         Height = 21
         Style = csDropDownList
-        TabOrder = 6
+        TabOrder = 10
       end
       object edtBairro: TLabeledEdit
         Left = 611
-        Top = 150
-        Width = 248
+        Top = 197
+        Width = 272
         Height = 21
         BiDiMode = bdLeftToRight
         EditLabel.Width = 28
@@ -204,14 +252,34 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 4
+        TabOrder = 8
+      end
+      object edtcpfCnpj: TLabeledEdit
+        Left = 753
+        Top = 93
+        Width = 130
+        Height = 21
+        EditLabel.Width = 48
+        EditLabel.Height = 13
+        EditLabel.Caption = 'CPF/CNPJ'
+        MaxLength = 60
+        TabOrder = 3
+        OnChange = edtcpfCnpjChange
+      end
+      object edttipoPessoa: TComboBox
+        Left = 611
+        Top = 93
+        Width = 127
+        Height = 21
+        Style = csDropDownList
+        TabOrder = 2
       end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 396
+    Top = 333
     Width = 982
-    ExplicitTop = 396
+    ExplicitTop = 333
     ExplicitWidth = 982
     inherited btnFechar: TBitBtn
       Left = 889
@@ -225,6 +293,8 @@ inherited frmCadCliente: TfrmCadCliente
     SQL.Strings = (
       'select clienteId,'
       #9#9'nome,'
+      '                                tipoPessoa,'
+      '                                cpfCnpj,'
       #9#9'endereco,'
       #9#9'cidade,'
       #9#9'bairro,'
@@ -246,8 +316,18 @@ inherited frmCadCliente: TfrmCadCliente
       FieldName = 'nome'
       Size = 60
     end
+    object QryListagemtipoPessoa: TWideStringField
+      DisplayLabel = 'Tipo Pessoa'
+      FieldName = 'tipoPessoa'
+      Size = 10
+    end
+    object QryListagemcpfCnpj: TWideStringField
+      DisplayLabel = 'CPF/CNPJ'
+      FieldName = 'cpfCnpj'
+      Size = 14
+    end
     object QryListagemendereco: TWideStringField
-      DisplayLabel = 'Endereco'
+      DisplayLabel = 'Endere'#231'o'
       FieldName = 'endereco'
       Size = 60
     end
@@ -267,14 +347,14 @@ inherited frmCadCliente: TfrmCadCliente
       Size = 2
     end
     object QryListagemcep: TWideStringField
-      DisplayLabel = 'Cep'
+      DisplayLabel = 'CEP'
       FieldName = 'cep'
       Size = 10
     end
     object QryListagemtelefone: TWideStringField
       DisplayLabel = 'Telefone'
       FieldName = 'telefone'
-      Size = 14
+      Size = 100
     end
     object QryListagememail: TWideStringField
       DisplayLabel = 'Email'
@@ -282,7 +362,7 @@ inherited frmCadCliente: TfrmCadCliente
       Size = 100
     end
     object QryListagemdataNascimento: TDateTimeField
-      DisplayLabel = 'Data Nascimento'
+      DisplayLabel = 'Data de Nascimento'
       FieldName = 'dataNascimento'
     end
   end
