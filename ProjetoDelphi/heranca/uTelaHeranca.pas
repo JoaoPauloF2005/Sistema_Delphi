@@ -45,9 +45,8 @@ type
     procedure mskPesquisarChange(Sender: TObject);
     procedure grdListagemDblClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-      State: TGridDrawState);
     procedure btnPesquisarClick(Sender: TObject);
+    
   private
     // Variáveis e métodos privados
     // Métodos privados para controlar botões e abas
@@ -67,7 +66,7 @@ type
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; virtual;
     procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
     class function TenhoAcesso (aUsuarioId: Integer; aChave: string; aConexao: TZConnection): Boolean; static;
-  end;
+end;
 
 var
   frmTelaHeranca: TfrmTelaHeranca; // Instância do formulário
@@ -166,7 +165,6 @@ begin
   end;
 end;
 
-
 procedure TfrmTelaHeranca.DesabilitarEditPK;
 var i:Integer;
 begin
@@ -189,7 +187,6 @@ begin
       TLabeledEdit(Components[i]).Text:=EmptyStr
     else if (Components[i] is TEdit) then
       TEdit(Components[i]).Text:=''
-
     else if (Components[i] is TMemo) then
       TMemo(Components[i]).Text:=''
      else if (Components[i] is TDBLookupComboBox) then
@@ -203,7 +200,6 @@ begin
 
     end;
 end;
-
 
 {$endregion}
 
@@ -246,7 +242,6 @@ begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
     Abort;
   end;
-
 end;
 
 // Ação do botão "Alterar" para modificar um registro existente
@@ -326,7 +321,6 @@ begin
   End;
 end;
 
-
 // Ação do botão "Fechar" para fechar o formulário
 procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
 begin
@@ -337,6 +331,7 @@ end;
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   QryListagem.Close; // Fecha a query
+  inherited
 end;
 
 // Ação executada ao criar o formulário
@@ -347,7 +342,7 @@ begin
   dtsListagem.DataSet:=QryListagem;
   grdListagem.DataSource:=dtsListagem;
   grdListagem.Options:=[dgTitles,dgIndicator,dgColumnResize,dgColLines,dgRowLines,dgTabs,dgRowSelect,dgAlwaysShowSelection,
-                        dgCancelOnExit,dgTitleClick,dgTitleHotTrack]
+                        dgCancelOnExit,dgTitleClick,dgTitleHotTrack];
 end;
 
 procedure TfrmTelaHeranca.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -380,29 +375,13 @@ begin
   Result := True;
 end;
 
-
 // Ação executada ao clicar no título de uma coluna no grid
 procedure TfrmTelaHeranca.grdListagemDblClick(Sender: TObject);
 begin
   btnAlterar.Click;
 end;
 
-procedure TfrmTelaHeranca.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-  State: TGridDrawState);
-begin
-  // Aplica a cor de fundo personalizada para linha selecionada
-  if gdSelected in State then
-    grdListagem.Canvas.Brush.Color := RGB(190, 223, 241)  // Beau Blue
-  else
-    grdListagem.Canvas.Brush.Color := clWindow;  // Cor padrão de fundo
-    grdListagem.Canvas.Font.Color := clBlack;   // Cor do texto preta
 
-  // Preenche o retângulo da célula
-  grdListagem.Canvas.FillRect(Rect);
-
-  // Exibe o texto da célula alinhado
-  grdListagem.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
-end;
 
 procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
 begin
@@ -422,7 +401,5 @@ begin
     if (Shift = [ssCtrl]) and (Key = 46) then
     	Key := 0;
 end;
-
-
 
 end .

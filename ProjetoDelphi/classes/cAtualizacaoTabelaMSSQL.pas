@@ -120,6 +120,7 @@ begin
   		'CREATE TABLE clientes( '+
     	'clienteId int IDENTITY(1,1) NOT NULL, '+
     	'nome varchar(60) NULL, '+
+      'status varchar(20) null '+
       'tipoPessoa varchar(10) null '+
       'cpfCnpj varchar(14) null '+
      	'endereco varchar(60) null, '+

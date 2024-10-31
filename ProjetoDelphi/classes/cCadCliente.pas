@@ -21,6 +21,7 @@ type
     ConexaoDB: TZConnection;  // Armazena a conexão com o banco de dados.
     F_clienteId: Integer;      // ID do cliente.
     F_nome: String;            // Nome do cliente.
+    F_status: string;
     F_tipoPessoa: string;
     F_cpfCnpj: string;
     F_endereco: String;        // Endereço do cliente.
@@ -44,6 +45,7 @@ type
     // Propriedades para acessar e modificar os campos privados.
     property codigo: Integer read F_clienteId write F_clienteId;
     property nome: string read F_nome write F_nome;
+    property status: string read F_status write F_status;
     property tipoPessoa: string read F_tipoPessoa write F_tipoPessoa;
     property cpfCnpj: string read F_cpfCnpj write F_cpfCnpj;
     property endereco: string read F_endereco write F_endereco;
@@ -114,13 +116,14 @@ begin
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('UPDATE clientes SET nome=:nome, tipoPessoa=:tipoPessoa, cpfCnpj=:cpfCnpj, endereco=:endereco, cidade=:cidade, ' +
+    Qry.SQL.Add('UPDATE clientes SET nome=:nome, status=:status, tipoPessoa=:tipoPessoa, cpfCnpj=:cpfCnpj, endereco=:endereco, cidade=:cidade, ' +
                 'bairro=:bairro, estado=:estado, cep=:cep, telefone=:telefone, ' +
                 'email=:email, dataNascimento=:dataNascimento WHERE clienteId=:clienteId');
 
     // Atribui valores aos parâmetros da query.
     Qry.ParamByName('clienteId').AsInteger := F_clienteId;
     Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('status').AsString := F_status;
     Qry.ParamByName('tipoPessoa').AsString := F_tipoPessoa;
     Qry.ParamByName('cpfCnpj').AsString := F_cpfCnpj;
     Qry.ParamByName('endereco').AsString := F_endereco;
@@ -153,12 +156,13 @@ begin
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('INSERT INTO clientes (nome, tipoPessoa, cpfCnpj, endereco, cidade, bairro, estado, cep, telefone, ' +
-                'email, datanascimento) VALUES (:nome, :tipoPessoa, :cpfCnpj, :endereco, :cidade, :bairro, :estado, ' +
+    Qry.SQL.Add('INSERT INTO clientes (nome, status, tipoPessoa, cpfCnpj, endereco, cidade, bairro, estado, cep, telefone, ' +
+                'email, datanascimento) VALUES (:nome, :status, :tipoPessoa, :cpfCnpj, :endereco, :cidade, :bairro, :estado, ' +
                 ':cep, :telefone, :email, :datanascimento)');
 
     // Define os valores dos parâmetros.
     Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('status').AsString := F_status;
     Qry.ParamByName('tipoPessoa').AsString := F_tipoPessoa;
     Qry.ParamByName('cpfCnpj').AsString := F_cpfCnpj;
     Qry.ParamByName('endereco').AsString := F_endereco;
@@ -200,6 +204,7 @@ begin
       // Atribui os valores retornados para os atributos da classe.
       F_clienteId := Qry.FieldByName('clienteId').AsInteger;
       F_nome := Qry.FieldByName('nome').AsString;
+      F_status := Qry.FieldByName('status').AsString;
       F_tipoPessoa := Qry.FieldByName('tipoPessoa').AsString;
       F_cpfCnpj := Qry.FieldByName('cpfCnpj').AsString;
       F_endereco := Qry.FieldByName('endereco').AsString;

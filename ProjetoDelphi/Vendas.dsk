@@ -12,21 +12,25 @@ File_9=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\relatorio
 
 [Modules]
 Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
-Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
 Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
-Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
-Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-Count=6
+Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas
+Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
+Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
+Module6=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
+Count=7
 EditWindowCount=1
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas]
 ModuleType=TSourceModule
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas]
+ModuleType=TSourceModule
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas]
 ModuleType=TSourceModule
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas]
@@ -39,7 +43,7 @@ ModuleType=TSourceModule
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=6
+ViewCount=7
 CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
 View0=0
 View1=1
@@ -47,6 +51,7 @@ View2=2
 View3=3
 View4=4
 View5=5
+View6=6
 PercentageSizes=1
 Create=1
 Visible=1
@@ -79,15 +84,26 @@ BottomMiddelPanelData=0000080001020200000009000000446F636B5369746530100000004772
 [View0]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
-CursorX=5
-CursorY=192
-TopLine=29
+CursorX=65
+CursorY=56
+TopLine=31
 LeftCol=1
 Elisions=
-Bookmarks={1,103,1}
-EditViewName=Borland.FormDesignerView
+Bookmarks={1,387,1}
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
 
 [View1]
+CustomEditViewType=TEditView
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+CursorX=19
+CursorY=325
+TopLine=285
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+
+[View2]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
 CursorX=1
@@ -98,18 +114,18 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
 
-[View2]
+[View3]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas
-CursorX=56
-CursorY=157
-TopLine=172
+CursorX=54
+CursorY=207
+TopLine=192
 LeftCol=1
-Elisions={{63,0},{73,11},{'Constructor and Destructor'}}
+Elisions=
 Bookmarks=
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadCliente.pas
 
-[View3]
+[View4]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
 CursorX=12
@@ -120,18 +136,18 @@ Elisions=
 Bookmarks={1,353,1}{2,353,1}{3,247,1}
 EditViewName=Borland.FormDesignerView
 
-[View4]
+[View5]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-CursorX=12
-CursorY=124
-TopLine=103
+CursorX=34
+CursorY=123
+TopLine=106
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
 
-[View5]
+[View6]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
 CursorX=1

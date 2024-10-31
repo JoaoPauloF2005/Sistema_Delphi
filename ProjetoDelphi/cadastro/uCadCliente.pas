@@ -17,16 +17,13 @@ type
     edtCidade: TLabeledEdit;
     edtEmail: TLabeledEdit;
     edtCEP: TMaskEdit;
-    Label1: TLabel;
-    edtTelefone: TMaskEdit;
-    Label2: TLabel;
-    Label3: TLabel;
     edtDataNascimento: TDateEdit;
     edtEstado: TComboBox;
     edtBairro: TLabeledEdit;
-    Label4: TLabel;
     edtcpfCnpj: TLabeledEdit;
     edttipoPessoa: TComboBox;
+    edtTelefone: TLabeledEdit;
+    cbStatus: TComboBox;
     QryListagemclienteId: TIntegerField;
     QryListagemnome: TWideStringField;
     QryListagemtipoPessoa: TWideStringField;
@@ -39,19 +36,39 @@ type
     QryListagemtelefone: TWideStringField;
     QryListagememail: TWideStringField;
     QryListagemdataNascimento: TDateTimeField;
+    QryListagemstatus: TWideStringField;
+    Panel1: TPanel;
+    Image1: TImage;
+    Label2: TLabel;
+    Image2: TImage;
+    Label5: TLabel;
+    Image3: TImage;
+    Label6: TLabel;
+    Image4: TImage;
+    Label7: TLabel;
+    Image5: TImage;
+    Label8: TLabel;
+
     procedure btnAlterarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure edtcpfCnpjChange(Sender: TObject);
-
+    procedure edttipoPessoaChange(Sender: TObject);
+    procedure edtcpfCnpjEnter(Sender: TObject);
+    procedure edtTelefoneChange(Sender: TObject);
+   
   private
-    { Private declarations }
-    oCliente:TCliente;
-    function Apagar:Boolean; override;
-    function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
-    function MascaraCpfCnpj(const AValue: string): string; // Adicione aqui
-
+    oCliente: TCliente;
+    function Apagar: Boolean; override;
+    function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; override;
+    function MascaraCnpj(const AValue: string): string;
+    function MascaraCpf(const AValue: string): string;
+    function SomenteNumeros(const AValue: string): string;
+    function MascaraTelefone(const AValue: string): string;
+    function ValidarCPF(const CPF: string): Boolean;
+    function ValidarCNPJ(const CNPJ: string): Boolean;
+    procedure CarregarImagemStatus(Status: string);
   public
     { Public declarations }
 
@@ -71,184 +88,328 @@ uses uDTMConexao;
 {$region 'Override'}
 function TfrmCadCliente.Apagar: Boolean;
 begin
-  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then begin
-     Result:=oCliente.Apagar;
-  end;
+  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
+    Result := oCliente.Apagar;
 end;
 
 function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
-  if edtClienteId.Text<>EmptyStr then
-     oCliente.codigo:=StrToInt(edtClienteId.Text)
-  else
-     oCliente.codigo:=0;
+  oCliente.codigo := StrToIntDef(edtClienteId.Text, 0);
+  oCliente.nome := edtNome.Text;
+  oCliente.status := cbStatus.Text;
+  oCliente.tipoPessoa := edttipoPessoa.Text;
+  oCliente.cpfCnpj := SomenteNumeros(edtcpfCnpj.Text);
+  oCliente.cep := edtCEP.Text;
+  oCliente.endereco := edtEndereco.Text;
+  oCliente.bairro := edtBairro.Text;
+  oCliente.cidade := edtCidade.Text;
+  oCliente.telefone := edtTelefone.Text;
+  oCliente.email := edtEmail.Text;
+  oCliente.estado := edtEstado.Text;
+  oCliente.dataNascimento := edtDataNascimento.Date;
 
-  oCliente.nome           :=edtNome.Text;
-  oCliente.tipoPessoa     :=edttipoPessoa.Text;
-  oCliente.cpfCnpj        :=edtcpfCnpj.Text;
-  oCliente.cep            :=edtCEP.Text;
-  oCliente.endereco       :=edtEndereco.Text;
-  oCliente.bairro         :=edtBairro.Text;
-  oCliente.cidade         :=edtCidade.Text;
-  oCliente.telefone       :=edtTelefone.Text;
-  oCliente.email          :=edtEmail.Text;
-  oCliente.estado					:=edtEstado.Text;
-  oCliente.dataNascimento :=edtDataNascimento.Date;
-
-  if (EstadoDoCadastro=ecInserir) then
-     Result:=oCliente.Inserir
-  else if (EstadoDoCadastro=ecAlterar) then
-     Result:=oCliente.Atualizar;
+  case EstadoDoCadastro of
+    ecInserir: Result := oCliente.Inserir;
+    ecAlterar: Result := oCliente.Atualizar;
+  end;
 end;
+
+procedure TfrmCadCliente.CarregarImagemStatus(Status: string);
+begin
+  if Status = 'Ativo' then
+    ImageStatus.Picture.LoadFromFile('Caminho\para\Ativo.png')
+  else if Status = 'Atenção' then
+    ImageStatus.Picture.LoadFromFile('Caminho\para\Atenção.png')
+  else if Status = 'Bloqueado' then
+    ImageStatus.Picture.LoadFromFile('Caminho\para\Bloqueado.png')
+  else if Status = 'Propecto' then
+    ImageStatus.Picture.LoadFromFile('Caminho\para\Propecto.png')
+  else if Status = 'Inativo' then
+    ImageStatus.Picture.LoadFromFile('Caminho\para\Inativo.png');
+end;
+
+
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
-begin
-  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then begin
-     edtClienteId.Text := IntToStr(oCliente.codigo);
-     edtNome.Text     := oCliente.nome;
-     edtTipoPessoa.Text := oCliente.tipoPessoa;
-     edtcpfCnpj.Text  := oCliente.cpfCnpj;
-     edtCEP.Text      := oCliente.cep;
-     edtEndereco.Text := oCliente.endereco;
-     edtBairro.Text   := oCliente.bairro;
-     edtCidade.Text   := oCliente.cidade;
-     edtTelefone.Text := oCliente.telefone;
-     edtEmail.Text    := oCliente.email;
-     edtEstado.Text		:= oCliente.estado;
-		 edtDataNascimento.Date := oCliente.dataNascimento;
+  begin
+  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
+  begin
+    edtClienteId.Text := IntToStr(oCliente.codigo);
+    edtNome.Text := oCliente.nome;
+    cbStatus.Text := oCliente.status;
+    edtTipoPessoa.Text := oCliente.tipoPessoa;
 
+    // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
+    if oCliente.cpfCnpj <> '' then
+    begin
+      if oCliente.tipoPessoa = 'Física' then
+        edtcpfCnpj.Text := MascaraCpf(oCliente.cpfCnpj)
+      else if oCliente.tipoPessoa = 'Jurídica' then
+        edtcpfCnpj.Text := MascaraCnpj(oCliente.cpfCnpj);
+    end
+    else
+    begin
+      edtcpfCnpj.Clear; // Ou você pode definir uma mensagem padrão
+    end;
+
+    edtCEP.Text := oCliente.cep;
+    edtEndereco.Text := oCliente.endereco;
+    edtBairro.Text := oCliente.bairro;
+    edtCidade.Text := oCliente.cidade;
+    edtTelefone.Text := oCliente.telefone;
+    edtEmail.Text := oCliente.email;
+    edtEstado.Text := oCliente.estado;
+    edtDataNascimento.Date := oCliente.dataNascimento;
   end
-  else begin
+  else
+  begin
     btnCancelar.Click;
     Abort;
   end;
 
   inherited;
-
 end;
 
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
   inherited;
-  edtDataNascimento.Date:=Date;
+  edtDataNascimento.Date := Date;
   edtNome.SetFocus;
 end;
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
-  if Assigned(oCliente) then
-     FreeAndNil(oCliente);
+  FreeAndNil(oCliente);
 end;
 
 procedure TfrmCadCliente.FormCreate(Sender: TObject);
 begin
   inherited;
-  oCliente:=TCliente.Create(dtmPrincipal.ConexaoDB);
+  oCliente := TCliente.Create(dtmPrincipal.ConexaoDB);
 
-  IndiceAtual:='nome';
+  // Inicializa ComboBoxes
+  with edttipoPessoa do
+  begin
+    Items.Add('Física');
+    Items.Add('Jurídica');
+  end;
 
-  edtTipoPessoa.Items.Add('Física');
-  edtTipoPessoa.Items.Add('Jurídica');
+  // Adiciona os estados
+  edtEstado.Items.AddStrings([
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO',
+    'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI',
+    'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+  ]);
 
+  cbStatus.Items.AddStrings([
+    'Ativo', 'Bloqueado', 'Atenção', 'Inativo', 'Propecto'
+  ]);
 
-    // Adicionando as siglas dos estados ao ComboBox
-  edtEstado.Items.Add('AC'); // Acre
-  edtEstado.Items.Add('AL'); // Alagoas
-  edtEstado.Items.Add('AP'); // Amapá
-  edtEstado.Items.Add('AM'); // Amazonas
-  edtEstado.Items.Add('BA'); // Bahia
-  edtEstado.Items.Add('CE'); // Ceará
-  edtEstado.Items.Add('DF'); // Distrito Federal
-  edtEstado.Items.Add('ES'); // Espírito Santo
-  edtEstado.Items.Add('GO'); // Goiás
-  edtEstado.Items.Add('MA'); // Maranhão
-  edtEstado.Items.Add('MT'); // Mato Grosso
-  edtEstado.Items.Add('MS'); // Mato Grosso do Sul
-  edtEstado.Items.Add('MG'); // Minas Gerais
-  edtEstado.Items.Add('PA'); // Pará
-  edtEstado.Items.Add('PB'); // Paraíba
-  edtEstado.Items.Add('PR'); // Paraná
-  edtEstado.Items.Add('PE'); // Pernambuco
-  edtEstado.Items.Add('PI'); // Piauí
-  edtEstado.Items.Add('RJ'); // Rio de Janeiro
-  edtEstado.Items.Add('RN'); // Rio Grande do Norte
-  edtEstado.Items.Add('RS'); // Rio Grande do Sul
-  edtEstado.Items.Add('RO'); // Rondônia
-  edtEstado.Items.Add('RR'); // Roraima
-  edtEstado.Items.Add('SC'); // Santa Catarina
-  edtEstado.Items.Add('SP'); // São Paulo
-  edtEstado.Items.Add('SE'); // Sergipe
-  edtEstado.Items.Add('TO'); // Tocantins
-
-  // Define o ComboBox como DropDownList para impedir edição
-  edtEstado.Style := csDropDownList;
-
+  edtEstado.Style := csDropDownList; // Impede edição
+  edtcpfCnpj.ReadOnly := True; // Bloqueia a edição inicialmente
 end;
+
+{$region 'Funções de Formatação'}
 
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
   Value: string; // Valor sem máscara
-  OldLength: Integer; // Comprimento do texto antes da máscara
-  CursorPos: Integer; // Posição do cursor
 begin
-  // Remove a máscara temporariamente
-  Value := StringReplace(edtcpfCnpj.Text, '.', '', [rfReplaceAll]);
-  Value := StringReplace(Value, '/', '', [rfReplaceAll]);
-  Value := StringReplace(Value, '-', '', [rfReplaceAll]);
+  inherited;
 
-  // Limita a entrada a 14 dígitos
-  if Length(Value) > 14 then
-    Value := Copy(Value, 1, 14);
+  // Remove a máscara e limita a 14 dígitos
+  Value := StringReplace(StringReplace(StringReplace(edtcpfCnpj.Text, '.', '', [rfReplaceAll]), '/', '', []), '-', '', []);
 
-  // Armazena a posição atual do cursor e o comprimento do texto
-  CursorPos := edtcpfCnpj.SelStart;
-  OldLength := Length(edtcpfCnpj.Text);
+  // Limita o número de dígitos conforme o tipo de pessoa
+  if edttipoPessoa.Text = 'Física' then
+  begin
+    if Length(Value) > 11 then
+      Value := Copy(Value, 1, 11);
+    edtcpfCnpj.Text := MascaraCpf(Value);
 
-  // Aplica a máscara enquanto o usuário digita
-  edtcpfCnpj.Text := MascaraCpfCnpj(Value);
+    // Valida o CPF apenas se estiver completo (11 dígitos)
+    if Length(Value) = 11 then
+    begin
+      if not ValidarCPF(Value) then
+        ShowMessage('CPF inválido!');
+    end
 
-  // Ajusta a posição do cursor
-  if CursorPos > Length(edtcpfCnpj.Text) then
-    CursorPos := Length(edtcpfCnpj.Text) // Ajusta se o cursor está além do novo texto
+  end
+  else if edttipoPessoa.Text = 'Jurídica' then
+  begin
+    if Length(Value) > 14 then
+      Value := Copy(Value, 1, 14);
+    edtcpfCnpj.Text := MascaraCnpj(Value);
+
+     // Valida o CNPJ apenas se estiver completo (14 dígitos)
+    if Length(Value) = 14 then
+    begin
+      if not ValidarCNPJ(Value) then
+        ShowMessage('CNPJ inválido!');
+    end;
+  end;
+
+  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text); // Ajusta a posição do cursor
+end;
+
+procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
+begin
+  if edttipoPessoa.ItemIndex = -1 then
+  begin
+    ShowMessage('Por favor, selecione primeiro o Tipo de Pessoa.');
+    edttipoPessoa.SetFocus; // Foco no Tipo de Pessoa
+  end;
+end;
+
+procedure TfrmCadCliente.edttipoPessoaChange(Sender: TObject);
+begin
+  edtcpfCnpj.ReadOnly := edttipoPessoa.ItemIndex = -1; // Bloqueia ou permite edição
+  if edtcpfCnpj.ReadOnly then
+    edtcpfCnpj.Clear; // Limpa o campo se estiver bloqueado
+end;
+
+function TfrmCadCliente.MascaraCpf(const AValue: string): string;
+begin
+  case Length(AValue) of
+    1..3: Result := AValue;
+    4..6: Result := Format('%s.%s', [Copy(AValue, 1, 3), Copy(AValue, 4, Length(AValue) - 3)]);
+    7..9: Result := Format('%s.%s.%s', [Copy(AValue, 1, 3), Copy(AValue, 4, 3), Copy(AValue, 7, Length(AValue) - 6)]);
+    10..11: Result := Format('%s.%s.%s-%s', [Copy(AValue, 1, 3), Copy(AValue, 4, 3), Copy(AValue, 7, 3), Copy(AValue, 10, 2)]);
+  end;
+end;
+
+function TfrmCadCliente.ValidarCPF(const CPF: string): Boolean;
+var
+  I, Soma, Resto, Digito1, Digito2: Integer;
+  Numero: string;
+begin
+  Result := False;
+  Numero := SomenteNumeros(CPF);
+
+   // Verifica se o CPF possui exatamente 11 dígitos e se não é uma sequência repetida
+  if (Length(Numero) <> 11) or (Numero = StringOfChar(Numero[1], 11)) then
+    Exit;
+
+  // Calcula o primeiro dígito verificador
+  Soma := 0;
+  for I := 1 to 9 do
+    Soma := Soma + StrToInt(Numero[I]) * (11 - I);
+  Resto := (Soma * 10) mod 11;
+  if (Resto =  10) then
+    Digito1 := 0
   else
-    CursorPos := CursorPos + (Length(edtcpfCnpj.Text) - OldLength); // Ajusta com base na diferença de comprimento
+    Digito1 := Resto;
 
-  // Move o cursor para a nova posição
-  edtcpfCnpj.SelStart := CursorPos;
+  // Calcula o segundo dígito verificador
+  Soma := 0;
+  for I := 1 to 10 do
+    Soma := Soma + StrToInt(Numero[I]) * (12 - I);
+  Resto := (Soma * 10) mod 11;
+  if (Resto = 10) then
+    Digito2 := 0
+  else
+    Digito2 := Resto;
+
+  // Verifica se os dígitos calculados correspondem aos dígitos informados
+  Result := (Digito1 = StrToInt(Numero[10])) and (Digito2 = StrToInt(Numero[11]));
 end;
 
 
-function TfrmCadCliente.MascaraCpfCnpj(const AValue: string): string;
+function TfrmCadCliente.ValidarCNPJ(const CNPJ: string): Boolean;
 var
-  I: Integer;  // Variável de controle para loops
+  I, Soma, Resto, Digito1, Digito2: Integer;
+  Numero: string;
+const
+  Peso1: array[1..12] of Integer = (5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2);
+  Peso2: array[1..13] of Integer = (6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2);
 begin
-  Result := '';  // Inicializa o resultado como uma string vazia
+  Result := False;
+  Numero := SomenteNumeros(CNPJ); // Remove caracteres não numéricos
 
-  // Remove caracteres não numéricos
+  // Verifica se o CNPJ possui exatamente 14 dígitos e se não é uma sequência repetida
+  if (Length(Numero) <> 14) or (Numero = StringOfChar(Numero[1], 14)) then
+    Exit;
+
+  // Calcula o primeiro dígito verificador
+  Soma := 0;
+  for I := 1 to 12 do
+    Soma := Soma + StrToInt(Numero[I]) * Peso1[I];
+  Resto := Soma mod 11;
+  if Resto < 2 then
+    Digito1 := 0
+  else
+    Digito1 := 11 - Resto;
+
+  // Calcula o segundo dígito verificador
+  Soma := 0;
+  for I := 1 to 13 do
+    Soma := Soma + StrToInt(Numero[I]) * Peso2[I];
+  Resto := Soma mod 11;
+  if Resto < 2 then
+    Digito2 := 0
+  else
+    Digito2 := 11 - Resto;
+
+  // Verifica se os dígitos calculados correspondem aos dígitos informados
+  Result := (Digito1 = StrToInt(Numero[13])) and (Digito2 = StrToInt(Numero[14]));
+end;
+
+
+function TfrmCadCliente.MascaraCnpj(const AValue: string): string;
+begin
+  case Length(AValue) of
+    1..2: Result := AValue;
+    3..5: Result := Format('%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, Length(AValue) - 2)]);
+    6..8: Result := Format('%s.%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, Length(AValue) - 5)]);
+    9..11: Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 8)]);
+    12..14: Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 2)]);
+  end;
+end;
+
+procedure TfrmCadCliente.edtTelefoneChange(Sender: TObject);
+begin
+  edtTelefone.Text := MascaraTelefone(edtTelefone.Text);
+  edtTelefone.SelStart := Length(edtTelefone.Text); // Ajusta a posição do cursor
+end;
+
+function TfrmCadCliente.MascaraTelefone(const AValue: string): string;
+var
+  ValorSemMascara: string;
+begin
+  ValorSemMascara := SomenteNumeros(AValue);
+
+  case Length(ValorSemMascara) of
+    10: // Formato fixo: (14) 3662-9252
+      Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, 4)]);
+
+    11: // Formato celular: (14) 98123-8367
+      Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 5), Copy(ValorSemMascara, 8, 4)]);
+
+    12: // Formato 0300: 0300 123 4566
+      Result := Format('%s %s %s', [Copy(ValorSemMascara, 1, 4), Copy(ValorSemMascara, 5, 3), Copy(ValorSemMascara, 8, 4)]);
+
+    else
+      Result := AValue; // Retorna sem formatação caso não corresponda a nenhum formato esperado
+  end;
+end;
+
+function TfrmCadCliente.SomenteNumeros(const AValue: string): string;
+var
+  I: Integer;
+begin
+  Result := ''; // Inicializa a string de resultado como vazia
+
+  // Percorre cada caractere da string
   for I := 1 to Length(AValue) do
   begin
-    if AValue[I] in ['0'..'9'] then
-      Result := Result + AValue[I];  // Concatena apenas os dígitos numéricos
-  end;
-
-  // Aplica a máscara com base no número de dígitos
-  case Length(Result) of
-    1..3: Result := Result;  // Apenas dígitos (sem máscara)
-    4..6: Result := Format('%s.%s', [Copy(Result, 1, 3), Copy(Result, 4, Length(Result) - 3)]);  // 3 dígitos + .
-    7..9: Result := Format('%s.%s.%s', [Copy(Result, 1, 3), Copy(Result, 4, 3), Copy(Result, 7, Length(Result) - 6)]);  // 6 dígitos + .
-    10..11: Result := Format('%s.%s.%s-%s', [Copy(Result, 1, 3), Copy(Result, 4, 3), Copy(Result, 7, 3), Copy(Result, 10, 2)]);  // CPF Completo
-    12..14: Result := Format('%s.%s.%s/%s-%s',
-      [Copy(Result, 1, 2),
-       Copy(Result, 3, 3),
-       Copy(Result, 6, 3),
-       Copy(Result, 9, 4),
-       Copy(Result, 13, 2)]);  // CNPJ Completo
+    // Verifica se o caractere é numérico e adiciona ao resultado
+    if CharInSet(AValue[I], ['0'..'9']) then
+      Result := Result + AValue[I];
   end;
 end;
-
-
-
+{$ENDREGION}
 end.
+
