@@ -29,10 +29,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     TabOrder = 0
     object tabListagem: TTabSheet
       Caption = 'Listagem'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
@@ -77,33 +73,37 @@ object frmTelaHeranca: TfrmTelaHeranca
         Width = 1016
         Height = 528
         Align = alClient
-        Color = clMenuText
-        FixedColor = clGray
-        GradientEndColor = clWhite
+        BorderStyle = bsNone
+        Color = clInfoText
+        FixedColor = clBlack
+        GradientEndColor = clGray
+        GradientStartColor = clGray
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindow
-        Font.Height = -11
-        Font.Name = 'Tahoma'
+        Font.Color = clNone
+        Font.Height = -12
+        Font.Name = 'Arial'
         Font.Style = []
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
         ParentFont = False
         TabOrder = 3
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWhite
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
+        TitleFont.Height = -12
+        TitleFont.Name = 'Arial'
+        TitleFont.Style = [fsBold]
+        OnDrawColumnCell = grdListagemDrawColumnCell
         OnDblClick = grdListagemDblClick
         OnTitleClick = grdListagemTitleClick
+        Columns = <
+          item
+            Expanded = False
+            Visible = True
+          end>
       end
     end
     object tabManutencao: TTabSheet
       Caption = 'Manuten'#231#227'o'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object pnlRodape: TPanel
@@ -354,6 +354,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Top = 34
   end
   object dtsListagem: TDataSource
+    DataSet = QryListagem
     Left = 820
     Top = 34
   end

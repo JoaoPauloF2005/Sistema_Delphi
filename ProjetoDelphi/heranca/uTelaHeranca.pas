@@ -46,6 +46,8 @@ type
     procedure grdListagemDblClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnPesquisarClick(Sender: TObject);
+    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
     
   private
     // Variáveis e métodos privados
@@ -381,7 +383,32 @@ begin
   btnAlterar.Click;
 end;
 
+procedure TfrmTelaHeranca.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  // Alterna a cor de fundo das linhas
+  if Odd(grdListagem.DataSource.DataSet.RecNo) then
+    grdListagem.Canvas.Brush.Color := clWhite // Cor cinza claro para linhas ímpares
+  else
+    grdListagem.Canvas.Brush.Color := $00E9E9E9; // Cor branca para linhas pares
 
+  // Verifica se a célula está selecionada
+  if (gdSelected in State) then
+  begin
+    grdListagem.Canvas.Brush.Color := clBlue; // Cor de fundo da célula selecionada
+    grdListagem.Canvas.Font.Style := [fsBold]; // Estilo em negrito para o texto selecionado
+  end
+  else
+  begin
+    grdListagem.Canvas.Font.Color := clBlack; // Cor do texto normal
+  end;
+
+  // Preenche o retângulo da célula
+  grdListagem.Canvas.FillRect(Rect);
+
+  // Desenha o texto na célula
+  grdListagem.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
 
 procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
 begin
