@@ -10,12 +10,9 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     Width = 982
     Height = 396
-    ActivePage = tabManutencao
     ExplicitWidth = 982
     ExplicitHeight = 396
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 974
       ExplicitHeight = 368
       inherited pnlListagemTopo: TPanel
@@ -29,25 +26,28 @@ inherited frmCadCategoria: TfrmCadCategoria
       inherited grdListagem: TDBGrid
         Width = 974
         Height = 305
+        BorderStyle = bsNone
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'categoriaId'
+            Title.Alignment = taCenter
             Width = 95
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
+            Title.Alignment = taCenter
             Width = 555
             Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 974
       ExplicitHeight = 368
       object edtCategoriaId: TLabeledEdit
@@ -107,8 +107,5 @@ inherited frmCadCategoria: TfrmCadCategoria
       FieldName = 'descricao'
       Size = 30
     end
-  end
-  inherited dtsListagem: TDataSource
-    DataSet = QryListagem
   end
 end

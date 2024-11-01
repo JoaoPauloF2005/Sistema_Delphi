@@ -72,24 +72,27 @@ object frmTelaHeranca: TfrmTelaHeranca
         Top = 63
         Width = 1016
         Height = 528
+        ParentCustomHint = False
         Align = alClient
-        BorderStyle = bsNone
-        Color = clInfoText
-        FixedColor = clBlack
+        Color = clBtnFace
+        DrawingStyle = gdsGradient
+        FixedColor = clWhite
         GradientEndColor = clGray
         GradientStartColor = clGray
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNone
-        Font.Height = -12
-        Font.Name = 'Arial'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
         Font.Style = []
-        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = False
         TabOrder = 3
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWhite
-        TitleFont.Height = -12
-        TitleFont.Name = 'Arial'
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
         TitleFont.Style = [fsBold]
         OnDrawColumnCell = grdListagemDrawColumnCell
         OnDblClick = grdListagemDblClick
@@ -356,6 +359,6 @@ object frmTelaHeranca: TfrmTelaHeranca
   object dtsListagem: TDataSource
     DataSet = QryListagem
     Left = 820
-    Top = 34
+    Top = 33
   end
 end

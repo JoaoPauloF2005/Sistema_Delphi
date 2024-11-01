@@ -10,12 +10,10 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   inherited pgcPrincipal: TPageControl
     Width = 756
     Height = 366
-    ActivePage = tabManutencao
+    ExplicitTop = -6
     ExplicitWidth = 756
     ExplicitHeight = 366
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 748
       ExplicitHeight = 338
       inherited pnlListagemTopo: TPanel
@@ -28,27 +26,31 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'acaoAcessoId'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
+            Title.Alignment = taCenter
             Width = 359
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'chave'
+            Title.Alignment = taCenter
             Width = 253
             Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 748
       ExplicitHeight = 338
       object edtAcaoAcessoId: TLabeledEdit
@@ -134,7 +136,6 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
     end
   end
   inherited dtsListagem: TDataSource
-    DataSet = QryListagem
     Left = 688
     Top = 38
   end

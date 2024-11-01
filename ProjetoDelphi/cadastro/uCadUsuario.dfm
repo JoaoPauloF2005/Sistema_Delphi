@@ -13,8 +13,6 @@ inherited frmCadUsuario: TfrmCadUsuario
     ExplicitWidth = 762
     ExplicitHeight = 316
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 754
       ExplicitHeight = 288
       inherited pnlListagemTopo: TPanel
@@ -27,21 +25,23 @@ inherited frmCadUsuario: TfrmCadUsuario
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'usuarioID'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
+            Title.Alignment = taCenter
             Width = 641
             Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 754
       ExplicitHeight = 288
       object edtUsuarioId: TLabeledEdit
@@ -122,7 +122,6 @@ inherited frmCadUsuario: TfrmCadUsuario
     end
   end
   inherited dtsListagem: TDataSource
-    DataSet = QryListagem
     Left = 673
     Top = 42
   end

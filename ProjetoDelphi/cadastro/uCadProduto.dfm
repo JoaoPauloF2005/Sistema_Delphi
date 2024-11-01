@@ -26,30 +26,40 @@ inherited frmCadProduto: TfrmCadProduto
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'produtoId'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'valor'
+            Title.Alignment = taCenter
             Width = 126
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'quantidade'
+            Title.Alignment = taCenter
             Width = 154
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'DescricaoCategoria'
+            Title.Alignment = taCenter
             Width = 313
             Visible = True
           end>
@@ -214,9 +224,6 @@ inherited frmCadProduto: TfrmCadProduto
       FieldName = 'DescricaoCategoria'
       Size = 30
     end
-  end
-  inherited dtsListagem: TDataSource
-    DataSet = QryListagem
   end
   object QryCategoria: TZQuery
     Connection = dtmPrincipal.ConexaoDB

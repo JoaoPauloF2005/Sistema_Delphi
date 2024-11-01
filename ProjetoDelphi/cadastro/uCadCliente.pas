@@ -61,7 +61,6 @@ type
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure grdListagemTitleClick(Column: TColumn);
-   
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -72,10 +71,8 @@ type
     function MascaraTelefone(const AValue: string): string;
     function ValidarCPF(const CPF: string): Boolean;
     function ValidarCNPJ(const CNPJ: string): Boolean;
-
   public
     { Public declarations }
-
   end;
 
 var
@@ -153,7 +150,6 @@ begin
   end;
 end;
 
-
 procedure TfrmCadCliente.grdListagemTitleClick(Column: TColumn);
 begin
   inherited;
@@ -170,9 +166,8 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     edtNome.Text := oCliente.nome;
     cbStatus.Text := oCliente.status;
     cbTipoPessoa.Text := oCliente.tipoPessoa;
-    edtcpfCnpj.Text := oCliente.cpfCnpj;
 
-    {// Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
+  // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
     if oCliente.cpfCnpj <> '' then
     begin
       if oCliente.tipoPessoa = 'Física' then
@@ -183,7 +178,7 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     else
     begin
       edtcpfCnpj.Clear;
-    end;}
+    end;
 
     edtCEP.Text := oCliente.cep;
     edtEndereco.Text := oCliente.endereco;
@@ -202,7 +197,6 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
 
   inherited;
 end;
-
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
@@ -348,7 +342,6 @@ begin
   Result := (Digito1 = StrToInt(Numero[10])) and (Digito2 = StrToInt(Numero[11]));
 end;
 
-
 function TfrmCadCliente.ValidarCNPJ(const CNPJ: string): Boolean;
 var
   I, Soma, Resto, Digito1, Digito2: Integer;
@@ -387,7 +380,6 @@ begin
   // Verifica se os dígitos calculados correspondem aos dígitos informados
   Result := (Digito1 = StrToInt(Numero[13])) and (Digito2 = StrToInt(Numero[14]));
 end;
-
 
 function TfrmCadCliente.MascaraCnpj(const AValue: string): string;
 begin
