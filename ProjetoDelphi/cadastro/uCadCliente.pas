@@ -60,7 +60,7 @@ type
     procedure edtTelefoneChange(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure grdListagemTitleClick(Column: TColumn);
+
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -119,24 +119,29 @@ procedure TfrmCadCliente.grdListagemDrawColumnCell(Sender: TObject; const Rect: 
   State: TGridDrawState);
 var
   IconIndex: Integer;
+  StatusValue: string;
 begin
-  if Column.FieldName = 'status' then
+  // Busca o valor do campo de status sem exibir o texto
+  StatusValue := QryListagem.FieldByName('status').AsString;
+
+  if Column.Index = 0 then // Supondo que a coluna de status seja a primeira
   begin
     // Define o índice do ícone com base no valor do campo Status
-    if Column.Field.AsString = 'Ativo' then
+    if StatusValue = 'Ativo' then
       IconIndex := 0 // Ícone verde
-    else if Column.Field.AsString = 'Atenção' then
+    else if StatusValue = 'Atenção' then
       IconIndex := 1 // Ícone amarelo
-    else if Column.Field.AsString = 'Bloqueado' then
+    else if StatusValue = 'Bloqueado' then
       IconIndex := 2 // Ícone vermelho
-    else if Column.Field.AsString = 'Prospecto' then
+    else if StatusValue = 'Prospecto' then
       IconIndex := 3 // Ícone azul
-    else if Column.Field.AsString = 'Inativo' then
-      IconIndex := 4 // Ícone preto
+    else if StatusValue = 'Inativo' then
+      IconIndex := 5 // Ícone preto
     else
       Exit; // Sai se o valor não corresponder a nenhum status
 
-    // Apaga o conteúdo da célula, garantindo que o texto não apareça
+    // Preenche o fundo da célula com a cor padrão do grid para remover a borda branca
+
     grdListagem.Canvas.FillRect(Rect);
 
     // Desenha o ícone no centro da célula
@@ -150,11 +155,6 @@ begin
   end;
 end;
 
-procedure TfrmCadCliente.grdListagemTitleClick(Column: TColumn);
-begin
-  inherited;
-
-end;
 
 {$endregion}
 
@@ -223,7 +223,6 @@ begin
     Items.Add('Jurídica');
   end;
 
-  // Adiciona os estados
   cbEstado.Items.AddStrings([
     'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO',
     'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI',
@@ -235,6 +234,9 @@ begin
   ]);
 
   edtcpfCnpj.ReadOnly := True; // Bloqueia a edição inicialmente
+
+  // Configura a coluna de status sem associar um campo
+  grdListagem.Columns[0].Width := ImageListStatus.Width + 4; // Ajusta a largura para caber o ícone
 end;
 
 {$region 'Funções de Formatação'}

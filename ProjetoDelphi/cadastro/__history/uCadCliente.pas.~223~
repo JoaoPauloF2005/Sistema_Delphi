@@ -60,7 +60,6 @@ type
     procedure edtTelefoneChange(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure grdListagemTitleClick(Column: TColumn);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -120,9 +119,6 @@ procedure TfrmCadCliente.grdListagemDrawColumnCell(Sender: TObject; const Rect: 
 var
   IconIndex: Integer;
 begin
-  // Preenche o retângulo da célula com a cor de fundo
-  grdListagem.Canvas.FillRect(Rect);
-
   if Column.FieldName = 'status' then
   begin
     // Define o índice do ícone com base no valor do campo Status
@@ -139,13 +135,12 @@ begin
     else
       Exit; // Sai se o valor não corresponder a nenhum status
 
-    // Desenha o ícone no centro da célula
-    ImageListStatus.Draw(grdListagem.Canvas,
-      Rect.Left + (Rect.Width - ImageListStatus.Width div ImageListStatus.Count) div 2,
-      Rect.Top + (Rect.Height - ImageListStatus.Height) div 2, IconIndex);
+    // Apaga o conteúdo da célula, garantindo que o texto não apareça
+    grdListagem.Canvas.FillRect(Rect);
 
-    // A seguir, não desenhe o texto padrão
-    Exit; // Sai do método aqui para não chamar o DefaultDrawColumnCell
+    // Desenha o ícone no centro da célula
+    ImageListStatus.Draw(grdListagem.Canvas, Rect.Left + (Rect.Width - ImageListStatus.Width) div 2,
+      Rect.Top + (Rect.Height - ImageListStatus.Height) div 2, IconIndex);
   end
   else
   begin
@@ -154,11 +149,6 @@ begin
   end;
 end;
 
-procedure TfrmCadCliente.grdListagemTitleClick(Column: TColumn);
-begin
-  inherited;
-
-end;
 
 {$endregion}
 
@@ -170,9 +160,8 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     edtNome.Text := oCliente.nome;
     cbStatus.Text := oCliente.status;
     cbTipoPessoa.Text := oCliente.tipoPessoa;
-    edtcpfCnpj.Text := oCliente.cpfCnpj;
 
-    {// Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
+  // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
     if oCliente.cpfCnpj <> '' then
     begin
       if oCliente.tipoPessoa = 'Física' then
@@ -183,7 +172,7 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     else
     begin
       edtcpfCnpj.Clear;
-    end;}
+    end;
 
     edtCEP.Text := oCliente.cep;
     edtEndereco.Text := oCliente.endereco;
@@ -240,6 +229,7 @@ begin
   ]);
 
   edtcpfCnpj.ReadOnly := True; // Bloqueia a edição inicialmente
+   grdListagem.Columns[0].ReadOnly := True; // Supondo que a coluna de status é a primeira
 end;
 
 {$region 'Funções de Formatação'}

@@ -60,8 +60,7 @@ type
     procedure edtTelefoneChange(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure grdListagemTitleClick(Column: TColumn);
-   
+    procedure grdListagemColEnter(Sender: TObject);
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -72,10 +71,8 @@ type
     function MascaraTelefone(const AValue: string): string;
     function ValidarCPF(const CPF: string): Boolean;
     function ValidarCNPJ(const CNPJ: string): Boolean;
-
   public
     { Public declarations }
-
   end;
 
 var
@@ -118,14 +115,13 @@ begin
   end;
 end;
 
+
+
 procedure TfrmCadCliente.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
 var
   IconIndex: Integer;
 begin
-  // Preenche o retângulo da célula com a cor de fundo
-  grdListagem.Canvas.FillRect(Rect);
-
   if Column.FieldName = 'status' then
   begin
     // Define o índice do ícone com base no valor do campo Status
@@ -142,13 +138,12 @@ begin
     else
       Exit; // Sai se o valor não corresponder a nenhum status
 
-    // Desenha o ícone no centro da célula
-    ImageListStatus.Draw(grdListagem.Canvas,
-      Rect.Left + (Rect.Width - ImageListStatus.Width div ImageListStatus.Count) div 2,
-      Rect.Top + (Rect.Height - ImageListStatus.Height) div 2, IconIndex);
+    // Apaga o conteúdo da célula, garantindo que o texto não apareça
+    grdListagem.Canvas.FillRect(Rect);
 
-    // A seguir, não desenhe o texto padrão
-    Exit; // Sai do método aqui para não chamar o DefaultDrawColumnCell
+    // Desenha o ícone no centro da célula
+    ImageListStatus.Draw(grdListagem.Canvas, Rect.Left + (Rect.Width - ImageListStatus.Width) div 2,
+      Rect.Top + (Rect.Height - ImageListStatus.Height) div 2, IconIndex);
   end
   else
   begin
@@ -157,12 +152,6 @@ begin
   end;
 end;
 
-
-procedure TfrmCadCliente.grdListagemTitleClick(Column: TColumn);
-begin
-  inherited;
-
-end;
 
 {$endregion}
 
@@ -174,9 +163,8 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     edtNome.Text := oCliente.nome;
     cbStatus.Text := oCliente.status;
     cbTipoPessoa.Text := oCliente.tipoPessoa;
-    edtcpfCnpj.Text := oCliente.cpfCnpj;
 
-    {// Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
+  // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
     if oCliente.cpfCnpj <> '' then
     begin
       if oCliente.tipoPessoa = 'Física' then
@@ -187,7 +175,7 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     else
     begin
       edtcpfCnpj.Clear;
-    end;}
+    end;
 
     edtCEP.Text := oCliente.cep;
     edtEndereco.Text := oCliente.endereco;
@@ -206,7 +194,6 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
 
   inherited;
 end;
-
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
@@ -245,6 +232,7 @@ begin
   ]);
 
   edtcpfCnpj.ReadOnly := True; // Bloqueia a edição inicialmente
+   grdListagem.Columns[0].ReadOnly := True; // Supondo que a coluna de status é a primeira
 end;
 
 {$region 'Funções de Formatação'}
@@ -352,7 +340,6 @@ begin
   Result := (Digito1 = StrToInt(Numero[10])) and (Digito2 = StrToInt(Numero[11]));
 end;
 
-
 function TfrmCadCliente.ValidarCNPJ(const CNPJ: string): Boolean;
 var
   I, Soma, Resto, Digito1, Digito2: Integer;
@@ -391,7 +378,6 @@ begin
   // Verifica se os dígitos calculados correspondem aos dígitos informados
   Result := (Digito1 = StrToInt(Numero[13])) and (Digito2 = StrToInt(Numero[14]));
 end;
-
 
 function TfrmCadCliente.MascaraCnpj(const AValue: string): string;
 begin

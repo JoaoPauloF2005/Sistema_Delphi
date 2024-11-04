@@ -10,33 +10,29 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 1081
     Height = 333
-    ExplicitWidth = 1091
+    ExplicitWidth = 1081
     ExplicitHeight = 333
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 1083
+      ExplicitWidth = 1073
       ExplicitHeight = 305
       inherited pnlListagemTopo: TPanel
         Width = 1073
-        ExplicitWidth = 1083
+        ExplicitWidth = 1073
       end
       inherited grdListagem: TDBGrid
         Width = 1073
         Height = 242
-        Color = clBtnFace
+        Anchors = [akLeft, akTop, akBottom]
+        Color = clWhite
         DataSource = dtsListagem
-        DrawingStyle = gdsGradient
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
+        FixedColor = clBlack
+        Font.Color = clBlack
+        ParentCtl3D = False
         Columns = <
           item
-            Color = clBackground
+            Alignment = taCenter
             Expanded = False
-            FieldName = 'status'
-            Title.Alignment = taCenter
-            Width = 27
+            Width = 19
             Visible = True
           end
           item
@@ -51,8 +47,13 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'nome'
             Title.Alignment = taCenter
-            Width = 299
             Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'status'
+            Title.Alignment = taCenter
+            Visible = False
           end
           item
             Alignment = taCenter
@@ -66,7 +67,6 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'cpfCnpj'
             Title.Alignment = taCenter
-            Width = 153
             Visible = True
           end
           item
@@ -74,7 +74,6 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'endereco'
             Title.Alignment = taCenter
-            Width = 224
             Visible = True
           end
           item
@@ -82,7 +81,6 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'cidade'
             Title.Alignment = taCenter
-            Width = 198
             Visible = True
           end
           item
@@ -90,7 +88,6 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'bairro'
             Title.Alignment = taCenter
-            Width = 279
             Visible = True
           end
           item
@@ -105,7 +102,6 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'cep'
             Title.Alignment = taCenter
-            Width = 75
             Visible = True
           end
           item
@@ -113,30 +109,27 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'telefone'
             Title.Alignment = taCenter
-            Width = 196
             Visible = True
           end
           item
             Alignment = taCenter
             Expanded = False
             FieldName = 'email'
-            Title.Alignment = taCenter
-            Width = 240
             Visible = True
           end
           item
             Alignment = taCenter
-            Color = clWhite
             Expanded = False
             FieldName = 'dataNascimento'
             Title.Alignment = taCenter
-            Width = 226
             Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 1083
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 1073
       ExplicitHeight = 305
       object Label1: TLabel
         Left = 753
@@ -182,7 +175,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Nome'
         MaxLength = 60
-        TabOrder = 1
+        TabOrder = 2
       end
       object edtClienteId: TLabeledEdit
         Left = 11
@@ -204,7 +197,7 @@ inherited frmCadCliente: TfrmCadCliente
         Height = 21
         EditMask = '99.999-999;1;_'
         MaxLength = 10
-        TabOrder = 6
+        TabOrder = 7
         Text = '  .   -   '
       end
       object edtEndereco: TLabeledEdit
@@ -220,7 +213,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 7
+        TabOrder = 8
       end
       object edtCidade: TLabeledEdit
         Left = 11
@@ -235,7 +228,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 9
+        TabOrder = 10
       end
       object edtEmail: TLabeledEdit
         Left = 11
@@ -250,7 +243,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 4
+        TabOrder = 5
       end
       object edtDataNascimento: TDateEdit
         Left = 611
@@ -261,14 +254,14 @@ inherited frmCadCliente: TfrmCadCliente
         DialogTitle = 'Selecione a Data'
         NumGlyphs = 2
         CalendarStyle = csDialog
-        TabOrder = 5
+        TabOrder = 6
       end
       object cbEstado: TComboBox
         Left = 611
         Top = 249
         Width = 127
         Height = 21
-        TabOrder = 10
+        TabOrder = 11
       end
       object edtBairro: TLabeledEdit
         Left = 611
@@ -283,7 +276,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentBiDiMode = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 8
+        TabOrder = 9
       end
       object edtcpfCnpj: TLabeledEdit
         Left = 753
@@ -295,7 +288,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Caption = 'CPF/CNPJ'
         MaxLength = 60
         NumbersOnly = True
-        TabOrder = 3
+        TabOrder = 4
         OnChange = edtcpfCnpjChange
         OnEnter = edtcpfCnpjEnter
       end
@@ -304,7 +297,7 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 93
         Width = 127
         Height = 21
-        TabOrder = 2
+        TabOrder = 3
         OnChange = cbTipoPessoaChange
       end
       object edtTelefone: TLabeledEdit
@@ -315,7 +308,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Width = 42
         EditLabel.Height = 13
         EditLabel.Caption = 'Telefone'
-        TabOrder = 11
+        TabOrder = 12
         OnChange = edtTelefoneChange
       end
       object cbStatus: TComboBox
@@ -323,7 +316,7 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 40
         Width = 127
         Height = 21
-        TabOrder = 12
+        TabOrder = 1
         OnChange = cbTipoPessoaChange
       end
     end
@@ -332,10 +325,10 @@ inherited frmCadCliente: TfrmCadCliente
     Top = 333
     Width = 1081
     ExplicitTop = 333
-    ExplicitWidth = 1091
+    ExplicitWidth = 1081
     inherited btnFechar: TBitBtn
       Left = 988
-      ExplicitLeft = 998
+      ExplicitLeft = 988
     end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
