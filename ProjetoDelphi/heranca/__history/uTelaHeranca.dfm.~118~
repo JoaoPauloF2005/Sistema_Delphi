@@ -336,8 +336,8 @@ object frmTelaHeranca: TfrmTelaHeranca
       Visible = False
     end
     object btnFechar: TBitBtn
-      Left = 901
-      Top = 2
+      Left = 910
+      Top = 6
       Width = 108
       Height = 36
       Anchors = [akTop, akRight]

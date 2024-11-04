@@ -48,6 +48,7 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure grdListagemColumnMoved(Sender: TObject; FromIndex, ToIndex: Integer);
     
   private
     // Variáveis e métodos privados
@@ -335,6 +336,7 @@ end;
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   QryListagem.Close; // Fecha a query
+  SalvarConfiguracaoColunas;
   inherited
 end;
 
@@ -366,6 +368,8 @@ begin
   ControlarIndiceTab(pgcPrincipal, 0);
   DesabilitarEditPK;
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, true);
+
+    CarregarConfiguracaoColunas;
 end;
 
 // Remover a implementação duplicada e incompleta
@@ -380,6 +384,12 @@ begin
 end;
 
 // Ação executada ao clicar no título de uma coluna no grid
+procedure TfrmTelaHeranca.grdListagemColumnMoved(Sender: TObject; FromIndex, ToIndex: Integer);
+begin
+  SalvarConfiguracaoColunas; // Salva a configuração das colunas sempre que uma coluna é movida
+end;
+
+
 procedure TfrmTelaHeranca.grdListagemDblClick(Sender: TObject);
 begin
   btnAlterar.Click;
@@ -431,40 +441,42 @@ begin
     	Key := 0;
 end;
 
+{$REGION 'Salvar configurações da coluna'}
 procedure TfrmTelaHeranca.SalvarConfiguracaoColunas;
 var
-  cArquivoIni: TArquivoIni;
   I: Integer;
 begin
-  cArquivoIni := TArquivoIni.Create(ExtractFilePath(Application.ExeName) + 'ConfigColunas.ini');
-  try
-    for I := 0 to grdListagem.Columns.Count - 1 do
-    begin
-      cArquivoIni.WriteInteger(Name, 'Coluna' + IntToStr(I) + '_Largura', grdListagem.Columns[I].Width);
-      cArquivoIni.WriteInteger(Name, 'Coluna' + IntToStr(I) + '_Posicao', grdListagem.Columns[I].Index);
-    end;
-  finally
-    cArquivoIni.Free;
+  for I := 0 to grdListagem.Columns.Count - 1 do
+  begin
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Nome', grdListagem.Columns[I].FieldName);
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Largura', IntToStr(grdListagem.Columns[I].Width));
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Posicao', IntToStr(grdListagem.Columns[I].Index));
   end;
 end;
 
 procedure TfrmTelaHeranca.CarregarConfiguracaoColunas;
 var
-  IniFile: TArquivoIni;
-  I, Largura, Posicao: Integer;
+  I, J, Largura, Posicao: Integer;
+  ColunaNome: string;
 begin
-  IniFile := TArquivoIni.Create(ExtractFilePath(Application.ExeName) + 'ConfigColunas.ini');
-  try
-    for I := 0 to grdListagem.Columns.Count - 1 do
-    begin
-      Largura := IniFile.ReadInteger(Name, 'Coluna' + IntToStr(I) + '_Largura', grdListagem.Columns[I].Width);
-      Posicao := IniFile.ReadInteger(Name, 'Coluna' + IntToStr(I) + '_Posicao', grdListagem.Columns[I].Index);
+  for I := 0 to grdListagem.Columns.Count - 1 do
+  begin
+    ColunaNome := TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Nome', grdListagem.Columns[I].FieldName);
+    Largura := StrToIntDef(TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Largura'), grdListagem.Columns[I].Width);
+    Posicao := StrToIntDef(TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Posicao'), grdListagem.Columns[I].Index);
 
-      grdListagem.Columns[I].Width := Largura;
-      grdListagem.Columns[I].Index := Posicao;
+    // Localiza a coluna correspondente pelo nome e aplica as configurações de largura e posição
+    for J := 0 to grdListagem.Columns.Count - 1 do
+    begin
+      if grdListagem.Columns[J].FieldName = ColunaNome then
+      begin
+        grdListagem.Columns[J].Width := Largura;
+        grdListagem.Columns[J].Index := Posicao;
+        Break;
+      end;
     end;
-  finally
-    IniFile.Free;
   end;
 end;
+{$ENDREGION}
+
 end .

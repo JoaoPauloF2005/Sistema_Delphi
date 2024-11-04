@@ -30,7 +30,9 @@ type
     btnNavigator: TDBNavigator; // Componente para navegação nos dados
     QryListagem: TZQuery; // Query que realiza operações no banco de dados
     dtsListagem: TDataSource; // DataSource que conecta os dados ao Grid
-    lblIndice: TLabel; // Rótulo para exibir o índice atual
+    lblIndice: TLabel;
+    pButtons: TPanel;
+    Splitter1: TSplitter; // Rótulo para exibir o índice atual
     // Declaração de métodos (procedures) que tratam eventos como cliques de botões
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);

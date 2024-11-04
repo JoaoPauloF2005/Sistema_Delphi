@@ -10,6 +10,7 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 1081
     Height = 333
+    ActivePage = tabManutencao
     ExplicitWidth = 1081
     ExplicitHeight = 333
     inherited tabListagem: TTabSheet
@@ -22,7 +23,6 @@ inherited frmCadCliente: TfrmCadCliente
       inherited grdListagem: TDBGrid
         Width = 1073
         Height = 242
-        Anchors = [akLeft, akTop, akBottom]
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack
@@ -67,6 +67,7 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'cpfCnpj'
             Title.Alignment = taCenter
+            Width = 144
             Visible = True
           end
           item
@@ -127,8 +128,6 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1073
       ExplicitHeight = 305
       object Label1: TLabel
@@ -326,21 +325,17 @@ inherited frmCadCliente: TfrmCadCliente
     Width = 1081
     ExplicitTop = 333
     ExplicitWidth = 1081
-    inherited btnFechar: TBitBtn
-      Left = 988
-      ExplicitLeft = 988
-    end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
-    object Panel1: TPanel
+    object Panel1: TPanel [1]
       Left = 676
       Top = 21
       Width = 307
       Height = 16
       AutoSize = True
       BevelOuter = bvNone
-      TabOrder = 7
+      TabOrder = 1
       object Image1: TImage
         Left = 0
         Top = 0
@@ -489,7 +484,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object Image4: TImage
-        Left = 182
+        Left = 184
         Top = 0
         Width = 16
         Height = 16
@@ -587,6 +582,9 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
     end
+    inherited btnFechar: TBitBtn
+      TabOrder = 2
+    end
   end
   inherited QryListagem: TZQuery
     SQL.Strings = (
@@ -629,6 +627,7 @@ inherited frmCadCliente: TfrmCadCliente
     object QryListagemcpfCnpj: TWideStringField
       DisplayLabel = 'CPF/CNPJ'
       FieldName = 'cpfCnpj'
+      OnGetText = QryListagemcpfCnpjGetText
       Size = 14
     end
     object QryListagemendereco: TWideStringField
@@ -679,7 +678,7 @@ inherited frmCadCliente: TfrmCadCliente
     Left = 769
     Top = 29
     Bitmap = {
-      494C010105000900040010001000FFFFFFFF2100FFFFFFFFFFFFFFFF424D3600
+      494C010105000900040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -947,6 +946,7 @@ inherited frmCadCliente: TfrmCadCliente
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000}
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000}
   end
 end

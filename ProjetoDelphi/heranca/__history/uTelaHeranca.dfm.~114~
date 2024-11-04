@@ -30,15 +30,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     ExplicitWidth = 1024
     object tabListagem: TTabSheet
       Caption = 'Listagem'
-      ExplicitLeft = 8
-      ExplicitTop = 22
-      object Splitter1: TSplitter
-        Left = 880
-        Top = 63
-        Width = 8
-        Height = 528
-        ExplicitLeft = 874
-      end
+      ExplicitWidth = 1016
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
@@ -81,10 +73,10 @@ object frmTelaHeranca: TfrmTelaHeranca
       object grdListagem: TDBGrid
         Left = 0
         Top = 63
-        Width = 880
+        Width = 900
         Height = 528
         ParentCustomHint = False
-        Align = alLeft
+        Align = alCustom
         Color = clBtnFace
         DrawingStyle = gdsGradient
         FixedColor = clWhite
@@ -115,12 +107,11 @@ object frmTelaHeranca: TfrmTelaHeranca
             Visible = True
           end>
       end
-      object pButtons: TPanel
-        Left = 892
+      object Panel2: TPanel
+        Left = 901
         Top = 63
-        Width = 130
+        Width = 121
         Height = 528
-        Align = alRight
         TabOrder = 4
         object btnAlterar: TBitBtn
           Tag = 99
@@ -336,8 +327,8 @@ object frmTelaHeranca: TfrmTelaHeranca
       Visible = False
     end
     object btnFechar: TBitBtn
-      Left = 901
-      Top = 2
+      Left = 910
+      Top = 6
       Width = 108
       Height = 36
       Anchors = [akTop, akRight]

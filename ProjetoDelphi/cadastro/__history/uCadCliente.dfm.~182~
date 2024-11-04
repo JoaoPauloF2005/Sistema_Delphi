@@ -1,28 +1,28 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientHeight = 388
-  ClientWidth = 1081
+  ClientWidth = 914
   Position = poDesktopCenter
-  ExplicitWidth = 1087
+  ExplicitWidth = 920
   ExplicitHeight = 417
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 1081
+    Width = 914
     Height = 333
+    ActivePage = tabManutencao
     ExplicitWidth = 1081
     ExplicitHeight = 333
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1073
       ExplicitHeight = 305
       inherited pnlListagemTopo: TPanel
-        Width = 1073
+        Width = 906
         ExplicitWidth = 1073
       end
       inherited grdListagem: TDBGrid
         Width = 1073
         Height = 242
-        Anchors = [akLeft, akTop, akBottom]
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack
@@ -67,6 +67,7 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'cpfCnpj'
             Title.Alignment = taCenter
+            Width = 144
             Visible = True
           end
           item
@@ -125,10 +126,14 @@ inherited frmCadCliente: TfrmCadCliente
             Visible = True
           end>
       end
+      inherited pButtons: TPanel
+        Left = 785
+        Height = 242
+        ExplicitLeft = 785
+        ExplicitHeight = 242
+      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1073
       ExplicitHeight = 305
       object Label1: TLabel
@@ -323,24 +328,24 @@ inherited frmCadCliente: TfrmCadCliente
   end
   inherited pnlRodape: TPanel
     Top = 333
-    Width = 1081
+    Width = 914
     ExplicitTop = 333
     ExplicitWidth = 1081
-    inherited btnFechar: TBitBtn
-      Left = 988
-      ExplicitLeft = 988
-    end
     inherited btnNavigator: TDBNavigator
+      Left = 0
+      Top = 6
       Hints.Strings = ()
+      ExplicitLeft = 0
+      ExplicitTop = 6
     end
-    object Panel1: TPanel
-      Left = 676
-      Top = 21
+    object Panel1: TPanel [1]
+      Left = 420
+      Top = 15
       Width = 307
       Height = 16
       AutoSize = True
       BevelOuter = bvNone
-      TabOrder = 7
+      TabOrder = 1
       object Image1: TImage
         Left = 0
         Top = 0
@@ -375,6 +380,7 @@ inherited frmCadCliente: TfrmCadCliente
           3EB13EA9DDA9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFF}
+        Transparent = True
       end
       object Label2: TLabel
         Left = 20
@@ -423,6 +429,7 @@ inherited frmCadCliente: TfrmCadCliente
           67AEAEBEDEDEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFF}
+        Transparent = True
       end
       object Label5: TLabel
         Left = 68
@@ -471,6 +478,7 @@ inherited frmCadCliente: TfrmCadCliente
           3939C9A3A3E6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFF}
+        Transparent = True
       end
       object Label6: TLabel
         Left = 131
@@ -486,7 +494,7 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
       object Image4: TImage
-        Left = 182
+        Left = 184
         Top = 0
         Width = 16
         Height = 16
@@ -519,6 +527,7 @@ inherited frmCadCliente: TfrmCadCliente
           FB403CFAADA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFF}
+        Transparent = True
       end
       object Label7: TLabel
         Left = 204
@@ -567,6 +576,7 @@ inherited frmCadCliente: TfrmCadCliente
           3E3E3EABABABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFF}
+        Transparent = True
       end
       object Label8: TLabel
         Left = 273
@@ -581,6 +591,10 @@ inherited frmCadCliente: TfrmCadCliente
         Font.Style = []
         ParentFont = False
       end
+    end
+    inherited btnFechar: TBitBtn
+      Left = 743
+      TabOrder = 2
     end
   end
   inherited QryListagem: TZQuery
@@ -624,6 +638,7 @@ inherited frmCadCliente: TfrmCadCliente
     object QryListagemcpfCnpj: TWideStringField
       DisplayLabel = 'CPF/CNPJ'
       FieldName = 'cpfCnpj'
+      OnGetText = QryListagemcpfCnpjGetText
       Size = 14
     end
     object QryListagemendereco: TWideStringField
@@ -674,7 +689,7 @@ inherited frmCadCliente: TfrmCadCliente
     Left = 769
     Top = 29
     Bitmap = {
-      494C010105000900040010001000FFFFFFFF2100FFFFFFFFFFFFFFFF424D3600
+      494C010105000900040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -942,6 +957,7 @@ inherited frmCadCliente: TfrmCadCliente
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000}
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000}
   end
 end
