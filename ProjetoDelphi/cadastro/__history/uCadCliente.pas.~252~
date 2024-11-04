@@ -60,6 +60,8 @@ type
     procedure edtTelefoneChange(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;
@@ -118,52 +120,47 @@ procedure TfrmCadCliente.grdListagemDrawColumnCell(Sender: TObject; const Rect: 
   State: TGridDrawState);
 var
   IconIndex: Integer;
-  FormattedValue: string;
+  StatusValue: string;
 begin
-  if Column.FieldName = 'status' then
+  // Chama o método herdado da tela de herança para garantir que as alterações sejam aplicadas
+  inherited grdListagemDrawColumnCell(Sender, Rect, DataCol, Column, State);
+
+  // Busca o valor do campo de status sem exibir o texto
+  StatusValue := QryListagem.FieldByName('status').AsString;
+
+  if Column.Index = 0 then // Supondo que a coluna de status seja a primeira
   begin
-    // Configuração de ícones conforme o status do cliente
-    if Column.Field.AsString = 'Ativo' then
-      IconIndex := 0
-    else if Column.Field.AsString = 'Atenção' then
-      IconIndex := 1
-    else if Column.Field.AsString = 'Bloqueado' then
-      IconIndex := 2
-    else if Column.Field.AsString = 'Prospecto' then
-      IconIndex := 3
-    else if Column.Field.AsString = 'Inativo' then
-      IconIndex := 4
+    // Define o índice do ícone com base no valor do campo Status
+    if StatusValue = 'Ativo' then
+      IconIndex := 0 // Ícone verde
+    else if StatusValue = 'Atenção' then
+      IconIndex := 1 // Ícone amarelo
+    else if StatusValue = 'Bloqueado' then
+      IconIndex := 2 // Ícone vermelho
+    else if StatusValue = 'Prospecto' then
+      IconIndex := 3 // Ícone azul
+    else if StatusValue = 'Inativo' then
+      IconIndex := 5 // Ícone preto
     else
-      Exit;
+      Exit; // Sai se o valor não corresponder a nenhum status
 
     grdListagem.Canvas.FillRect(Rect);
+
+    // Desenha o ícone no centro da célula
     ImageListStatus.Draw(grdListagem.Canvas, Rect.Left + (Rect.Width - ImageListStatus.Width) div 2,
       Rect.Top + (Rect.Height - ImageListStatus.Height) div 2, IconIndex);
   end
-  else if Column.FieldName = 'cpfCnpj' then
-  begin
-    // Aplica máscara ao CPF ou CNPJ conforme o tipo de pessoa
-    if QryListagemtipoPessoa.AsString = 'Física' then
-      FormattedValue := MascaraCpf(Column.Field.AsString)
-    else if QryListagemtipoPessoa.AsString = 'Jurídica' then
-      FormattedValue := MascaraCnpj(Column.Field.AsString)
-    else
-      FormattedValue := Column.Field.AsString;
-
-    grdListagem.Canvas.FillRect(Rect);
-
-  end
   else
   begin
+    // Desenha o conteúdo padrão da célula nas outras colunas
     TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
   end;
 end;
 
-
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
-  begin
+begin
   if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
   begin
     edtClienteId.Text := IntToStr(oCliente.codigo);
@@ -171,7 +168,7 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     cbStatus.Text := oCliente.status;
     cbTipoPessoa.Text := oCliente.tipoPessoa;
 
-  // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
+    // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
     if oCliente.cpfCnpj <> '' then
     begin
       if oCliente.tipoPessoa = 'Física' then
@@ -227,7 +224,6 @@ begin
     Items.Add('Jurídica');
   end;
 
-  // Adiciona os estados
   cbEstado.Items.AddStrings([
     'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO',
     'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI',
@@ -239,6 +235,9 @@ begin
   ]);
 
   edtcpfCnpj.ReadOnly := True; // Bloqueia a edição inicialmente
+
+  // Configura a coluna de status sem associar um campo
+  grdListagem.Columns[0].Width := ImageListStatus.Width + 4; // Ajusta a largura para caber o ícone
 end;
 
 {$region 'Funções de Formatação'}
@@ -247,51 +246,26 @@ procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
   Value: string; // Valor sem máscara
 begin
-  inherited;
+  Value := SomenteNumeros(edtcpfCnpj.Text); // Remove a máscara existente
 
-  // Remove a máscara e limita a 14 dígitos
-  Value := StringReplace(StringReplace(StringReplace(edtcpfCnpj.Text, '.', '', [rfReplaceAll]), '/', '', []), '-', '', []);
-
-  // Limita o número de dígitos conforme o tipo de pessoa
+  // Aplica a máscara conforme o tipo selecionado
   if cbTipoPessoa.Text = 'Física' then
-  begin
-    if Length(Value) > 11 then
-      Value := Copy(Value, 1, 11);
-    edtcpfCnpj.Text := MascaraCpf(Value);
-
-    // Valida o CPF apenas se estiver completo (11 dígitos)
-    if Length(Value) = 11 then
-    begin
-      if not ValidarCPF(Value) then
-        ShowMessage('CPF inválido!');
-    end
-
-  end
+    edtcpfCnpj.Text := MascaraCpf(Value)
   else if cbTipoPessoa.Text = 'Jurídica' then
-  begin
-    if Length(Value) > 14 then
-      Value := Copy(Value, 1, 14);
     edtcpfCnpj.Text := MascaraCnpj(Value);
 
-     // Valida o CNPJ apenas se estiver completo (14 dígitos)
-    if Length(Value) = 14 then
-    begin
-      if not ValidarCNPJ(Value) then
-        ShowMessage('CNPJ inválido!');
-    end;
-  end;
-
-  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text); // Ajusta a posição do cursor
+  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text); // Ajusta o cursor para o final do texto
 end;
 
 procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
 begin
-  if cbTipoPessoa.ItemIndex = -1 then
+  // Verifica se o tipo de pessoa já está selecionado e se o valor de CPF/CNPJ já está preenchido
+  if (cbTipoPessoa.ItemIndex = -1) or (Trim(cbTipoPessoa.Text) = '') then
   begin
     ShowMessage('Por favor, selecione primeiro o Tipo de Pessoa.');
     cbTipoPessoa.SetFocus; // Foco no Tipo de Pessoa
   end;
-end;
+end
 
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin
@@ -421,6 +395,22 @@ begin
     else
       Result := AValue; // Retorna sem formatação caso não corresponda a nenhum formato esperado
   end;
+end;
+
+procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+  if Sender.AsString <> '' then
+  begin
+    // Aplica a máscara conforme o tipo de pessoa na grid
+    if QryListagemtipoPessoa.AsString = 'Física' then
+      Text := MascaraCpf(Sender.AsString)
+    else if QryListagemtipoPessoa.AsString = 'Jurídica' then
+      Text := MascaraCnpj(Sender.AsString)
+    else
+      Text := Sender.AsString;
+  end
+  else
+    Text := ''; // Deixa vazio se não houver valor
 end;
 
 function TfrmCadCliente.SomenteNumeros(const AValue: string): string;

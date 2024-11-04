@@ -10,6 +10,7 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 1081
     Height = 333
+    ActivePage = tabManutencao
     ExplicitWidth = 1081
     ExplicitHeight = 333
     inherited tabListagem: TTabSheet
@@ -67,6 +68,7 @@ inherited frmCadCliente: TfrmCadCliente
             Expanded = False
             FieldName = 'cpfCnpj'
             Title.Alignment = taCenter
+            Width = 144
             Visible = True
           end
           item
@@ -629,6 +631,7 @@ inherited frmCadCliente: TfrmCadCliente
     object QryListagemcpfCnpj: TWideStringField
       DisplayLabel = 'CPF/CNPJ'
       FieldName = 'cpfCnpj'
+      OnGetText = QryListagemcpfCnpjGetText
       Size = 14
     end
     object QryListagemendereco: TWideStringField

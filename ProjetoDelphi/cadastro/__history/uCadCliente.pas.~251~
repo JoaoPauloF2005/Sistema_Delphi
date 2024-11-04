@@ -60,6 +60,7 @@ type
     procedure edtTelefoneChange(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 
   private
     oCliente: TCliente;
@@ -121,6 +122,9 @@ var
   IconIndex: Integer;
   StatusValue: string;
 begin
+  // Chama o método herdado da tela de herança para garantir que as alterações sejam aplicadas
+  inherited grdListagemDrawColumnCell(Sender, Rect, DataCol, Column, State);
+
   // Busca o valor do campo de status sem exibir o texto
   StatusValue := QryListagem.FieldByName('status').AsString;
 
@@ -136,12 +140,10 @@ begin
     else if StatusValue = 'Prospecto' then
       IconIndex := 3 // Ícone azul
     else if StatusValue = 'Inativo' then
-      IconIndex := 4 // Ícone preto
+      IconIndex := 5 // Ícone preto
     else
       Exit; // Sai se o valor não corresponder a nenhum status
 
-    // Preenche o fundo da célula com a cor padrão do grid para remover a borda branca
-    grdListagem.Canvas.Brush.Color := grdListagem.Color;
     grdListagem.Canvas.FillRect(Rect);
 
     // Desenha o ícone no centro da célula
@@ -155,11 +157,10 @@ begin
   end;
 end;
 
-
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
-  begin
+begin
   if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
   begin
     edtClienteId.Text := IntToStr(oCliente.codigo);
@@ -167,7 +168,7 @@ procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
     cbStatus.Text := oCliente.status;
     cbTipoPessoa.Text := oCliente.tipoPessoa;
 
-  // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
+    // Verifica se o cpfCnpj não está vazio antes de aplicar a máscara
     if oCliente.cpfCnpj <> '' then
     begin
       if oCliente.tipoPessoa = 'Física' then
@@ -245,41 +246,15 @@ procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
   Value: string; // Valor sem máscara
 begin
-  inherited;
+  Value := SomenteNumeros(edtcpfCnpj.Text); // Remove a máscara existente
 
-  // Remove a máscara e limita a 14 dígitos
-  Value := StringReplace(StringReplace(StringReplace(edtcpfCnpj.Text, '.', '', [rfReplaceAll]), '/', '', []), '-', '', []);
-
-  // Limita o número de dígitos conforme o tipo de pessoa
+  // Aplica a máscara conforme o tipo selecionado
   if cbTipoPessoa.Text = 'Física' then
-  begin
-    if Length(Value) > 11 then
-      Value := Copy(Value, 1, 11);
-    edtcpfCnpj.Text := MascaraCpf(Value);
-
-    // Valida o CPF apenas se estiver completo (11 dígitos)
-    if Length(Value) = 11 then
-    begin
-      if not ValidarCPF(Value) then
-        ShowMessage('CPF inválido!');
-    end
-
-  end
+    edtcpfCnpj.Text := MascaraCpf(Value)
   else if cbTipoPessoa.Text = 'Jurídica' then
-  begin
-    if Length(Value) > 14 then
-      Value := Copy(Value, 1, 14);
     edtcpfCnpj.Text := MascaraCnpj(Value);
 
-     // Valida o CNPJ apenas se estiver completo (14 dígitos)
-    if Length(Value) = 14 then
-    begin
-      if not ValidarCNPJ(Value) then
-        ShowMessage('CNPJ inválido!');
-    end;
-  end;
-
-  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text); // Ajusta a posição do cursor
+  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text); // Ajusta o cursor para o final do texto
 end;
 
 procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
@@ -419,6 +394,22 @@ begin
     else
       Result := AValue; // Retorna sem formatação caso não corresponda a nenhum formato esperado
   end;
+end;
+
+procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+  if Sender.AsString <> '' then
+  begin
+    // Aplica a máscara conforme o tipo de pessoa na grid
+    if QryListagemtipoPessoa.AsString = 'Física' then
+      Text := MascaraCpf(Sender.AsString)
+    else if QryListagemtipoPessoa.AsString = 'Jurídica' then
+      Text := MascaraCnpj(Sender.AsString)
+    else
+      Text := Sender.AsString;
+  end
+  else
+    Text := ''; // Deixa vazio se não houver valor
 end;
 
 function TfrmCadCliente.SomenteNumeros(const AValue: string): string;

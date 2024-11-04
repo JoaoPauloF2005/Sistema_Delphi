@@ -1,40 +1,55 @@
 inherited frmCadCategoria: TfrmCadCategoria
   Caption = 'Cadastro de Categorias'
+  ClientHeight = 451
+  ClientWidth = 982
   Position = poScreenCenter
+  ExplicitWidth = 988
+  ExplicitHeight = 480
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
+    Width = 982
+    Height = 396
+    ExplicitWidth = 982
+    ExplicitHeight = 396
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 1265
-      ExplicitHeight = 676
+      ExplicitWidth = 974
+      ExplicitHeight = 368
+      inherited pnlListagemTopo: TPanel
+        Width = 974
+        ExplicitWidth = 974
+      end
       inherited btnPesquisar: TButton
         Top = 20
         ExplicitTop = 20
       end
       inherited grdListagem: TDBGrid
+        Width = 974
+        Height = 305
+        BorderStyle = bsNone
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'categoriaId'
+            Title.Alignment = taCenter
             Width = 95
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
+            Title.Alignment = taCenter
             Width = 555
             Visible = True
           end>
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 1265
-      ExplicitHeight = 676
+      ExplicitWidth = 974
+      ExplicitHeight = 368
       object edtCategoriaId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -63,13 +78,17 @@ inherited frmCadCategoria: TfrmCadCategoria
     end
   end
   inherited pnlRodape: TPanel
+    Top = 396
+    Width = 982
+    ExplicitTop = 396
+    ExplicitWidth = 982
     inherited btnGravar: TBitBtn
       Left = 268
       ExplicitLeft = 268
     end
     inherited btnFechar: TBitBtn
-      Left = 1179
-      ExplicitLeft = 1179
+      Left = 888
+      ExplicitLeft = 888
     end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
@@ -88,8 +107,5 @@ inherited frmCadCategoria: TfrmCadCategoria
       FieldName = 'descricao'
       Size = 30
     end
-  end
-  inherited dtsListagem: TDataSource
-    DataSet = QryListagem
   end
 end

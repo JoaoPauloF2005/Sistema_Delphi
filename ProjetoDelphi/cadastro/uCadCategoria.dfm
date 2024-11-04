@@ -48,6 +48,8 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 974
       ExplicitHeight = 368
       object edtCategoriaId: TLabeledEdit

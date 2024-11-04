@@ -20,6 +20,8 @@ type
     procedure FormCreate(Sender : TObject);  // Evento ao criar o formulário
     procedure FormClose(Sender : TObject; var Action : TCloseAction);
     procedure btnAlterarClick(Sender : TObject);
+    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
 
   private
     { Declarações privadas }
@@ -64,6 +66,13 @@ begin
   else if (EstadoDoCadastro = ecAlterar) then
     Result := oCategoria.Atualizar;  // Se for para alterar, chama o método Atualizar
 end;
+procedure TfrmCadCategoria.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  inherited;
+
+end;
+
 {$ENDREGION}
 
 procedure TfrmCadCategoria.btnAlterarClick(Sender : TObject);

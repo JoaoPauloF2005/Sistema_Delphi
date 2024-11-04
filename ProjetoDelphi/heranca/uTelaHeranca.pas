@@ -395,8 +395,8 @@ begin
   // Verifica se a célula está selecionada
   if (gdSelected in State) then
   begin
-    grdListagem.Canvas.Brush.Color := RGB(165, 208, 247);; // Cor de fundo da célula selecionada
-    grdListagem.Canvas.Font.Style := [fsBold]; // Estilo em negrito para o texto selecionado
+    grdListagem.Canvas.Brush.Color := RGB(165, 208, 247);; // Cor de fundo da célula selecionada  [
+    grdListagem.Canvas.Font.Color := clBlack; // Mantém a cor do texto preta ao selecionar
   end
   else
   begin
