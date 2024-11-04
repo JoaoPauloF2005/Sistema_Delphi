@@ -1,0 +1,77 @@
+unit cArquivoIni;
+
+interface
+
+uses
+  System.Classes, System.SysUtils, System.IniFiles, Vcl.Forms;
+
+type
+  TArquivoIni = class
+  private
+    class function ArquivoIni: string; static;
+  public
+    class function LerIni(aSecao, aEntrada: String): String; static;
+    class procedure AtualizarIni(aSecao, aEntrada, aValor: String); static;
+    class function ReadInteger(aSecao, aEntrada: String; aDefault: Integer): Integer; static;
+    class procedure WriteInteger(aSecao, aEntrada: String; aValor: Integer); static;
+  end;
+
+implementation
+
+{ TArquivoIni }
+
+class function TArquivoIni.ArquivoIni: string;
+begin
+  Result := ChangeFileExt(Application.ExeName, '.INI');
+end;
+
+class function TArquivoIni.LerIni(aSecao, aEntrada: String): String;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(ArquivoIni);
+  try
+    Result := Ini.ReadString(aSecao, aEntrada, 'NAO ENCONTRADO');
+  finally
+    Ini.Free;
+  end;
+end;
+
+class procedure TArquivoIni.AtualizarIni(aSecao, aEntrada, aValor: String);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(ArquivoIni);
+  try
+    Ini.WriteString(aSecao, aEntrada, aValor);
+  finally
+    Ini.Free;
+  end;
+end;
+
+class function TArquivoIni.ReadInteger(aSecao, aEntrada: String; aDefault: Integer): Integer;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(ArquivoIni);
+  try
+    Result := Ini.ReadInteger(aSecao, aEntrada, aDefault);
+  finally
+    Ini.Free;
+  end;
+end;
+
+class procedure TArquivoIni.WriteInteger(aSecao, aEntrada: String; aValor: Integer);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(ArquivoIni);
+  try
+    Ini.WriteInteger(aSecao, aEntrada, aValor);
+  finally
+    Ini.Free;
+  end;
+end;
+
+end.
+

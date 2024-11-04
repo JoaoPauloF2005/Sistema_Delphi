@@ -7,8 +7,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit,
-  ZAbstractConnection, ZConnection;
-  
+  ZAbstractConnection, ZConnection, cArquivoIni;
+
 type
   // Definição de uma classe de formulário chamada TfrmTelaHeranca
   TfrmTelaHeranca = class(TForm)
@@ -48,6 +48,7 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure grdListagemColumnMoved(Sender: TObject; FromIndex, ToIndex: Integer);
     
   private
     // Variáveis e métodos privados
@@ -60,6 +61,8 @@ type
     function ExisteCampoObrigatorio: Boolean;
     procedure DesabilitarEditPK;
     procedure LimparEdits;
+    procedure CarregarConfiguracaoColunas;
+    procedure SalvarConfiguracaoColunas;
   public
     // Variáveis públicas
     IndiceAtual:string; // Variável para armazenar o índice atual de ordenação
@@ -77,7 +80,7 @@ implementation
 
 {$R *.dfm} // Diretiva que associa o arquivo de design visual (DFM) ao código
 
-uses uPrincipal;
+uses uPrincipal, IniFiles;
 
  		{$region 'OBSERVAÇÕES'}
  //TAG:1 - CHAVE PRIMARIA PK
@@ -333,6 +336,7 @@ end;
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   QryListagem.Close; // Fecha a query
+  SalvarConfiguracaoColunas;
   inherited
 end;
 
@@ -364,6 +368,8 @@ begin
   ControlarIndiceTab(pgcPrincipal, 0);
   DesabilitarEditPK;
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, btnNavigator, pgcPrincipal, true);
+
+    CarregarConfiguracaoColunas;
 end;
 
 // Remover a implementação duplicada e incompleta
@@ -378,6 +384,12 @@ begin
 end;
 
 // Ação executada ao clicar no título de uma coluna no grid
+procedure TfrmTelaHeranca.grdListagemColumnMoved(Sender: TObject; FromIndex, ToIndex: Integer);
+begin
+  SalvarConfiguracaoColunas; // Salva a configuração das colunas sempre que uma coluna é movida
+end;
+
+
 procedure TfrmTelaHeranca.grdListagemDblClick(Sender: TObject);
 begin
   btnAlterar.Click;
@@ -428,5 +440,43 @@ begin
     if (Shift = [ssCtrl]) and (Key = 46) then
     	Key := 0;
 end;
+
+{$REGION 'Salvar configurações da coluna'}
+procedure TfrmTelaHeranca.SalvarConfiguracaoColunas;
+var
+  I: Integer;
+begin
+  for I := 0 to grdListagem.Columns.Count - 1 do
+  begin
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Nome', grdListagem.Columns[I].FieldName);
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Largura', IntToStr(grdListagem.Columns[I].Width));
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Posicao', IntToStr(grdListagem.Columns[I].Index));
+  end;
+end;
+
+procedure TfrmTelaHeranca.CarregarConfiguracaoColunas;
+var
+  I, J, Largura, Posicao: Integer;
+  ColunaNome: string;
+begin
+  for I := 0 to grdListagem.Columns.Count - 1 do
+  begin
+    ColunaNome := TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Nome', grdListagem.Columns[I].FieldName);
+    Largura := StrToIntDef(TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Largura'), grdListagem.Columns[I].Width);
+    Posicao := StrToIntDef(TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Posicao'), grdListagem.Columns[I].Index);
+
+    // Localiza a coluna correspondente pelo nome e aplica as configurações de largura e posição
+    for J := 0 to grdListagem.Columns.Count - 1 do
+    begin
+      if grdListagem.Columns[J].FieldName = ColunaNome then
+      begin
+        grdListagem.Columns[J].Width := Largura;
+        grdListagem.Columns[J].Index := Posicao;
+        Break;
+      end;
+    end;
+  end;
+end;
+{$ENDREGION}
 
 end .

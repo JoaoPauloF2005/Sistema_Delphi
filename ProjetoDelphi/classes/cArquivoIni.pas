@@ -2,56 +2,49 @@ unit cArquivoIni;
 
 interface
 
-uses System.Classes,
-     Vcl.Controls,
-     Vcl.ExtCtrls,
-     Vcl.Dialogs,
-     System.SysUtils,
-     System.IniFiles,
-     Vcl.Forms;
+uses
+  System.SysUtils, System.IniFiles, Vcl.Forms;
 
 type
   TArquivoIni = class
-  private
-
   public
-    class function ArquivoIni:string; static;
-    class function LerIni(aSecao:String; aEntrada:String):String; static;
+    class function ArquivoIni: string; static;
     class procedure AtualizarIni(aSecao, aEntrada, aValor: String); static;
-end;
+    class function LerIni(aSecao, aEntrada: String; aValorPadrao: String = ''): String; static;
+  end;
 
 implementation
 
-{ IniFile }
+{ TArquivoIni }
 
 class function TArquivoIni.ArquivoIni: string;
 begin
-  result := ChangeFileExt( Application.ExeName, '.INI' );
+  Result := ChangeFileExt(Application.ExeName, '.ini');
 end;
 
-class function TArquivoIni.LerIni(aSecao:String; aEntrada:String):String;
+class procedure TArquivoIni.AtualizarIni(aSecao, aEntrada, aValor: String);
 var
   Ini: TIniFile;
 begin
+  Ini := TIniFile.Create(ArquivoIni);
   try
-    Ini := TIniFile.Create(ArquivoIni);
-    Result := Ini.ReadString( aSecao, aEntrada, 'NAO ENCONTRADO' );
+    Ini.WriteString(aSecao, aEntrada, aValor);
   finally
     Ini.Free;
   end;
 end;
 
-
-class procedure TArquivoIni.AtualizarIni(aSecao:String; aEntrada:String; aValor:String);
+class function TArquivoIni.LerIni(aSecao, aEntrada: String; aValorPadrao: String = ''): String;
 var
   Ini: TIniFile;
 begin
+  Ini := TIniFile.Create(ArquivoIni);
   try
-    Ini := TIniFile.Create(ArquivoIni);
-    Ini.WriteString( aSecao, aEntrada, aValor);
+    Result := Ini.ReadString(aSecao, aEntrada, aValorPadrao);
   finally
     Ini.Free;
   end;
 end;
 
 end.
+

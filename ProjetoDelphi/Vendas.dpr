@@ -41,7 +41,8 @@ uses
   cAcaoAcesso in 'classes\cAcaoAcesso.pas',
   uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso},
   uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes},
-  uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule};
+  uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule},
+  IniFiles in 'datamodule\IniFiles.pas';
 
 {$R *.res}
 
@@ -49,5 +50,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TDTMGrafico, DTMGrafico);
   Application.Run;
 end.

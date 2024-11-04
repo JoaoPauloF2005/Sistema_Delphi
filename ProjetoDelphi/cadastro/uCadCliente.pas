@@ -271,7 +271,6 @@ begin
   end;
 end;
 
-
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin
   edtcpfCnpj.ReadOnly := cbTipoPessoa.ItemIndex = -1; // Bloqueia ou permite edição
