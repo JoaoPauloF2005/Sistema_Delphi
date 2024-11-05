@@ -1,4 +1,4 @@
-unit cCadProduto;
+ï»¿unit cCadProduto;
 
 interface
 
@@ -11,7 +11,8 @@ uses System.Classes,
      ZAbstractRODataset,
      ZAbstractDataset,
      ZDataset,
-     System.SysUtils;
+     System.SysUtils,
+     Data.DB;
 
 type
   TProduto = class
@@ -23,6 +24,7 @@ type
     F_valor:Double;
     F_quantidade: Double;
     F_categoriaId: Integer;
+    F_imagem: TMemoryStream; // Novo campo para a imagem
 
   public
     constructor Create(aConexao:TZConnection);
@@ -38,6 +40,7 @@ type
     property valor         :Double     read F_valor          write F_valor;
     property quantidade    :Double     read F_quantidade     write F_quantidade;
     property categoriaId   :Integer    read F_categoriaId    write F_categoriaId;
+     property imagem: TMemoryStream read F_imagem write F_imagem;
   end;
 
 implementation
@@ -49,11 +52,12 @@ implementation
 constructor TProduto.Create(aConexao:TZConnection);
 begin
   ConexaoDB:=aConexao;
+  F_imagem := TMemoryStream.Create;
 end;
 
 destructor TProduto.Destroy;
 begin
-
+  F_imagem.Free;
   inherited;
 end;
 {$endRegion}
@@ -63,8 +67,8 @@ function TProduto.Apagar: Boolean;
 var Qry:TZQuery;
 begin
   if MessageDlg('Apagar o Registro: '+#13+#13+
-                'Código: '+IntToStr(F_produtoId)+#13+
-                'Descrição: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
+                'Cï¿½digo: '+IntToStr(F_produtoId)+#13+
+                'Descriï¿½ï¿½o: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
      Result:=false;
      abort;
   end;
@@ -93,117 +97,113 @@ begin
 end;
 
 function TProduto.Atualizar: Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;
 begin
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Result := true;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('UPDATE produtos '+
-                '   SET nome           =:nome '+
-                '       ,descricao     =:descricao '+
-                '       ,valor         =:valor '+
-                '       ,quantidade    =:quantidade '+
-                '       ,categoriaId   =:categoriaId '+
-                ' WHERE produtoId=:produtoId ');
-    Qry.ParamByName('produtoId').AsInteger       :=Self.F_produtoId;
-    Qry.ParamByName('nome').AsString             :=Self.F_nome;
-    Qry.ParamByName('descricao').AsString        :=Self.F_descricao;
-    Qry.ParamByName('valor').AsFloat             :=Self.F_valor;
-    Qry.ParamByName('quantidade').AsFloat        :=Self.F_quantidade;
-    Qry.ParamByName('categoriaId').AsInteger     :=Self.F_categoriaId;
+    Qry.SQL.Add('UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor, quantidade = :quantidade, ' +
+                'categoriaId = :categoriaId, imagem = :imagem WHERE produtoId = :produtoId');
 
-    Try
+    Qry.ParamByName('produtoId').AsInteger := F_produtoId;
+    Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('descricao').AsString := F_descricao;
+    Qry.ParamByName('valor').AsFloat := F_valor;
+    Qry.ParamByName('quantidade').AsFloat := F_quantidade;
+    Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
+
+    // Atualiza a imagem no campo BLOB
+    F_imagem.Position := 0;
+    Qry.ParamByName('imagem').LoadFromStream(F_imagem, ftBlob);
+
+    try
       ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       ConexaoDB.Commit;
-    Except
+    except
       ConexaoDB.Rollback;
-      Result:=false;
-    End;
+      Result := false;
+    end;
 
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    Qry.Free;
   end;
 end;
 
+
 function TProduto.Inserir: Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;
 begin
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Result := true;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('INSERT INTO produtos (nome, '+
-                '                      descricao, '+
-                '                      valor,  '+
-                '                      quantidade,  '+
-                '                      categoriaId) '+
-                ' VALUES              (:nome, '+
-                '                      :descricao, '+
-                '                      :valor,  '+
-                '                      :quantidade,  '+
-                '                      :categoriaId )' );
+    Qry.SQL.Add('INSERT INTO produtos (nome, descricao, valor, quantidade, categoriaId, imagem) ' +
+                'VALUES (:nome, :descricao, :valor, :quantidade, :categoriaId, :imagem)');
 
-    Qry.ParamByName('nome').AsString             :=Self.F_nome;
-    Qry.ParamByName('descricao').AsString        :=Self.F_descricao;
-    Qry.ParamByName('valor').AsFloat             :=Self.F_valor;
-    Qry.ParamByName('quantidade').AsFloat        :=Self.F_quantidade;
-    Qry.ParamByName('categoriaId').AsInteger     :=Self.F_categoriaId;
+    Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('descricao').AsString := F_descricao;
+    Qry.ParamByName('valor').AsFloat := F_valor;
+    Qry.ParamByName('quantidade').AsFloat := F_quantidade;
+    Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
 
-    Try
+    // Insere a imagem no campo BLOB
+    F_imagem.Position := 0; // Garante que o stream estÃ¡ no inÃ­cio
+    Qry.ParamByName('imagem').LoadFromStream(F_imagem, ftBlob);
+
+    try
       ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       ConexaoDB.Commit;
-    Except
+    except
       ConexaoDB.Rollback;
-      Result:=false;
-    End;
+      Result := false;
+    end;
 
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    Qry.Free;
   end;
 end;
 
 function TProduto.Selecionar(id: Integer): Boolean;
-var Qry:TZQuery;
+var Qry: TZQuery;
 begin
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
+    Result := true;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('SELECT produtoId,'+
-                '       nome, '+
-                '       descricao, '+
-                '       valor, '+
-                '       quantidade, '+
-                '       categoriaId '+
-                '  FROM produtos '+
-                ' WHERE produtoId=:produtoId');
-    Qry.ParamByName('produtoId').AsInteger:=id;
-    Try
+    Qry.SQL.Add('SELECT produtoId, nome, descricao, valor, quantidade, categoriaId, imagem ' +
+                'FROM produtos WHERE produtoId = :produtoId');
+    Qry.ParamByName('produtoId').AsInteger := id;
+
+    try
       Qry.Open;
 
-      Self.F_produtoId     := Qry.FieldByName('produtoId').AsInteger;
-      Self.F_nome          := Qry.FieldByName('nome').AsString;
-      Self.F_descricao     := Qry.FieldByName('descricao').AsString;
-      Self.F_valor         := Qry.FieldByName('valor').AsFloat;
-      Self.F_quantidade    := Qry.FieldByName('quantidade').AsFloat;
-      Self.F_categoriaId   := Qry.FieldByName('categoriaId').AsInteger;
-    Except
-      Result:=false;
-    End;
+      F_produtoId := Qry.FieldByName('produtoId').AsInteger;
+      F_nome := Qry.FieldByName('nome').AsString;
+      F_descricao := Qry.FieldByName('descricao').AsString;
+      F_valor := Qry.FieldByName('valor').AsFloat;
+      F_quantidade := Qry.FieldByName('quantidade').AsFloat;
+      F_categoriaId := Qry.FieldByName('categoriaId').AsInteger;
+
+      // Carrega a imagem do banco de dados, se disponÃ­vel
+      F_imagem.Clear;
+      if not Qry.FieldByName('imagem').IsNull then
+        TBlobField(Qry.FieldByName('imagem')).SaveToStream(F_imagem);
+
+    except
+      Result := false;
+    end;
 
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    Qry.Free;
   end;
 end;
+
 {$endregion}
 
 

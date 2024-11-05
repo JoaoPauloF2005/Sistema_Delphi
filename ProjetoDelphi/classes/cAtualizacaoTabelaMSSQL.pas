@@ -148,6 +148,7 @@ begin
       'descricao varchar(255) null, '+
       'valor decimal(18,5) default 0.00000 null, '+
       'quantidade decimal(18,5) default 0.00000 null, '+
+      'imagem BLOB, '+
       'categoriaId int null, '+
       'PRIMARY KEY (produtoId), '+
       'CONSTRAINT FK_ProdutosCategorias '+

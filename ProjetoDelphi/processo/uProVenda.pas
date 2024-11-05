@@ -19,13 +19,11 @@ type
     lkpCliente: TDBLookupComboBox;
     Label4: TLabel;
     edtDataVenda: TDateEdit;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    dbGridItensVenda: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
     edtValorTotal: TCurrencyEdit;
     Label2: TLabel;
-    dbGridItensVenda: TDBGrid;
     lkpProduto: TDBLookupComboBox;
     Label1: TLabel;
     edtValorUnitario: TCurrencyEdit;
@@ -48,8 +46,7 @@ type
     procedure btnGravarClick(Sender: TObject);
     procedure btnApagarItemClick(Sender: TObject);
     procedure dbGridItensVendaDblClick(Sender: TObject);
-    procedure dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-      State: TGridDrawState);
+   
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
   private
@@ -253,21 +250,7 @@ begin
 
 end;
 
-procedure TfrmProVenda.dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-  State: TGridDrawState);
-begin
-  if gdSelected in State then
-  begin
-    // Define a cor de fundo e da fonte para a linha selecionada
-    dbGridItensVenda.Canvas.Brush.Color := $F1DFBE;  // Cor de fundo branco
-    dbGridItensVenda.Canvas.Font.Color := clBlack;   // Cor do texto preta
-  end
-  else
-    dbGridItensVenda.Canvas.Brush.Color := clWindow;  // Cor normal de fundo
 
-  dbGridItensVenda.Canvas.FillRect(Rect);  // Preenche a célula
-  dbGridItensVenda.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
-end;
 
 procedure TfrmProVenda.dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
 	Shift: TShiftState);

@@ -1,0 +1,323 @@
+﻿unit uTelaHeranca;
+
+interface
+
+uses
+  // Módulos e bibliotecas que o código utiliza, como componentes visuais, banco de dados, etc.
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit,
+  ZAbstractConnection, ZConnection, cArquivoIni;
+
+type
+  TfrmTelaHeranca = class(TForm)
+    // Declaração de componentes visuais usados no formulário
+    pgcPrincipal: TPageControl; // Controle de abas
+    pnlRodape: TPanel; // Painel no rodapé
+    tabListagem: TTabSheet; // Aba de listagem
+    tabManutencao: TTabSheet; // Aba de manutenção
+    pnlListagemTopo: TPanel; // Painel superior na aba de listagem
+    mskPesquisar: TMaskEdit; // Campo para pesquisa
+    btnPesquisar: TButton; // Botão de pesquisa
+    grdListagem: TDBGrid; // Grid que exibe os dados
+    btnNovo: TBitBtn; // Botão "Novo"
+    btnAlterar: TBitBtn; // Botão "Alterar"
+    btnCancelar: TBitBtn; // Botão "Cancelar"
+    btnGravar: TBitBtn; // Botão "Gravar"
+    btnApagar: TBitBtn; // Botão "Apagar"
+    btnFechar: TBitBtn; // Botão "Fechar"
+    QryListagem: TZQuery; // Query que realiza operações no banco de dados
+    dtsListagem: TDataSource; // DataSource que conecta os dados ao Grid
+    lblIndice: TLabel; // Rótulo para exibir o índice atual
+    // Declaração de métodos (procedures) que tratam eventos como cliques de botões
+    procedure FormCreate(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnApagarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
+
+
+
+
+    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
+    procedure grdListagemColumnMoved(Sender: TObject; FromIndex, ToIndex: Integer);
+
+  private
+    // Variáveis e métodos privados
+    procedure ControlarBotoes(Novo, Alterar, Cancelar, Gravar, Apagar: Boolean);
+    procedure ControlarIndiceTab(Indice: Integer);
+    function RetornarCampoTraduzido(Campo: string): string;
+    procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
+    function ExisteCampoObrigatorio: Boolean;
+    procedure DesabilitarEditPK;
+    procedure LimparEdits;
+    procedure CarregarConfiguracaoColunas;
+    procedure SalvarConfiguracaoColunas;
+  public
+    // Variáveis públicas
+    IndiceAtual: string; // Variável para armazenar o índice atual de ordenação
+    EstadoDoCadastro: TEstadoDoCadastro; // Variável que armazena o estado atual do cadastro (inserir, alterar, etc.)
+    function Apagar: Boolean; virtual;
+    function Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean; virtual;
+    procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
+    class function TenhoAcesso(aUsuarioId: Integer; aChave: string; aConexao: TZConnection): Boolean; static;
+end;
+
+var
+  frmTelaHeranca: TfrmTelaHeranca;
+
+implementation
+
+{$R *.dfm} // Diretiva que associa o arquivo de design visual (DFM) ao código
+
+uses uPrincipal, IniFiles;
+
+{$region 'Funções e Procedures'}
+
+procedure TfrmTelaHeranca.ControlarBotoes(Novo, Alterar, Cancelar, Gravar, Apagar: Boolean);
+begin
+  btnNovo.Enabled := Novo;
+  btnAlterar.Enabled := Alterar;
+  btnCancelar.Enabled := Cancelar;
+  btnGravar.Enabled := Gravar;
+  btnApagar.Enabled := Apagar;
+end;
+
+procedure TfrmTelaHeranca.ControlarIndiceTab(Indice: Integer);
+begin
+  if (pgcPrincipal.Pages[Indice].TabVisible) then
+    pgcPrincipal.TabIndex := Indice;
+end;
+
+function TfrmTelaHeranca.RetornarCampoTraduzido(Campo: string): string;
+var
+  I: Integer;
+begin
+  Result := '';
+  for I := 0 to QryListagem.Fields.Count - 1 do
+    if LowerCase(QryListagem.Fields[i].FieldName) = LowerCase(Campo) then
+    begin
+      Result := QryListagem.Fields[i].DisplayLabel;
+      Break;
+    end;
+end;
+
+class function TfrmTelaHeranca.TenhoAcesso(aUsuarioId: Integer; aChave: string; aConexao: TZConnection): Boolean;
+var
+  Qry: TZQuery;
+begin
+  Result := True;
+  Qry := TZQuery.Create(nil);
+  try
+    Qry.Connection := aConexao;
+    Qry.SQL.Text := 'SELECT usuarioId FROM usuariosAcaoAcesso ' +
+                    'WHERE usuarioId = :usuarioId AND acaoAcessoId = (SELECT TOP 1 acaoAcessoId FROM acaoAcesso WHERE chave = :chave) AND ativo = 1';
+    Qry.ParamByName('usuarioId').AsInteger := aUsuarioId;
+    Qry.ParamByName('chave').AsString := aChave;
+    Qry.Open;
+    Result := not Qry.IsEmpty;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.ExibirLabelIndice(Campo: string; aLabel: TLabel);
+begin
+  aLabel.Caption := RetornarCampoTraduzido(Campo);
+end;
+
+function TfrmTelaHeranca.ExisteCampoObrigatorio: Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+  for I := 0 to ComponentCount - 1 do
+    if (Components[i] is TLabeledEdit) and (TLabeledEdit(Components[i]).Tag = 2) and (TLabeledEdit(Components[i]).Text = '') then
+    begin
+      MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption + ' é um campo obrigatório', mtInformation, [mbOK], 0);
+      TLabeledEdit(Components[i]).SetFocus;
+      Result := True;
+      Break;
+    end;
+end;
+
+procedure TfrmTelaHeranca.DesabilitarEditPK;
+var
+  I: Integer;
+begin
+  for I := 0 to ComponentCount - 1 do
+    if (Components[i] is TLabeledEdit) and (TLabeledEdit(Components[i]).Tag = 1) then
+    begin
+      TLabeledEdit(Components[i]).Enabled := False;
+      Break;
+    end;
+end;
+
+procedure TfrmTelaHeranca.LimparEdits;
+var
+  I: Integer;
+begin
+  for I := 0 to ComponentCount - 1 do
+    if (Components[i] is TLabeledEdit) then
+      TLabeledEdit(Components[i]).Text := ''
+    else if (Components[i] is TEdit) then
+      TEdit(Components[i]).Text := ''
+    else if (Components[i] is TDBLookupComboBox) then
+      TDBLookupComboBox(Components[i]).KeyValue := null;
+end;
+
+{$endregion}
+
+{$region 'Métodos Virtuais'}
+function TfrmTelaHeranca.Apagar: Boolean;
+begin
+  ShowMessage('Registro apagado com sucesso.');
+  Result := True;
+end;
+
+function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  if EstadoDoCadastro = ecInserir then
+    ShowMessage('Registro inserido com sucesso.')
+  else if EstadoDoCadastro = ecAlterar then
+    ShowMessage('Registro alterado com sucesso.');
+  Result := True;
+end;
+{$endregion}
+
+// Implementação dos botões
+procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
+begin
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name + '_Novo', dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário não tem permissão de acesso.', mtWarning, [mbOK], 0);
+    Exit;
+  end;
+
+  ControlarBotoes(False, False, True, True, False);
+  EstadoDoCadastro := ecInserir;
+  LimparEdits;
+end;
+
+procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
+begin
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name + '_Alterar', dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário não tem permissão de acesso.', mtWarning, [mbOK], 0);
+    Exit;
+  end;
+
+  ControlarBotoes(False, False, True, True, False);
+  EstadoDoCadastro := ecAlterar;
+end;
+
+procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
+begin
+  ControlarBotoes(True, True, False, False, True);
+  EstadoDoCadastro := ecNenhum;
+  LimparEdits;
+end;
+
+procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
+begin
+  if ExisteCampoObrigatorio then
+    Exit;
+
+  if Gravar(EstadoDoCadastro) then
+  begin
+    ControlarBotoes(True, True, False, False, True);
+    EstadoDoCadastro := ecNenhum;
+    LimparEdits;
+    QryListagem.Refresh;
+  end;
+end;
+
+procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
+begin
+  if Apagar then
+  begin
+    ControlarBotoes(True, True, False, False, True);
+    LimparEdits;
+    QryListagem.Refresh;
+  end
+  else
+    MessageDlg('Erro ao apagar o registro.', mtError, [mbOK], 0);
+end;
+
+procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
+begin
+  QryListagem.Connection := dtmPrincipal.ConexaoDB;
+  dtsListagem.DataSet := QryListagem;
+  grdListagem.DataSource := dtsListagem;
+  grdListagem.Options := [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection,
+                          dgCancelOnExit, dgTitleClick, dgTitleHotTrack];
+end;
+
+procedure TfrmTelaHeranca.FormShow(Sender: TObject);
+begin
+  if QryListagem.SQL.Text <> '' then
+  begin
+    QryListagem.IndexFieldNames := IndiceAtual;
+    ExibirLabelIndice(IndiceAtual, lblIndice);
+    QryListagem.Open;
+  end;
+  ControlarBotoes(True, True, False, False, True);
+  DesabilitarEditPK;
+  CarregarConfiguracaoColunas;
+end;
+
+procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  QryListagem.Close;
+  SalvarConfiguracaoColunas;
+  inherited;
+end;
+
+{$REGION 'Salvar e Carregar Configurações de Colunas'}
+procedure TfrmTelaHeranca.SalvarConfiguracaoColunas;
+var
+  I: Integer;
+begin
+  for I := 0 to grdListagem.Columns.Count - 1 do
+  begin
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Nome', grdListagem.Columns[I].FieldName);
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Largura', IntToStr(grdListagem.Columns[I].Width));
+    TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Posicao', IntToStr(grdListagem.Columns[I].Index));
+  end;
+end;
+
+procedure TfrmTelaHeranca.CarregarConfiguracaoColunas;
+var
+  I, J, Largura, Posicao: Integer;
+  ColunaNome: string;
+begin
+  for I := 0 to grdListagem.Columns.Count - 1 do
+  begin
+    ColunaNome := TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Nome', grdListagem.Columns[I].FieldName);
+    Largura := StrToIntDef(TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Largura'), grdListagem.Columns[I].Width);
+    Posicao := StrToIntDef(TArquivoIni.LerIni(Name, 'Coluna' + IntToStr(I) + '_Posicao'), grdListagem.Columns[I].Index);
+
+    for J := 0 to grdListagem.Columns.Count - 1 do
+      if grdListagem.Columns[J].FieldName = ColunaNome then
+      begin
+        grdListagem.Columns[J].Width := Largura;
+        grdListagem.Columns[J].Index := Posicao;
+        Break;
+      end;
+  end;
+end;
+{$ENDREGION}
+
+end.
+

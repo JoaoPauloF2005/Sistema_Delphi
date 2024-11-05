@@ -1,27 +1,27 @@
 inherited frmCadUsuario: TfrmCadUsuario
   Caption = 'Cadastro de Usu'#225'rio'
-  ClientHeight = 371
-  ClientWidth = 762
+  ClientHeight = 390
+  ClientWidth = 715
   Position = poScreenCenter
-  ExplicitWidth = 768
-  ExplicitHeight = 400
+  ExplicitWidth = 721
+  ExplicitHeight = 419
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 762
-    Height = 316
-    ExplicitWidth = 762
+    Width = 585
+    Height = 335
+    ExplicitWidth = 585
     ExplicitHeight = 316
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 754
-      ExplicitHeight = 288
+      ExplicitWidth = 577
+      ExplicitHeight = 521
       inherited pnlListagemTopo: TPanel
-        Width = 754
-        ExplicitWidth = 754
+        Width = 577
+        ExplicitWidth = 577
       end
       inherited grdListagem: TDBGrid
         Width = 754
-        Height = 225
+        Height = 244
         DataSource = dtsListagem
         Columns = <
           item
@@ -42,7 +42,7 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 754
+      ExplicitWidth = 577
       ExplicitHeight = 288
       object edtUsuarioId: TLabeledEdit
         Tag = 1
@@ -61,7 +61,7 @@ inherited frmCadUsuario: TfrmCadUsuario
       object edtNome: TLabeledEdit
         Left = 11
         Top = 87
-        Width = 710
+        Width = 465
         Height = 21
         EditLabel.Width = 36
         EditLabel.Height = 13
@@ -84,16 +84,21 @@ inherited frmCadUsuario: TfrmCadUsuario
     end
   end
   inherited pnlRodape: TPanel
-    Top = 316
-    Width = 762
+    Top = 335
+    Width = 715
     ExplicitTop = 316
-    ExplicitWidth = 762
+    ExplicitWidth = 715
+  end
+  inherited Panel2: TPanel
+    Left = 585
+    Height = 335
+    ExplicitLeft = 585
+    ExplicitHeight = 316
     inherited btnFechar: TBitBtn
-      Left = 672
-      ExplicitLeft = 672
-    end
-    inherited btnNavigator: TDBNavigator
-      Hints.Strings = ()
+      Left = 12
+      Top = 285
+      ExplicitLeft = 12
+      ExplicitTop = 285
     end
   end
   inherited QryListagem: TZQuery
@@ -102,8 +107,8 @@ inherited frmCadUsuario: TfrmCadUsuario
       '       nome,'
       '       Senha'
       'FROM usuarios')
-    Left = 582
-    Top = 41
+    Left = 254
+    Top = 64
     object QryListagemusuarioID: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'usuarioID'
@@ -122,7 +127,7 @@ inherited frmCadUsuario: TfrmCadUsuario
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 673
-    Top = 42
+    Left = 345
+    Top = 65
   end
 end

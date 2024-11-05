@@ -1,28 +1,28 @@
 inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   Caption = 'Cadastro de A'#231#227'o de Acesso'
-  ClientHeight = 421
-  ClientWidth = 756
+  ClientHeight = 437
+  ClientWidth = 731
   Position = poScreenCenter
-  ExplicitWidth = 762
-  ExplicitHeight = 450
+  ExplicitWidth = 737
+  ExplicitHeight = 466
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 756
-    Height = 366
-    ExplicitTop = -6
-    ExplicitWidth = 756
+    Width = 601
+    Height = 382
+    ActivePage = tabManutencao
+    ExplicitWidth = 626
     ExplicitHeight = 366
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 748
+      ExplicitWidth = 618
       ExplicitHeight = 338
       inherited pnlListagemTopo: TPanel
-        Width = 748
-        ExplicitWidth = 748
+        Width = 593
+        ExplicitWidth = 618
       end
       inherited grdListagem: TDBGrid
-        Width = 748
-        Height = 275
+        Width = 612
+        Height = 291
         DataSource = dtsListagem
         Columns = <
           item
@@ -51,8 +51,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 748
-      ExplicitHeight = 338
+      ExplicitWidth = 618
+      ExplicitHeight = 543
       object edtAcaoAcessoId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -70,7 +70,7 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
         Tag = 2
         Left = 11
         Top = 96
-        Width = 723
+        Width = 566
         Height = 21
         EditLabel.Width = 46
         EditLabel.Height = 13
@@ -93,20 +93,21 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
     end
   end
   inherited pnlRodape: TPanel
-    Top = 366
-    Width = 756
+    Top = 382
+    Width = 731
     ExplicitTop = 366
     ExplicitWidth = 756
-    inherited btnGravar: TBitBtn
-      Left = 270
-      ExplicitLeft = 270
-    end
+  end
+  inherited Panel2: TPanel
+    Left = 601
+    Height = 382
+    ExplicitLeft = 626
+    ExplicitHeight = 366
     inherited btnFechar: TBitBtn
-      Left = 663
-      ExplicitLeft = 663
-    end
-    inherited btnNavigator: TDBNavigator
-      Hints.Strings = ()
+      Left = 12
+      Top = 328
+      ExplicitLeft = 12
+      ExplicitTop = 328
     end
   end
   inherited QryListagem: TZQuery
@@ -115,8 +116,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       '       descricao,'
       '       chave'
       '  FROM acaoAcesso')
-    Left = 597
-    Top = 38
+    Left = 402
+    Top = 148
     object QryListagemacaoAcessoId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'acaoAcessoId'
@@ -136,7 +137,7 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 688
-    Top = 38
+    Left = 317
+    Top = 32
   end
 end

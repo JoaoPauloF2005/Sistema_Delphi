@@ -1,33 +1,28 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientHeight = 388
-  ClientWidth = 914
+  ClientWidth = 971
   Position = poDesktopCenter
-  ExplicitWidth = 920
+  ExplicitWidth = 977
   ExplicitHeight = 417
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 914
-    Height = 333
-    ExplicitWidth = 1081
-    ExplicitHeight = 333
+    Width = 841
+    Height = 340
+    ActivePage = tabListagem
+    ExplicitWidth = 841
+    ExplicitHeight = 340
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 1073
-      ExplicitHeight = 305
-      inherited Splitter1: TSplitter
-        Left = 1073
-        Height = 242
-      end
+      ExplicitWidth = 833
+      ExplicitHeight = 312
       inherited pnlListagemTopo: TPanel
-        Width = 906
-        ExplicitWidth = 1073
+        Width = 833
+        ExplicitWidth = 833
       end
       inherited grdListagem: TDBGrid
         Width = 1073
-        Height = 242
+        Height = 249
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack
@@ -131,55 +126,49 @@ inherited frmCadCliente: TfrmCadCliente
             Visible = True
           end>
       end
-      inherited pButtons: TPanel
-        Left = 776
-        Height = 242
-        ExplicitLeft = 775
-        ExplicitHeight = 242
-      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 1073
-      ExplicitHeight = 305
+      ExplicitWidth = 833
+      ExplicitHeight = 312
       object Label1: TLabel
-        Left = 753
-        Top = 125
+        Left = 309
+        Top = 131
         Width = 19
         Height = 13
         Caption = 'CEP'
       end
       object Label3: TLabel
-        Left = 611
-        Top = 130
+        Left = 425
+        Top = 25
         Width = 81
         Height = 13
         Caption = 'Data Nascimento'
       end
       object Label4: TLabel
-        Left = 611
-        Top = 233
+        Left = 425
+        Top = 189
         Width = 33
         Height = 13
         Caption = 'Estado'
       end
       object TLabel
-        Left = 611
-        Top = 77
+        Left = 279
+        Top = 24
         Width = 20
         Height = 13
         Caption = 'Tipo'
       end
       object TLabel
-        Left = 161
-        Top = 21
+        Left = 135
+        Top = 24
         Width = 31
         Height = 13
         Caption = 'Status'
       end
       object edtNome: TLabeledEdit
         Left = 11
-        Top = 93
-        Width = 579
+        Top = 91
+        Width = 393
         Height = 21
         EditLabel.Width = 27
         EditLabel.Height = 13
@@ -190,7 +179,7 @@ inherited frmCadCliente: TfrmCadCliente
       object edtClienteId: TLabeledEdit
         Left = 11
         Top = 40
-        Width = 121
+        Width = 99
         Height = 21
         EditLabel.Width = 33
         EditLabel.Height = 13
@@ -201,9 +190,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 0
       end
       object edtCEP: TMaskEdit
-        Left = 753
-        Top = 144
-        Width = 130
+        Left = 309
+        Top = 150
+        Width = 95
         Height = 21
         EditMask = '99.999-999;1;_'
         MaxLength = 10
@@ -211,9 +200,9 @@ inherited frmCadCliente: TfrmCadCliente
         Text = '  .   -   '
       end
       object edtEndereco: TLabeledEdit
-        Left = 11
-        Top = 197
-        Width = 579
+        Left = 425
+        Top = 151
+        Width = 393
         Height = 21
         BiDiMode = bdLeftToRight
         EditLabel.Width = 45
@@ -226,9 +215,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 8
       end
       object edtCidade: TLabeledEdit
-        Left = 11
-        Top = 249
-        Width = 579
+        Left = 197
+        Top = 204
+        Width = 207
         Height = 21
         BiDiMode = bdLeftToRight
         EditLabel.Width = 33
@@ -241,9 +230,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 10
       end
       object edtEmail: TLabeledEdit
-        Left = 11
-        Top = 144
-        Width = 579
+        Left = 425
+        Top = 93
+        Width = 393
         Height = 21
         BiDiMode = bdLeftToRight
         EditLabel.Width = 24
@@ -256,9 +245,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 5
       end
       object edtDataNascimento: TDateEdit
-        Left = 611
-        Top = 144
-        Width = 127
+        Left = 425
+        Top = 40
+        Width = 99
         Height = 21
         ClickKey = 114
         DialogTitle = 'Selecione a Data'
@@ -267,16 +256,16 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 6
       end
       object cbEstado: TComboBox
-        Left = 611
-        Top = 249
-        Width = 127
+        Left = 425
+        Top = 204
+        Width = 99
         Height = 21
         TabOrder = 11
       end
       object edtBairro: TLabeledEdit
-        Left = 611
-        Top = 197
-        Width = 272
+        Left = 11
+        Top = 204
+        Width = 165
         Height = 21
         BiDiMode = bdLeftToRight
         EditLabel.Width = 28
@@ -289,9 +278,9 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 9
       end
       object edtcpfCnpj: TLabeledEdit
-        Left = 753
-        Top = 93
-        Width = 130
+        Left = 11
+        Top = 151
+        Width = 124
         Height = 21
         EditLabel.Width = 48
         EditLabel.Height = 13
@@ -303,17 +292,17 @@ inherited frmCadCliente: TfrmCadCliente
         OnEnter = edtcpfCnpjEnter
       end
       object cbTipoPessoa: TComboBox
-        Left = 611
-        Top = 93
-        Width = 127
+        Left = 279
+        Top = 40
+        Width = 125
         Height = 21
         TabOrder = 3
         OnChange = cbTipoPessoaChange
       end
       object edtTelefone: TLabeledEdit
-        Left = 762
-        Top = 249
-        Width = 121
+        Left = 161
+        Top = 150
+        Width = 125
         Height = 21
         EditLabel.Width = 42
         EditLabel.Height = 13
@@ -322,9 +311,9 @@ inherited frmCadCliente: TfrmCadCliente
         OnChange = edtTelefoneChange
       end
       object cbStatus: TComboBox
-        Left = 161
+        Left = 129
         Top = 40
-        Width = 127
+        Width = 124
         Height = 21
         TabOrder = 1
         OnChange = cbTipoPessoaChange
@@ -332,25 +321,20 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited pnlRodape: TPanel
-    Top = 333
-    Width = 914
-    ExplicitTop = 333
-    ExplicitWidth = 1081
-    inherited btnNavigator: TDBNavigator
-      Left = 0
-      Top = 6
-      Hints.Strings = ()
-      ExplicitLeft = 0
-      ExplicitTop = 6
-    end
-    object Panel1: TPanel [1]
-      Left = 420
+    Top = 340
+    Width = 971
+    Height = 48
+    ExplicitTop = 340
+    ExplicitWidth = 971
+    ExplicitHeight = 48
+    object Panel1: TPanel
+      Left = 314
       Top = 15
       Width = 307
       Height = 16
       AutoSize = True
       BevelOuter = bvNone
-      TabOrder = 1
+      TabOrder = 0
       object Image1: TImage
         Left = 0
         Top = 0
@@ -486,7 +470,7 @@ inherited frmCadCliente: TfrmCadCliente
         Transparent = True
       end
       object Label6: TLabel
-        Left = 131
+        Left = 129
         Top = 0
         Width = 50
         Height = 13
@@ -597,15 +581,24 @@ inherited frmCadCliente: TfrmCadCliente
         ParentFont = False
       end
     end
+  end
+  inherited Panel2: TPanel
+    Left = 841
+    Height = 340
+    ExplicitLeft = 841
+    ExplicitHeight = 340
+    DesignSize = (
+      130
+      340)
     inherited btnFechar: TBitBtn
-      Left = 785
-      Top = 6
-      TabOrder = 2
-      ExplicitLeft = 785
-      ExplicitTop = 6
+      Left = 12
+      Top = 288
+      ExplicitLeft = 12
+      ExplicitTop = 288
     end
   end
   inherited QryListagem: TZQuery
+    Active = True
     SQL.Strings = (
       'select clienteId,'
       '       nome,'
