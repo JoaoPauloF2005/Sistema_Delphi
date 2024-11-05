@@ -10,7 +10,6 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 841
     Height = 340
-    ActivePage = tabListagem
     ExplicitWidth = 841
     ExplicitHeight = 340
     inherited tabListagem: TTabSheet
@@ -159,7 +158,7 @@ inherited frmCadCliente: TfrmCadCliente
         Caption = 'Tipo'
       end
       object TLabel
-        Left = 135
+        Left = 129
         Top = 24
         Width = 31
         Height = 13
@@ -279,7 +278,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtcpfCnpj: TLabeledEdit
         Left = 11
-        Top = 151
+        Top = 150
         Width = 124
         Height = 21
         EditLabel.Width = 48

@@ -265,8 +265,6 @@ inherited frmCadProduto: TfrmCadProduto
           Top = 1
           Width = 121
           Height = 192
-          Proportional = True
-          Stretch = True
         end
       end
     end

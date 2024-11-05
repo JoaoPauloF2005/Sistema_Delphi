@@ -10,15 +10,14 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 554
-    ActivePage = tabManutencao
-    ExplicitWidth = 781
+    ExplicitWidth = 911
     ExplicitHeight = 554
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 773
+      ExplicitWidth = 903
       ExplicitHeight = 526
       inherited pnlListagemTopo: TPanel
         Width = 903
-        ExplicitWidth = 773
+        ExplicitWidth = 903
       end
       inherited grdListagem: TDBGrid
         Width = 903
@@ -55,7 +54,7 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 773
+      ExplicitWidth = 903
       ExplicitHeight = 526
       object Label4: TLabel
         Left = 143
@@ -113,7 +112,6 @@ inherited frmProVenda: TfrmProVenda
         Height = 425
         Align = alBottom
         TabOrder = 3
-        ExplicitWidth = 773
         object Panel3: TPanel
           Left = 1
           Top = 383
@@ -127,7 +125,6 @@ inherited frmProVenda: TfrmProVenda
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 771
           object Label2: TLabel
             Left = 675
             Top = 11
@@ -153,7 +150,6 @@ inherited frmProVenda: TfrmProVenda
           Height = 55
           Align = alTop
           TabOrder = 1
-          ExplicitWidth = 771
           object Label1: TLabel
             Left = 5
             Top = 3
@@ -302,13 +298,12 @@ inherited frmProVenda: TfrmProVenda
     Top = 554
     Width = 1041
     ExplicitTop = 554
-    ExplicitWidth = 911
+    ExplicitWidth = 1041
   end
   inherited Panel2: TPanel
     Left = 911
     Height = 554
-    ExplicitLeft = 782
-    ExplicitTop = -6
+    ExplicitLeft = 911
     ExplicitHeight = 554
   end
   inherited QryListagem: TZQuery
