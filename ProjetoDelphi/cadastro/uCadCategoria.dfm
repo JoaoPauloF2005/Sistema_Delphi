@@ -11,19 +11,13 @@ inherited frmCadCategoria: TfrmCadCategoria
     Width = 629
     Height = 334
     ActivePage = tabManutencao
-    ExplicitWidth = 852
-    ExplicitHeight = 396
+    ExplicitWidth = 629
+    ExplicitHeight = 334
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 844
       ExplicitHeight = 368
-      inherited pnlListagemTopo: TPanel
-        Width = 621
-        ExplicitWidth = 844
-      end
-      inherited btnPesquisar: TButton
-        Top = 20
-        ExplicitTop = 20
-      end
       inherited grdListagem: TDBGrid
         Width = 974
         Height = 243
@@ -49,8 +43,8 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 844
-      ExplicitHeight = 368
+      ExplicitWidth = 621
+      ExplicitHeight = 306
       object edtDescricao: TLabeledEdit
         Tag = 2
         Left = 11
@@ -81,14 +75,14 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pnlRodape: TPanel
     Top = 334
     Width = 759
-    ExplicitTop = 396
-    ExplicitWidth = 982
+    ExplicitTop = 334
+    ExplicitWidth = 759
   end
   inherited Panel2: TPanel
     Left = 629
     Height = 334
-    ExplicitLeft = 852
-    ExplicitHeight = 396
+    ExplicitLeft = 629
+    ExplicitHeight = 334
     inherited btnFechar: TBitBtn
       Left = 12
       Top = 284

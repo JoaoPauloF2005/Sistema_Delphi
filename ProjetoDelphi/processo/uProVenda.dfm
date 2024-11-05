@@ -15,13 +15,9 @@ inherited frmProVenda: TfrmProVenda
     inherited tabListagem: TTabSheet
       ExplicitWidth = 903
       ExplicitHeight = 526
-      inherited pnlListagemTopo: TPanel
-        Width = 903
-        ExplicitWidth = 903
-      end
       inherited grdListagem: TDBGrid
         Width = 903
-        Height = 463
+        Height = 526
         DataSource = dtsListagem
         Columns = <
           item
@@ -54,6 +50,8 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 903
       ExplicitHeight = 526
       object Label4: TLabel

@@ -11,17 +11,13 @@ inherited frmCadUsuario: TfrmCadUsuario
     Width = 585
     Height = 335
     ExplicitWidth = 585
-    ExplicitHeight = 316
+    ExplicitHeight = 335
     inherited tabListagem: TTabSheet
       ExplicitWidth = 577
-      ExplicitHeight = 521
-      inherited pnlListagemTopo: TPanel
-        Width = 577
-        ExplicitWidth = 577
-      end
+      ExplicitHeight = 307
       inherited grdListagem: TDBGrid
         Width = 754
-        Height = 244
+        Height = 307
         DataSource = dtsListagem
         Columns = <
           item
@@ -42,6 +38,8 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 577
       ExplicitHeight = 288
       object edtUsuarioId: TLabeledEdit
@@ -86,14 +84,14 @@ inherited frmCadUsuario: TfrmCadUsuario
   inherited pnlRodape: TPanel
     Top = 335
     Width = 715
-    ExplicitTop = 316
+    ExplicitTop = 335
     ExplicitWidth = 715
   end
   inherited Panel2: TPanel
     Left = 585
     Height = 335
     ExplicitLeft = 585
-    ExplicitHeight = 316
+    ExplicitHeight = 335
     inherited btnFechar: TBitBtn
       Left = 12
       Top = 285

@@ -16,10 +16,7 @@ type
     pgcPrincipal: TPageControl; // Controle de abas
     pnlRodape: TPanel; // Painel no rodap�
     tabListagem: TTabSheet; // Aba de listagem
-    tabManutencao: TTabSheet; // Aba de manuten��o
-    pnlListagemTopo: TPanel; // Painel superior na aba de listagem
-    mskPesquisar: TMaskEdit; // Campo para pesquisa
-    btnPesquisar: TButton; // Bot�o de pesquisa
+    tabManutencao: TTabSheet; // Bot�o de pesquisa
     grdListagem: TDBGrid; // Grid que exibe os dados
     btnNovo: TBitBtn; // Bot�o "Novo"
     btnAlterar: TBitBtn; // Bot�o "Alterar"
@@ -29,8 +26,8 @@ type
     btnFechar: TBitBtn; // Bot�o "Fechar"
 
     QryListagem: TZQuery; // Query que realiza opera��es no banco de dados
-    dtsListagem: TDataSource; // DataSource que conecta os dados ao Grid
-    lblIndice: TLabel; // R�tulo para exibir o �ndice atual
+    dtsListagem: TDataSource;
+    BitBtn1: TBitBtn; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -362,7 +359,7 @@ begin
   // Abre a query se a SQL n�o estiver vazia
   if (QryListagem.SQL.Text<>EmptyStr) then begin
     QryListagem.IndexFieldNames:=IndiceAtual;
-    ExibirLabelIndice(IndiceAtual, lblIndice);
+
     QryListagem.Open;
   end;
   ControlarIndiceTab(pgcPrincipal, 0);
@@ -426,7 +423,6 @@ procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
 begin
   IndiceAtual := Column.FieldName; // Atualiza o �ndice atual para ordenar os dados
   QryListagem.IndexFieldNames:=IndiceAtual; // Ordena os dados pelo campo clicado
-  ExibirLabelIndice(IndiceAtual, lblIndice);
 end;
 
 procedure TfrmTelaHeranca.mskPesquisarChange(Sender: TObject);

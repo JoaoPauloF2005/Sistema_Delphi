@@ -11,15 +11,13 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
     Width = 601
     Height = 382
     ActivePage = tabManutencao
-    ExplicitWidth = 626
-    ExplicitHeight = 366
+    ExplicitWidth = 601
+    ExplicitHeight = 382
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 618
       ExplicitHeight = 338
-      inherited pnlListagemTopo: TPanel
-        Width = 593
-        ExplicitWidth = 618
-      end
       inherited grdListagem: TDBGrid
         Width = 612
         Height = 291
@@ -51,8 +49,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 618
-      ExplicitHeight = 543
+      ExplicitWidth = 593
+      ExplicitHeight = 354
       object edtAcaoAcessoId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -95,14 +93,14 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   inherited pnlRodape: TPanel
     Top = 382
     Width = 731
-    ExplicitTop = 366
-    ExplicitWidth = 756
+    ExplicitTop = 382
+    ExplicitWidth = 731
   end
   inherited Panel2: TPanel
     Left = 601
     Height = 382
-    ExplicitLeft = 626
-    ExplicitHeight = 366
+    ExplicitLeft = 601
+    ExplicitHeight = 382
     inherited btnFechar: TBitBtn
       Left = 12
       Top = 328

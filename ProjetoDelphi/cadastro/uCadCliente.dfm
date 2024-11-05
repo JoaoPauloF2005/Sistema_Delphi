@@ -15,13 +15,9 @@ inherited frmCadCliente: TfrmCadCliente
     inherited tabListagem: TTabSheet
       ExplicitWidth = 833
       ExplicitHeight = 312
-      inherited pnlListagemTopo: TPanel
-        Width = 833
-        ExplicitWidth = 833
-      end
       inherited grdListagem: TDBGrid
         Width = 1073
-        Height = 249
+        Height = 312
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack

@@ -1,28 +1,23 @@
 inherited frmCadProduto: TfrmCadProduto
-  ActiveControl = edtNome
   Caption = 'Cadastro de Produtos'
   ClientHeight = 577
-  ClientWidth = 1032
+  ClientWidth = 1033
   Position = poDesktopCenter
-  ExplicitWidth = 1038
+  ExplicitWidth = 1039
   ExplicitHeight = 606
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 902
+    Width = 903
     Height = 522
-    ExplicitWidth = 902
-    ExplicitHeight = 409
+    ExplicitWidth = 903
+    ExplicitHeight = 522
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 894
-      ExplicitHeight = 381
-      inherited pnlListagemTopo: TPanel
-        Width = 894
-        ExplicitWidth = 894
-      end
+      ExplicitWidth = 895
+      ExplicitHeight = 494
       inherited grdListagem: TDBGrid
-        Width = 974
-        Height = 431
+        Width = 951
+        Height = 494
         DataSource = dtsListagem
         Columns = <
           item
@@ -66,10 +61,8 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 22
       ExplicitWidth = 894
-      ExplicitHeight = 468
+      ExplicitHeight = 494
       object Label1: TLabel
         Left = 12
         Top = 82
@@ -271,15 +264,15 @@ inherited frmCadProduto: TfrmCadProduto
   end
   inherited pnlRodape: TPanel
     Top = 522
-    Width = 1032
-    ExplicitTop = 409
-    ExplicitWidth = 1032
+    Width = 1033
+    ExplicitTop = 522
+    ExplicitWidth = 1033
   end
   inherited Panel2: TPanel
-    Left = 902
+    Left = 903
     Height = 522
-    ExplicitLeft = 902
-    ExplicitHeight = 409
+    ExplicitLeft = 903
+    ExplicitHeight = 522
     inherited btnFechar: TBitBtn
       Left = 12
       Top = 468
@@ -299,8 +292,8 @@ inherited frmCadProduto: TfrmCadProduto
       #9'     c.descricao As DescricaoCategoria'
       'From produtos as p'
       #9'LEFT JOIN categorias as c on c.categoriaId = p.categoriaId')
-    Left = 483
-    Top = 99
+    Left = 502
+    Top = 165
     object QryListagemprodutoId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
@@ -335,16 +328,16 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 573
-    Top = 99
+    Left = 592
+    Top = 165
   end
   object QryCategoria: TZQuery
     Connection = dtmPrincipal.ConexaoDB
     SQL.Strings = (
       'Select categoriaId, descricao from categorias')
     Params = <>
-    Left = 563
-    Top = 174
+    Left = 582
+    Top = 240
     object QryCategoriacategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
@@ -358,7 +351,7 @@ inherited frmCadProduto: TfrmCadProduto
   end
   object dtsCategoria: TDataSource
     DataSet = QryCategoria
-    Left = 643
-    Top = 162
+    Left = 662
+    Top = 228
   end
 end
