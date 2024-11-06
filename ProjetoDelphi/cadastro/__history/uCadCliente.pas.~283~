@@ -224,7 +224,7 @@ procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
   inherited;
   edtDataNascimento.Date := Date;
-  edtNome.SetFocus;
+  cbStatus.SetFocus;
 end;
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -265,38 +265,47 @@ end;
 
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
-  Value: string; // Valor sem m�scara
+  Value: string;
 begin
-  inherited;
-  // Remove a m�scara e limita a 14 d�gitos
-  Value := StringReplace(StringReplace(StringReplace(edtcpfCnpj.Text, '.', '', [rfReplaceAll]), '/', '', []), '-', '', []);
-  // Limita o n�mero de d�gitos conforme o tipo de pessoa
-  if cbTipoPessoa.Text = 'F�sica' then
+  // Obtém apenas os números do campo
+  Value := SomenteNumeros(edtcpfCnpj.Text);
+
+  // Limita e aplica a máscara com base no tipo de pessoa
+  if cbTipoPessoa.Text = 'Física' then
   begin
+    // Limita a 11 dígitos e aplica máscara de CPF
     if Length(Value) > 11 then
       Value := Copy(Value, 1, 11);
+
     edtcpfCnpj.Text := MascaraCpf(Value);
-    // Valida o CPF apenas se estiver completo (11 d�gitos)
+
+    // Validação de CPF quando o valor está completo
     if Length(Value) = 11 then
     begin
       if not ValidarCPF(Value) then
-        ShowMessage('CPF inv�lido!');
-    end
+        ShowMessage('CPF inválido! Por favor, verifique o número.');
+    end;
   end
-  else if cbTipoPessoa.Text = 'Jur�dica' then
+  else if cbTipoPessoa.Text = 'Jurídica' then
   begin
+    // Limita a 14 dígitos e aplica máscara de CNPJ
     if Length(Value) > 14 then
       Value := Copy(Value, 1, 14);
+
     edtcpfCnpj.Text := MascaraCnpj(Value);
-     // Valida o CNPJ apenas se estiver completo (14 d�gitos)
+
+    // Validação de CNPJ quando o valor está completo
     if Length(Value) = 14 then
     begin
       if not ValidarCNPJ(Value) then
-        ShowMessage('CNPJ inv�lido!');
+        ShowMessage('CNPJ inválido! Por favor, verifique o número.');
     end;
   end;
-  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text); // Ajusta a posi��o do cursor
+
+  // Posiciona o cursor no final do texto após aplicar a máscara
+  edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text);
 end;
+
 
 procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
 begin

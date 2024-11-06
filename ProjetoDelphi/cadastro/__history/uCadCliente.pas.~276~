@@ -1,4 +1,4 @@
-unit uCadCliente;
+Ôªøunit uCadCliente;
 
 interface
 
@@ -110,6 +110,27 @@ begin
   oCliente.estado := cbEstado.Text;
   oCliente.dataNascimento := edtDataNascimento.Date;
 
+  // Valida√ß√£o de CPF ou CNPJ
+  if oCliente.tipoPessoa = 'F√≠sica' then
+  begin
+    if not ValidarCPF(oCliente.cpfCnpj) then
+    begin
+      ShowMessage('CPF inv√°lido. Por favor, verifique o n√∫mero.');
+      Result := False;
+      Exit;
+    end;
+  end
+  else if oCliente.tipoPessoa = 'Jur√≠dica' then
+  begin
+    if not ValidarCNPJ(oCliente.cpfCnpj) then
+    begin
+      ShowMessage('CNPJ inv√°lido. Por favor, verifique o n√∫mero.');
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Procede com a inser√ß√£o ou atualiza√ß√£o se a valida√ß√£o passar
   case EstadoDoCadastro of
     ecInserir: Result := oCliente.Inserir;
     ecAlterar: Result := oCliente.Atualizar;
@@ -122,7 +143,7 @@ var
   IconIndex: Integer;
   StatusValue: string;
 begin
-  // Chama o mÈtodo herdado da tela de heranÁa para garantir que as alteraÁıes sejam aplicadas
+  // Chama o m√©todo herdado da tela de heran√ßa para garantir que as altera√ß√µes sejam aplicadas
   inherited grdListagemDrawColumnCell(Sender, Rect, DataCol, Column, State);
 
   // Busca o valor do campo de status sem exibir o texto
@@ -130,29 +151,29 @@ begin
 
   if Column.Index = 0 then // Supondo que a coluna de status seja a primeira
   begin
-    // Define o Ìndice do Ìcone com base no valor do campo Status
+    // Define o √≠ndice do √≠cone com base no valor do campo Status
     if StatusValue = 'Ativo' then
-      IconIndex := 0 // Õcone verde
-    else if StatusValue = 'AtenÁ„o' then
-      IconIndex := 1 // Õcone amarelo
+      IconIndex := 0 // √çcone verde
+    else if StatusValue = 'Aten√ß√£o' then
+      IconIndex := 1 // √çcone amarelo
     else if StatusValue = 'Bloqueado' then
-      IconIndex := 2 // Õcone vermelho
+      IconIndex := 2 // √çcone vermelho
     else if StatusValue = 'Prospecto' then
-      IconIndex := 3 // Õcone azul
+      IconIndex := 3 // √çcone azul
     else if StatusValue = 'Inativo' then
-      IconIndex := 5 // Õcone preto
+      IconIndex := 5 // √çcone preto
     else
-      Exit; // Sai se o valor n„o corresponder a nenhum status
+      Exit; // Sai se o valor n√£o corresponder a nenhum status
 
     grdListagem.Canvas.FillRect(Rect);
 
-    // Desenha o Ìcone no centro da cÈlula
+    // Desenha o √≠cone no centro da c√©lula
     ImageListStatus.Draw(grdListagem.Canvas, Rect.Left + (Rect.Width - ImageListStatus.Width) div 2,
       Rect.Top + (Rect.Height - ImageListStatus.Height) div 2, IconIndex);
   end
   else
   begin
-    // Desenha o conte˙do padr„o da cÈlula nas outras colunas
+    // Desenha o conte√∫do padr√£o da c√©lula nas outras colunas
     TDBGrid(Sender).DefaultDrawColumnCell(Rect, DataCol, Column, State);
   end;
 end;
@@ -168,12 +189,12 @@ begin
     cbStatus.Text := oCliente.status;
     cbTipoPessoa.Text := oCliente.tipoPessoa;
 
-    // Verifica se o cpfCnpj n„o est· vazio antes de aplicar a m·scara
+    // Verifica se o cpfCnpj n√£o est√° vazio antes de aplicar a m√°scara
     if oCliente.cpfCnpj <> '' then
     begin
-      if oCliente.tipoPessoa = 'FÌsica' then
+      if oCliente.tipoPessoa = 'F√≠sica' then
         edtcpfCnpj.Text := MascaraCpf(oCliente.cpfCnpj)
-      else if oCliente.tipoPessoa = 'JurÌdica' then
+      else if oCliente.tipoPessoa = 'Jur√≠dica' then
         edtcpfCnpj.Text := MascaraCnpj(oCliente.cpfCnpj);
     end
     else
@@ -203,7 +224,7 @@ procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
   inherited;
   edtDataNascimento.Date := Date;
-  edtNome.SetFocus;
+  cbStatus.SetFocus;
 end;
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -220,8 +241,8 @@ begin
   // Inicializa ComboBoxes
   with cbTipoPessoa do
   begin
-    Items.Add('FÌsica');
-    Items.Add('JurÌdica');
+    Items.Add('F√≠sica');
+    Items.Add('Jur√≠dica');
   end;
 
   cbEstado.Items.AddStrings([
@@ -231,44 +252,64 @@ begin
   ]);
 
   cbStatus.Items.AddStrings([
-    'Ativo', 'Bloqueado', 'AtenÁ„o', 'Inativo', 'Prospecto'
+    'Ativo', 'Bloqueado', 'Aten√ß√£o', 'Inativo', 'Prospecto'
   ]);
 
-  edtcpfCnpj.ReadOnly := True; // Bloqueia a ediÁ„o inicialmente
+  edtcpfCnpj.ReadOnly := True; // Bloqueia a edi√ß√£o inicialmente
 
   // Configura a coluna de status sem associar um campo
-  grdListagem.Columns[0].Width := ImageListStatus.Width + 4; // Ajusta a largura para caber o Ìcone
+  grdListagem.Columns[0].Width := ImageListStatus.Width + 4; // Ajusta a largura para caber o √≠cone
 end;
 
-{$region 'FunÁıes de FormataÁ„o'}
+{$region 'Fun√ß√µes de Formata√ß√£o'}
 
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
   Value: string;
 begin
-  // Remove qualquer m·scara existente e obtÈm apenas os n˙meros
+  // Obt√©m apenas os n√∫meros do campo
   Value := SomenteNumeros(edtcpfCnpj.Text);
 
-  // Se o campo estiver vazio, limpa o texto e sai do procedimento
-  if Value = '' then
+  // Limita e aplica a m√°scara com base no tipo de pessoa
+  if cbTipoPessoa.Text = 'F√≠sica' then
   begin
-    edtcpfCnpj.Text := '';
-    Exit;
-  end;
+    // Limita a 11 d√≠gitos e aplica m√°scara de CPF
+    if Length(Value) > 11 then
+      Value := Copy(Value, 1, 11);
 
-  // Aplica a m·scara conforme o tipo selecionado
-  if cbTipoPessoa.Text = 'FÌsica' then
-    edtcpfCnpj.Text := MascaraCpf(Value)
-  else if cbTipoPessoa.Text = 'JurÌdica' then
+    edtcpfCnpj.Text := MascaraCpf(Value);
+
+    // Valida√ß√£o de CPF quando o valor est√° completo
+    if Length(Value) = 11 then
+    begin
+      if not ValidarCPF(Value) then
+        ShowMessage('CPF inv√°lido! Por favor, verifique o n√∫mero.');
+    end;
+  end
+  else if cbTipoPessoa.Text = 'Jur√≠dica' then
+  begin
+    // Limita a 14 d√≠gitos e aplica m√°scara de CNPJ
+    if Length(Value) > 14 then
+      Value := Copy(Value, 1, 14);
+
     edtcpfCnpj.Text := MascaraCnpj(Value);
 
-  // Posiciona o cursor no final do texto
+    // Valida√ß√£o de CNPJ quando o valor est√° completo
+    if Length(Value) = 14 then
+    begin
+      if not ValidarCNPJ(Value) then
+        ShowMessage('CNPJ inv√°lido! Por favor, verifique o n√∫mero.');
+    end;
+  end;
+
+  // Posiciona o cursor no final do texto ap√≥s aplicar a m√°scara
   edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text);
 end;
 
+
 procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
 begin
-  // Verifique se o tipo de pessoa est· selecionado antes de permitir a ediÁ„o
+  // Verifique se o tipo de pessoa est√° selecionado antes de permitir a edi√ß√£o
   if cbTipoPessoa.ItemIndex = -1 then
   begin
     ShowMessage('Por favor, selecione primeiro o Tipo de Pessoa.');
@@ -276,13 +317,13 @@ begin
   end
   else
   begin
-    edtcpfCnpj.ReadOnly := False; // Permite ediÁ„o caso o tipo de pessoa esteja selecionado
+    edtcpfCnpj.ReadOnly := False; // Permite edi√ß√£o caso o tipo de pessoa esteja selecionado
   end;
 end;
 
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin
-  edtcpfCnpj.ReadOnly := cbTipoPessoa.ItemIndex = -1; // Bloqueia ou permite ediÁ„o
+  edtcpfCnpj.ReadOnly := cbTipoPessoa.ItemIndex = -1; // Bloqueia ou permite edi√ß√£o
   if edtcpfCnpj.ReadOnly then
     edtcpfCnpj.Clear; // Limpa o campo se estiver bloqueado
 end;
@@ -305,11 +346,11 @@ begin
   Result := False;
   Numero := SomenteNumeros(CPF);
 
-   // Verifica se o CPF possui exatamente 11 dÌgitos e se n„o È uma sequÍncia repetida
+   // Verifica se o CPF possui exatamente 11 d√≠gitos e se n√£o √© uma sequ√™ncia repetida
   if (Length(Numero) <> 11) or (Numero = StringOfChar(Numero[1], 11)) then
     Exit;
 
-  // Calcula o primeiro dÌgito verificador
+  // Calcula o primeiro d√≠gito verificador
   Soma := 0;
   for I := 1 to 9 do
     Soma := Soma + StrToInt(Numero[I]) * (11 - I);
@@ -319,7 +360,7 @@ begin
   else
     Digito1 := Resto;
 
-  // Calcula o segundo dÌgito verificador
+  // Calcula o segundo d√≠gito verificador
   Soma := 0;
   for I := 1 to 10 do
     Soma := Soma + StrToInt(Numero[I]) * (12 - I);
@@ -329,7 +370,7 @@ begin
   else
     Digito2 := Resto;
 
-  // Verifica se os dÌgitos calculados correspondem aos dÌgitos informados
+  // Verifica se os d√≠gitos calculados correspondem aos d√≠gitos informados
   Result := (Digito1 = StrToInt(Numero[10])) and (Digito2 = StrToInt(Numero[11]));
 end;
 
@@ -342,13 +383,13 @@ const
   Peso2: array[1..13] of Integer = (6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2);
 begin
   Result := False;
-  Numero := SomenteNumeros(CNPJ); // Remove caracteres n„o numÈricos
+  Numero := SomenteNumeros(CNPJ); // Remove caracteres n√£o num√©ricos
 
-  // Verifica se o CNPJ possui exatamente 14 dÌgitos e se n„o È uma sequÍncia repetida
+  // Verifica se o CNPJ possui exatamente 14 d√≠gitos e se n√£o √© uma sequ√™ncia repetida
   if (Length(Numero) <> 14) or (Numero = StringOfChar(Numero[1], 14)) then
     Exit;
 
-  // Calcula o primeiro dÌgito verificador
+  // Calcula o primeiro d√≠gito verificador
   Soma := 0;
   for I := 1 to 12 do
     Soma := Soma + StrToInt(Numero[I]) * Peso1[I];
@@ -358,7 +399,7 @@ begin
   else
     Digito1 := 11 - Resto;
 
-  // Calcula o segundo dÌgito verificador
+  // Calcula o segundo d√≠gito verificador
   Soma := 0;
   for I := 1 to 13 do
     Soma := Soma + StrToInt(Numero[I]) * Peso2[I];
@@ -368,7 +409,7 @@ begin
   else
     Digito2 := 11 - Resto;
 
-  // Verifica se os dÌgitos calculados correspondem aos dÌgitos informados
+  // Verifica se os d√≠gitos calculados correspondem aos d√≠gitos informados
   Result := (Digito1 = StrToInt(Numero[13])) and (Digito2 = StrToInt(Numero[14]));
 end;
 
@@ -386,7 +427,7 @@ end;
 procedure TfrmCadCliente.edtTelefoneChange(Sender: TObject);
 begin
   edtTelefone.Text := MascaraTelefone(edtTelefone.Text);
-  edtTelefone.SelStart := Length(edtTelefone.Text); // Ajusta a posiÁ„o do cursor
+  edtTelefone.SelStart := Length(edtTelefone.Text); // Ajusta a posi√ß√£o do cursor
 end;
 
 function TfrmCadCliente.MascaraTelefone(const AValue: string): string;
@@ -395,13 +436,13 @@ var
 begin
   ValorSemMascara := SomenteNumeros(AValue);
 
-  // Aplica a m·scara de acordo com o comprimento do n˙mero e o prefixo
+  // Aplica a m√°scara de acordo com o comprimento do n√∫mero e o prefixo
   if Copy(ValorSemMascara, 1, 4) = '0300' then
   begin
     if Length(ValorSemMascara) = 11 then
       Result := Format('%s %s %s', [Copy(ValorSemMascara, 1, 4), Copy(ValorSemMascara, 5, 3), Copy(ValorSemMascara, 8, 4)])
     else
-      Result := ValorSemMascara; // Sem m·scara se o n˙mero estiver incompleto
+      Result := ValorSemMascara; // Sem m√°scara se o n√∫mero estiver incompleto
   end
   else
   begin
@@ -413,7 +454,7 @@ begin
         Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 5), Copy(ValorSemMascara, 8, 4)]);
 
       else
-        Result := ValorSemMascara; // Retorna o valor sem formataÁ„o se n„o corresponder a nenhum formato esperado
+        Result := ValorSemMascara; // Retorna o valor sem formata√ß√£o se n√£o corresponder a nenhum formato esperado
     end;
   end;
 end;
@@ -422,16 +463,16 @@ procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: str
 begin
   if Sender.AsString <> '' then
   begin
-    // Aplica a m·scara conforme o tipo de pessoa na grid
-    if QryListagemtipoPessoa.AsString = 'FÌsica' then
+    // Aplica a m√°scara conforme o tipo de pessoa na grid
+    if QryListagemtipoPessoa.AsString = 'F√≠sica' then
       Text := MascaraCpf(Sender.AsString)
-    else if QryListagemtipoPessoa.AsString = 'JurÌdica' then
+    else if QryListagemtipoPessoa.AsString = 'Jur√≠dica' then
       Text := MascaraCnpj(Sender.AsString)
     else
       Text := Sender.AsString;
   end
   else
-    Text := ''; // Deixa vazio se n„o houver valor
+    Text := ''; // Deixa vazio se n√£o houver valor
 end;
 
 function TfrmCadCliente.SomenteNumeros(const AValue: string): string;
@@ -443,7 +484,7 @@ begin
   // Percorre cada caractere da string
   for I := 1 to Length(AValue) do
   begin
-    // Verifica se o caractere È numÈrico e adiciona ao resultado
+    // Verifica se o caractere √© num√©rico e adiciona ao resultado
     if CharInSet(AValue[I], ['0'..'9']) then
       Result := Result + AValue[I];
   end;

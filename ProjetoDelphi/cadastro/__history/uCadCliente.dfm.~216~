@@ -10,27 +10,22 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 841
     Height = 340
-    ExplicitWidth = 948
+    ActivePage = tabManutencao
+    ExplicitWidth = 841
     ExplicitHeight = 340
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 940
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 833
       ExplicitHeight = 312
-      inherited pnlListagemTopo: TPanel
-        Width = 833
-        ExplicitWidth = 940
-      end
       inherited grdListagem: TDBGrid
         Width = 1073
-        Height = 249
+        Height = 312
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack
         Font.Color = clBlack
         ParentCtl3D = False
-        OnDrawColumnCell = grdListagemDrawColumnCell
-        OnDblClick = grdListagemDblClick
         Columns = <
           item
             Alignment = taCenter
@@ -131,7 +126,9 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 940
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 833
       ExplicitHeight = 312
       object Label1: TLabel
         Left = 309
@@ -162,7 +159,7 @@ inherited frmCadCliente: TfrmCadCliente
         Caption = 'Tipo'
       end
       object TLabel
-        Left = 135
+        Left = 129
         Top = 24
         Width = 31
         Height = 13
@@ -170,7 +167,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtNome: TLabeledEdit
         Left = 11
-        Top = 91
+        Top = 92
         Width = 393
         Height = 21
         EditLabel.Width = 27
@@ -282,7 +279,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
       object edtcpfCnpj: TLabeledEdit
         Left = 11
-        Top = 151
+        Top = 150
         Width = 124
         Height = 21
         EditLabel.Width = 48
@@ -328,7 +325,7 @@ inherited frmCadCliente: TfrmCadCliente
     Width = 971
     Height = 48
     ExplicitTop = 340
-    ExplicitWidth = 1078
+    ExplicitWidth = 971
     ExplicitHeight = 48
     object Panel1: TPanel
       Left = 314
@@ -588,7 +585,7 @@ inherited frmCadCliente: TfrmCadCliente
   inherited Panel2: TPanel
     Left = 841
     Height = 340
-    ExplicitLeft = 948
+    ExplicitLeft = 841
     ExplicitHeight = 340
     DesignSize = (
       130

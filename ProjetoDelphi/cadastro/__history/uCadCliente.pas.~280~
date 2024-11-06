@@ -224,7 +224,7 @@ procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
   inherited;
   edtDataNascimento.Date := Date;
-  edtNome.SetFocus;
+  cbStatus.SetFocus;
 end;
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -267,26 +267,45 @@ procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
   Value: string;
 begin
-  // Remove qualquer máscara existente e obtém apenas os números
-   Value := StringReplace(StringReplace(StringReplace(edtcpfCnpj.Text, '.', '', [rfReplaceAll]), '/', '', []), '-', '', []);
+  // Obtém apenas os números do campo
+  Value := SomenteNumeros(edtcpfCnpj.Text);
 
-
-  // Se o campo estiver vazio, limpa o texto e sai do procedimento
-  if Value = '' then
-  begin
-    edtcpfCnpj.Text := '';
-    Exit;
-  end;
-
-  // Aplica a máscara conforme o tipo selecionado
+  // Limita e aplica a máscara com base no tipo de pessoa
   if cbTipoPessoa.Text = 'Física' then
-    edtcpfCnpj.Text := MascaraCpf(Value)
+  begin
+    // Limita a 11 dígitos e aplica máscara de CPF
+    if Length(Value) > 11 then
+      Value := Copy(Value, 1, 11);
+
+    edtcpfCnpj.Text := MascaraCpf(Value);
+
+    // Validação de CPF quando o valor está completo
+    if Length(Value) = 11 then
+    begin
+      if not ValidarCPF(Value) then
+        ShowMessage('CPF inválido! Por favor, verifique o número.');
+    end;
+  end
   else if cbTipoPessoa.Text = 'Jurídica' then
+  begin
+    // Limita a 14 dígitos e aplica máscara de CNPJ
+    if Length(Value) > 14 then
+      Value := Copy(Value, 1, 14);
+
     edtcpfCnpj.Text := MascaraCnpj(Value);
 
-  // Posiciona o cursor no final do texto
+    // Validação de CNPJ quando o valor está completo
+    if Length(Value) = 14 then
+    begin
+      if not ValidarCNPJ(Value) then
+        ShowMessage('CNPJ inválido! Por favor, verifique o número.');
+    end;
+  end;
+
+  // Posiciona o cursor no final do texto após aplicar a máscara
   edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text);
 end;
+
 
 procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
 begin
@@ -400,8 +419,8 @@ begin
     1..2: Result := AValue;
     3..5: Result := Format('%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, Length(AValue) - 2)]);
     6..8: Result := Format('%s.%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, Length(AValue) - 5)]);
-    9..11: Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 8)]);
-    12..14: Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 2)]);
+    9..11: Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 7)]);
+    12..14: Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 12, 2)]);
   end;
 end;
 

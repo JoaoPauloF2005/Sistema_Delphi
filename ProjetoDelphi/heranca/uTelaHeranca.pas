@@ -26,8 +26,7 @@ type
     btnFechar: TBitBtn; // Bot�o "Fechar"
 
     QryListagem: TZQuery; // Query que realiza opera��es no banco de dados
-    dtsListagem: TDataSource;
-    BitBtn1: TBitBtn; // R�tulo para exibir o �ndice atual
+    dtsListagem: TDataSource; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);

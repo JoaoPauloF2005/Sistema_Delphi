@@ -1,23 +1,27 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produtos'
-  ClientHeight = 577
-  ClientWidth = 1033
+  ClientHeight = 624
+  ClientWidth = 1259
   Position = poDesktopCenter
-  ExplicitWidth = 1039
-  ExplicitHeight = 606
+  ExplicitLeft = -12
+  ExplicitWidth = 1265
+  ExplicitHeight = 653
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 903
-    Height = 522
+    Width = 1129
+    Height = 569
+    ActivePage = tabManutencao
     ExplicitWidth = 903
     ExplicitHeight = 522
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 895
       ExplicitHeight = 494
       inherited grdListagem: TDBGrid
         Width = 951
-        Height = 494
+        Height = 541
         DataSource = dtsListagem
         Columns = <
           item
@@ -61,8 +65,10 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 894
-      ExplicitHeight = 494
+      ExplicitLeft = 31
+      ExplicitTop = 22
+      ExplicitWidth = 1121
+      ExplicitHeight = 541
       object Label1: TLabel
         Left = 12
         Top = 82
@@ -92,8 +98,8 @@ inherited frmCadProduto: TfrmCadProduto
         Caption = 'Categoria'
       end
       object Label5: TLabel
-        Left = 14
-        Top = 264
+        Left = 318
+        Top = 210
         Width = 22
         Height = 13
         Caption = 'Foto'
@@ -168,8 +174,8 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object btnCarregarImagem: TBitBtn
         Tag = 99
-        Left = 143
-        Top = 281
+        Left = 678
+        Top = 226
         Width = 28
         Height = 25
         Glyph.Data = {
@@ -203,8 +209,8 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnCarregarImagemClick
       end
       object btnRemoverImagem: TBitBtn
-        Left = 143
-        Top = 312
+        Left = 678
+        Top = 257
         Width = 28
         Height = 25
         Glyph.Data = {
@@ -238,9 +244,9 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnRemoverImagemClick
       end
       object Panel1: TPanel
-        Left = 12
-        Top = 281
-        Width = 127
+        Left = 315
+        Top = 226
+        Width = 357
         Height = 198
         BevelOuter = bvLowered
         BiDiMode = bdRightToLeftReadingOnly
@@ -254,23 +260,23 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 8
         OnClick = Panel1Click
         object imgProduto: TImage
-          Left = 1
-          Top = 1
-          Width = 121
+          Left = 2
+          Top = 2
+          Width = 350
           Height = 192
         end
       end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 522
-    Width = 1033
+    Top = 569
+    Width = 1259
     ExplicitTop = 522
     ExplicitWidth = 1033
   end
   inherited Panel2: TPanel
-    Left = 903
-    Height = 522
+    Left = 1129
+    Height = 569
     ExplicitLeft = 903
     ExplicitHeight = 522
     inherited btnFechar: TBitBtn
@@ -336,8 +342,8 @@ inherited frmCadProduto: TfrmCadProduto
     SQL.Strings = (
       'Select categoriaId, descricao from categorias')
     Params = <>
-    Left = 582
-    Top = 240
+    Left = 968
+    Top = 333
     object QryCategoriacategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
@@ -351,7 +357,7 @@ inherited frmCadProduto: TfrmCadProduto
   end
   object dtsCategoria: TDataSource
     DataSet = QryCategoria
-    Left = 662
-    Top = 228
+    Left = 1048
+    Top = 321
   end
 end
