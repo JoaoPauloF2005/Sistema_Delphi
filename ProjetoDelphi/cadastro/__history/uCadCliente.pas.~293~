@@ -433,12 +433,16 @@ begin
   end;
 end;
 
-
 procedure TfrmCadCliente.edtTelefoneChange(Sender: TObject);
 begin
+  // Aplica a máscara ao texto do campo de telefone
   edtTelefone.Text := MascaraTelefone(edtTelefone.Text);
-  edtTelefone.SelStart := Length(edtTelefone.Text); // Ajusta a posição do cursor
+
+  // Reposiciona o cursor no final do texto
+  edtTelefone.SelStart := Length(edtTelefone.Text);
 end;
+
+
 
 function TfrmCadCliente.MascaraTelefone(const AValue: string): string;
 var
@@ -446,28 +450,22 @@ var
 begin
   ValorSemMascara := SomenteNumeros(AValue);
 
-  // Aplica a máscara de acordo com o comprimento do número e o prefixo
-  if Copy(ValorSemMascara, 1, 4) = '0300' then
-  begin
-    if Length(ValorSemMascara) = 11 then
-      Result := Format('%s %s %s', [Copy(ValorSemMascara, 1, 4), Copy(ValorSemMascara, 5, 3), Copy(ValorSemMascara, 8, 4)])
+  // Aplica a máscara de acordo com o comprimento do número
+  case Length(ValorSemMascara) of
+    1..2:
+      Result := Format('(%s', [ValorSemMascara]);
+    3..6:
+      Result := Format('(%s) %s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, Length(ValorSemMascara) - 2)]);
+    7..10: // Telefone fixo: (99) 1234-5678
+      Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, Length(ValorSemMascara) - 6)]);
+    11: // Celular: (99) 91234-5678
+      Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 5), Copy(ValorSemMascara, 8, 4)]);
     else
-      Result := ValorSemMascara; // Sem máscara se o número estiver incompleto
-  end
-  else
-  begin
-    case Length(ValorSemMascara) of
-      10: // Formato fixo: (14) 3662-9252
-        Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, 4)]);
-
-      11: // Formato celular: (14) 98123-8367
-        Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 5), Copy(ValorSemMascara, 8, 4)]);
-
-      else
-        Result := ValorSemMascara; // Retorna o valor sem formatação se não corresponder a nenhum formato esperado
-    end;
+      Result := ValorSemMascara; // Retorna sem máscara se o formato for diferente
   end;
 end;
+
+
 
 procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 begin

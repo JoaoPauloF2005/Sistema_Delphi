@@ -416,19 +416,33 @@ end;
 function TfrmCadCliente.MascaraCnpj(const AValue: string): string;
 begin
   case Length(AValue) of
-    1..2: Result := AValue;
-    3..5: Result := Format('%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, Length(AValue) - 2)]);
-    6..8: Result := Format('%s.%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, Length(AValue) - 5)]);
-    9..11: Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 7)]);
-    12..14: Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 2)]);
+    1..2:
+      Result := AValue;
+    3..5:
+      Result := Format('%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, Length(AValue) - 2)]);
+    6..8:
+      Result := Format('%s.%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, Length(AValue) - 5)]);
+    9..11:
+      Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 8)]);
+    12:
+      Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4)]);
+    13:
+      Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 1)]);
+    14:
+      Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 2)]);
   end;
 end;
 
 procedure TfrmCadCliente.edtTelefoneChange(Sender: TObject);
 begin
+  // Aplica a máscara ao texto do campo de telefone
   edtTelefone.Text := MascaraTelefone(edtTelefone.Text);
-  edtTelefone.SelStart := Length(edtTelefone.Text); // Ajusta a posição do cursor
+
+  // Reposiciona o cursor no final do texto após aplicar a máscara
+  edtTelefone.SelStart := Length(edtTelefone.Text);
 end;
+
+
 
 function TfrmCadCliente.MascaraTelefone(const AValue: string): string;
 var
@@ -436,28 +450,43 @@ var
 begin
   ValorSemMascara := SomenteNumeros(AValue);
 
-  // Aplica a máscara de acordo com o comprimento do número e o prefixo
-  if Copy(ValorSemMascara, 1, 4) = '0300' then
+  // Limita o número de dígitos conforme o tipo de telefone
+  if (Copy(ValorSemMascara, 1, 4) = '0300') or (Copy(ValorSemMascara, 1, 4) = '0800') then
   begin
-    if Length(ValorSemMascara) = 11 then
+    // Máscara para número comercial (ex.: 0300 123 4567 ou 0800 123 4567)
+    if Length(ValorSemMascara) > 11 then
+      ValorSemMascara := Copy(ValorSemMascara, 1, 11);
+    if Length(ValorSemMascara) >= 8 then
       Result := Format('%s %s %s', [Copy(ValorSemMascara, 1, 4), Copy(ValorSemMascara, 5, 3), Copy(ValorSemMascara, 8, 4)])
+    else if Length(ValorSemMascara) >= 5 then
+      Result := Format('%s %s', [Copy(ValorSemMascara, 1, 4), Copy(ValorSemMascara, 5, Length(ValorSemMascara) - 4)])
     else
-      Result := ValorSemMascara; // Sem máscara se o número estiver incompleto
+      Result := ValorSemMascara;
   end
   else
   begin
+    // Limita a 11 dígitos para números de telefone fixo e celular
+    if Length(ValorSemMascara) > 11 then
+      ValorSemMascara := Copy(ValorSemMascara, 1, 11);
+
+    // Aplica a máscara de acordo com o comprimento do número
     case Length(ValorSemMascara) of
-      10: // Formato fixo: (14) 3662-9252
-        Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, 4)]);
-
-      11: // Formato celular: (14) 98123-8367
+      1..2:
+        Result := Format('(%s', [ValorSemMascara]);
+      3..6:
+        Result := Format('(%s) %s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, Length(ValorSemMascara) - 2)]);
+      7..10: // Telefone fixo: (99) 1234-5678
+        Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, Length(ValorSemMascara) - 6)]);
+      11: // Celular: (99) 91234-5678
         Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 5), Copy(ValorSemMascara, 8, 4)]);
-
       else
-        Result := ValorSemMascara; // Retorna o valor sem formatação se não corresponder a nenhum formato esperado
+        Result := ValorSemMascara; // Retorna sem máscara se o formato for diferente
     end;
   end;
 end;
+
+
+
 
 procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 begin

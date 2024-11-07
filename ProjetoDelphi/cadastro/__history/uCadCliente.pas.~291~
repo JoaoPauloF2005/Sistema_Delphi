@@ -416,11 +416,20 @@ end;
 function TfrmCadCliente.MascaraCnpj(const AValue: string): string;
 begin
   case Length(AValue) of
-    1..2: Result := AValue;
-    3..5: Result := Format('%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, Length(AValue) - 2)]);
-    6..8: Result := Format('%s.%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, Length(AValue) - 5)]);
-    9..11: Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 8)]);
-    12..14: Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 2)]);
+    1..2:
+      Result := AValue;
+    3..5:
+      Result := Format('%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, Length(AValue) - 2)]);
+    6..8:
+      Result := Format('%s.%s.%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, Length(AValue) - 5)]);
+    9..11:
+      Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, Length(AValue) - 8)]);
+    12:
+      Result := Format('%s.%s.%s/%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4)]);
+    13:
+      Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 1)]);
+    14:
+      Result := Format('%s.%s.%s/%s-%s', [Copy(AValue, 1, 2), Copy(AValue, 3, 3), Copy(AValue, 6, 3), Copy(AValue, 9, 4), Copy(AValue, 13, 2)]);
   end;
 end;
 
@@ -439,6 +448,7 @@ begin
   // Aplica a máscara de acordo com o comprimento do número e o prefixo
   if Copy(ValorSemMascara, 1, 4) = '0300' then
   begin
+    // Máscara para número comercial (ex.: 0300 123 4567)
     if Length(ValorSemMascara) = 11 then
       Result := Format('%s %s %s', [Copy(ValorSemMascara, 1, 4), Copy(ValorSemMascara, 5, 3), Copy(ValorSemMascara, 8, 4)])
     else
@@ -446,18 +456,18 @@ begin
   end
   else
   begin
+    // Aplica a máscara para telefone fixo ou celular
     case Length(ValorSemMascara) of
-      10: // Formato fixo: (14) 3662-9252
-        Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, 4)]);
-
-      11: // Formato celular: (14) 98123-8367
+      1..10: // Telefone fixo (ex.: (99) 1234-5678)
+        Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 4), Copy(ValorSemMascara, 7, Length(ValorSemMascara) - 6)]);
+      11: // Celular (ex.: (99) 91234-5678)
         Result := Format('(%s) %s-%s', [Copy(ValorSemMascara, 1, 2), Copy(ValorSemMascara, 3, 5), Copy(ValorSemMascara, 8, 4)]);
-
       else
         Result := ValorSemMascara; // Retorna o valor sem formatação se não corresponder a nenhum formato esperado
     end;
   end;
 end;
+
 
 procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 begin

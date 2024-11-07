@@ -38,6 +38,8 @@ type
     Panel1: TPanel;
     imgProduto: TImage;
     QryListagemimagem: TBlobField;
+    panelImagem: TPanel;
+    imgProdutoPreview: TImage;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -45,8 +47,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnCarregarImagemClick(Sender: TObject);
     procedure btnRemoverImagemClick(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
-
+    procedure grdListagemCellClick(Column: TColumn);
   private
     { Private declarations }
     oProduto: TProduto;
@@ -74,26 +75,23 @@ end;
 
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
-  if edtProdutoId.Text <> EmptyStr then
-    oProduto.codigo := StrToInt(edtProdutoId.Text)
-  else
-    oProduto.codigo := 0;
-
+  oProduto.codigo := StrToIntDef(edtProdutoId.Text, 0);
   oProduto.nome := edtNome.Text;
   oProduto.descricao := edtDescricao.Text;
   oProduto.categoriaId := lkpCategoria.KeyValue;
   oProduto.valor := edtValor.Value;
   oProduto.quantidade := edtQuantidade.Value;
 
-  // Verifica se a imagem está presente antes de tentar salvá-la
-  if (imgProduto.Picture <> nil) and not imgProduto.Picture.Graphic.Empty then
+  // Verifica se imgProduto tem uma imagem carregada antes de salvar
+  if (imgProduto.Picture <> nil) and (imgProduto.Picture.Graphic <> nil) and
+     not imgProduto.Picture.Graphic.Empty then
   begin
-    oProduto.imagem.Clear;
+    oProduto.imagem.Clear; // Limpa o stream antes de salvar
     imgProduto.Picture.Graphic.SaveToStream(oProduto.imagem);
   end
   else
   begin
-    oProduto.imagem.Clear; // Limpa o stream para garantir que esteja vazio
+    oProduto.imagem.Clear; // Garante que o stream esteja vazio se não houver imagem
   end;
 
   if EstadoDoCadastro = ecInserir then
@@ -102,11 +100,43 @@ begin
     Result := oProduto.Atualizar;
 end;
 
-procedure TfrmCadProduto.Panel1Click(Sender: TObject);
+procedure TfrmCadProduto.grdListagemCellClick(Column: TColumn);
+var
+  Picture: TPicture;
+  ImageStream: TMemoryStream;
 begin
-  inherited;
-
+  // Verifica se a coluna clicada é a que contém o campo de imagem
+  if Column.Field = QryListagemimagem then
+  begin
+    // Verifica se o campo de imagem não está vazio
+    if not QryListagemimagem.IsNull then
+    begin
+      ImageStream := TMemoryStream.Create;
+      Picture := TPicture.Create;
+      try
+        // Carrega os dados do campo blob para o stream
+        TBlobField(QryListagemimagem).SaveToStream(ImageStream);
+        ImageStream.Position := 0; // Garante que o stream esteja no início
+        Picture.LoadFromStream(ImageStream);
+        imgProdutoPreview.Picture.Assign(Picture); // Usa imgProdutoPreview para exibir a imagem
+        panelImagem.Visible := True; // Mostra o painel com a imagem
+      finally
+        Picture.Free;
+        ImageStream.Free;
+      end;
+    end
+    else
+    begin
+      imgProdutoPreview.Picture := nil; // Remove a imagem se não houver dados
+      panelImagem.Visible := False; // Esconde o painel se não houver imagem
+    end;
+  end
+  else
+  begin
+    panelImagem.Visible := False; // Esconde o painel se outra coluna for selecionada
+  end;
 end;
+
 
 {$endregion}
 

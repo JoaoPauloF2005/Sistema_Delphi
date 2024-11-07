@@ -10,6 +10,7 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 841
     Height = 340
+    ActivePage = tabManutencao
     ExplicitWidth = 841
     ExplicitHeight = 340
     inherited tabListagem: TTabSheet
@@ -597,7 +598,6 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited QryListagem: TZQuery
-    Active = True
     SQL.Strings = (
       'select clienteId,'
       '       nome,'

@@ -38,6 +38,10 @@ type
     Panel1: TPanel;
     imgProduto: TImage;
     QryListagemimagem: TBlobField;
+    panelImagem: TPanel;
+    imgProdutoPreview: TImage;
+    Label6: TLabel;
+    Panel3: TPanel;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -45,8 +49,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnCarregarImagemClick(Sender: TObject);
     procedure btnRemoverImagemClick(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
-
+    procedure QryListagemAfterScroll(DataSet: TDataSet);
   private
     { Private declarations }
     oProduto: TProduto;
@@ -99,13 +102,33 @@ begin
     Result := oProduto.Atualizar;
 end;
 
-
-
-procedure TfrmCadProduto.Panel1Click(Sender: TObject);
+procedure TfrmCadProduto.QryListagemAfterScroll(DataSet: TDataSet);
+var
+  Picture: TPicture;
+  ImageStream: TMemoryStream;
 begin
-  inherited;
-
+  if not QryListagemimagem.IsNull then
+  begin
+    ImageStream := TMemoryStream.Create;
+    Picture := TPicture.Create;
+    try
+      TBlobField(QryListagemimagem).SaveToStream(ImageStream);
+      ImageStream.Position := 0; // Garante que o stream esteja no início
+      Picture.LoadFromStream(ImageStream);
+      imgProdutoPreview.Picture.Assign(Picture);
+      panelImagem.Visible := True; // Mostra o painel com a imagem
+    finally
+      Picture.Free;
+      ImageStream.Free;
+    end;
+  end
+  else
+  begin
+    imgProdutoPreview.Picture := nil; // Remove a imagem se não houver dados
+    panelImagem.Visible := False; // Esconde o painel se não houver imagem
+  end;
 end;
+
 
 {$endregion}
 

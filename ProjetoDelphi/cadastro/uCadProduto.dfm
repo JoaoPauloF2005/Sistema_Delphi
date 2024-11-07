@@ -1,25 +1,26 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produtos'
-  ClientHeight = 624
-  ClientWidth = 1259
+  ClientHeight = 558
+  ClientWidth = 1458
   Position = poDesktopCenter
-  ExplicitWidth = 1265
-  ExplicitHeight = 653
+  ExplicitLeft = -230
+  ExplicitWidth = 1464
+  ExplicitHeight = 587
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 1129
-    Height = 569
+    Width = 1328
+    Height = 503
     ExplicitWidth = 1129
     ExplicitHeight = 569
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 1121
-      ExplicitHeight = 541
+      ExplicitLeft = 2
+      ExplicitTop = 22
+      ExplicitWidth = 1320
+      ExplicitHeight = 475
       inherited grdListagem: TDBGrid
-        Width = 951
-        Height = 541
+        Width = 1015
+        Height = 475
         DataSource = dtsListagem
         Columns = <
           item
@@ -41,6 +42,7 @@ inherited frmCadProduto: TfrmCadProduto
             Expanded = False
             FieldName = 'descricao'
             Title.Alignment = taCenter
+            Width = 347
             Visible = True
           end
           item
@@ -62,7 +64,7 @@ inherited frmCadProduto: TfrmCadProduto
             Expanded = False
             FieldName = 'categoriaId'
             Title.Alignment = taCenter
-            Visible = True
+            Visible = False
           end
           item
             Alignment = taCenter
@@ -76,6 +78,47 @@ inherited frmCadProduto: TfrmCadProduto
             FieldName = 'imagem'
             Visible = False
           end>
+      end
+      object panelImagem: TPanel
+        Left = 1021
+        Top = 0
+        Width = 297
+        Height = 323
+        TabOrder = 1
+        object imgProdutoPreview: TImage
+          Left = 0
+          Top = 42
+          Width = 297
+          Height = 272
+          Stretch = True
+        end
+        object Panel3: TPanel
+          Left = 1
+          Top = 1
+          Width = 295
+          Height = 35
+          Align = alTop
+          Color = clGray
+          ParentBackground = False
+          TabOrder = 0
+          object Label6: TLabel
+            Left = 86
+            Top = 9
+            Width = 127
+            Height = 16
+            Align = alCustom
+            Alignment = taCenter
+            Caption = 'Imagem do Produto'
+            Color = clWhite
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWhite
+            Font.Height = -13
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentColor = False
+            ParentFont = False
+          end
+        end
       end
     end
     inherited tabManutencao: TTabSheet
@@ -272,7 +315,6 @@ inherited frmCadProduto: TfrmCadProduto
         ParentCtl3D = False
         ParentDoubleBuffered = False
         TabOrder = 8
-        OnClick = Panel1Click
         object imgProduto: TImage
           Left = 2
           Top = 2
@@ -284,24 +326,25 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited pnlRodape: TPanel
-    Top = 569
-    Width = 1259
-    ExplicitTop = 569
+    Top = 503
+    Width = 1458
+    ExplicitTop = 520
     ExplicitWidth = 1259
   end
   inherited Panel2: TPanel
-    Left = 1129
-    Height = 569
+    Left = 1328
+    Height = 503
     ExplicitLeft = 1129
     ExplicitHeight = 569
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 468
+      Top = 454
       ExplicitLeft = 12
-      ExplicitTop = 468
+      ExplicitTop = 454
     end
   end
   inherited QryListagem: TZQuery
+    AfterScroll = QryListagemAfterScroll
     SQL.Strings = (
       'SELECT p.produtoId,'
       #9'     p.nome,'
@@ -364,8 +407,8 @@ inherited frmCadProduto: TfrmCadProduto
     SQL.Strings = (
       'Select categoriaId, descricao from categorias')
     Params = <>
-    Left = 968
-    Top = 333
+    Left = 792
+    Top = 266
     object QryCategoriacategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
@@ -379,7 +422,7 @@ inherited frmCadProduto: TfrmCadProduto
   end
   object dtsCategoria: TDataSource
     DataSet = QryCategoria
-    Left = 1048
-    Top = 321
+    Left = 872
+    Top = 254
   end
 end
