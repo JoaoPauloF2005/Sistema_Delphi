@@ -67,8 +67,8 @@ function TProduto.Apagar: Boolean;
 var Qry:TZQuery;
 begin
   if MessageDlg('Apagar o Registro: '+#13+#13+
-                'C�digo: '+IntToStr(F_produtoId)+#13+
-                'Descri��o: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
+                'Código: '+IntToStr(F_produtoId)+#13+
+                'Descrição: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
      Result:=false;
      abort;
   end;
@@ -97,10 +97,11 @@ begin
 end;
 
 function TProduto.Atualizar: Boolean;
-var Qry: TZQuery;
+var
+  Qry: TZQuery;
 begin
   try
-    Result := true;
+    Result := True;
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
@@ -114,9 +115,13 @@ begin
     Qry.ParamByName('quantidade').AsFloat := F_quantidade;
     Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
 
-    // Atualiza a imagem no campo BLOB
-    F_imagem.Position := 0;
-    Qry.ParamByName('imagem').LoadFromStream(F_imagem, ftBlob);
+    if F_imagem.Size > 0 then
+    begin
+      F_imagem.Position := 0; // Garante que o stream esteja no início
+      Qry.ParamByName('imagem').LoadFromStream(F_imagem, ftBlob);
+    end
+    else
+      Qry.ParamByName('imagem').Clear; // Configura o parâmetro como NULL
 
     try
       ConexaoDB.StartTransaction;
@@ -124,7 +129,7 @@ begin
       ConexaoDB.Commit;
     except
       ConexaoDB.Rollback;
-      Result := false;
+      Result := False;
     end;
 
   finally
@@ -132,12 +137,12 @@ begin
   end;
 end;
 
-
 function TProduto.Inserir: Boolean;
-var Qry: TZQuery;
+var
+  Qry: TZQuery;
 begin
   try
-    Result := true;
+    Result := True;
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
@@ -150,9 +155,13 @@ begin
     Qry.ParamByName('quantidade').AsFloat := F_quantidade;
     Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
 
-    // Insere a imagem no campo BLOB
-    F_imagem.Position := 0; // Garante que o stream está no início
-    Qry.ParamByName('imagem').LoadFromStream(F_imagem, ftBlob);
+    if F_imagem.Size > 0 then
+    begin
+      F_imagem.Position := 0; // Garante que o stream esteja no início
+      Qry.ParamByName('imagem').LoadFromStream(F_imagem, ftBlob);
+    end
+    else
+      Qry.ParamByName('imagem').Clear; // Configura o parâmetro como NULL
 
     try
       ConexaoDB.StartTransaction;
@@ -160,13 +169,14 @@ begin
       ConexaoDB.Commit;
     except
       ConexaoDB.Rollback;
-      Result := false;
+      Result := False;
     end;
 
   finally
     Qry.Free;
   end;
 end;
+
 
 function TProduto.Selecionar(id: Integer): Boolean;
 var Qry: TZQuery;

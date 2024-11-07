@@ -32,11 +32,12 @@ type
     QryCategoriadescricao: TWideStringField;
     dtsCategoria: TDataSource;
     Label4: TLabel;
-    imgProduto: TImage;
-    btnCarregarImagem: TBitBtn;
     Label5: TLabel;
+    btnCarregarImagem: TBitBtn;
     btnRemoverImagem: TBitBtn;
     Panel1: TPanel;
+    imgProduto: TImage;
+    QryListagemimagem: TBlobField;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -73,31 +74,33 @@ end;
 
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
-  if edtProdutoId.Text <> EmptyStr then
-    oProduto.codigo := StrToInt(edtProdutoId.Text)
-  else
-    oProduto.codigo := 0;
-
+  oProduto.codigo := StrToIntDef(edtProdutoId.Text, 0);
   oProduto.nome := edtNome.Text;
   oProduto.descricao := edtDescricao.Text;
   oProduto.categoriaId := lkpCategoria.KeyValue;
   oProduto.valor := edtValor.Value;
   oProduto.quantidade := edtQuantidade.Value;
 
-  // Salva a imagem no campo de imagem do objeto
-  if not imgProduto.Picture.Graphic.Empty then
+  // Verifica se imgProduto tem uma imagem carregada antes de salvar
+  if (imgProduto.Picture <> nil) and (imgProduto.Picture.Graphic <> nil) and
+     not imgProduto.Picture.Graphic.Empty then
   begin
-    oProduto.imagem.Clear;
+    oProduto.imagem.Clear; // Limpa o stream antes de salvar
     imgProduto.Picture.Graphic.SaveToStream(oProduto.imagem);
   end
   else
-    oProduto.imagem.Clear;
+  begin
+    oProduto.imagem.Clear; // Garante que o stream esteja vazio se não houver imagem
+  end;
 
   if EstadoDoCadastro = ecInserir then
     Result := oProduto.Inserir
   else if EstadoDoCadastro = ecAlterar then
     Result := oProduto.Atualizar;
 end;
+
+
+
 procedure TfrmCadProduto.Panel1Click(Sender: TObject);
 begin
   inherited;
@@ -107,6 +110,8 @@ end;
 {$endregion}
 
 procedure TfrmCadProduto.btnAlterarClick(Sender: TObject);
+var
+  Picture: TPicture;
 begin
   if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
   begin
@@ -117,14 +122,20 @@ begin
     edtValor.Value := oProduto.valor;
     edtQuantidade.Value := oProduto.quantidade;
 
-    // Carrega a imagem do campo de imagem do objeto
+    // Carrega a imagem do TMemoryStream para o TImage
     if oProduto.imagem.Size > 0 then
     begin
-      oProduto.imagem.Position := 0;
-      imgProduto.Picture.Graphic.LoadFromStream(oProduto.imagem);
+      oProduto.imagem.Position := 0; // Garante que o stream esteja no início
+      Picture := TPicture.Create;
+      try
+        Picture.LoadFromStream(oProduto.imagem);
+        imgProduto.Picture.Assign(Picture);
+      finally
+        Picture.Free;
+      end;
     end
     else
-      imgProduto.Picture := nil;
+      imgProduto.Picture := nil; // Remove a imagem se o stream estiver vazio
   end
   else
   begin
@@ -134,6 +145,7 @@ begin
 
   inherited;
 end;
+
 
 procedure TfrmCadProduto.btnCarregarImagemClick(Sender: TObject);
 var
@@ -174,6 +186,7 @@ end;
 
 procedure TfrmCadProduto.FormCreate(Sender: TObject);
 begin
+  inherited;
   oProduto := TProduto.Create(dtmPrincipal.ConexaoDB);
   edtDescricao.Text := '';
   imgProduto.Picture := nil; // Inicializa sem imagem
