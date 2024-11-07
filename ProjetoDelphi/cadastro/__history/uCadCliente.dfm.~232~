@@ -25,102 +25,71 @@ inherited frmCadCliente: TfrmCadCliente
         FixedColor = clBlack
         Font.Color = clBlack
         ParentCtl3D = False
-        OnDblClick = nil
         Columns = <
-          item
-            Alignment = taCenter
-            Expanded = False
-            Width = 19
-            Visible = True
-          end
-          item
-            Alignment = taCenter
-            Expanded = False
-            FieldName = 'clienteId'
-            Title.Alignment = taCenter
-            Visible = True
-          end
-          item
-            Alignment = taCenter
-            Expanded = False
-            FieldName = 'nome'
-            Title.Alignment = taCenter
-            Visible = True
-          end
           item
             Expanded = False
             FieldName = 'status'
-            Title.Alignment = taCenter
-            Visible = False
+            Width = 39
+            Visible = True
           end
           item
-            Alignment = taCenter
+            Expanded = False
+            FieldName = 'clienteId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome'
+            Visible = True
+          end
+          item
             Expanded = False
             FieldName = 'tipoPessoa'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cpfCnpj'
-            Title.Alignment = taCenter
-            Width = 144
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'endereco'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cidade'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'bairro'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'estado'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cep'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'telefone'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'email'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'dataNascimento'
-            Title.Alignment = taCenter
             Visible = True
           end>
       end
@@ -184,6 +153,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Width = 33
         EditLabel.Height = 13
         EditLabel.Caption = 'C'#243'digo'
+        Enabled = False
         MaxLength = 10
         NumbersOnly = True
         ReadOnly = True
@@ -598,7 +568,6 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited QryListagem: TZQuery
-    Active = True
     SQL.Strings = (
       'select clienteId,'
       '       nome,'

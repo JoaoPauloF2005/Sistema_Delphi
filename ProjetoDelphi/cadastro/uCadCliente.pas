@@ -162,7 +162,7 @@ begin
     else if StatusValue = 'Prospecto' then
       IconIndex := 3 // Ícone azul
     else if StatusValue = 'Inativo' then
-      IconIndex := 5 // Ícone preto
+      IconIndex := 4 // Ícone preto
     else
       Exit; // Sai se o valor não corresponder a nenhum status
 
@@ -227,6 +227,8 @@ begin
   inherited;
   edtDataNascimento.Date := Date;
   cbStatus.SetFocus;
+  cbTipoPessoa.ItemIndex := -1;
+  cbStatus.ItemIndex := -1;
 end;
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -310,11 +312,10 @@ begin
   edtcpfCnpj.SelStart := Length(edtcpfCnpj.Text);
 end;
 
-
 procedure TfrmCadCliente.edtcpfCnpjEnter(Sender: TObject);
 begin
-  // Verifique se o tipo de pessoa está selecionado antes de permitir a edição
-  if cbTipoPessoa.ItemIndex = -1 then
+  // Verifica se o tipo de pessoa não está selecionado (vazio)
+  if cbTipoPessoa.Text = '' then
   begin
     ShowMessage('Por favor, selecione primeiro o Tipo de Pessoa.');
     cbTipoPessoa.SetFocus;
@@ -324,6 +325,7 @@ begin
     edtcpfCnpj.ReadOnly := False; // Permite edição caso o tipo de pessoa esteja selecionado
   end;
 end;
+
 
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin
