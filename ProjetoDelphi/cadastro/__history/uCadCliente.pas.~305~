@@ -49,6 +49,7 @@ type
     Image5: TImage;
     Label8: TLabel;
     ImageListStatus: TImageList;
+    StringGrid1: TStringGrid;
 
     procedure btnAlterarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -325,6 +326,7 @@ begin
     edtcpfCnpj.ReadOnly := False; // Permite edição caso o tipo de pessoa esteja selecionado
   end;
 end;
+
 
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin

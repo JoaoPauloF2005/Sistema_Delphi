@@ -49,6 +49,7 @@ type
     Image5: TImage;
     Label8: TLabel;
     ImageListStatus: TImageList;
+    StringGrid1: TStringGrid;
 
     procedure btnAlterarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -72,6 +73,8 @@ type
     function MascaraTelefone(const AValue: string): string;
     function ValidarCPF(const CPF: string): Boolean;
     function ValidarCNPJ(const CNPJ: string): Boolean;
+    procedure ExportStringGridToExcel(Grid: TStringGrid; const FileName: string);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   public
     { Public declarations }
   end;
@@ -326,6 +329,7 @@ begin
   end;
 end;
 
+
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin
   edtcpfCnpj.ReadOnly := cbTipoPessoa.ItemIndex = -1; // Bloqueia ou permite edição
@@ -519,5 +523,55 @@ begin
   end;
 end;
 {$ENDREGION}
+
+procedure TfrmCadCliente.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  // Verifica se Ctrl + Shift + E foi pressionado
+  if (Shift = [ssCtrl, ssShift]) and (Key = Ord('E')) then
+  begin
+    ExportStringGridToExcel(StringGrid1, 'C:\Users\devmv\Documents\JoaoPaulo\Arquivo.xls');
+    ShowMessage('Exportação para Excel concluída com sucesso!');
+  end;
+end;
+
+
+procedure TfrmCadCliente.ExportStringGridToExcel(Grid: TStringGrid; const FileName: string);
+var
+  SL: TStringList;
+  I, J: Integer;
+  Line: string;
+begin
+  SL := TStringList.Create;
+  try
+    // Adiciona cabeçalhos
+    Line := '';
+    for I := 0 to Grid.ColCount - 1 do
+    begin
+      Line := Line + Grid.Cells[I, 0];
+      if I < Grid.ColCount - 1 then
+        Line := Line + #9; // Tabulação para separar as células
+    end;
+    SL.Add(Line);
+
+    // Adiciona dados da grid
+    for J := 1 to Grid.RowCount - 1 do
+    begin
+      Line := '';
+      for I := 0 to Grid.ColCount - 1 do
+      begin
+        Line := Line + Grid.Cells[I, J];
+        if I < Grid.ColCount - 1 then
+          Line := Line + #9; // Tabulação para separar as células
+      end;
+      SL.Add(Line);
+    end;
+
+    // Salva no arquivo com extensão .xls ou .csv
+    SL.SaveToFile(FileName);
+  finally
+    SL.Free;
+  end;
+end;
+
 end.
 

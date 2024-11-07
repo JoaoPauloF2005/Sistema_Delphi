@@ -7,7 +7,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,
-  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd;
+  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -325,6 +325,7 @@ begin
     edtcpfCnpj.ReadOnly := False; // Permite edição caso o tipo de pessoa esteja selecionado
   end;
 end;
+
 
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin

@@ -7,7 +7,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,
-  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd;
+  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -326,6 +326,7 @@ begin
   end;
 end;
 
+
 procedure TfrmCadCliente.cbTipoPessoaChange(Sender: TObject);
 begin
   edtcpfCnpj.ReadOnly := cbTipoPessoa.ItemIndex = -1; // Bloqueia ou permite edição
@@ -487,6 +488,9 @@ begin
     end;
   end;
 end;
+
+
+
 
 procedure TfrmCadCliente.QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 begin

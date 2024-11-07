@@ -72,6 +72,7 @@ type
     function MascaraTelefone(const AValue: string): string;
     function ValidarCPF(const CPF: string): Boolean;
     function ValidarCNPJ(const CNPJ: string): Boolean;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   public
     { Public declarations }
   end;
