@@ -27,8 +27,9 @@ inherited frmCadCliente: TfrmCadCliente
         ParentCtl3D = False
         Columns = <
           item
-            Alignment = taCenter
             Expanded = False
+            FieldName = 'status'
+            Title.Alignment = taCenter
             Width = 19
             Visible = True
           end
@@ -45,12 +46,6 @@ inherited frmCadCliente: TfrmCadCliente
             FieldName = 'nome'
             Title.Alignment = taCenter
             Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'status'
-            Title.Alignment = taCenter
-            Visible = False
           end
           item
             Alignment = taCenter
@@ -597,7 +592,6 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited QryListagem: TZQuery
-    Active = True
     SQL.Strings = (
       'select clienteId,'
       '       nome,'

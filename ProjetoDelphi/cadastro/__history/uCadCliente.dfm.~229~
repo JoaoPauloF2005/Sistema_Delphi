@@ -10,7 +10,6 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 841
     Height = 340
-    ActivePage = tabManutencao
     ExplicitWidth = 841
     ExplicitHeight = 340
     inherited tabListagem: TTabSheet
@@ -28,99 +27,69 @@ inherited frmCadCliente: TfrmCadCliente
         ParentCtl3D = False
         Columns = <
           item
-            Alignment = taCenter
-            Expanded = False
-            Width = 19
-            Visible = True
-          end
-          item
-            Alignment = taCenter
-            Expanded = False
-            FieldName = 'clienteId'
-            Title.Alignment = taCenter
-            Visible = True
-          end
-          item
-            Alignment = taCenter
-            Expanded = False
-            FieldName = 'nome'
-            Title.Alignment = taCenter
-            Visible = True
-          end
-          item
             Expanded = False
             FieldName = 'status'
-            Title.Alignment = taCenter
-            Visible = False
+            Width = 39
+            Visible = True
           end
           item
-            Alignment = taCenter
+            Expanded = False
+            FieldName = 'clienteId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome'
+            Visible = True
+          end
+          item
             Expanded = False
             FieldName = 'tipoPessoa'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cpfCnpj'
-            Title.Alignment = taCenter
-            Width = 144
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'endereco'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cidade'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'bairro'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'estado'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cep'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'telefone'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'email'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'dataNascimento'
-            Title.Alignment = taCenter
             Visible = True
           end>
       end
@@ -598,7 +567,6 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited QryListagem: TZQuery
-    Active = True
     SQL.Strings = (
       'select clienteId,'
       '       nome,'

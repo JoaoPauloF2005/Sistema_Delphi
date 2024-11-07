@@ -29,7 +29,6 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitWidth = 1038
     DesignSize = (
       1061
       41)
@@ -69,7 +68,6 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
         4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
       TabOrder = 0
       OnClick = btnFecharClick
-      ExplicitLeft = 951
     end
   end
   object Panel1: TPanel
@@ -79,19 +77,21 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
     Height = 573
     Align = alLeft
     TabOrder = 1
-    object DBGrid1: TDBGrid
+    object grdUsuarios: TDBGrid
       Left = 1
       Top = 1
       Width = 340
       Height = 571
       Align = alClient
       DataSource = dtsUsuario
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDrawColumnCell = grdUsuariosDrawColumnCell
       Columns = <
         item
           Expanded = False
@@ -113,20 +113,22 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
     Height = 573
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 690
-    object DBGrid2: TDBGrid
+    object grdAcoes: TDBGrid
       Left = 1
       Top = 1
       Width = 711
       Height = 571
       Align = alClient
       DataSource = dtsAcoes
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDrawColumnCell = grdAcoesDrawColumnCell
+      OnDblClick = grdAcoesDblClick
       Columns = <
         item
           Expanded = False
@@ -140,7 +142,7 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
         end
         item
           Expanded = False
-          FieldName = 'Descri'#231#227'o'
+          FieldName = 'descricao'
           Width = 633
           Visible = True
         end

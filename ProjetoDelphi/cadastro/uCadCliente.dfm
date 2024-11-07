@@ -29,98 +29,67 @@ inherited frmCadCliente: TfrmCadCliente
           item
             Expanded = False
             FieldName = 'status'
-            Title.Alignment = taCenter
-            Width = 19
+            Width = 39
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'clienteId'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Expanded = False
-            FieldName = 'status'
-            Title.Alignment = taCenter
-            Visible = False
-          end
-          item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'tipoPessoa'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cpfCnpj'
-            Title.Alignment = taCenter
-            Width = 144
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'endereco'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cidade'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'bairro'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'estado'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'cep'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'telefone'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'email'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'dataNascimento'
-            Title.Alignment = taCenter
             Visible = True
           end>
       end

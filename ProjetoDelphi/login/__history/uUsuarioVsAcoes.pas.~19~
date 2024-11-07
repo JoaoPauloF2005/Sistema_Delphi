@@ -1,4 +1,4 @@
-﻿unit uUsuarioVsAcoes;
+unit uUsuarioVsAcoes;
 
 interface
 
@@ -31,8 +31,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure grdAcoesDblClick(Sender: TObject);
     procedure grdAcoesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
-      State: TGridDrawState);
-    procedure grdUsuariosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
   private
     { Private declarations }
@@ -93,64 +91,12 @@ end;
 procedure TfrmUsuarioVsAcoes.grdAcoesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
 begin
-
-// Alterna a cor de fundo das linhas
-  if Odd(grdAcoes.DataSource.DataSet.RecNo) then
-    grdAcoes.Canvas.Brush.Color := clWhite // Cor cinza claro para linhas �mpares
-  else
-    grdAcoes.Canvas.Brush.Color := $00E9E9E9; // Cor branca para linhas pares
-
-  // Verifica se a c�lula est� selecionada
-  if (gdSelected in State) then
-  begin
-    grdAcoes.Canvas.Brush.Color := RGB(165, 208, 247);; // Cor de fundo da c�lula selecionada  [
-    grdAcoes.Canvas.Font.Color := clBlack; // Mant�m a cor do texto preta ao selecionar
-  end
-  else
-  begin
-    grdAcoes.Canvas.Font.Color := clBlack; // Cor do texto normal
-  end;
-
-  // Preenche o ret�ngulo da c�lula
-  grdAcoes.Canvas.FillRect(Rect);
-
-  // Desenha o texto na c�lula
-  grdAcoes.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-
-
 	if not QryAcoes.FieldByName('ativo').AsBoolean then
   begin
     TDBGrid(Sender).Canvas.Font.Color := clWhite;
     TDBGrid(Sender).Canvas.Brush.Color := clRed;
   end;
   TDBGrid(Sender).DefaultDrawDataCell(Rect, TDBGrid(Sender).Columns[DataCol].Field, State);
-end;
-
-procedure TfrmUsuarioVsAcoes.grdUsuariosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer;
-  Column: TColumn; State: TGridDrawState);
-begin
-  // Alterna a cor de fundo das linhas
-  if Odd(grdUsuarios.DataSource.DataSet.RecNo) then
-    grdUsuarios.Canvas.Brush.Color := clWhite // Cor cinza claro para linhas �mpares
-  else
-    grdUsuarios.Canvas.Brush.Color := $00E9E9E9; // Cor branca para linhas pares
-
-  // Verifica se a c�lula est� selecionada
-  if (gdSelected in State) then
-  begin
-    grdUsuarios.Canvas.Brush.Color := RGB(165, 208, 247);; // Cor de fundo da c�lula selecionada  [
-    grdUsuarios.Canvas.Font.Color := clBlack; // Mant�m a cor do texto preta ao selecionar
-  end
-  else
-  begin
-    grdUsuarios.Canvas.Font.Color := clBlack; // Cor do texto normal
-  end;
-
-  // Preenche o ret�ngulo da c�lula
-  grdUsuarios.Canvas.FillRect(Rect);
-
-  // Desenha o texto na c�lula
-  grdUsuarios.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 procedure TfrmUsuarioVsAcoes.FormShow(Sender: TObject);
