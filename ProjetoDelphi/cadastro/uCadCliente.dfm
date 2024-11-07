@@ -10,7 +10,6 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 841
     Height = 340
-    ActivePage = tabManutencao
     ExplicitWidth = 841
     ExplicitHeight = 340
     inherited tabListagem: TTabSheet
@@ -28,8 +27,9 @@ inherited frmCadCliente: TfrmCadCliente
         ParentCtl3D = False
         Columns = <
           item
-            Alignment = taCenter
             Expanded = False
+            FieldName = 'status'
+            Title.Alignment = taCenter
             Width = 19
             Visible = True
           end

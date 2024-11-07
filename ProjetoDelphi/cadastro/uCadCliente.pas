@@ -146,12 +146,13 @@ begin
   // Chama o método herdado da tela de herança para garantir que as alterações sejam aplicadas
   inherited grdListagemDrawColumnCell(Sender, Rect, DataCol, Column, State);
 
-  // Busca o valor do campo de status sem exibir o texto
-  StatusValue := QryListagem.FieldByName('status').AsString;
-
-  if Column.Index = 0 then // Supondo que a coluna de status seja a primeira
+  // Verifica se a coluna atual está associada ao campo de status
+  if Column.Field = QryListagemstatus then
   begin
-    // Define o índice do ícone com base no valor do campo Status
+    // Obtém o valor do campo de status
+    StatusValue := QryListagem.FieldByName('status').AsString;
+
+    // Define o índice do ícone com base no valor do campo de status
     if StatusValue = 'Ativo' then
       IconIndex := 0 // Ícone verde
     else if StatusValue = 'Atenção' then
@@ -165,6 +166,7 @@ begin
     else
       Exit; // Sai se o valor não corresponder a nenhum status
 
+    // Preenche o fundo da célula
     grdListagem.Canvas.FillRect(Rect);
 
     // Desenha o ícone no centro da célula
@@ -259,6 +261,8 @@ begin
 
   // Configura a coluna de status sem associar um campo
   grdListagem.Columns[0].Width := ImageListStatus.Width + 4; // Ajusta a largura para caber o ícone
+
+  grdListagem.Columns[0].Title.Caption := ''; // Define o título como vazio
 end;
 
 {$region 'Funções de Formatação'}
