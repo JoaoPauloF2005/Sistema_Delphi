@@ -226,7 +226,7 @@ procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
 begin
   if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
   begin
-    MessageDlg('Usu�rio: '+oUsuarioLogado.nome +', n�o tem permiss�o de acesso',mtWarning,[mbOK], 0);
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
     Abort;
   end;
 
@@ -239,8 +239,8 @@ end;
 procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
 begin
 	if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
-  begin
-    MessageDlg('Usu�rio: '+oUsuarioLogado.nome +', n�o tem permiss�o de acesso',mtWarning,[mbOK], 0);
+    begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
     Abort;
   end;
 end;
@@ -249,8 +249,8 @@ end;
 procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
   if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
-  begin
-    MessageDlg('Usu�rio: '+oUsuarioLogado.nome +', n�o tem permiss�o de acesso',mtWarning,[mbOK], 0);
+   begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
     Abort;
   end;
 
@@ -263,8 +263,8 @@ end;
 procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
 begin
   if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
-  begin
-    MessageDlg('Usu�rio: '+oUsuarioLogado.nome +', n�o tem permiss�o de acesso',mtWarning,[mbOK], 0);
+    begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
     Abort;
   end;
 
@@ -277,7 +277,7 @@ begin
       QryListagem.Refresh;
     end
     else begin
-      MessageDlg('Erro na Exclus�o', mtError, [mbOK], 0);
+      MessageDlg('Erro na Exclusão', mtError, [mbOK], 0);
     end;
   Finally
     EstadoDoCadastro:=ecNenhum;
@@ -298,8 +298,8 @@ end;
 procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
 begin
   if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
-  begin
-    MessageDlg('Usu�rio: '+oUsuarioLogado.nome +', n�o tem permiss�o de acesso',mtWarning,[mbOK], 0);
+    begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
     Abort;
   end;
 
@@ -315,7 +315,7 @@ begin
       QryListagem.Refresh;
     end
     else begin
-      MessageDlg('Erro na Grava��o', mtError, [mbOK], 0)
+      MessageDlg('Erro na Gravação', mtError, [mbOK], 0)
     end;
   Finally
 

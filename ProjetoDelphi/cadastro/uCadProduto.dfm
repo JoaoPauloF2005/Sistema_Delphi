@@ -1,26 +1,24 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produtos'
-  ClientHeight = 558
+  ClientHeight = 593
   ClientWidth = 1458
   Position = poDesktopCenter
-  ExplicitLeft = -230
   ExplicitWidth = 1464
-  ExplicitHeight = 587
+  ExplicitHeight = 622
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
     Width = 1328
-    Height = 503
-    ExplicitWidth = 1129
-    ExplicitHeight = 569
+    Height = 538
+    ActivePage = tabManutencao
+    ExplicitWidth = 1328
+    ExplicitHeight = 503
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 22
       ExplicitWidth = 1320
       ExplicitHeight = 475
       inherited grdListagem: TDBGrid
         Width = 1015
-        Height = 475
+        Height = 510
         DataSource = dtsListagem
         Columns = <
           item
@@ -122,10 +120,8 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 1121
-      ExplicitHeight = 541
+      ExplicitWidth = 1320
+      ExplicitHeight = 475
       object Label1: TLabel
         Left = 12
         Top = 82
@@ -231,7 +227,7 @@ inherited frmCadProduto: TfrmCadProduto
       end
       object btnCarregarImagem: TBitBtn
         Tag = 99
-        Left = 678
+        Left = 618
         Top = 226
         Width = 28
         Height = 25
@@ -266,7 +262,7 @@ inherited frmCadProduto: TfrmCadProduto
         OnClick = btnCarregarImagemClick
       end
       object btnRemoverImagem: TBitBtn
-        Left = 678
+        Left = 618
         Top = 257
         Width = 28
         Height = 25
@@ -303,8 +299,8 @@ inherited frmCadProduto: TfrmCadProduto
       object Panel1: TPanel
         Left = 315
         Top = 226
-        Width = 357
-        Height = 198
+        Width = 297
+        Height = 279
         BevelOuter = bvLowered
         BiDiMode = bdRightToLeftReadingOnly
         BorderStyle = bsSingle
@@ -319,23 +315,23 @@ inherited frmCadProduto: TfrmCadProduto
           Left = 2
           Top = 2
           Width = 352
-          Height = 192
+          Height = 272
           Stretch = True
         end
       end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 503
+    Top = 538
     Width = 1458
-    ExplicitTop = 520
-    ExplicitWidth = 1259
+    ExplicitTop = 503
+    ExplicitWidth = 1458
   end
   inherited Panel2: TPanel
     Left = 1328
-    Height = 503
-    ExplicitLeft = 1129
-    ExplicitHeight = 569
+    Height = 538
+    ExplicitLeft = 1328
+    ExplicitHeight = 503
     inherited btnFechar: TBitBtn
       Left = 12
       Top = 454
