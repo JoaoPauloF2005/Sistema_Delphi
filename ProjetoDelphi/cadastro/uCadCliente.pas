@@ -198,10 +198,6 @@ begin
         edtcpfCnpj.Text := MascaraCpf(oCliente.cpfCnpj)
       else if oCliente.tipoPessoa = 'Jurídica' then
         edtcpfCnpj.Text := MascaraCnpj(oCliente.cpfCnpj);
-    end
-    else
-    begin
-      edtcpfCnpj.Clear;
     end;
 
     edtCEP.Text := oCliente.cep;

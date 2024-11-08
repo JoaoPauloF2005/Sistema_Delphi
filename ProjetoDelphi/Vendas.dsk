@@ -1,62 +1,44 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas',0,1,307,1,1,0,0,,{1
-File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',0,1,169,10,172,0,0,{{51,0}
-File_2=TSourceModule,'C:\Componentes\unrxlib_275_u_1_0_22\units\RxPlacemnt.pas',0,1,67,27,77,0,0,,
-File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\IniFiles.pas',0,1,1,1,1,0,0,,
-File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,53,48,77,0,0,,{1
-File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas',0,1,86,60,99,0,0,,{1
-File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,70,1,42,0,0,,
-File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas',0,1,180,80,258,0,0,{{207,0}
-File_8=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,9887,1,9916,0,0,,
-File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,17383,1,17408,0,0,,
+File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,82,43,105,0,0,,{1,219,1}{2,219,1}
+File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas',0,1,58,107,28,0,0,,
+File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas',0,1,1,1,1,0,0,,
+File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMGrafico.pas',0,1,1,1,1,0,0,,
+File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas',0,1,1,1,1,0,0,,
+File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas',0,1,256,28,219,0,0,,{1,353,1}{2,353,1}{3,247,1}
+File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas',0,1,1,1,1,0,0,,
+File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas',0,1,307,1,1,0,0,,{1
+File_8=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',0,1,169,10,172,0,0,{{51,0}
+File_9=TSourceModule,'C:\Componentes\unrxlib_275_u_1_0_22\units\RxPlacemnt.pas',0,1,67,27,77,0,0,,
+File_10=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\IniFiles.pas',0,1,1,1,1,0,0,,
+File_11=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,70,1,42,0,0,,
 
 [Modules]
-Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas
-Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
-Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMGrafico.pas
-Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
-Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas
-Module6=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-Module7=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas
-Count=8
+Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
+Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+Count=4
 EditWindowCount=1
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas]
 ModuleType=TSourceModule
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMGrafico.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas]
-ModuleType=TSourceModule
-
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas]
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=8
-CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
+ViewCount=4
+CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
 View0=0
 View1=1
 View2=2
 View3=3
-View4=4
-View5=5
-View6=6
-View7=7
 PercentageSizes=1
 Create=1
 Visible=1
@@ -88,91 +70,47 @@ BottomMiddelPanelData=0000080001020200000009000000446F636B5369746530100000004772
 
 [View0]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
-CursorX=20
-CursorY=23
-TopLine=16
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+CursorX=1
+CursorY=1
+TopLine=241
 LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas
+Elisions={{80,0},{149,11},{'Override'}}
+Bookmarks={1,328,1}
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
-CursorX=1
-CursorY=1
-TopLine=1
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
+CursorX=55
+CursorY=74
+TopLine=52
 LeftCol=1
 Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas
+Bookmarks={1,490,1}
+EditViewName=Borland.FormDesignerView
 
 [View2]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMConexao.pas
-CursorX=41
-CursorY=14
-TopLine=1
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+CursorX=74
+CursorY=418
+TopLine=387
 LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=Borland.FormDesignerView
+Elisions={{81,3},{84,13},{'OBSERVA��ES'}}{{86,0},{205,11},{'FUN��ES E PROCEDURES'}}{{207,0},{222,11},{'M�TODOS VIRTUAIS'}}{{439,0},{475,11},{'Salvar configura��es da coluna'}}
+Bookmarks={1,477,1}
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
 
 [View3]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMVenda.pas
-
-[View4]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMGrafico.pas
-CursorX=1
-CursorY=1
-TopLine=1
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
+CursorX=69
+CursorY=99
+TopLine=93
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
-
-[View5]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas
-
-[View6]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-CursorX=28
-CursorY=219
-TopLine=256
-LeftCol=1
-Elisions=
-Bookmarks={1,353,1}{2,353,1}{3,247,1}
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas
-
-[View7]
-CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas
 
 [UndockedDesigner]
 Count=0
@@ -202,14 +140,10 @@ Dockable=1
 StayOnTop=0
 
 [Breakpoints]
-Count=7
+Count=3
 Breakpoint0='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas',269,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint1='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas',249,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint2='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',76,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint3='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',152,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint4='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',166,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint5='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',172,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint6='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',143,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint2='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',143,'',0,1,'',1,0,0,'',1,'','','',0,''
 
 [EmbarcaderoWin32Debugger_AddressBreakpoints]
 Count=0
@@ -366,6 +300,11 @@ LRDockWidth=1896
 Dockable=1
 StayOnTop=0
 SplitPos=111
+
+[PropInspDesignerSelection]
+ArrangeBy=Name
+SelectedItem=Align,DataSource
+ExpandedItems=Font=1,Title=1,Anchors=0,Constraints=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,Options=0,DataSource=0,Touch=0,Padding=0,ProviderFlags=0,DataSource.DataSet=0,DataSource.LiveBindings=0,Connection=0,BevelEdges=0,StyleElements=0,Font.Style=0,Title.Font=0,BorderIcons=0,TitleFont=1,TitleFont.Style=0,EditLabel=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -740,11 +679,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=7151
+Height=3876
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=7151
+ClientHeight=3876
 TBDockHeight=4893
 LRDockWidth=5307
 Dockable=1

@@ -1,25 +1,24 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 388
-  ClientWidth = 971
-  Position = poDesktopCenter
-  ExplicitWidth = 977
-  ExplicitHeight = 417
+  ClientHeight = 418
+  ClientWidth = 1004
+  Position = poScreenCenter
+  ExplicitWidth = 1010
+  ExplicitHeight = 447
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 841
-    Height = 340
-    ExplicitWidth = 841
-    ExplicitHeight = 340
+    Width = 874
+    Height = 370
+    ActivePage = tabManutencao
+    ExplicitWidth = 882
+    ExplicitHeight = 374
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 833
-      ExplicitHeight = 312
+      ExplicitWidth = 874
+      ExplicitHeight = 346
       inherited grdListagem: TDBGrid
         Width = 1073
-        Height = 312
+        Height = 342
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack
@@ -120,10 +119,8 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 833
-      ExplicitHeight = 312
+      ExplicitWidth = 874
+      ExplicitHeight = 346
       object Label1: TLabel
         Left = 309
         Top = 131
@@ -311,16 +308,15 @@ inherited frmCadCliente: TfrmCadCliente
         Width = 124
         Height = 21
         TabOrder = 1
-        OnChange = cbTipoPessoaChange
       end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 340
-    Width = 971
+    Top = 370
+    Width = 1004
     Height = 48
-    ExplicitTop = 340
-    ExplicitWidth = 971
+    ExplicitTop = 374
+    ExplicitWidth = 1012
     ExplicitHeight = 48
     object Panel1: TPanel
       Left = 314
@@ -578,18 +574,18 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited Panel2: TPanel
-    Left = 841
-    Height = 340
-    ExplicitLeft = 841
-    ExplicitHeight = 340
+    Left = 874
+    Height = 370
+    ExplicitLeft = 882
+    ExplicitHeight = 374
     DesignSize = (
       130
-      340)
+      370)
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 288
+      Top = 319
       ExplicitLeft = 12
-      ExplicitTop = 288
+      ExplicitTop = 319
     end
   end
   inherited QryListagem: TZQuery
