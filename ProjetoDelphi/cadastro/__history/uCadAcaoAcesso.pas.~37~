@@ -1,0 +1,173 @@
+unit uCadAcaoAcesso;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cAcaoAcesso, uEnum, uDTMConexao,
+  System.ImageList, Vcl.ImgList, System.Win.ComObj, Vcl.OleAuto;
+
+type
+  TfrmCadAcaoAcesso = class(TfrmTelaHeranca)
+    QryListagemacaoAcessoId: TIntegerField;
+    QryListagemdescricao: TWideStringField;
+    QryListagemchave: TWideStringField;
+    edtAcaoAcessoId: TLabeledEdit;
+    edtDescricao: TLabeledEdit;
+    edtChave: TLabeledEdit;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+  private
+
+    procedure ExportarDBGridParaExcel(DBGird: TDBGrid);
+    { Private declarations }
+  public
+    { Public declarations }
+    oAcaoAcesso : TAcaoAcesso;
+    function Gravar(EstadoDoCadastro:TEstadoDoCadastro) : Boolean; override;
+    function Apagar: Boolean; override;
+     procedure btnExcelClick(Sender: TObject);
+  end;
+
+var
+  frmCadAcaoAcesso: TfrmCadAcaoAcesso;
+
+implementation
+
+{$R *.dfm}
+
+{ TfrmCadAcaoAcesso }
+
+procedure TfrmCadAcaoAcesso.ExportarDBGridParaExcel(DBGird: TDBGrid);
+var
+  ExcelApp, Workbook, Worksheet: OleVariant;
+  Col, Row, i: Integer;
+begin
+  try
+    // Cria a instância do Excel
+    ExcelApp := CreateOleObject('Excel.Application');
+    ExcelApp.Visible := False; // Define como False para não mostrar o Excel durante a exportação
+
+    // Adiciona uma nova pasta de trabalho
+    Workbook := ExcelApp.Workbooks.Add;
+    Worksheet := Workbook.Worksheets[1];
+
+    // Exporta os títulos das colunas
+    for Col := 0 to grdListagem.Columns.Count - 1 do
+      Worksheet.Cells[1, Col + 1] := grdListagem.Columns[Col].Title.Caption;
+
+    // Exporta os dados
+    grdListagem.DataSource.DataSet.First;
+    Row := 2; // Começa na segunda linha porque a primeira é para os títulos
+    while not grdListagem.DataSource.DataSet.Eof do
+    begin
+      for Col := 0 to grdListagem.Columns.Count - 1 do
+      begin
+        Worksheet.Cells[Row, Col + 1] := grdListagem.Columns[Col].Field.AsString;
+      end;
+      Inc(Row);
+      grdListagem.DataSource.DataSet.Next;
+    end;
+
+    // Ajusta as colunas automaticamente
+    Worksheet.Columns.AutoFit;
+
+    // Torna o Excel visível e seleciona a planilha
+    ExcelApp.Visible := True;
+    ExcelApp.UserControl := True;
+
+    // Libera os objetos
+    Worksheet := Unassigned;
+    Workbook := Unassigned;
+    ExcelApp := Unassigned;
+
+  except
+    on E: Exception do
+      ShowMessage('Erro ao exportar para o Excel: ' + E.Message);
+  end;
+end;
+
+procedure TfrmCadAcaoAcesso.btnExcelClick(Sender: TObject);
+begin
+  ExportarDBGridParaExcel(grdListagem);
+end;
+
+function TfrmCadAcaoAcesso.Apagar: Boolean;
+begin
+	if oAcaoAcesso.Selecionar(QryListagem.FieldByName('acaoAcessoId').AsInteger) then begin
+    Result := oAcaoAcesso.Apagar;
+  end;
+end;
+
+procedure TfrmCadAcaoAcesso.btnAlterarClick(Sender: TObject);
+begin
+	if oAcaoAcesso.Selecionar(QryListagem.FieldByName('acaoAcessoId').AsInteger) then begin
+  	edtAcaoAcessoId.Text := IntToStr(oAcaoAcesso.codigo);
+    edtDescricao.Text	:= oAcaoAcesso.descricao;
+    edtChave.Text	:=	oAcaoAcesso.chave;
+
+	end
+  else begin
+    btnCancelar.Click;
+    Abort;
+  end;
+  inherited;
+
+end;
+
+
+procedure TfrmCadAcaoAcesso.btnGravarClick(Sender: TObject);
+begin
+
+
+  if edtAcaoAcessoId.Text <> EmptyStr then
+     oAcaoAcesso.codigo := StrToInt(edtAcaoAcessoId.Text)
+  else
+  	 oAcaoAcesso.codigo := 0;
+
+  oAcaoAcesso.descricao	:= edtDescricao.Text;
+  oAcaoAcesso.chave	:= edtChave.Text;
+
+  if oAcaoAcesso.ChaveExiste(edtChave.Text, oAcaoAcesso.codigo ) then begin
+  	MessageDlg('Chave já cadastrado', mtInformation, [mbOK], 0);
+  	edtChave.SetFocus;
+  	Abort;
+  end;
+
+  inherited;
+
+end;
+
+procedure TfrmCadAcaoAcesso.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+   edtDescricao.SetFocus;
+end;
+
+procedure TfrmCadAcaoAcesso.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if Assigned(oAcaoAcesso) then
+  	FreeAndNil(oAcaoAcesso);
+end;
+
+procedure TfrmCadAcaoAcesso.FormCreate(Sender: TObject);
+begin
+  inherited;
+  oAcaoAcesso := TAcaoAcesso.Create(dtmPrincipal.ConexaoDB);
+  IndiceAtual := 'descricao';
+end;
+
+function TfrmCadAcaoAcesso.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+ if EstadoDoCadastro = ecInserir then
+ 	Result := oAcaoAcesso.Inserir
+ else if EstadoDoCadastro = ecAlterar then
+ 	Result := oAcaoAcesso.Atualizar;
+end;
+
+end.

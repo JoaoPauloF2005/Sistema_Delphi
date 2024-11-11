@@ -48,10 +48,14 @@ inherited frmProVenda: TfrmProVenda
             Visible = True
           end>
       end
+      inherited pExportar: TPanel
+        Left = 350
+        Top = 195
+        ExplicitLeft = 350
+        ExplicitTop = 195
+      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 903
       ExplicitHeight = 526
       object Label4: TLabel

@@ -1,26 +1,30 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,82,43,105,0,0,,{1,219,1}{2,219,1}
+File_0=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadProduto.pas',0,1,82,43,105,0,0,,{1
 File_1=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoTabelaMSSQL.pas',0,1,58,107,28,0,0,,
 File_2=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoCampoMSSQL.pas',0,1,1,1,1,0,0,,
 File_3=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\uDTMGrafico.pas',0,1,1,1,1,0,0,,
 File_4=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cArquivoIni.pas',0,1,1,1,1,0,0,,
-File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas',0,1,256,28,219,0,0,,{1,353,1}{2,353,1}{3,247,1}
+File_5=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\uPrincipal.pas',0,1,256,28,219,0,0,,{1
 File_6=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAtualizacaoBancoDeDados.pas',0,1,1,1,1,0,0,,
 File_7=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cAcaoAcesso.pas',0,1,307,1,1,0,0,,{1
 File_8=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',0,1,169,10,172,0,0,{{51,0}
 File_9=TSourceModule,'C:\Componentes\unrxlib_275_u_1_0_22\units\RxPlacemnt.pas',0,1,67,27,77,0,0,,
 File_10=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\datamodule\IniFiles.pas',0,1,1,1,1,0,0,,
-File_11=TSourceModule,'C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas',0,1,70,1,42,0,0,,
 
 [Modules]
-Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
-Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
-Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
-Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
-Count=4
+Module0=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas
+Module1=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
+Module2=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+Module3=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
+Module4=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+Module5=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
+Count=6
 EditWindowCount=1
 
-[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas]
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas]
+ModuleType=TSourceModule
+
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas]
 ModuleType=TSourceModule
 
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas]
@@ -32,13 +36,18 @@ ModuleType=TSourceModule
 [C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas]
 ModuleType=TSourceModule
 
+[C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas]
+ModuleType=TSourceModule
+
 [EditWindow0]
-ViewCount=4
-CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCliente.pas
+ViewCount=6
+CurrentEditView=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas
 View0=0
 View1=1
 View2=2
 View3=3
+View4=4
+View5=5
 PercentageSizes=1
 Create=1
 Visible=1
@@ -57,13 +66,13 @@ BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1896
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=00000800010100000000791200000000000001680700000000000001000000002B10000009000000446F636B53697465330100000000D72000001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=00000800010100000000741200000000000001680700000000000001000000002B10000009000000446F636B53697465330100000000CE2000001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=2000
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=00000800010100000000791200000000000001D00700000000000001000000002B10000009000000446F636B53697465320100000000D720000009000000446F636B5369746534FFFFFFFF
-BottomPanelSize=352
+RightPanelData=00000800010100000000741200000000000001D00700000000000001000000006C10000009000000446F636B53697465320100000000CE20000009000000446F636B5369746534FFFFFFFF
+BottomPanelSize=361
 BottomPanelClients=MessageView,DockSite1
-BottomPanelData=0000080001020100000009000000446F636B536974653197450000000000000260010000000000000100000000974500000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomPanelData=0000080001020100000009000000446F636B536974653197450000000000000269010000000000000100000000974500000F0000004D65737361676556696577466F726DFFFFFFFF
 BottomMiddlePanelSize=0
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel
 BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E6756696577961D00000000000002FB06000000000000FFFFFFFF
@@ -77,7 +86,7 @@ TopLine=241
 LeftCol=1
 Elisions={{80,0},{149,11},{'Override'}}
 Bookmarks={1,328,1}
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\processo\uProVenda.pas
+EditViewName=Borland.FormDesignerView
 
 [View1]
 CustomEditViewType=TEditView
@@ -92,16 +101,38 @@ EditViewName=Borland.FormDesignerView
 
 [View2]
 CustomEditViewType=TEditView
-Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
-CursorX=74
-CursorY=418
-TopLine=387
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
+CursorX=1
+CursorY=1
+TopLine=1
 LeftCol=1
-Elisions={{81,3},{84,13},{'OBSERVA��ES'}}{{86,0},{205,11},{'FUN��ES E PROCEDURES'}}{{207,0},{222,11},{'M�TODOS VIRTUAIS'}}{{439,0},{475,11},{'Salvar configura��es da coluna'}}
-Bookmarks={1,477,1}
-EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadAcaoAcesso.pas
 
 [View3]
+CustomEditViewType=TEditView
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas
+CursorX=53
+CursorY=7
+TopLine=49
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\cadastro\uCadCategoria.pas
+
+[View4]
+CustomEditViewType=TEditView
+Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas
+CursorX=67
+CursorY=421
+TopLine=390
+LeftCol=1
+Elisions={{84,3},{87,13},{'OBSERVA��ES'}}{{89,0},{208,11},{'FUN��ES E PROCEDURES'}}{{210,0},{225,11},{'M�TODOS VIRTUAIS'}}{{442,0},{478,11},{'Salvar configura��es da coluna'}}
+Bookmarks={1,480,1}
+EditViewName=Borland.FormDesignerView
+
+[View5]
 CustomEditViewType=TEditView
 Module=C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\login\uUsuarioVsAcoes.pas
 CursorX=69
@@ -142,7 +173,7 @@ StayOnTop=0
 [Breakpoints]
 Count=3
 Breakpoint0='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadUsuario.pas',269,'',0,1,'',1,0,0,'',1,'','','',0,''
-Breakpoint1='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas',249,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint1='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\heranca\uTelaHeranca.pas',252,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint2='C:\Users\devmv\Documents\JoaoPaulo\ProjetoDelphi\classes\cCadProduto.pas',143,'',0,1,'',1,0,0,'',1,'','','',0,''
 
 [EmbarcaderoWin32Debugger_AddressBreakpoints]
@@ -195,11 +226,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=3876
+Height=3944
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=3876
+ClientHeight=3944
 TBDockHeight=5901
 LRDockWidth=2349
 Dockable=1
@@ -214,12 +245,12 @@ State=0
 Left=0
 Top=18
 Width=10021
-Height=194
+Height=203
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10021
-ClientHeight=194
-TBDockHeight=194
+ClientHeight=203
+TBDockHeight=203
 LRDockWidth=2766
 Dockable=1
 StayOnTop=0
@@ -233,11 +264,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=4293
+Height=4215
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=4293
+ClientHeight=4215
 TBDockHeight=7151
 LRDockWidth=2000
 Dockable=1
@@ -290,21 +321,16 @@ State=0
 Left=0
 Top=465
 Width=1896
-Height=4293
+Height=4283
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1896
-ClientHeight=4293
+ClientHeight=4283
 TBDockHeight=8595
 LRDockWidth=1896
 Dockable=1
 StayOnTop=0
 SplitPos=111
-
-[PropInspDesignerSelection]
-ArrangeBy=Name
-SelectedItem=Align,DataSource
-ExpandedItems=Font=1,Title=1,Anchors=0,Constraints=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,Options=0,DataSource=0,Touch=0,Padding=0,ProviderFlags=0,DataSource.DataSet=0,DataSource.LiveBindings=0,Connection=0,BevelEdges=0,StyleElements=0,Font.Style=0,Title.Font=0,BorderIcons=0,TitleFont=1,TitleFont.Style=0,EditLabel=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -679,11 +705,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=3876
+Height=7151
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=3876
+ClientHeight=7151
 TBDockHeight=4893
 LRDockWidth=5307
 Dockable=1
@@ -770,11 +796,11 @@ State=0
 Left=0
 Top=18
 Width=2000
-Height=4118
+Height=4186
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=4118
+ClientHeight=4186
 TBDockHeight=8595
 LRDockWidth=2000
 Dockable=1
@@ -816,13 +842,13 @@ Visible=1
 Docked=1
 State=0
 Left=0
-Top=465
+Top=472
 Width=2000
-Height=4293
+Height=4215
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=4293
+ClientHeight=4215
 TBDockHeight=8595
 LRDockWidth=2000
 Dockable=1

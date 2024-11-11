@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cAcaoAcesso, uEnum, uDTMConexao;
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cAcaoAcesso, uEnum, uDTMConexao,
+  System.ImageList, Vcl.ImgList, System.Win.ComObj, Vcl.OleAuto;
 
 type
   TfrmCadAcaoAcesso = class(TfrmTelaHeranca)
@@ -60,6 +61,7 @@ begin
   inherited;
 
 end;
+
 
 procedure TfrmCadAcaoAcesso.btnGravarClick(Sender: TObject);
 begin

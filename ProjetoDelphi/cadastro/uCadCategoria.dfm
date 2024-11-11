@@ -10,17 +10,16 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     Width = 629
     Height = 334
-    ActivePage = tabManutencao
     ExplicitWidth = 629
     ExplicitHeight = 334
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 844
-      ExplicitHeight = 368
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 621
+      ExplicitHeight = 306
       inherited grdListagem: TDBGrid
         Width = 974
-        Height = 243
+        Height = 306
         BorderStyle = bsNone
         DataSource = dtsListagem
         Columns = <
@@ -41,8 +40,16 @@ inherited frmCadCategoria: TfrmCadCategoria
             Visible = True
           end>
       end
+      inherited pExportar: TPanel
+        Left = 207
+        Top = 106
+        ExplicitLeft = 207
+        ExplicitTop = 106
+      end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 621
       ExplicitHeight = 306
       object edtDescricao: TLabeledEdit
@@ -93,8 +100,8 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited QryListagem: TZQuery
     SQL.Strings = (
       'SELECT categoriaId, descricao FROM categorias')
-    Left = 265
-    Top = 189
+    Left = 453
+    Top = 132
     object intgrfldQryListagemcategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
@@ -107,7 +114,7 @@ inherited frmCadCategoria: TfrmCadCategoria
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 356
-    Top = 188
+    Left = 544
+    Top = 131
   end
 end

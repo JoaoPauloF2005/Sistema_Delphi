@@ -13,6 +13,8 @@ inherited frmCadUsuario: TfrmCadUsuario
     ExplicitWidth = 585
     ExplicitHeight = 335
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 577
       ExplicitHeight = 307
       inherited grdListagem: TDBGrid
@@ -36,12 +38,18 @@ inherited frmCadUsuario: TfrmCadUsuario
             Visible = True
           end>
       end
+      inherited pExportar: TPanel
+        Left = 208
+        Top = 89
+        ExplicitLeft = 208
+        ExplicitTop = 89
+      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 577
-      ExplicitHeight = 288
+      ExplicitHeight = 307
       object edtUsuarioId: TLabeledEdit
         Tag = 1
         Left = 11

@@ -10,12 +10,11 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 874
     Height = 370
-    ActivePage = tabManutencao
-    ExplicitWidth = 882
-    ExplicitHeight = 374
+    ExplicitWidth = 874
+    ExplicitHeight = 370
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 874
-      ExplicitHeight = 346
+      ExplicitWidth = 866
+      ExplicitHeight = 342
       inherited grdListagem: TDBGrid
         Width = 1073
         Height = 342
@@ -117,10 +116,16 @@ inherited frmCadCliente: TfrmCadCliente
             Visible = True
           end>
       end
+      inherited pExportar: TPanel
+        Left = 330
+        Top = 127
+        ExplicitLeft = 330
+        ExplicitTop = 127
+      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 874
-      ExplicitHeight = 346
+      ExplicitWidth = 866
+      ExplicitHeight = 342
       object Label1: TLabel
         Left = 309
         Top = 131
@@ -315,8 +320,8 @@ inherited frmCadCliente: TfrmCadCliente
     Top = 370
     Width = 1004
     Height = 48
-    ExplicitTop = 374
-    ExplicitWidth = 1012
+    ExplicitTop = 370
+    ExplicitWidth = 1004
     ExplicitHeight = 48
     object Panel1: TPanel
       Left = 314
@@ -576,8 +581,8 @@ inherited frmCadCliente: TfrmCadCliente
   inherited Panel2: TPanel
     Left = 874
     Height = 370
-    ExplicitLeft = 882
-    ExplicitHeight = 374
+    ExplicitLeft = 874
+    ExplicitHeight = 370
     DesignSize = (
       130
       370)
@@ -675,7 +680,7 @@ inherited frmCadCliente: TfrmCadCliente
   inherited dtsListagem: TDataSource
     Left = 696
   end
-  object ImageListStatus: TImageList
+  object ImageListStatus: TImageList [5]
     ColorDepth = cd32Bit
     Left = 769
     Top = 29
