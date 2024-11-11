@@ -189,7 +189,6 @@ begin
 
 end;
 
-
 procedure TfrmProVenda.btnAlterarClick(Sender: TObject);
 begin
   if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVenda.cdsItensVenda) then begin
@@ -204,7 +203,6 @@ begin
   end;
   inherited;
 end;
-
 
 procedure TfrmProVenda.btnApagarItemClick(Sender: TObject);
 begin
@@ -249,8 +247,6 @@ begin
   CarregarRegistroSelecionado;
 
 end;
-
-
 
 procedure TfrmProVenda.dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
 	Shift: TShiftState);

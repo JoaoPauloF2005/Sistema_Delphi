@@ -55,8 +55,6 @@ begin
   TAcaoAcesso.PreencherUsuariosVsAcoes(dtmPrincipal.ConexaoDB);
 end;
 
-
-
 procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
 begin
   if oUsuario.Selecionar(QryListagem.FieldByName('usuarioID').AsInteger) then begin

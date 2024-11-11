@@ -1,25 +1,23 @@
 inherited frmCadCategoria: TfrmCadCategoria
   Caption = 'Cadastro de Categorias'
-  ClientHeight = 389
-  ClientWidth = 759
+  ClientHeight = 486
+  ClientWidth = 888
   Position = poScreenCenter
-  ExplicitWidth = 765
-  ExplicitHeight = 418
+  ExplicitWidth = 894
+  ExplicitHeight = 515
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 629
-    Height = 334
-    ExplicitWidth = 629
-    ExplicitHeight = 334
+    Width = 758
+    Height = 431
+    ExplicitWidth = 758
+    ExplicitHeight = 431
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 621
-      ExplicitHeight = 306
+      ExplicitWidth = 750
+      ExplicitHeight = 403
       inherited grdListagem: TDBGrid
         Width = 974
-        Height = 306
+        Height = 403
         BorderStyle = bsNone
         DataSource = dtsListagem
         Columns = <
@@ -41,17 +39,21 @@ inherited frmCadCategoria: TfrmCadCategoria
           end>
       end
       inherited pExportar: TPanel
-        Left = 207
-        Top = 106
-        ExplicitLeft = 207
-        ExplicitTop = 106
+        Left = 263
+        Top = 84
+        ExplicitLeft = 263
+        ExplicitTop = 84
+        inherited Panel5: TPanel
+          ExplicitLeft = 1
+          ExplicitTop = 1
+        end
       end
     end
     inherited tabManutencao: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
-      ExplicitWidth = 621
-      ExplicitHeight = 306
+      ExplicitWidth = 750
+      ExplicitHeight = 403
       object edtDescricao: TLabeledEdit
         Tag = 2
         Left = 11
@@ -80,21 +82,21 @@ inherited frmCadCategoria: TfrmCadCategoria
     end
   end
   inherited pnlRodape: TPanel
-    Top = 334
-    Width = 759
-    ExplicitTop = 334
-    ExplicitWidth = 759
+    Top = 431
+    Width = 888
+    ExplicitTop = 431
+    ExplicitWidth = 888
   end
   inherited Panel2: TPanel
-    Left = 629
-    Height = 334
-    ExplicitLeft = 629
-    ExplicitHeight = 334
+    Left = 758
+    Height = 431
+    ExplicitLeft = 758
+    ExplicitHeight = 431
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 284
+      Top = 376
       ExplicitLeft = 12
-      ExplicitTop = 284
+      ExplicitTop = 376
     end
   end
   inherited QryListagem: TZQuery

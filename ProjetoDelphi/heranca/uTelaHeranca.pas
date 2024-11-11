@@ -29,7 +29,9 @@ type
     dtsListagem: TDataSource;
     btnExcel: TButton;
     ImageList1: TImageList;
-    pExportar: TPanel; // R�tulo para exibir o �ndice atual
+    pExportar: TPanel;
+    Panel5: TPanel;
+    btnFecharPanel: TSpeedButton; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -49,8 +51,8 @@ type
       State: TGridDrawState);
     procedure grdListagemColumnMoved(Sender: TObject; FromIndex, ToIndex: Integer);
     procedure btnExcelClick(Sender: TObject);
-
-
+    procedure btnFecharPanelClick(Sender: TObject);
+    procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     // Vari�veis e m�todos privados
     // M�todos privados para controlar bot�es e abas
@@ -367,8 +369,6 @@ begin
   end;
 end;
 
-
-
 procedure TfrmTelaHeranca.btnExcelClick(Sender: TObject);
 begin
   // Chama a função de exportação passando o grid da tela atual
@@ -466,7 +466,6 @@ begin
   SalvarConfiguracaoColunas; // Salva a configura��o das colunas sempre que uma coluna � movida
 end;
 
-
 procedure TfrmTelaHeranca.grdListagemDblClick(Sender: TObject);
 begin
   btnAlterar.Click;
@@ -499,6 +498,17 @@ begin
   grdListagem.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
+procedure TfrmTelaHeranca.grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  // Verifica se Ctrl + Shift + E foi pressionado
+  if (Shift = [ssCtrl, ssShift]) and (Key = Ord('E')) then
+  begin
+    pExportar.Visible := True; // Torna o painel visível
+    pExportar.BringToFront; // Garante que o painel esteja na frente dos outros componentes
+  end;
+end;
+
 procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
 begin
   IndiceAtual := Column.FieldName; // Atualiza o �ndice atual para ordenar os dados
@@ -528,6 +538,11 @@ begin
     TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Largura', IntToStr(grdListagem.Columns[I].Width));
     TArquivoIni.AtualizarIni(Name, 'Coluna' + IntToStr(I) + '_Posicao', IntToStr(grdListagem.Columns[I].Index));
   end;
+end;
+
+procedure TfrmTelaHeranca.btnFecharPanelClick(Sender: TObject);
+begin
+   pExportar.Visible := False;
 end;
 
 procedure TfrmTelaHeranca.CarregarConfiguracaoColunas;

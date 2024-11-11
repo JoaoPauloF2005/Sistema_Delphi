@@ -3,6 +3,7 @@ inherited frmCadProduto: TfrmCadProduto
   ClientHeight = 593
   ClientWidth = 1458
   Position = poDesktopCenter
+  ExplicitLeft = -318
   ExplicitWidth = 1464
   ExplicitHeight = 622
   PixelsPerInch = 96
@@ -79,11 +80,15 @@ inherited frmCadProduto: TfrmCadProduto
           end>
       end
       inherited pExportar: TPanel
-        Left = 368
-        Top = 199
+        Left = 357
+        Top = 116
         TabOrder = 2
-        ExplicitLeft = 368
-        ExplicitTop = 199
+        ExplicitLeft = 357
+        ExplicitTop = 116
+        inherited Panel5: TPanel
+          ExplicitLeft = 1
+          ExplicitTop = 1
+        end
       end
       object panelImagem: TPanel
         Left = 1021
@@ -344,9 +349,9 @@ inherited frmCadProduto: TfrmCadProduto
     ExplicitHeight = 538
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 454
+      Top = 481
       ExplicitLeft = 12
-      ExplicitTop = 454
+      ExplicitTop = 481
     end
   end
   inherited QryListagem: TZQuery
@@ -362,8 +367,8 @@ inherited frmCadProduto: TfrmCadProduto
       #9'     c.descricao As DescricaoCategoria'
       'From produtos as p'
       #9'LEFT JOIN categorias as c on c.categoriaId = p.categoriaId')
-    Left = 502
-    Top = 165
+    Left = 796
+    Top = 175
     object QryListagemprodutoId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
@@ -405,8 +410,8 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 592
-    Top = 165
+    Left = 886
+    Top = 175
   end
   object QryCategoria: TZQuery
     Connection = dtmPrincipal.ConexaoDB
