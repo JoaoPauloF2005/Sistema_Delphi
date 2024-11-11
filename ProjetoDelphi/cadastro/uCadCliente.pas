@@ -62,6 +62,8 @@ type
       State: TGridDrawState);
     procedure QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 
+
+
   private
     oCliente: TCliente;
     function Apagar: Boolean; override;

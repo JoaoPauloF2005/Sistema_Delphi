@@ -7,7 +7,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit,
-  ZAbstractConnection, ZConnection, cArquivoIni, System.ImageList, Vcl.ImgList, Vcl.OleAuto, Vcl.Imaging.pngimage, System.IOUtils, Vcl.Imaging.jpeg;
+  ZAbstractConnection, Printers, ZConnection, cArquivoIni, System.ImageList, Vcl.ImgList, Vcl.OleAuto, Clipbrd, Math, Vcl.Imaging.pngimage, System.IOUtils, Vcl.Imaging.jpeg;
 
 type
   // Defini��o de uma classe de formul�rio chamada TfrmTelaHeranca
@@ -31,7 +31,14 @@ type
     ImageList1: TImageList;
     pExportar: TPanel;
     Panel5: TPanel;
-    btnFecharPanel: TSpeedButton; // R�tulo para exibir o �ndice atual
+    btnFecharPanel: TSpeedButton;
+    btnImprimirRetrato: TButton;
+    btnImprimirPaisagem: TButton;
+    btnExportarHTML: TButton;
+    btnExportarCSV: TButton;
+    btnCopiar: TButton;
+    PrintDialog: TPrintDialog;
+    SaveDialog: TSaveDialog; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -53,6 +60,11 @@ type
     procedure btnExcelClick(Sender: TObject);
     procedure btnFecharPanelClick(Sender: TObject);
     procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnImprimirPaisagemClick(Sender: TObject);
+    procedure btnImprimirRetratoClick(Sender: TObject);
+    procedure btnExportarHTMLClick(Sender: TObject);
+    procedure btnExportarCSVClick(Sender: TObject);
+    procedure btnCopiarClick(Sender: TObject);
   private
     // Vari�veis e m�todos privados
     // M�todos privados para controlar bot�es e abas
@@ -67,6 +79,13 @@ type
     procedure CarregarConfiguracaoColunas;
     procedure SalvarConfiguracaoColunas;
     procedure ExportarDBGridParaExcel(DBGrid: TDBGrid);
+
+
+    procedure ExportarParaHTML(DBGrid: TDBGrid; const FileName: string);
+    procedure ExportarParaCSV(DBGrid: TDBGrid; const FileName: string);
+    procedure ExportarParaTexto(DBGrid: TDBGrid; const FileName: string);
+    procedure CopiarParaClipboard;
+    procedure ImprimirDBGrid(DBGrid: TDBGrid; OrientacaoPaisagem: Boolean);
   public
     // Vari�veis p�blicas
     IndiceAtual:string; // Vari�vel para armazenar o �ndice atual de ordena��o
@@ -302,79 +321,6 @@ begin
   LimparEdits;
 end;
 
-procedure TfrmTelaHeranca.ExportarDBGridParaExcel(DBGrid: TDBGrid);
-var
-  ExcelApp, Workbook, Worksheet: OleVariant;
-  Col, Row, ExcelCol: Integer;
-  Range: OleVariant;
-begin
-  try
-    // Cria a instância do Excel
-    ExcelApp := CreateOleObject('Excel.Application');
-    ExcelApp.Visible := False;
-
-    // Adiciona uma nova pasta de trabalho
-    Workbook := ExcelApp.Workbooks.Add;
-    Worksheet := Workbook.Worksheets[1];
-
-    // Exporta os títulos das colunas, ignorando colunas com campos de imagem
-    ExcelCol := 1; // Índice da coluna no Excel
-    for Col := 0 to DBGrid.Columns.Count - 1 do
-    begin
-      if not (DBGrid.Columns[Col].Field.DataType in [ftGraphic, ftBlob]) then
-      begin
-        Worksheet.Cells[1, ExcelCol] := DBGrid.Columns[Col].Title.Caption;
-        Inc(ExcelCol);
-      end;
-    end;
-
-    // Exporta os dados, ignorando colunas com campos de imagem
-    DBGrid.DataSource.DataSet.First;
-    Row := 2; // Começa na segunda linha porque a primeira é para os títulos
-    while not DBGrid.DataSource.DataSet.Eof do
-    begin
-      ExcelCol := 1; // Reinicia o índice da coluna no Excel para cada nova linha
-      for Col := 0 to DBGrid.Columns.Count - 1 do
-      begin
-        if not (DBGrid.Columns[Col].Field.DataType in [ftGraphic, ftBlob]) then
-        begin
-          Worksheet.Cells[Row, ExcelCol] := DBGrid.Columns[Col].Field.AsString;
-          Inc(ExcelCol);
-        end;
-      end;
-      Inc(Row);
-      DBGrid.DataSource.DataSet.Next;
-    end;
-
-    // Adiciona bordas e formatação de tabela
-    Range := Worksheet.Range[Worksheet.Cells[1, 1], Worksheet.Cells[Row - 1, ExcelCol - 1]];
-    Range.Borders.Weight := 2; // Define bordas para a tabela
-    Range.Borders.LineStyle := 1; // Define o estilo das bordas (contínuo)
-
-    // Ajusta as colunas automaticamente
-    Worksheet.Columns.AutoFit;
-
-    // Torna o Excel visível e seleciona a planilha
-    ExcelApp.Visible := True;
-    ExcelApp.UserControl := True;
-
-    // Libera os objetos
-    Worksheet := Unassigned;
-    Workbook := Unassigned;
-    ExcelApp := Unassigned;
-
-  except
-    on E: Exception do
-      ShowMessage('Erro ao exportar para o Excel: ' + E.Message);
-  end;
-end;
-
-procedure TfrmTelaHeranca.btnExcelClick(Sender: TObject);
-begin
-  // Chama a função de exportação passando o grid da tela atual
-  ExportarDBGridParaExcel(grdListagem);
-end;
-
 // A��o do bot�o "Gravar" para salvar um registro no banco de dados
 procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
 begin
@@ -431,6 +377,13 @@ end;
 procedure TfrmTelaHeranca.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 	BloqueiaCTRL_DEL_DBGrid(Key, Shift);
+
+   // Verifica se Ctrl + C foi pressionado
+  if (Shift = [ssCtrl]) and (Key = Ord('C')) then
+  begin
+    CopiarParaClipboard;
+    Key := 0; // Evita qualquer ação adicional após o atalho ser capturado
+  end;
 end;
 
 // A��o executada quando o formul�rio � mostrado
@@ -507,6 +460,7 @@ begin
     pExportar.Visible := True; // Torna o painel visível
     pExportar.BringToFront; // Garante que o painel esteja na frente dos outros componentes
   end;
+
 end;
 
 procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
@@ -570,5 +524,356 @@ begin
 end;
 {$ENDREGION}
 
+{$REGION 'Funções de atalhos exportar grid'}
+procedure TfrmTelaHeranca.ExportarDBGridParaExcel(DBGrid: TDBGrid);
+var
+  ExcelApp, Workbook, Worksheet: OleVariant;
+  Col, Row, ExcelCol: Integer;
+  Range: OleVariant;
+begin
+  try
+    // Cria a instância do Excel
+    ExcelApp := CreateOleObject('Excel.Application');
+    ExcelApp.Visible := False;
+
+    // Adiciona uma nova pasta de trabalho
+    Workbook := ExcelApp.Workbooks.Add;
+    Worksheet := Workbook.Worksheets[1];
+
+    // Exporta os títulos das colunas, ignorando colunas com campos de imagem
+    ExcelCol := 1; // Índice da coluna no Excel
+    for Col := 0 to DBGrid.Columns.Count - 1 do
+    begin
+      if not (DBGrid.Columns[Col].Field.DataType in [ftGraphic, ftBlob]) then
+      begin
+        Worksheet.Cells[1, ExcelCol] := DBGrid.Columns[Col].Title.Caption;
+        Inc(ExcelCol);
+      end;
+    end;
+
+    // Exporta os dados, ignorando colunas com campos de imagem
+    DBGrid.DataSource.DataSet.First;
+    Row := 2; // Começa na segunda linha porque a primeira é para os títulos
+    while not DBGrid.DataSource.DataSet.Eof do
+    begin
+      ExcelCol := 1; // Reinicia o índice da coluna no Excel para cada nova linha
+      for Col := 0 to DBGrid.Columns.Count - 1 do
+      begin
+        if not (DBGrid.Columns[Col].Field.DataType in [ftGraphic, ftBlob]) then
+        begin
+          Worksheet.Cells[Row, ExcelCol] := DBGrid.Columns[Col].Field.AsString;
+          Inc(ExcelCol);
+        end;
+      end;
+      Inc(Row);
+      DBGrid.DataSource.DataSet.Next;
+    end;
+
+    // Adiciona bordas e formatação de tabela
+    Range := Worksheet.Range[Worksheet.Cells[1, 1], Worksheet.Cells[Row - 1, ExcelCol - 1]];
+    Range.Borders.Weight := 2; // Define bordas para a tabela
+    Range.Borders.LineStyle := 1; // Define o estilo das bordas (contínuo)
+
+    // Ajusta as colunas automaticamente
+    Worksheet.Columns.AutoFit;
+
+    // Torna o Excel visível e seleciona a planilha
+    ExcelApp.Visible := True;
+    ExcelApp.UserControl := True;
+
+    // Libera os objetos
+    Worksheet := Unassigned;
+    Workbook := Unassigned;
+    ExcelApp := Unassigned;
+
+  except
+    on E: Exception do
+      ShowMessage('Erro ao exportar para o Excel: ' + E.Message);
+  end;
+end;
+
+procedure TfrmTelaHeranca.btnExcelClick(Sender: TObject);
+begin
+  // Chama a função de exportação passando o grid da tela atual
+  ExportarDBGridParaExcel(grdListagem);
+end;
+
+procedure TfrmTelaHeranca.CopiarParaClipboard;
+var
+  i, j: Integer;
+  Linha: string;
+begin
+  if grdListagem.SelectedRows.Count > 0 then
+  begin
+    Linha := '';
+    // Cabeçalhos das colunas
+    for j := 0 to grdListagem.Columns.Count - 1 do
+    begin
+      Linha := Linha + grdListagem.Columns[j].Title.Caption + #9; // Tab para separar colunas
+    end;
+    Linha := Linha + sLineBreak;
+
+    // Dados das linhas selecionadas
+    grdListagem.DataSource.DataSet.DisableControls;
+    try
+      for i := 0 to grdListagem.SelectedRows.Count - 1 do
+      begin
+        grdListagem.DataSource.DataSet.GotoBookmark(grdListagem.SelectedRows.Items[i]);
+        for j := 0 to grdListagem.Columns.Count - 1 do
+        begin
+          Linha := Linha + grdListagem.Columns[j].Field.AsString + #9;
+        end;
+        Linha := Linha + sLineBreak;
+      end;
+    finally
+      grdListagem.DataSource.DataSet.EnableControls;
+    end;
+
+    Clipboard.AsText := Linha; // Copia o conteúdo para a área de transferência
+    ShowMessage('Conteúdo copiado para a área de transferência.');
+  end
+  else
+  begin
+    // Se nenhuma linha estiver selecionada, copie a linha atual
+    if not grdListagem.DataSource.DataSet.IsEmpty then
+    begin
+      Linha := '';
+      for j := 0 to grdListagem.Columns.Count - 1 do
+      begin
+        Linha := Linha + grdListagem.Columns[j].Title.Caption + #9;
+      end;
+      Linha := Linha + sLineBreak;
+
+      for j := 0 to grdListagem.Columns.Count - 1 do
+      begin
+        Linha := Linha + grdListagem.Columns[j].Field.AsString + #9;
+      end;
+
+      Clipboard.AsText := Linha;
+      ShowMessage('Linha atual copiada para a área de transferência.');
+    end
+    else
+      ShowMessage('Nenhuma linha disponível para copiar.');
+  end;
+end;
+
+procedure TfrmTelaHeranca.ImprimirDBGrid(DBGrid: TDBGrid; OrientacaoPaisagem: Boolean);
+var
+  Col, Y, X, MaxColWidth: Integer;
+  Texto: string;
+  ColunaLargura: Integer;
+begin
+  // Configura a orientação da impressora
+  if OrientacaoPaisagem then
+    Printer.Orientation := poLandscape
+  else
+    Printer.Orientation := poPortrait;
+
+  // Abre o diálogo de impressão
+  if PrintDialog.Execute then
+  begin
+    Printer.BeginDoc; // Inicia o trabalho de impressão
+
+    try
+      Y := 100; // Define a posição inicial no eixo Y
+      MaxColWidth := Printer.PageWidth div DBGrid.Columns.Count;
+
+      // Ajuste de largura das colunas para cada coluna
+      for Col := 0 to DBGrid.Columns.Count - 1 do
+      begin
+        Texto := DBGrid.Columns[Col].Title.Caption;
+        ColunaLargura := Min(MaxColWidth, Printer.Canvas.TextWidth(Texto) + 50);
+        Printer.Canvas.TextOut(100 + (Col * ColunaLargura), Y, Texto);
+      end;
+
+      // Move para a próxima linha após imprimir os títulos das colunas
+      Inc(Y, Printer.Canvas.TextHeight('W') + 10);
+
+      // Imprime os dados das linhas do DBGrid
+      DBGrid.DataSource.DataSet.DisableControls;
+      try
+        DBGrid.DataSource.DataSet.First;
+        while not DBGrid.DataSource.DataSet.Eof do
+        begin
+          X := 100; // Posição inicial de X para cada linha
+          for Col := 0 to DBGrid.Columns.Count - 1 do
+          begin
+            Texto := DBGrid.Columns[Col].Field.AsString;
+            Printer.Canvas.TextOut(X, Y, Texto);
+            Inc(X, ColunaLargura); // Move X para a próxima coluna
+          end;
+
+          // Move para a próxima linha
+          Inc(Y, Printer.Canvas.TextHeight('W') + 10);
+
+          // Verifica se a posição Y excede o comprimento da página
+          if Y > Printer.PageHeight - 100 then
+          begin
+            Printer.NewPage; // Inicia uma nova página se necessário
+            Y := 100;        // Reinicia a posição Y
+          end;
+
+          // Passa para o próximo registro
+          DBGrid.DataSource.DataSet.Next;
+        end;
+      finally
+        DBGrid.DataSource.DataSet.EnableControls;
+      end;
+
+    finally
+      Printer.EndDoc; // Finaliza o trabalho de impressão
+    end;
+
+    ShowMessage('Impressão concluída.');
+  end;
+end;
+
+
+procedure TfrmTelaHeranca.btnImprimirPaisagemClick(Sender: TObject);
+begin
+  ImprimirDBGrid(grdListagem, True); // Imprime em modo paisagem
+end;
+
+procedure TfrmTelaHeranca.btnImprimirRetratoClick(Sender: TObject);
+begin
+  ImprimirDBGrid(grdListagem, False); // Imprime em modo retrato
+end;
+
+procedure TfrmTelaHeranca.ExportarParaTexto(DBGrid: TDBGrid; const FileName: string);
+var
+  SL: TStringList;
+  Col: Integer;
+  Line: string;
+begin
+  SL := TStringList.Create;
+  try
+    // Cabeçalho das colunas
+    Line := '';
+    for Col := 0 to DBGrid.Columns.Count - 1 do
+      Line := Line + Format('%-20s', [DBGrid.Columns[Col].Title.Caption]); // Ajuste de largura
+    SL.Add(Line);
+
+    // Linhas de dados
+    DBGrid.DataSource.DataSet.First;
+    while not DBGrid.DataSource.DataSet.Eof do
+    begin
+      Line := '';
+      for Col := 0 to DBGrid.Columns.Count - 1 do
+        Line := Line + Format('%-20s', [DBGrid.Columns[Col].Field.AsString]); // Ajuste de largura
+      SL.Add(Line);
+      DBGrid.DataSource.DataSet.Next;
+    end;
+
+    // Salva o conteúdo em um arquivo de texto
+    SL.SaveToFile(FileName);
+    ShowMessage('Exportação para texto concluída!');
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure TfrmTelaHeranca.btnExportarCSVClick(Sender: TObject);
+begin
+  SaveDialog.Filter := 'CSV Files (*.csv)|*.csv';
+  SaveDialog.DefaultExt := 'csv';
+  SaveDialog.Title := 'Salvar como CSV';
+
+  if SaveDialog.Execute then
+  begin
+    ExportarParaCSV(grdListagem, SaveDialog.FileName);
+    ShowMessage('Exportação para CSV concluída e salva em "' + SaveDialog.FileName + '"');
+  end;
+end;
+
+procedure TfrmTelaHeranca.btnExportarHTMLClick(Sender: TObject);
+begin
+  begin
+  SaveDialog.Filter := 'HTML Files (*.html)|*.html';
+  SaveDialog.DefaultExt := 'html';
+  SaveDialog.Title := 'Salvar como HTML';
+
+  if SaveDialog.Execute then
+  begin
+    ExportarParaHTML(grdListagem, SaveDialog.FileName);
+    ShowMessage('Exportação para HTML concluída e salva em "' + SaveDialog.FileName + '"');
+  end;
+end;
+end;
+
+procedure TfrmTelaHeranca.ExportarParaHTML(DBGrid: TDBGrid; const FileName: string);
+var
+  HTMLFile: TextFile;
+  Col, Row: Integer;
+begin
+  AssignFile(HTMLFile, FileName);
+  Rewrite(HTMLFile);
+  try
+    // Cabeçalho HTML
+    Writeln(HTMLFile, '<html><body><table border="1">');
+    // Títulos das colunas
+    Writeln(HTMLFile, '<tr>');
+    for Col := 0 to DBGrid.Columns.Count - 1 do
+      Writeln(HTMLFile, '<th>' + DBGrid.Columns[Col].Title.Caption + '</th>');
+    Writeln(HTMLFile, '</tr>');
+
+    // Linhas de dados
+    DBGrid.DataSource.DataSet.First;
+    while not DBGrid.DataSource.DataSet.Eof do
+    begin
+      Writeln(HTMLFile, '<tr>');
+      for Col := 0 to DBGrid.Columns.Count - 1 do
+        Writeln(HTMLFile, '<td>' + DBGrid.Columns[Col].Field.AsString + '</td>');
+      Writeln(HTMLFile, '</tr>');
+      DBGrid.DataSource.DataSet.Next;
+    end;
+    Writeln(HTMLFile, '</table></body></html>');
+  finally
+    CloseFile(HTMLFile);
+  end;
+  ShowMessage('Exportação para HTML concluída!');
+end;
+
+procedure TfrmTelaHeranca.ExportarParaCSV(DBGrid: TDBGrid; const FileName: string);
+var
+  CSVFile: TextFile;
+  Col, Row: Integer;
+begin
+  AssignFile(CSVFile, FileName);
+  Rewrite(CSVFile);
+  try
+    // Títulos das colunas
+    for Col := 0 to DBGrid.Columns.Count - 1 do
+    begin
+      Write(CSVFile, DBGrid.Columns[Col].Title.Caption);
+      if Col < DBGrid.Columns.Count - 1 then
+        Write(CSVFile, ';');
+    end;
+    Writeln(CSVFile);
+
+    // Linhas de dados
+    DBGrid.DataSource.DataSet.First;
+    while not DBGrid.DataSource.DataSet.Eof do
+    begin
+      for Col := 0 to DBGrid.Columns.Count - 1 do
+      begin
+        Write(CSVFile, DBGrid.Columns[Col].Field.AsString);
+        if Col < DBGrid.Columns.Count - 1 then
+          Write(CSVFile, ';');
+      end;
+      Writeln(CSVFile);
+      DBGrid.DataSource.DataSet.Next;
+    end;
+  finally
+    CloseFile(CSVFile);
+  end;
+  ShowMessage('Exportação para CSV concluída!');
+end;
+
+procedure TfrmTelaHeranca.btnCopiarClick(Sender: TObject);
+begin
+  CopiarParaClipboard;
+end;
+
+{$ENDREGION}
 
 end .

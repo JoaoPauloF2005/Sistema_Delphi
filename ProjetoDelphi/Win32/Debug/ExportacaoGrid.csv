@@ -1,0 +1,4 @@
+;Código;Nome;Tipo;CPF/CNPJ;Endereço;Cidade;Bairro;Estado;CEP;Telefone;Data Nascimento;Email
+Bloqueado;2;Jorge Peres;Jurídica;03816716000150;rua 1;cidade 1;bairro 1;AC;14.123-412;0800 123 3445;07/11/2024;jorgerperes@gmail.com
+Inativo;3;João Paulo Franchini de Freitas;Física;55564880889;Salim Miguel Aburad;Itapui;Mar Azul 1;SP;17.237-020;(14) 99746-4302;16/07/2005;joaopaulofranchinidefreitas@gmail.com
+Atenção;4;Paulo Cesar de Freitas;Física;17402101827;Salim Miguel Aburad;Itapui;Mar Azul 1;SP;17.237-020;(14) 99746-4302;08/11/2024;paulocesardefreitas@gmail.com
