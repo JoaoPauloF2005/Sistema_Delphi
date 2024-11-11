@@ -7,7 +7,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,
-  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd;
+  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd, uRelCadCliente, Printers;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -61,8 +61,7 @@ type
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
-
-
+    procedure btnImprimirClick(Sender: TObject);
 
   private
     oCliente: TCliente;
@@ -218,6 +217,30 @@ begin
   end;
 
   inherited;
+end;
+
+procedure TfrmCadCliente.btnImprimirClick(Sender: TObject);
+var
+  Relatorio: TfrmRelCadCliente;
+begin
+  // Cria o formulário do relatório
+  Relatorio := TfrmRelCadCliente.Create(nil);
+  try
+    // Abre a conexão com os dados do cliente
+    Relatorio.QryCliente.Open;
+
+    // Exibe a pré-visualização do relatório
+    Relatorio.Relatorio.PreviewModal;
+
+    // Ou, para imprimir diretamente sem pré-visualização, use:
+    // Relatorio.Relatorio.Print;
+
+  finally
+    // Fecha a conexão com os dados e libera o formulário
+    Relatorio.QryCliente.Close;
+    Relatorio.Free;
+  end;
+
 end;
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
@@ -518,4 +541,3 @@ begin
 end;
 {$ENDREGION}
 end.
-

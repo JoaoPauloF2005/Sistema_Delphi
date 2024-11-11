@@ -32,13 +32,12 @@ type
     pExportar: TPanel;
     Panel5: TPanel;
     btnFecharPanel: TSpeedButton;
-    btnImprimirRetrato: TButton;
-    btnImprimirPaisagem: TButton;
     btnExportarHTML: TButton;
     btnExportarCSV: TButton;
     btnCopiar: TButton;
     PrintDialog: TPrintDialog;
-    SaveDialog: TSaveDialog; // R�tulo para exibir o �ndice atual
+    SaveDialog: TSaveDialog;
+    btnImprimir: TButton; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -60,8 +59,7 @@ type
     procedure btnExcelClick(Sender: TObject);
     procedure btnFecharPanelClick(Sender: TObject);
     procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure btnImprimirPaisagemClick(Sender: TObject);
-    procedure btnImprimirRetratoClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
     procedure btnExportarHTMLClick(Sender: TObject);
     procedure btnExportarCSVClick(Sender: TObject);
     procedure btnCopiarClick(Sender: TObject);
@@ -530,6 +528,7 @@ var
   ExcelApp, Workbook, Worksheet: OleVariant;
   Col, Row, ExcelCol: Integer;
   Range: OleVariant;
+  ColumnTitle, CellValue: string;
 begin
   try
     // Cria a instância do Excel
@@ -546,7 +545,13 @@ begin
     begin
       if not (DBGrid.Columns[Col].Field.DataType in [ftGraphic, ftBlob]) then
       begin
-        Worksheet.Cells[1, ExcelCol] := DBGrid.Columns[Col].Title.Caption;
+        // Força o título "Status" para o campo correspondente
+        if DBGrid.Columns[Col].FieldName = 'status' then
+          ColumnTitle := 'Status'
+        else
+          ColumnTitle := DBGrid.Columns[Col].Title.Caption;
+
+        Worksheet.Cells[1, ExcelCol] := ColumnTitle;
         Inc(ExcelCol);
       end;
     end;
@@ -561,7 +566,18 @@ begin
       begin
         if not (DBGrid.Columns[Col].Field.DataType in [ftGraphic, ftBlob]) then
         begin
-          Worksheet.Cells[Row, ExcelCol] := DBGrid.Columns[Col].Field.AsString;
+          // Obtém o valor da célula como string
+          CellValue := DBGrid.Columns[Col].Field.AsString;
+
+          // Verifica se o campo é CPF ou CNPJ e aplica o formato de texto usando Range
+          if (DBGrid.Columns[Col].FieldName = 'cpfCnpj') then
+          begin
+            Worksheet.Cells[Row, ExcelCol] := '''' + CellValue; // Insere o valor como texto
+          end
+          else
+          begin
+            Worksheet.Cells[Row, ExcelCol] := CellValue;
+          end;
           Inc(ExcelCol);
         end;
       end;
@@ -591,6 +607,7 @@ begin
       ShowMessage('Erro ao exportar para o Excel: ' + E.Message);
   end;
 end;
+
 
 procedure TfrmTelaHeranca.btnExcelClick(Sender: TObject);
 begin
@@ -728,15 +745,9 @@ begin
   end;
 end;
 
-
-procedure TfrmTelaHeranca.btnImprimirPaisagemClick(Sender: TObject);
+procedure TfrmTelaHeranca.btnImprimirClick(Sender: TObject);
 begin
   ImprimirDBGrid(grdListagem, True); // Imprime em modo paisagem
-end;
-
-procedure TfrmTelaHeranca.btnImprimirRetratoClick(Sender: TObject);
-begin
-  ImprimirDBGrid(grdListagem, False); // Imprime em modo retrato
 end;
 
 procedure TfrmTelaHeranca.ExportarParaTexto(DBGrid: TDBGrid; const FileName: string);
