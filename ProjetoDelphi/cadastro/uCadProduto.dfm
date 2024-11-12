@@ -3,7 +3,6 @@ inherited frmCadProduto: TfrmCadProduto
   ClientHeight = 593
   ClientWidth = 1458
   Position = poDesktopCenter
-  ExplicitLeft = -318
   ExplicitWidth = 1464
   ExplicitHeight = 622
   PixelsPerInch = 96
@@ -14,8 +13,6 @@ inherited frmCadProduto: TfrmCadProduto
     ExplicitWidth = 1328
     ExplicitHeight = 538
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       inherited grdListagem: TDBGrid
@@ -85,10 +82,6 @@ inherited frmCadProduto: TfrmCadProduto
         TabOrder = 2
         ExplicitLeft = 357
         ExplicitTop = 116
-        inherited Panel5: TPanel
-          ExplicitLeft = 1
-          ExplicitTop = 1
-        end
       end
       object panelImagem: TPanel
         Left = 1021
@@ -133,8 +126,6 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       object Label1: TLabel
@@ -389,6 +380,7 @@ inherited frmCadProduto: TfrmCadProduto
       DisplayLabel = 'Valor'
       FieldName = 'valor'
       Required = True
+      DisplayFormat = 'R$ #,##0.00'
     end
     object QryListagemquantidade: TFloatField
       DisplayLabel = 'Quantidade'
@@ -412,6 +404,10 @@ inherited frmCadProduto: TfrmCadProduto
   inherited dtsListagem: TDataSource
     Left = 886
     Top = 175
+  end
+  inherited PrintDialog: TPrintDialog
+    Left = 727
+    Top = 176
   end
   object QryCategoria: TZQuery
     Connection = dtmPrincipal.ConexaoDB

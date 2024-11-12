@@ -1,47 +1,52 @@
 inherited frmProVenda: TfrmProVenda
   Caption = 'Vendas'
-  ClientHeight = 609
+  ClientHeight = 610
   ClientWidth = 1041
   Position = poScreenCenter
   ExplicitWidth = 1047
-  ExplicitHeight = 638
+  ExplicitHeight = 639
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
     Width = 911
-    Height = 554
+    Height = 555
     ExplicitWidth = 911
-    ExplicitHeight = 554
+    ExplicitHeight = 555
     inherited tabListagem: TTabSheet
       ExplicitWidth = 903
-      ExplicitHeight = 526
+      ExplicitHeight = 527
       inherited grdListagem: TDBGrid
         Width = 903
-        Height = 526
+        Height = 527
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'vendaId'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'clienteId'
             Width = 76
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'dataVenda'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'totalVenda'
             Width = 160
@@ -57,7 +62,7 @@ inherited frmProVenda: TfrmProVenda
     end
     inherited tabManutencao: TTabSheet
       ExplicitWidth = 903
-      ExplicitHeight = 526
+      ExplicitHeight = 527
       object Label4: TLabel
         Left = 143
         Top = 30
@@ -107,9 +112,9 @@ inherited frmProVenda: TfrmProVenda
         CalendarStyle = csDialog
         TabOrder = 2
       end
-      object dbGridItensVenda: TPanel
+      object panelGridItensVenda: TPanel
         Left = 0
-        Top = 101
+        Top = 102
         Width = 903
         Height = 425
         Align = alBottom
@@ -293,22 +298,84 @@ inherited frmProVenda: TfrmProVenda
             OnExit = lkpProdutoExit
           end
         end
+        object dbGridItensVenda: TDBGrid
+          Left = -2
+          Top = 56
+          Width = 903
+          Height = 321
+          Color = clBtnFace
+          Ctl3D = True
+          DataSource = dtmVenda.dtsItensVenda
+          DrawingStyle = gdsGradient
+          GradientEndColor = clGray
+          GradientStartColor = clGray
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 2
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWhite
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = [fsBold]
+          OnDrawColumnCell = dbGridItensVendaDrawColumnCell
+          OnDblClick = dbGridItensVendaDblClick
+          Columns = <
+            item
+              Alignment = taCenter
+              Expanded = False
+              FieldName = 'produtoId'
+              Visible = True
+            end
+            item
+              Alignment = taCenter
+              Expanded = False
+              FieldName = 'NomeProduto'
+              Visible = True
+            end
+            item
+              Alignment = taCenter
+              Expanded = False
+              FieldName = 'quantidade'
+              Width = 64
+              Visible = True
+            end
+            item
+              Alignment = taCenter
+              Expanded = False
+              FieldName = 'valorUnitario'
+              Width = 64
+              Visible = True
+            end
+            item
+              Alignment = taCenter
+              Expanded = False
+              FieldName = 'valorTotalProduto'
+              Width = 64
+              Visible = True
+            end>
+        end
       end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 554
+    Top = 555
     Width = 1041
-    ExplicitTop = 554
+    ExplicitTop = 555
     ExplicitWidth = 1041
   end
   inherited Panel2: TPanel
     Left = 911
-    Height = 554
+    Height = 555
     ExplicitLeft = 911
-    ExplicitHeight = 554
+    ExplicitHeight = 555
   end
   inherited QryListagem: TZQuery
+    Active = True
     SQL.Strings = (
       'SELECT vendas.vendaId'
       '       ,vendas.clienteId'
@@ -317,6 +384,7 @@ inherited frmProVenda: TfrmProVenda
       '       ,vendas.totalVenda'
       '   FROM vendas'
       '   INNER JOIN clientes ON  clientes.clienteId = vendas.clienteId')
+    DataSource = dtmVenda.dtsCliente
     Left = 361
     Top = 13
     object QryListagemvendaId: TIntegerField
@@ -343,6 +411,7 @@ inherited frmProVenda: TfrmProVenda
       DisplayLabel = 'Total da Venda'
       FieldName = 'totalVenda'
       Required = True
+      DisplayFormat = 'R$ #,##0.00'
     end
   end
   inherited dtsListagem: TDataSource

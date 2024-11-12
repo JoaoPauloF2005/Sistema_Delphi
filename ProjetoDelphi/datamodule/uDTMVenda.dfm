@@ -34,7 +34,7 @@
       '  From produtos')
     Params = <>
     Left = 185
-    Top = 64
+    Top = 63
     object Código: TIntegerField
       FieldName = 'produtoId'
       ReadOnly = True
@@ -45,6 +45,7 @@
     end
     object Valor: TFloatField
       FieldName = 'valor'
+      DisplayFormat = 'R$ #,##0.00'
     end
     object QryProdutosquantidade: TFloatField
       FieldName = 'quantidade'
@@ -71,10 +72,12 @@
     object cdsItensVendavalorUnitario: TFloatField
       DisplayLabel = 'Valor Unitario'
       FieldName = 'valorUnitario'
+      DisplayFormat = 'R$ #,##0.00'
     end
     object cdsItensVendavalorTotalProduto: TFloatField
       DisplayLabel = 'Total do Produto'
       FieldName = 'valorTotalProduto'
+      DisplayFormat = 'R$ #,##0.00'
     end
   end
   object dtsItensVenda: TDataSource

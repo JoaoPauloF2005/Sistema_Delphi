@@ -21,6 +21,7 @@ type
     procedure btnNovoClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
+    procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -103,6 +104,7 @@ begin
   inherited;
   oAcaoAcesso := TAcaoAcesso.Create(dtmPrincipal.ConexaoDB);
   IndiceAtual := 'descricao';
+  DesabilitarAtalhoExportar := True;
 end;
 
 function TfrmCadAcaoAcesso.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
@@ -112,5 +114,13 @@ begin
  else if EstadoDoCadastro = ecAlterar then
  	Result := oAcaoAcesso.Atualizar;
 end;
+
+procedure TfrmCadAcaoAcesso.grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  // Aqui, deixamos vazio ou adicionamos outras ações conforme necessário
+  // Isso impede que o atalho Ctrl + Shift + E ative o painel de exportação
+end;
+
 
 end.

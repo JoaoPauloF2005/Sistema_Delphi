@@ -21,6 +21,7 @@ type
     procedure btnNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     oUsuario:TUsuario;
@@ -53,6 +54,14 @@ begin
      Result := oUsuario.Atualizar;
 
   TAcaoAcesso.PreencherUsuariosVsAcoes(dtmPrincipal.ConexaoDB);
+end;
+
+procedure TfrmCadUsuario.grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  // Aqui, deixamos vazio ou adicionamos outras ações conforme necessário
+  // Isso impede que o atalho Ctrl + Shift + E ative o painel de exportação
+
 end;
 
 procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
@@ -109,6 +118,7 @@ begin
   inherited;
   oUsuario := TUsuario.Create(dtmPrincipal.ConexaoDB);
   IndiceAtual := 'nome';
+  DesabilitarAtalhoExportar := True;
 end;
 
 

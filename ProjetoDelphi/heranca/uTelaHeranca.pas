@@ -24,7 +24,6 @@ type
     btnGravar: TBitBtn; // Bot�o "Gravar"
     btnApagar: TBitBtn; // Bot�o "Apagar"
     btnFechar: TBitBtn; // Bot�o "Fechar"
-
     QryListagem: TZQuery; // Query que realiza opera��es no banco de dados
     dtsListagem: TDataSource;
     btnExcel: TButton;
@@ -64,6 +63,7 @@ type
     procedure btnExportarCSVClick(Sender: TObject);
     procedure btnCopiarClick(Sender: TObject);
   private
+
     // Vari�veis e m�todos privados
     // M�todos privados para controlar bot�es e abas
     procedure ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar:TBitBtn;
@@ -77,14 +77,14 @@ type
     procedure CarregarConfiguracaoColunas;
     procedure SalvarConfiguracaoColunas;
     procedure ExportarDBGridParaExcel(DBGrid: TDBGrid);
-
-
     procedure ExportarParaHTML(DBGrid: TDBGrid; const FileName: string);
     procedure ExportarParaCSV(DBGrid: TDBGrid; const FileName: string);
     procedure ExportarParaTexto(DBGrid: TDBGrid; const FileName: string);
     procedure CopiarParaClipboard;
     procedure ImprimirDBGrid(DBGrid: TDBGrid; OrientacaoPaisagem: Boolean);
+
   public
+  DesabilitarAtalhoExportar: Boolean;
     // Vari�veis p�blicas
     IndiceAtual:string; // Vari�vel para armazenar o �ndice atual de ordena��o
     EstadoDoCadastro:TEstadoDoCadastro; // Vari�vel que armazena o estado atual do cadastro (inserir, alterar, etc.)
@@ -451,6 +451,8 @@ end;
 
 procedure TfrmTelaHeranca.grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
+  if DesabilitarAtalhoExportar then
+    Exit; // Sai do procedimento se o atalho estiver desabilitado para esta tela
 
   // Verifica se Ctrl + Shift + E foi pressionado
   if (Shift = [ssCtrl, ssShift]) and (Key = Ord('E')) then
@@ -458,7 +460,6 @@ begin
     pExportar.Visible := True; // Torna o painel visível
     pExportar.BringToFront; // Garante que o painel esteja na frente dos outros componentes
   end;
-
 end;
 
 procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
