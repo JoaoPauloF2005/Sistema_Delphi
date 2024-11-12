@@ -3,7 +3,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 0
   BorderWidth = 1
   Caption = 'Menu Principal'
-  ClientHeight = 663
+  ClientHeight = 643
   ClientWidth = 1108
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +11,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = mainPrincipal
   OldCreateOrder = False
   WindowState = wsMaximized
   OnClose = FormClose
@@ -20,7 +21,7 @@ object frmPrincipal: TfrmPrincipal
   TextHeight = 13
   object StbPrincipal: TStatusBar
     Left = 0
-    Top = 644
+    Top = 624
     Width = 1108
     Height = 19
     Panels = <
@@ -32,22 +33,18 @@ object frmPrincipal: TfrmPrincipal
   end
   object Panel1: TPanel
     Left = 0
-    Top = 41
-    Width = 221
-    Height = 603
+    Top = 0
+    Width = 200
+    Height = 624
     Align = alLeft
-    BevelInner = bvSpace
-    BevelKind = bkFlat
-    BevelOuter = bvNone
-    BiDiMode = bdLeftToRight
-    ParentBiDiMode = False
     TabOrder = 1
+    ExplicitHeight = 626
     object TreeView1: TTreeView
       Left = 1
       Top = 1
-      Width = 239
-      Height = 597
-      Align = alLeft
+      Width = 198
+      Height = 622
+      Align = alClient
       BevelInner = bvNone
       BiDiMode = bdLeftToRight
       BorderStyle = bsNone
@@ -109,17 +106,106 @@ object frmPrincipal: TfrmPrincipal
         00730020005600530020004100E700F500650073003800000000000000000000
         00FFFFFFFFFFFFFFFF000000000000000000000000010D41006C007400650072
         00610072002000530065006E0068006100}
+      ExplicitWidth = 200
     end
   end
-  object Panel2: TPanel
-    Left = 0
-    Top = 0
-    Width = 1108
-    Height = 41
-    Align = alTop
-    Color = 16223093
-    ParentBackground = False
-    TabOrder = 2
+  object mainPrincipal: TMainMenu
+    Left = 689
+    Top = 4
+    object CADASTRO1: TMenuItem
+      Caption = 'CADASTRO'
+      object CLIENTE1: TMenuItem
+        Caption = 'CLIENTE'
+        OnClick = CLIENTE1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object CATEGORIA1: TMenuItem
+        Caption = 'CATEGORIA'
+        OnClick = CATEGORIA1Click
+      end
+      object PRODUTO1: TMenuItem
+        Caption = 'PRODUTO'
+        OnClick = PRODUTO1Click
+      end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object USURIO1: TMenuItem
+        Caption = 'USU'#193'RIO'
+        OnClick = USURIO1Click
+      end
+      object AOACESSO1: TMenuItem
+        Caption = 'A'#199#195'O ACESSO'
+        OnClick = AOACESSO1Click
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object USURIOSVSAES1: TMenuItem
+        Caption = 'USU'#193'RIOS VS A'#199#213'ES'
+        OnClick = USURIOSVSAES1Click
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object ALTERARSENHA1: TMenuItem
+        Caption = 'ALTERAR SENHA'
+        OnClick = ALTERARSENHA1Click
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object ROCARUSURIO1: TMenuItem
+        Caption = 'TROCAR USU'#193'RIO'
+        OnClick = ROCARUSURIO1Click
+      end
+      object mnuFechar: TMenuItem
+        Caption = 'FECHAR'
+        OnClick = mnuFecharClick
+      end
+    end
+    object MOVIMENTAO1: TMenuItem
+      Caption = 'MOVIMENTA'#199#195'O'
+      object VENDAS1: TMenuItem
+        Caption = 'VENDAS'
+        OnClick = VENDAS1Click
+      end
+    end
+    object RELATRIOS1: TMenuItem
+      Caption = 'RELAT'#211'RIOS'
+      object CATEGORIA2: TMenuItem
+        Caption = 'CATEGORIA'
+        OnClick = CATEGORIA2Click
+      end
+      object CLIENTE2: TMenuItem
+        Caption = 'CLIENTE'
+        OnClick = CLIENTE2Click
+      end
+      object FICHADECLIENTE1: TMenuItem
+        Caption = 'FICHA DE CLIENTE'
+        OnClick = FICHADECLIENTE1Click
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object PRODUTO2: TMenuItem
+        Caption = 'PRODUTO'
+        OnClick = PRODUTO2Click
+      end
+      object PRODUTOPORCATEGORIA1: TMenuItem
+        Caption = 'PRODUTOS POR CATEGORIA'
+        OnClick = PRODUTOPORCATEGORIA1Click
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object VENDAPORDATA1: TMenuItem
+        Caption = 'VENDA POR DATA'
+        OnClick = VENDAPORDATA1Click
+      end
+    end
   end
   object ImageList1: TImageList
     ColorDepth = cd32Bit

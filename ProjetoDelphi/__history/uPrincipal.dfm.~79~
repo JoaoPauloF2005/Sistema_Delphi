@@ -15,6 +15,7 @@ object frmPrincipal: TfrmPrincipal
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
+  OnPaint = FormPaint
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -33,21 +34,18 @@ object frmPrincipal: TfrmPrincipal
   object Panel1: TPanel
     Left = 0
     Top = 41
-    Width = 221
+    Width = 200
     Height = 603
     Align = alLeft
-    BevelInner = bvSpace
-    BevelKind = bkFlat
-    BevelOuter = bvNone
-    BiDiMode = bdLeftToRight
-    ParentBiDiMode = False
     TabOrder = 1
+    ExplicitTop = 0
+    ExplicitHeight = 626
     object TreeView1: TTreeView
       Left = 1
       Top = 1
-      Width = 239
-      Height = 597
-      Align = alLeft
+      Width = 198
+      Height = 601
+      Align = alClient
       BevelInner = bvNone
       BiDiMode = bdLeftToRight
       BorderStyle = bsNone
@@ -109,6 +107,8 @@ object frmPrincipal: TfrmPrincipal
         00730020005600530020004100E700F500650073003800000000000000000000
         00FFFFFFFFFFFFFFFF000000000000000000000000010D41006C007400650072
         00610072002000530065006E0068006100}
+      ExplicitWidth = 200
+      ExplicitHeight = 622
     end
   end
   object Panel2: TPanel

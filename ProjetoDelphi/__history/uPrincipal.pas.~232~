@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
   Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport, Vcl.ExtCtrls, Vcl.StdCtrls, VclTee.TeeGDIPlus,
   Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
-  VCLTee.Series;
+  VCLTee.Series, System.ImageList, Vcl.ImgList;
 
 
 type
@@ -41,10 +41,8 @@ type
     N7: TMenuItem;
     ROCARUSURIO1: TMenuItem;
     Panel1: TPanel;
-    Label1: TLabel;
-    GridPanel1: TGridPanel;
-    DBChart1: TDBChart;
-    Series1: TBarSeries;
+    TreeView1: TTreeView;
+    ImageList1: TImageList;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -64,6 +62,7 @@ type
     procedure AOACESSO1Click(Sender: TObject);
     procedure USURIOSVSAES1Click(Sender: TObject);
     procedure ROCARUSURIO1Click(Sender: TObject);
+    procedure TreeView1DblClick(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -138,6 +137,67 @@ begin
 
   // Atualize a barra de status para refletir a troca de usuário
   StbPrincipal.Panels[0].Text := 'USUÁRIO: Não Logado';
+end;
+
+procedure TfrmPrincipal.TreeView1DblClick(Sender: TObject);
+begin
+  if Assigned(TreeView1.Selected) then
+  begin
+    // Verifique o texto do nó selecionado para abrir o formulário ou o relatório correspondente
+    if TreeView1.Selected.Text = 'Cadastro de Clientes' then
+    begin
+      CriarForm(TfrmCadCliente);
+    end
+    else if TreeView1.Selected.Text = 'Cadastro de Categorias' then
+    begin
+      CriarForm(TfrmCadCategoria);
+    end
+    else if TreeView1.Selected.Text = 'Cadastro de Produtos' then
+    begin
+      CriarForm(TfrmCadProduto);
+    end
+    else if TreeView1.Selected.Text = 'Cadastro de Usuários' then
+    begin
+      CriarForm(TfrmCadUsuario);
+    end
+    else if TreeView1.Selected.Text = 'Ação Acesso' then
+    begin
+      CriarForm(TfrmCadAcaoAcesso);
+    end
+    else if TreeView1.Selected.Text = 'Usuários VS Ações' then
+    begin
+      CriarForm(TfrmUsuarioVsAcoes);
+    end
+    else if TreeView1.Selected.Text = 'Alterar Senha' then
+    begin
+      CriarForm(TfrmAlterarSenha);
+    end
+    else if TreeView1.Selected.Text = 'Relatório de Categorias' then
+    begin
+      CriarRelatorio(TfrmRelCadCategoria);
+    end
+    else if TreeView1.Selected.Text = 'Relatório de Clientes' then
+    begin
+      CriarRelatorio(TfrmRelCadCliente);
+    end
+    else if TreeView1.Selected.Text = 'Relatório de Ficha de Clientes' then
+    begin
+      CriarRelatorio(TfrmRelCadClienteFicha);
+    end
+    else if TreeView1.Selected.Text = 'Relatório de Produtos' then
+    begin
+      CriarRelatorio(TfrmRelCadProduto);
+    end
+    else if TreeView1.Selected.Text = 'Relatório de Produtos por Categorias' then
+    begin
+      CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
+    end
+    else if TreeView1.Selected.Text = 'Relatório de Venda por Data' then
+    begin
+      CriarRelatorio(TfrmRelVendaPorData);
+    end;
+    // Continue com outros subitens conforme necessário
+  end;
 end;
 
 procedure TfrmPrincipal.USURIO1Click(Sender: TObject);
@@ -231,7 +291,7 @@ begin
       TArquivoIni.AtualizarIni('SERVER', 'Port', '1433');
       TArquivoIni.AtualizarIni('SERVER', 'User', 'sa');
       TArquivoIni.AtualizarIni('SERVER', 'Password', 'mudar@123');
-      TArquivoIni.AtualizarIni('SERVER', 'Database', 'dbVendaTeste');
+      TArquivoIni.AtualizarIni('SERVER', 'Database', 'vendas');
       MessageDlg('Arquivo '+ TArquivoIni.ArquivoIni +' Criado com sucesso' +#13+
                  'Configure o arquivo antes de inicializar aplicação',MtInformation,[mbok],0);
 
@@ -282,7 +342,7 @@ begin
       TeclaEnter := TMREnter.Create(Self);
       TeclaEnter.FocusEnabled := true;
       TeclaEnter.FocusColor := clInfoBk;
-    end
+    end;
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);

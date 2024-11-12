@@ -33,20 +33,15 @@ object frmPrincipal: TfrmPrincipal
   object Panel1: TPanel
     Left = 0
     Top = 41
-    Width = 221
+    Width = 240
     Height = 603
     Align = alLeft
-    BevelInner = bvSpace
-    BevelKind = bkFlat
-    BevelOuter = bvNone
-    BiDiMode = bdLeftToRight
-    ParentBiDiMode = False
     TabOrder = 1
     object TreeView1: TTreeView
       Left = 1
       Top = 1
       Width = 239
-      Height = 597
+      Height = 601
       Align = alLeft
       BevelInner = bvNone
       BiDiMode = bdLeftToRight
