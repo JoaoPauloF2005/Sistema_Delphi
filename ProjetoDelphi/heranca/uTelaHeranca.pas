@@ -33,7 +33,6 @@ type
     btnFecharPanel: TSpeedButton;
     btnExportarHTML: TButton;
     btnExportarCSV: TButton;
-    btnCopiar: TButton;
     PrintDialog: TPrintDialog;
     SaveDialog: TSaveDialog;
     btnImprimir: TButton; // R�tulo para exibir o �ndice atual
@@ -61,7 +60,6 @@ type
     procedure btnImprimirClick(Sender: TObject);
     procedure btnExportarHTMLClick(Sender: TObject);
     procedure btnExportarCSVClick(Sender: TObject);
-    procedure btnCopiarClick(Sender: TObject);
   private
 
     // Vari�veis e m�todos privados
@@ -80,7 +78,6 @@ type
     procedure ExportarParaHTML(DBGrid: TDBGrid; const FileName: string);
     procedure ExportarParaCSV(DBGrid: TDBGrid; const FileName: string);
     procedure ExportarParaTexto(DBGrid: TDBGrid; const FileName: string);
-    procedure CopiarParaClipboard;
     procedure ImprimirDBGrid(DBGrid: TDBGrid; OrientacaoPaisagem: Boolean);
 
   public
@@ -375,13 +372,6 @@ end;
 procedure TfrmTelaHeranca.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
 	BloqueiaCTRL_DEL_DBGrid(Key, Shift);
-
-   // Verifica se Ctrl + C foi pressionado
-  if (Shift = [ssCtrl]) and (Key = Ord('C')) then
-  begin
-    CopiarParaClipboard;
-    Key := 0; // Evita qualquer ação adicional após o atalho ser capturado
-  end;
 end;
 
 // A��o executada quando o formul�rio � mostrado
@@ -609,70 +599,10 @@ begin
   end;
 end;
 
-
 procedure TfrmTelaHeranca.btnExcelClick(Sender: TObject);
 begin
   // Chama a função de exportação passando o grid da tela atual
   ExportarDBGridParaExcel(grdListagem);
-end;
-
-procedure TfrmTelaHeranca.CopiarParaClipboard;
-var
-  i, j: Integer;
-  Linha: string;
-begin
-  if grdListagem.SelectedRows.Count > 0 then
-  begin
-    Linha := '';
-    // Cabeçalhos das colunas
-    for j := 0 to grdListagem.Columns.Count - 1 do
-    begin
-      Linha := Linha + grdListagem.Columns[j].Title.Caption + #9; // Tab para separar colunas
-    end;
-    Linha := Linha + sLineBreak;
-
-    // Dados das linhas selecionadas
-    grdListagem.DataSource.DataSet.DisableControls;
-    try
-      for i := 0 to grdListagem.SelectedRows.Count - 1 do
-      begin
-        grdListagem.DataSource.DataSet.GotoBookmark(grdListagem.SelectedRows.Items[i]);
-        for j := 0 to grdListagem.Columns.Count - 1 do
-        begin
-          Linha := Linha + grdListagem.Columns[j].Field.AsString + #9;
-        end;
-        Linha := Linha + sLineBreak;
-      end;
-    finally
-      grdListagem.DataSource.DataSet.EnableControls;
-    end;
-
-    Clipboard.AsText := Linha; // Copia o conteúdo para a área de transferência
-    ShowMessage('Conteúdo copiado para a área de transferência.');
-  end
-  else
-  begin
-    // Se nenhuma linha estiver selecionada, copie a linha atual
-    if not grdListagem.DataSource.DataSet.IsEmpty then
-    begin
-      Linha := '';
-      for j := 0 to grdListagem.Columns.Count - 1 do
-      begin
-        Linha := Linha + grdListagem.Columns[j].Title.Caption + #9;
-      end;
-      Linha := Linha + sLineBreak;
-
-      for j := 0 to grdListagem.Columns.Count - 1 do
-      begin
-        Linha := Linha + grdListagem.Columns[j].Field.AsString + #9;
-      end;
-
-      Clipboard.AsText := Linha;
-      ShowMessage('Linha atual copiada para a área de transferência.');
-    end
-    else
-      ShowMessage('Nenhuma linha disponível para copiar.');
-  end;
 end;
 
 procedure TfrmTelaHeranca.ImprimirDBGrid(DBGrid: TDBGrid; OrientacaoPaisagem: Boolean);
@@ -881,10 +811,6 @@ begin
   ShowMessage('Exportação para CSV concluída!');
 end;
 
-procedure TfrmTelaHeranca.btnCopiarClick(Sender: TObject);
-begin
-  CopiarParaClipboard;
-end;
 
 {$ENDREGION}
 

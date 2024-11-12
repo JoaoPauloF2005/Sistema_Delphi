@@ -119,26 +119,18 @@ inherited frmCadCliente: TfrmCadCliente
       inherited pExportar: TPanel
         Left = 310
         Top = 84
-        Height = 295
         ExplicitLeft = 310
         ExplicitTop = 84
-        ExplicitHeight = 295
         inherited btnExcel: TButton
           Width = 170
           Height = 36
           ExplicitWidth = 170
           ExplicitHeight = 36
         end
-        inherited Panel5: TPanel
-          ExplicitWidth = 182
-        end
         inherited btnExportarHTML: TButton
           ImageIndex = 2
         end
         inherited btnExportarCSV: TButton
-          ImageIndex = 2
-        end
-        inherited btnCopiar: TButton
           ImageIndex = 2
         end
         inherited btnImprimir: TButton

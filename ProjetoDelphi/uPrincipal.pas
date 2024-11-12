@@ -134,6 +134,10 @@ begin
     begin
       CriarForm(TfrmCadUsuario);
     end
+    else if TreeView1.Selected.Text = 'Vendas' then
+    begin
+      CriarForm(TfrmProVenda);
+    end
     else if TreeView1.Selected.Text = 'Ação Acesso' then
     begin
       CriarForm(TfrmCadAcaoAcesso);
@@ -162,15 +166,39 @@ begin
     begin
       CriarRelatorio(TfrmRelCadProduto);
     end
-    else if TreeView1.Selected.Text = 'Relatório de Produtos por Categorias' then
+    else if TreeView1.Selected.Text = 'Relatório de Produtos por Categoria' then
     begin
       CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
     end
     else if TreeView1.Selected.Text = 'Relatório de Venda por Data' then
     begin
-      CriarRelatorio(TfrmRelVendaPorData);
+    Try
+    // Abre o formulário de seleção de data
+    frmSelecionarData := TfrmSelecionarData.Create(Self);
+
+    // Exibe o formulário para selecionar as datas
+    if frmSelecionarData.ShowModal = mrOk then
+    begin
+      // Abre o relatório com as datas selecionadas
+      frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+      Try
+        frmRelVendaPorData.QryVenda.Close;
+        frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
+        frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
+        frmRelVendaPorData.QryVenda.Open;
+
+        // Exibe o relatório em modo de visualização
+        frmRelVendaPorData.Relatorio.PreviewModal;
+      Finally
+        frmRelVendaPorData.Release;
+      End;
     end;
-    // Continue com outros subitens conforme necessário
+
+    Finally
+      frmSelecionarData.Release;
+    End;
+end;
+
   end;
 end;
 

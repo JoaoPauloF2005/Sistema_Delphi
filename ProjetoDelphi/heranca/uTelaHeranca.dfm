@@ -69,7 +69,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         Left = 316
         Top = 147
         Width = 184
-        Height = 258
+        Height = 215
         Color = 15395049
         ParentBackground = False
         TabOrder = 1
@@ -164,18 +164,6 @@ object frmTelaHeranca: TfrmTelaHeranca
           TabOrder = 3
           OnClick = btnExportarCSVClick
         end
-        object btnCopiar: TButton
-          Left = 9
-          Top = 204
-          Width = 169
-          Height = 36
-          Caption = 'Ctrl + C'
-          ImageIndex = 3
-          ImageMargins.Left = 10
-          Images = ImageList1
-          TabOrder = 4
-          OnClick = btnCopiarClick
-        end
         object btnImprimir: TButton
           Left = 9
           Top = 77
@@ -185,7 +173,7 @@ object frmTelaHeranca: TfrmTelaHeranca
           ImageIndex = 2
           ImageMargins.Left = 10
           Images = ImageList1
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnImprimirClick
         end
       end

@@ -22,6 +22,8 @@ type
     procedure btnAlterarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
     procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -113,6 +115,13 @@ begin
  	Result := oAcaoAcesso.Inserir
  else if EstadoDoCadastro = ecAlterar then
  	Result := oAcaoAcesso.Atualizar;
+end;
+
+procedure TfrmCadAcaoAcesso.grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+   inherited grdListagemDrawColumnCell(Sender, Rect, DataCol, Column, State);
+
 end;
 
 procedure TfrmCadAcaoAcesso.grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

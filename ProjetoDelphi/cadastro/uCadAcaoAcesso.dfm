@@ -1,14 +1,14 @@
 inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   Caption = 'Cadastro de A'#231#227'o de Acesso'
   ClientHeight = 437
-  ClientWidth = 731
+  ClientWidth = 853
   Position = poScreenCenter
-  ExplicitWidth = 737
+  ExplicitWidth = 859
   ExplicitHeight = 466
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 601
+    Width = 723
     Height = 382
     ExplicitWidth = 601
     ExplicitHeight = 382
@@ -16,10 +16,9 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       ExplicitWidth = 593
       ExplicitHeight = 354
       inherited grdListagem: TDBGrid
-        Width = 612
+        Width = 712
         Height = 354
         DataSource = dtsListagem
-        OnDrawColumnCell = nil
         Columns = <
           item
             Alignment = taCenter
@@ -96,12 +95,12 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   end
   inherited pnlRodape: TPanel
     Top = 382
-    Width = 731
+    Width = 853
     ExplicitTop = 382
     ExplicitWidth = 731
   end
   inherited Panel2: TPanel
-    Left = 601
+    Left = 723
     Height = 382
     ExplicitLeft = 601
     ExplicitHeight = 382
@@ -118,8 +117,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       '       descricao,'
       '       chave'
       '  FROM acaoAcesso')
-    Left = 402
-    Top = 148
+    Left = 478
+    Top = 137
     object QryListagemacaoAcessoId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'acaoAcessoId'
@@ -145,6 +144,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   inherited ImageList1: TImageList
     Height = 32
     Width = 32
+    Left = 693
+    Top = 176
     Bitmap = {
       494C010102000500040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
@@ -680,5 +681,13 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
+  end
+  inherited PrintDialog: TPrintDialog
+    Left = 633
+    Top = 182
+  end
+  inherited SaveDialog: TSaveDialog
+    Left = 668
+    Top = 236
   end
 end
