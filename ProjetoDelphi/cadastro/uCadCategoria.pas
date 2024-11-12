@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset,
   ZDataset, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.ComCtrls, cCadCategoria, uDTMConexao, uEnum, Vcl.DBCtrls, System.ImageList, Vcl.ImgList;
+  Vcl.ComCtrls, cCadCategoria, uDTMConexao, uEnum, Vcl.DBCtrls, System.ImageList, Vcl.ImgList, uRelCategoria;
 
 type
   // Declaração do formulário TfrmCadCategoria, que herda de TfrmTelaHeranca
@@ -22,6 +22,7 @@ type
     procedure btnAlterarClick(Sender : TObject);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure btnImprimirClick(Sender: TObject);
 
   private
     { Declarações privadas }
@@ -90,6 +91,35 @@ begin
 end;
 
 
+
+procedure TfrmCadCategoria.btnImprimirClick(Sender: TObject);
+var
+  Relatorio: TfrmRelCadCategoria;
+begin
+  // Cria o formulário do relatório
+  Relatorio := TfrmRelCadCategoria.Create(nil);
+  try
+    // Abre a conexão com os dados do cliente
+    Relatorio.QryCategorias.Open;
+
+    // Prepara o relatório para impressão
+    if Relatorio.Relatorio.Prepare then
+    begin
+      // Exibe a caixa de diálogo de impressão e imprime o relatório
+      Relatorio.Relatorio.Print;
+    end
+    else
+    begin
+      ShowMessage('Falha ao preparar o relatório.');
+    end;
+
+  finally
+    // Fecha a conexão com os dados e libera o formulário
+    Relatorio.QryCategorias.Close;
+    Relatorio.Free;
+  end;
+
+end;
 
 procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action : TCloseAction);
 begin

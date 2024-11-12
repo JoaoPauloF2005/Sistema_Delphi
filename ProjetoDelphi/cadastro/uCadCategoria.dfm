@@ -43,15 +43,9 @@ inherited frmCadCategoria: TfrmCadCategoria
         Top = 84
         ExplicitLeft = 263
         ExplicitTop = 84
-        inherited Panel5: TPanel
-          ExplicitLeft = 1
-          ExplicitTop = 1
-        end
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 750
       ExplicitHeight = 403
       object edtDescricao: TLabeledEdit

@@ -341,21 +341,18 @@ inherited frmProVenda: TfrmProVenda
               Alignment = taCenter
               Expanded = False
               FieldName = 'quantidade'
-              Width = 64
               Visible = True
             end
             item
               Alignment = taCenter
               Expanded = False
               FieldName = 'valorUnitario'
-              Width = 64
               Visible = True
             end
             item
               Alignment = taCenter
               Expanded = False
               FieldName = 'valorTotalProduto'
-              Width = 64
               Visible = True
             end>
         end

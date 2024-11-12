@@ -7,7 +7,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.Grids, Vcl.DBGrids,
   Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uCadCategoria, System.ImageList, Vcl.ImgList;
+  RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uCadCategoria, System.ImageList, Vcl.ImgList, uRelCadProduto;
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)
@@ -50,6 +50,7 @@ type
     procedure btnCarregarImagemClick(Sender: TObject);
     procedure btnRemoverImagemClick(Sender: TObject);
     procedure QryListagemAfterScroll(DataSet: TDataSet);
+    procedure btnImprimirClick(Sender: TObject);
   private
     { Private declarations }
     oProduto: TProduto;
@@ -184,6 +185,35 @@ begin
   finally
     OpenDialog.Free;
   end;
+end;
+
+procedure TfrmCadProduto.btnImprimirClick(Sender: TObject);
+var
+  Relatorio: TfrmRelCadProduto;
+begin
+  // Cria o formulário do relatório
+  Relatorio := TfrmRelCadProduto.Create(nil);
+  try
+    // Abre a conexão com os dados do cliente
+    Relatorio.QryProdutos.Open;
+
+    // Prepara o relatório para impressão
+    if Relatorio.Relatorio.Prepare then
+    begin
+      // Exibe a caixa de diálogo de impressão e imprime o relatório
+      Relatorio.Relatorio.Print;
+    end
+    else
+    begin
+      ShowMessage('Falha ao preparar o relatório.');
+    end;
+
+  finally
+    // Fecha a conexão com os dados e libera o formulário
+    Relatorio.QryProdutos.Close;
+    Relatorio.Free;
+  end;
+
 end;
 
 procedure TfrmCadProduto.btnRemoverImagemClick(Sender: TObject);

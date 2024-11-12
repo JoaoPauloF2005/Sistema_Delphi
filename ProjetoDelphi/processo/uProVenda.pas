@@ -49,6 +49,7 @@ type
     procedure dbGridItensVendaDblClick(Sender: TObject);
     procedure dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure btnImprimirClick(Sender: TObject);
   private
     { Private declarations }
   	dtmVenda: TdtmVenda;
@@ -215,6 +216,40 @@ begin
   inherited;
 	LimparCds;
 end;
+
+procedure TfrmProVenda.btnImprimirClick(Sender: TObject);
+var
+  Relatorio: TfrmRelProVenda;
+begin
+  // Cria o formulário do relatório
+  Relatorio := TfrmRelProVenda.Create(nil);
+  try
+    // Configura a consulta do cliente e dos itens de venda
+    Relatorio.QryVenda.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+    Relatorio.QryVenda.Open;
+
+    Relatorio.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+    Relatorio.QryVendasItens.Open;
+
+    // Prepara o relatório para impressão
+    if Relatorio.Relatorio.Prepare then
+    begin
+      // Exibe a caixa de diálogo de impressão e imprime o relatório
+      Relatorio.Relatorio.Print;
+    end
+    else
+    begin
+      ShowMessage('Falha ao preparar o relatório.');
+    end;
+
+  finally
+    // Fecha a consulta com os dados e libera o formulário
+    Relatorio.QryVenda.Close;
+    Relatorio.QryVendasItens.Close;
+    Relatorio.Free;
+  end;
+end;
+
 
 procedure TfrmProVenda.btnNovoClick(Sender: TObject);
 begin

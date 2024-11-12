@@ -229,19 +229,24 @@ begin
     // Abre a conexão com os dados do cliente
     Relatorio.QryCliente.Open;
 
-    // Exibe a pré-visualização do relatório
-    Relatorio.Relatorio.PreviewModal;
-
-    // Ou, para imprimir diretamente sem pré-visualização, use:
-    // Relatorio.Relatorio.Print;
+    // Prepara o relatório para impressão
+    if Relatorio.Relatorio.Prepare then
+    begin
+      // Exibe a caixa de diálogo de impressão e imprime o relatório
+      Relatorio.Relatorio.Print;
+    end
+    else
+    begin
+      ShowMessage('Falha ao preparar o relatório.');
+    end;
 
   finally
     // Fecha a conexão com os dados e libera o formulário
     Relatorio.QryCliente.Close;
     Relatorio.Free;
   end;
-
 end;
+
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
