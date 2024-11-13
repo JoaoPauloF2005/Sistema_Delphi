@@ -62,7 +62,7 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico, uRelProVenda;
 {$R *.dfm}
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
@@ -179,34 +179,39 @@ begin
     begin
       CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
     end
+
     else if TreeView1.Selected.Text = 'Relatório de Venda por Data' then
     begin
-    Try
-    // Abre o formulário de seleção de data
-    frmSelecionarData := TfrmSelecionarData.Create(Self);
-
-    // Exibe o formulário para selecionar as datas
-    if frmSelecionarData.ShowModal = mrOk then
-    begin
-      // Abre o relatório com as datas selecionadas
-      frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
       Try
-        frmRelVendaPorData.QryVenda.Close;
-        frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
-        frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
-        frmRelVendaPorData.QryVenda.Open;
+      // Abre o formulário de seleção de data
+      frmSelecionarData := TfrmSelecionarData.Create(Self);
 
-        // Exibe o relatório em modo de visualização
-        frmRelVendaPorData.Relatorio.PreviewModal;
+      // Exibe o formulário para selecionar as datas
+      if frmSelecionarData.ShowModal = mrOk then
+      begin
+        // Abre o relatório com as datas selecionadas
+        frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+        Try
+          frmRelVendaPorData.QryVenda.Close;
+          frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
+          frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
+          frmRelVendaPorData.QryVenda.Open;
+
+          // Exibe o relatório em modo de visualização
+          frmRelVendaPorData.Relatorio.PreviewModal;
+        Finally
+          frmRelVendaPorData.Release;
+        End;
+      end;
+
       Finally
-        frmRelVendaPorData.Release;
+        frmSelecionarData.Release;
       End;
-    end;
-
-    Finally
-      frmSelecionarData.Release;
-    End;
-end;
+    end
+   else if TreeView1.Selected.Text = 'Relatório de Vendas' then
+    begin
+      CriarRelatorio(TfrmRelProVenda);
+    end
 
   end;
 end;
@@ -363,6 +368,7 @@ begin
       TAcaoAcesso.CriarAcoes(TfrmRelCadCliente,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadProdutoComGrupoCategoria,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelProVenda,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmUsuarioVsAcoes, dtmPrincipal.ConexaoDB);
 

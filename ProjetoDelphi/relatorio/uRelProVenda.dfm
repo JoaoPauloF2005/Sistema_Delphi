@@ -437,7 +437,6 @@
   end
   object QryVenda: TZQuery
     Connection = dtmPrincipal.ConexaoDB
-    Active = True
     SQL.Strings = (
       'SELECT vendas.vendaId,'
       '       vendas.clienteId,'
@@ -456,7 +455,7 @@
         ParamType = ptInput
         Value = 20
       end>
-    Left = 403
+    Left = 404
     Top = 350
     ParamData = <
       item
@@ -508,7 +507,6 @@
   end
   object QryVendasItens: TZQuery
     Connection = dtmPrincipal.ConexaoDB
-    Active = True
     SQL.Strings = (
       'SELECT vendasItens.vendaId,'
       '       vendasItens.produtoId,'
@@ -529,6 +527,7 @@
         ParamType = ptInput
         Value = 20
       end>
+    DataSource = dtsVenda
     Left = 606
     Top = 358
     ParamData = <

@@ -117,9 +117,6 @@ begin
   frmRelProVenda.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
   frmRelProVenda.QryVendasItens.Open;
 
-	frmRelProVenda.Relatorio.PreviewModal;
-  frmRelProVenda.Release;
-
   Result := true;
 end;
 
@@ -326,39 +323,30 @@ begin
 end;
 
 procedure TfrmProVenda.btnImprimirClick(Sender: TObject);
+var
+  Relatorio: TfrmRelProVenda;
 begin
-  inherited;
-
-  // Configura a consulta no TZQuery
-  QryRelatorio.Close;
-  QryRelatorio.SQL.Text :=
-    'SELECT c.nome AS NomeCliente, ' +
-    '       v.dataVenda AS DataVenda, ' +
-    '       v.totalVenda AS TotalVenda, ' +
-    '       p.nome AS NomeProduto, ' +
-    '       vi.valorUnitario AS ValorUnitario, ' +
-    '       vi.quantidade AS Quantidade, ' +
-    '       vi.totalProduto AS TotalProduto ' +
-    'FROM vendas v ' +
-    'INNER JOIN clientes c ON c.clienteId = v.clienteId ' +
-    'INNER JOIN vendasItens vi ON vi.vendaId = v.vendaId ' +
-    'INNER JOIN produtos p ON p.produtoId = vi.produtoId ' +
-    'WHERE v.vendaId = :VendaId';
-
-  // Configura o parâmetro da consulta
-  QryRelatorio.ParamByName('VendaId').AsInteger := oVenda.VendaId;
-
-  // Abre a consulta para carregar os dados
-  QryRelatorio.Open;
-
-  // Exibe o relatório
-  // (Aqui você deve configurar o relatório para usar o QryRelatorio como fonte de dados)
-  frmRelProVenda := TfrmRelProVenda.Create(Self);
+  Relatorio := TfrmRelProVenda.Create(nil);
   try
-    frmRelProVenda.Relatorio.Prepare;
-    frmRelProVenda.Relatorio.PreviewModal;
+    Relatorio.QryVenda.Close;
+    Relatorio.QryVenda.Open;
+
+    if Relatorio.Relatorio.Prepare then
+    begin
+      Relatorio.Relatorio.Preview;
+
+      if MessageDlg('Deseja imprimir este relatório?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        Relatorio.Relatorio.Print;
+      end;
+    end
+    else
+    begin
+      ShowMessage('Falha ao preparar o relatório. Verifique os dados e tente novamente.');
+    end;
   finally
-    frmRelProVenda.Free;
+    Relatorio.QryVenda.Close;
+    Relatorio.Free;
   end;
 end;
 

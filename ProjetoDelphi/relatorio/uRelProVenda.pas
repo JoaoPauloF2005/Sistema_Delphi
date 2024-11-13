@@ -84,6 +84,7 @@ implementation
 procedure TfrmRelProVenda.FormCreate(Sender: TObject);
 begin
 	QryVenda.Open;
+
 end;
 
 procedure TfrmRelProVenda.FormDestroy(Sender: TObject);
