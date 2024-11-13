@@ -224,18 +224,18 @@ begin
   // Cria o formulário do relatório
   Relatorio := TfrmRelProVenda.Create(nil);
   try
-    // Configura a consulta do cliente e dos itens de venda
+    // Define o parâmetro para a venda específica
     Relatorio.QryVenda.ParamByName('VendaId').AsInteger := oVenda.VendaId;
     Relatorio.QryVenda.Open;
 
     Relatorio.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
     Relatorio.QryVendasItens.Open;
 
-    // Prepara o relatório para impressão
+    // Prepara o relatório para visualização e impressão
     if Relatorio.Relatorio.Prepare then
     begin
-      // Exibe a caixa de diálogo de impressão e imprime o relatório
-      Relatorio.Relatorio.Print;
+      // Exibe uma pré-visualização do relatório com as informações do cliente e seus itens de compra
+      Relatorio.Relatorio.PreviewModal;
     end
     else
     begin
@@ -243,13 +243,12 @@ begin
     end;
 
   finally
-    // Fecha a consulta com os dados e libera o formulário
+    // Fecha as queries e libera o formulário de relatório
     Relatorio.QryVenda.Close;
     Relatorio.QryVendasItens.Close;
     Relatorio.Free;
   end;
 end;
-
 
 procedure TfrmProVenda.btnNovoClick(Sender: TObject);
 begin

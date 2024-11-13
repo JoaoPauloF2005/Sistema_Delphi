@@ -1,23 +1,24 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 479
+  ClientHeight = 487
   ClientWidth = 1004
   Position = poScreenCenter
   ExplicitWidth = 1010
-  ExplicitHeight = 508
+  ExplicitHeight = 516
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
     Width = 874
-    Height = 431
+    Height = 439
+    ActivePage = tabManutencao
     ExplicitWidth = 874
     ExplicitHeight = 431
     inherited tabListagem: TTabSheet
       ExplicitWidth = 866
-      ExplicitHeight = 403
+      ExplicitHeight = 415
       inherited grdListagem: TDBGrid
         Width = 1073
-        Height = 403
+        Height = 357
         Color = clWhite
         DataSource = dtsListagem
         FixedColor = clBlack
@@ -117,15 +118,19 @@ inherited frmCadCliente: TfrmCadCliente
           end>
       end
       inherited pExportar: TPanel
-        Left = 310
-        Top = 84
-        ExplicitLeft = 310
-        ExplicitTop = 84
+        Left = 326
+        Top = 111
+        ExplicitLeft = 326
+        ExplicitTop = 111
         inherited btnExcel: TButton
           Width = 170
           Height = 36
           ExplicitWidth = 170
           ExplicitHeight = 36
+        end
+        inherited Panel5: TPanel
+          ExplicitLeft = 3
+          ExplicitTop = 4
         end
         inherited btnExportarHTML: TButton
           ImageIndex = 2
@@ -136,6 +141,9 @@ inherited frmCadCliente: TfrmCadCliente
         inherited btnImprimir: TButton
           ImageIndex = 1
         end
+      end
+      inherited SearchBox1: TSearchBox
+        OnChange = SearchBox1Change
       end
     end
     inherited tabManutencao: TTabSheet
@@ -332,10 +340,10 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited pnlRodape: TPanel
-    Top = 431
+    Top = 439
     Width = 1004
     Height = 48
-    ExplicitTop = 431
+    ExplicitTop = 497
     ExplicitWidth = 1004
     ExplicitHeight = 48
     object Panel1: TPanel
@@ -595,17 +603,17 @@ inherited frmCadCliente: TfrmCadCliente
   end
   inherited Panel2: TPanel
     Left = 874
-    Height = 431
+    Height = 439
     ExplicitLeft = 874
     ExplicitHeight = 431
     DesignSize = (
       130
-      431)
+      439)
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 374
+      Top = 388
       ExplicitLeft = 12
-      ExplicitTop = 374
+      ExplicitTop = 388
     end
   end
   inherited QryListagem: TZQuery

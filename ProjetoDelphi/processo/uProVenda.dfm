@@ -10,9 +10,12 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 555
+    ActivePage = tabManutencao
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       inherited grdListagem: TDBGrid
@@ -61,6 +64,8 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       object Label4: TLabel
@@ -372,7 +377,6 @@ inherited frmProVenda: TfrmProVenda
     ExplicitHeight = 555
   end
   inherited QryListagem: TZQuery
-    Active = True
     SQL.Strings = (
       'SELECT vendas.vendaId'
       '       ,vendas.clienteId'

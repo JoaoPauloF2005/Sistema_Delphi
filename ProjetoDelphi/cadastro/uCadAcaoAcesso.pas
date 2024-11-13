@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cAcaoAcesso, uEnum, uDTMConexao,
-  System.ImageList, Vcl.ImgList, System.Win.ComObj, Vcl.OleAuto;
+  System.ImageList, Vcl.ImgList, System.Win.ComObj, Vcl.OleAuto, Vcl.WinXCtrls;
 
 type
   TfrmCadAcaoAcesso = class(TfrmTelaHeranca)
@@ -24,6 +24,7 @@ type
     procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure SearchBox1Change(Sender: TObject);
   private
     { Private declarations }
   public
@@ -131,5 +132,40 @@ begin
   // Isso impede que o atalho Ctrl + Shift + E ative o painel de exportação
 end;
 
+
+procedure TfrmCadAcaoAcesso.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT * FROM AcaoAcesso ' +
+      'WHERE descricao LIKE :SearchText ' +
+      'OR chave LIKE :SearchText ' +
+      'OR acaoAcessoId LIKE :SearchText ';
+
+
+    // Adiciona o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text := 'SELECT * FROM AcaoAcesso';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
+end;
 
 end.

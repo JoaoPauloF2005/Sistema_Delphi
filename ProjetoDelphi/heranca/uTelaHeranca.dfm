@@ -31,11 +31,11 @@ object frmTelaHeranca: TfrmTelaHeranca
       Caption = 'Listagem'
       object grdListagem: TDBGrid
         Left = 0
-        Top = 0
+        Top = 56
         Width = 892
-        Height = 532
+        Height = 476
         ParentCustomHint = False
-        Align = alLeft
+        Align = alCustom
         Color = clBtnFace
         DrawingStyle = gdsGradient
         FixedColor = clWhite
@@ -176,6 +176,13 @@ object frmTelaHeranca: TfrmTelaHeranca
           TabOrder = 4
           OnClick = btnImprimirClick
         end
+      end
+      object SearchBox1: TSearchBox
+        Left = 0
+        Top = 15
+        Width = 311
+        Height = 21
+        TabOrder = 2
       end
     end
     object tabManutencao: TTabSheet

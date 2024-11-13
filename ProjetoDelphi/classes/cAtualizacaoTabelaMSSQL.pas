@@ -112,6 +112,7 @@ begin
   end;
 end;
 
+
 procedure TAtualizacaoTabelaMSSQL.Cliente;
 begin
   if not TabelaExiste('clientes') then

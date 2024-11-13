@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset,
   ZDataset, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.ComCtrls, cCadCategoria, uDTMConexao, uEnum, Vcl.DBCtrls, System.ImageList, Vcl.ImgList, uRelCategoria;
+  Vcl.ComCtrls, cCadCategoria, uDTMConexao, uEnum, Vcl.DBCtrls, System.ImageList, Vcl.ImgList, uRelCategoria, Vcl.WinXCtrls;
 
 type
   // Declaração do formulário TfrmCadCategoria, que herda de TfrmTelaHeranca
@@ -23,6 +23,7 @@ type
     procedure grdListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure btnImprimirClick(Sender: TObject);
+    procedure SearchBox1Change(Sender: TObject);
 
   private
     { Declarações privadas }
@@ -74,7 +75,13 @@ begin
 
 end;
 
-{$ENDREGION}
+{procedure TfrmCadCategoria.SearchBox1Change(Sender: TObject);
+begin
+  inherited;
+
+end;
+
+$ENDREGION}
 
 procedure TfrmCadCategoria.btnAlterarClick(Sender : TObject);
 begin
@@ -140,6 +147,40 @@ begin
 
   // Define o índice padrão para listar categorias (baseado na descrição)
   IndiceAtual := 'descricao';
+end;
+
+procedure TfrmCadCategoria.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT * FROM Categorias ' +
+      'WHERE descricao LIKE :SearchText ' +
+      'OR categoriaId LIKE :SearchText ';
+
+
+    // Adiciona o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text := 'SELECT * FROM Categorias';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
 end;
 
 end.

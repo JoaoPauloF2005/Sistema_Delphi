@@ -7,8 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
   Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport, Vcl.ExtCtrls, Vcl.StdCtrls, VclTee.TeeGDIPlus,
   Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
-  VCLTee.Series, System.ImageList, Vcl.ImgList;
-
+  VCLTee.Series, System.ImageList, Vcl.ImgList, Vcl.Buttons;
 
 type
   TfrmPrincipal = class(TForm)
@@ -17,6 +16,7 @@ type
     TreeView1: TTreeView;
     ImageList1: TImageList;
     Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);

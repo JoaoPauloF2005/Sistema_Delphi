@@ -7,7 +7,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.DBCtrls, Vcl.Buttons, uDTMConexao, ZAbstractRODataset, ZAbstractDataset, ZDataset, uEnum, RxToolEdit, RxCurrEdit,
-  ZAbstractConnection, Printers, ZConnection, cArquivoIni, System.ImageList, Vcl.ImgList, Vcl.OleAuto, Clipbrd, Math, Vcl.Imaging.pngimage, System.IOUtils, Vcl.Imaging.jpeg;
+  ZAbstractConnection, Printers, ZConnection, cArquivoIni, System.ImageList, Vcl.ImgList, Vcl.OleAuto, Clipbrd, Math, Vcl.Imaging.pngimage, System.IOUtils, Vcl.Imaging.jpeg,
+  Vcl.WinXCtrls;
 
 type
   // Defini��o de uma classe de formul�rio chamada TfrmTelaHeranca
@@ -35,7 +36,8 @@ type
     btnExportarCSV: TButton;
     PrintDialog: TPrintDialog;
     SaveDialog: TSaveDialog;
-    btnImprimir: TButton; // R�tulo para exibir o �ndice atual
+    btnImprimir: TButton;
+    SearchBox1: TSearchBox; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);

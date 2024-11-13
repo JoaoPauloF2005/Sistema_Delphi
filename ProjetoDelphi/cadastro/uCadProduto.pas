@@ -7,7 +7,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.Grids, Vcl.DBGrids,
   Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uCadCategoria, System.ImageList, Vcl.ImgList, uRelCadProduto;
+  RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uCadCategoria, System.ImageList, Vcl.ImgList, uRelCadProduto, Vcl.WinXCtrls;
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)
@@ -51,6 +51,7 @@ type
     procedure btnRemoverImagemClick(Sender: TObject);
     procedure QryListagemAfterScroll(DataSet: TDataSet);
     procedure btnImprimirClick(Sender: TObject);
+    procedure SearchBox1Change(Sender: TObject);
   private
     { Private declarations }
     oProduto: TProduto;
@@ -131,6 +132,44 @@ begin
 end;
 
 
+procedure TfrmCadProduto.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT * FROM Produtos ' +
+      'WHERE nome LIKE :SearchText ' +
+      'OR descricaoCategoria LIKE :SearchText ' +
+      'OR valor LIKE :SearchText ' +
+      'OR quantidade LIKE :SearchText ' +
+      'OR produtoId LIKE :SearchText ' +
+      'OR categoriaId LIKE :SearchText ';
+
+
+    // Adiciona o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text := 'SELECT * FROM Produtos';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
+end;
+
 {$endregion}
 
 procedure TfrmCadProduto.btnAlterarClick(Sender: TObject);
@@ -170,7 +209,6 @@ begin
   inherited;
 end;
 
-
 procedure TfrmCadProduto.btnCarregarImagemClick(Sender: TObject);
 var
   OpenDialog: TOpenDialog;
@@ -186,6 +224,7 @@ begin
     OpenDialog.Free;
   end;
 end;
+
 
 procedure TfrmCadProduto.btnImprimirClick(Sender: TObject);
 var

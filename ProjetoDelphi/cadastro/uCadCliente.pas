@@ -7,7 +7,8 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,
-  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd, uRelCadCliente, Printers;
+  uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd, uRelCadCliente, Printers,
+  Vcl.WinXCtrls;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -62,6 +63,7 @@ type
       State: TGridDrawState);
     procedure QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure btnImprimirClick(Sender: TObject);
+    procedure SearchBox1Change(Sender: TObject);
 
   private
     oCliente: TCliente;
@@ -528,6 +530,49 @@ begin
   end
   else
     Text := ''; // Deixa vazio se não houver valor
+end;
+
+procedure TfrmCadCliente.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT * FROM Clientes ' +
+      'WHERE nome LIKE :SearchText ' +
+      'OR clienteId LIKE :SearchText ' +
+      'OR tipoPessoa LIKE :SearchText ' +
+      'OR cpfCnpj LIKE :SearchText ' +
+      'OR endereco LIKE :SearchText ' +
+      'OR cidade LIKE :SearchText ' +
+      'OR bairro LIKE :SearchText ' +
+      'OR estado LIKE :SearchText ' +
+      'OR cep LIKE :SearchText ' +
+      'OR telefone LIKE :SearchText ' +
+      'OR email LIKE :SearchText ' +
+      'OR status LIKE :SearchText';
+
+    // Adiciona o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text := 'SELECT * FROM Clientes';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
 end;
 
 function TfrmCadCliente.SomenteNumeros(const AValue: string): string;
