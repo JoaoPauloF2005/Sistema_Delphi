@@ -119,7 +119,7 @@ object frmPrincipal: TfrmPrincipal
     ParentBackground = False
     TabOrder = 2
     ExplicitTop = -3
-    object btnFechar: TSpeedButton
+    object SpeedButton1: TSpeedButton
       Left = 1062
       Top = 1
       Width = 39
@@ -259,7 +259,7 @@ object frmPrincipal: TfrmPrincipal
         0000000000000000000000000000000000000000000000000000000000000000
         000000000000}
       Transparent = False
-      OnClick = btnFecharClick
+      OnClick = SpeedButton1Click
       ExplicitLeft = 1053
       ExplicitTop = 5
       ExplicitHeight = 32

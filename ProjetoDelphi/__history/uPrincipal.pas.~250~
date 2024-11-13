@@ -7,8 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
   Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport, Vcl.ExtCtrls, Vcl.StdCtrls, VclTee.TeeGDIPlus,
   Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
-  VCLTee.Series, System.ImageList, Vcl.ImgList;
-
+  VCLTee.Series, System.ImageList, Vcl.ImgList, Vcl.Buttons;
 
 type
   TfrmPrincipal = class(TForm)
@@ -17,6 +16,7 @@ type
     TreeView1: TTreeView;
     ImageList1: TImageList;
     Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -166,14 +166,38 @@ begin
     begin
       CriarRelatorio(TfrmRelCadProduto);
     end
-    else if TreeView1.Selected.Text = 'Relatório de Produtos por Categorias' then
+    else if TreeView1.Selected.Text = 'Relatório de Produtos por Categoria' then
     begin
       CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
     end
     else if TreeView1.Selected.Text = 'Relatório de Venda por Data' then
     begin
-      CriarRelatorio(TfrmRelVendaPorData);
+    Try
+    // Abre o formulário de seleção de data
+    frmSelecionarData := TfrmSelecionarData.Create(Self);
+
+    // Exibe o formulário para selecionar as datas
+    if frmSelecionarData.ShowModal = mrOk then
+    begin
+      // Abre o relatório com as datas selecionadas
+      frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+      Try
+        frmRelVendaPorData.QryVenda.Close;
+        frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
+        frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
+        frmRelVendaPorData.QryVenda.Open;
+
+        // Exibe o relatório em modo de visualização
+        frmRelVendaPorData.Relatorio.PreviewModal;
+      Finally
+        frmRelVendaPorData.Release;
+      End;
     end;
+
+    Finally
+      frmSelecionarData.Release;
+    End;
+end;
 
   end;
 end;

@@ -16,7 +16,10 @@ type
     TreeView1: TTreeView;
     ImageList1: TImageList;
     Panel2: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnFechar: TSpeedButton;
+    btnVenda: TSpeedButton;
+    btnProduto: TSpeedButton;
+    btnCliente: TSpeedButton;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -37,6 +40,10 @@ type
     procedure USURIOSVSAES1Click(Sender: TObject);
     procedure ROCARUSURIO1Click(Sender: TObject);
     procedure TreeView1DblClick(Sender: TObject);
+    procedure btnClienteClick(Sender: TObject);
+    procedure btnProdutoClick(Sender: TObject);
+    procedure btnVendaClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -112,6 +119,8 @@ begin
   // Atualize a barra de status para refletir a troca de usuário
   StbPrincipal.Panels[0].Text := 'USUÁRIO: Não Logado';
 end;
+
+
 
 procedure TfrmPrincipal.TreeView1DblClick(Sender: TObject);
 begin
@@ -268,6 +277,26 @@ begin
     	FreeAndNil(oAtualizarMSSQL);
   end;
 
+end;
+
+procedure TfrmPrincipal.btnClienteClick(Sender: TObject);
+begin
+  CriarForm(TfrmCadCliente);
+end;
+
+procedure TfrmPrincipal.btnFecharClick(Sender: TObject);
+begin
+   Application.Terminate;
+end;
+
+procedure TfrmPrincipal.btnProdutoClick(Sender: TObject);
+begin
+  CriarForm(TfrmCadProduto);
+end;
+
+procedure TfrmPrincipal.btnVendaClick(Sender: TObject);
+begin
+ CriarForm(TfrmProVenda);
 end;
 
 procedure TfrmPrincipal.FICHADECLIENTE1Click(Sender: TObject);
