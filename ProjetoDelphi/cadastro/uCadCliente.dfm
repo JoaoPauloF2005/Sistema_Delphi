@@ -12,10 +12,10 @@ inherited frmCadCliente: TfrmCadCliente
     Height = 439
     ActivePage = tabManutencao
     ExplicitWidth = 874
-    ExplicitHeight = 431
+    ExplicitHeight = 439
     inherited tabListagem: TTabSheet
       ExplicitWidth = 866
-      ExplicitHeight = 415
+      ExplicitHeight = 411
       inherited grdListagem: TDBGrid
         Width = 1073
         Height = 357
@@ -128,10 +128,6 @@ inherited frmCadCliente: TfrmCadCliente
           ExplicitWidth = 170
           ExplicitHeight = 36
         end
-        inherited Panel5: TPanel
-          ExplicitLeft = 3
-          ExplicitTop = 4
-        end
         inherited btnExportarHTML: TButton
           ImageIndex = 2
         end
@@ -148,7 +144,7 @@ inherited frmCadCliente: TfrmCadCliente
     end
     inherited tabManutencao: TTabSheet
       ExplicitWidth = 866
-      ExplicitHeight = 403
+      ExplicitHeight = 411
       object Label1: TLabel
         Left = 309
         Top = 131
@@ -343,7 +339,7 @@ inherited frmCadCliente: TfrmCadCliente
     Top = 439
     Width = 1004
     Height = 48
-    ExplicitTop = 497
+    ExplicitTop = 439
     ExplicitWidth = 1004
     ExplicitHeight = 48
     object Panel1: TPanel
@@ -605,7 +601,7 @@ inherited frmCadCliente: TfrmCadCliente
     Left = 874
     Height = 439
     ExplicitLeft = 874
-    ExplicitHeight = 431
+    ExplicitHeight = 439
     DesignSize = (
       130
       439)

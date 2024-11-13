@@ -234,18 +234,24 @@ begin
   Relatorio := TfrmRelCadProduto.Create(nil);
   try
     // Abre a conexão com os dados do cliente
+    Relatorio.QryProdutos.Close;
     Relatorio.QryProdutos.Open;
 
     // Prepara o relatório para impressão
     if Relatorio.Relatorio.Prepare then
     begin
       // Exibe a caixa de diálogo de impressão e imprime o relatório
-      Relatorio.Relatorio.Print;
+      Relatorio.Relatorio.Preview;
+      if MessageDlg('Deseja imprimir este relatório?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        Relatorio.Relatorio.Print;
+      end;
     end
     else
     begin
-      ShowMessage('Falha ao preparar o relatório.');
+      ShowMessage('Falha ao preparar o relatório. Verifique os dados e tente novamente.');
     end;
+
 
   finally
     // Fecha a conexão com os dados e libera o formulário

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, uDTMConexao, uDTMVenda,
-  RxToolEdit, RxCurrEdit, uEnum, cProVenda, System.ImageList, Vcl.ImgList;
+  RxToolEdit, RxCurrEdit, uEnum, cProVenda, System.ImageList, Vcl.ImgList, Vcl.WinXCtrls;
 
 type
   TfrmProVenda = class(TfrmTelaHeranca)
@@ -34,6 +34,8 @@ type
     Label5: TLabel;
     Label6: TLabel;
     dbGridItensVenda: TDBGrid;
+    SearchBox2: TSearchBox;
+    QryRelatorio: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
@@ -50,6 +52,8 @@ type
     procedure dbGridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure btnImprimirClick(Sender: TObject);
+    procedure SearchBox2Change(Sender: TObject);
+    procedure SearchBox1Change(Sender: TObject);
   private
     { Private declarations }
   	dtmVenda: TdtmVenda;
@@ -129,6 +133,110 @@ begin
     edtTotalProduto.Value := TotalizarProduto(edtValorUnitario.Value, edtQuantidade.Value);
   end;
 end;
+
+procedure TfrmProVenda.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos necessários
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT vendas.vendaId, ' +
+      '       vendas.clienteId, ' +
+      '       clientes.nome, ' +
+      '       vendas.dataVenda, ' +
+      '       vendas.totalVenda ' +
+      'FROM vendas ' +
+      'INNER JOIN clientes ON clientes.clienteId = vendas.clienteId ' +
+      'WHERE clientes.nome LIKE :SearchText ' +
+      '   OR vendas.vendaId LIKE :SearchText ' +
+      '   OR vendas.dataVenda LIKE :SearchText ' +
+      '   OR vendas.totalVenda LIKE :SearchText ';
+
+    // Adiciona o parâmetro para evitar SQL Injection
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text :=
+      'SELECT vendas.vendaId, ' +
+      '       vendas.clienteId, ' +
+      '       clientes.nome, ' +
+      '       vendas.dataVenda, ' +
+      '       vendas.totalVenda ' +
+      'FROM vendas ' +
+      'INNER JOIN clientes ON clientes.clienteId = vendas.clienteId';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
+end;
+
+procedure TfrmProVenda.SearchBox2Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Fecha a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro nos campos de "VendasItens"
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT vendasItens.vendaId AS "Numero Venda", ' +
+      '       vendasItens.produtoId AS "Codigo Produto", ' +
+      '       produtos.nome AS "Nome Produto", ' +
+      '       vendasItens.valorUnitario AS "Valor Unitario", ' +
+      '       vendasItens.quantidade AS "Quantidade", ' +
+      '       vendasItens.totalProduto AS "Total Produto" ' +
+      'FROM vendasItens ' +
+      'INNER JOIN produtos ON produtos.produtoId = vendasItens.produtoId ' +
+      'WHERE produtos.nome LIKE :SearchText ' +
+      '   OR vendasItens.valorUnitario LIKE :SearchText ' +
+      '   OR vendasItens.quantidade LIKE :SearchText ' +
+      '   OR vendasItens.totalProduto LIKE :SearchText ' +
+      '   OR vendasItens.vendaId LIKE :SearchText ' +
+      '   OR vendasItens.produtoId LIKE :SearchText';
+
+    // Define o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text :=
+      'SELECT vendasItens.vendaId AS "Numero Venda", ' +
+      '       vendasItens.produtoId AS "Codigo Produto", ' +
+      '       produtos.nome AS "Nome Produto", ' +
+      '       vendasItens.valorUnitario AS "Valor Unitario", ' +
+      '       vendasItens.quantidade AS "Quantidade", ' +
+      '       vendasItens.totalProduto AS "Total Produto" ' +
+      'FROM vendasItens ' +
+      'INNER JOIN produtos ON produtos.produtoId = vendasItens.produtoId';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
+end;
+
+
+
+
 
 {$ENDREGION}
 
@@ -218,37 +326,42 @@ begin
 end;
 
 procedure TfrmProVenda.btnImprimirClick(Sender: TObject);
-var
-  Relatorio: TfrmRelProVenda;
 begin
-  // Cria o formulário do relatório
-  Relatorio := TfrmRelProVenda.Create(nil);
+  inherited;
+
+  // Configura a consulta no TZQuery
+  QryRelatorio.Close;
+  QryRelatorio.SQL.Text :=
+    'SELECT c.nome AS NomeCliente, ' +
+    '       v.dataVenda AS DataVenda, ' +
+    '       v.totalVenda AS TotalVenda, ' +
+    '       p.nome AS NomeProduto, ' +
+    '       vi.valorUnitario AS ValorUnitario, ' +
+    '       vi.quantidade AS Quantidade, ' +
+    '       vi.totalProduto AS TotalProduto ' +
+    'FROM vendas v ' +
+    'INNER JOIN clientes c ON c.clienteId = v.clienteId ' +
+    'INNER JOIN vendasItens vi ON vi.vendaId = v.vendaId ' +
+    'INNER JOIN produtos p ON p.produtoId = vi.produtoId ' +
+    'WHERE v.vendaId = :VendaId';
+
+  // Configura o parâmetro da consulta
+  QryRelatorio.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+
+  // Abre a consulta para carregar os dados
+  QryRelatorio.Open;
+
+  // Exibe o relatório
+  // (Aqui você deve configurar o relatório para usar o QryRelatorio como fonte de dados)
+  frmRelProVenda := TfrmRelProVenda.Create(Self);
   try
-    // Define o parâmetro para a venda específica
-    Relatorio.QryVenda.ParamByName('VendaId').AsInteger := oVenda.VendaId;
-    Relatorio.QryVenda.Open;
-
-    Relatorio.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
-    Relatorio.QryVendasItens.Open;
-
-    // Prepara o relatório para visualização e impressão
-    if Relatorio.Relatorio.Prepare then
-    begin
-      // Exibe uma pré-visualização do relatório com as informações do cliente e seus itens de compra
-      Relatorio.Relatorio.PreviewModal;
-    end
-    else
-    begin
-      ShowMessage('Falha ao preparar o relatório.');
-    end;
-
+    frmRelProVenda.Relatorio.Prepare;
+    frmRelProVenda.Relatorio.PreviewModal;
   finally
-    // Fecha as queries e libera o formulário de relatório
-    Relatorio.QryVenda.Close;
-    Relatorio.QryVendasItens.Close;
-    Relatorio.Free;
+    frmRelProVenda.Free;
   end;
 end;
+
 
 procedure TfrmProVenda.btnNovoClick(Sender: TObject);
 begin

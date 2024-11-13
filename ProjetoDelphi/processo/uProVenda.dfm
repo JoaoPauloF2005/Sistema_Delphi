@@ -10,7 +10,6 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 555
-    ActivePage = tabManutencao
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
@@ -61,6 +60,9 @@ inherited frmProVenda: TfrmProVenda
         Top = 195
         ExplicitLeft = 350
         ExplicitTop = 195
+      end
+      inherited SearchBox1: TSearchBox
+        OnChange = SearchBox1Change
       end
     end
     inherited tabManutencao: TTabSheet
@@ -305,9 +307,10 @@ inherited frmProVenda: TfrmProVenda
         end
         object dbGridItensVenda: TDBGrid
           Left = -2
-          Top = 56
+          Top = 89
           Width = 903
-          Height = 321
+          Height = 288
+          Align = alCustom
           Color = clBtnFace
           Ctl3D = True
           DataSource = dtmVenda.dtsItensVenda
@@ -346,20 +349,31 @@ inherited frmProVenda: TfrmProVenda
               Alignment = taCenter
               Expanded = False
               FieldName = 'quantidade'
+              Width = 64
               Visible = True
             end
             item
               Alignment = taCenter
               Expanded = False
               FieldName = 'valorUnitario'
+              Width = 64
               Visible = True
             end
             item
               Alignment = taCenter
               Expanded = False
               FieldName = 'valorTotalProduto'
+              Width = 64
               Visible = True
             end>
+        end
+        object SearchBox2: TSearchBox
+          Left = -2
+          Top = 62
+          Width = 311
+          Height = 21
+          TabOrder = 3
+          OnChange = SearchBox2Change
         end
       end
     end
@@ -418,5 +432,42 @@ inherited frmProVenda: TfrmProVenda
   inherited dtsListagem: TDataSource
     Left = 432
     Top = 11
+  end
+  object QryRelatorio: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'SELECT '
+      '    c.nome AS NomeCliente,'
+      '    v.dataVenda AS DataVenda,'
+      '    v.totalVenda AS TotalVenda,'
+      '    p.nome AS NomeProduto,'
+      '    vi.valorUnitario AS ValorUnitario,'
+      '    vi.quantidade AS Quantidade,'
+      '    vi.totalProduto AS TotalProduto'
+      'FROM '
+      '    vendas v'
+      'INNER JOIN '
+      '    clientes c ON c.clienteId = v.clienteId'
+      'INNER JOIN '
+      '    vendasItens vi ON vi.vendaId = v.vendaId'
+      'INNER JOIN '
+      '    produtos p ON p.produtoId = vi.produtoId'
+      'WHERE '
+      '    v.vendaId = :VendaId')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'VendaId'
+        ParamType = ptUnknown
+      end>
+    DataSource = dtmVenda.dtsCliente
+    Left = 777
+    Top = 399
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'VendaId'
+        ParamType = ptUnknown
+      end>
   end
 end
