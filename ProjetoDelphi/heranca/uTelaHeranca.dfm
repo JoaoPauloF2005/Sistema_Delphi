@@ -24,7 +24,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Top = 0
     Width = 900
     Height = 560
-    ActivePage = tabManutencao
+    ActivePage = tabListagem
     Align = alClient
     TabOrder = 0
     object tabListagem: TTabSheet
@@ -177,12 +177,24 @@ object frmTelaHeranca: TfrmTelaHeranca
           OnClick = btnImprimirClick
         end
       end
-      object SearchBox1: TSearchBox
+      object Panel6: TPanel
         Left = 0
-        Top = 15
-        Width = 311
-        Height = 21
+        Top = 0
+        Width = 892
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
         TabOrder = 2
+        ExplicitLeft = 354
+        ExplicitTop = 246
+        ExplicitWidth = 185
+        object SearchBox1: TSearchBox
+          Left = 0
+          Top = 15
+          Width = 311
+          Height = 21
+          TabOrder = 0
+        end
       end
     end
     object tabManutencao: TTabSheet

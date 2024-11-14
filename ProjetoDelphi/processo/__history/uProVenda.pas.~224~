@@ -35,6 +35,7 @@ type
     Label6: TLabel;
     dbGridItensVenda: TDBGrid;
     SearchBox2: TSearchBox;
+    QryRelatorio: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;
@@ -116,9 +117,6 @@ begin
   frmRelProVenda.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
   frmRelProVenda.QryVendasItens.Open;
 
-	frmRelProVenda.Relatorio.PreviewModal;
-  frmRelProVenda.Release;
-
   Result := true;
 end;
 
@@ -197,12 +195,12 @@ begin
   if SearchText <> '' then
   begin
     QryListagem.SQL.Text :=
-      'SELECT vendasItens.vendaId AS "Numero Venda"' +
-      '       vendasItens.produtoId AS "Codigo Produto" ' +
-      '       produtos.nome AS "Nome Produto" ' +
-      '       vendasItens.valorUnitario AS "Valor Unitario" ' +
-      '       vendasItens.quantidade AS "Quantidade" ' +
-      '        vendasItens.totalProduto AS "Total Produto" ' +
+      'SELECT vendasItens.vendaId AS "Numero Venda", ' +
+      '       vendasItens.produtoId AS "Codigo Produto", ' +
+      '       produtos.nome AS "Nome Produto", ' +
+      '       vendasItens.valorUnitario AS "Valor Unitario", ' +
+      '       vendasItens.quantidade AS "Quantidade", ' +
+      '       vendasItens.totalProduto AS "Total Produto" ' +
       'FROM vendasItens ' +
       'INNER JOIN produtos ON produtos.produtoId = vendasItens.produtoId ' +
       'WHERE produtos.nome LIKE :SearchText ' +
@@ -219,12 +217,12 @@ begin
   begin
     // Restaura o SQL original sem filtro
     QryListagem.SQL.Text :=
-      'SELECT vendasItens.vendaId AS CodVenda, ' +
-      '       vendasItens.produtoId AS CodProduto, ' +
-      '       produtos.nome AS NomeProduto, ' +
-      '       vendasItens.valorUnitario, ' +
-      '       vendasItens.quantidade, ' +
-      '       vendasItens.totalProduto ' +
+      'SELECT vendasItens.vendaId AS "Numero Venda", ' +
+      '       vendasItens.produtoId AS "Codigo Produto", ' +
+      '       produtos.nome AS "Nome Produto", ' +
+      '       vendasItens.valorUnitario AS "Valor Unitario", ' +
+      '       vendasItens.quantidade AS "Quantidade", ' +
+      '       vendasItens.totalProduto AS "Total Produto" ' +
       'FROM vendasItens ' +
       'INNER JOIN produtos ON produtos.produtoId = vendasItens.produtoId';
   end;
@@ -232,6 +230,7 @@ begin
   // Reabre a query para atualizar a grid
   QryListagem.Open;
 end;
+
 
 
 
@@ -327,34 +326,30 @@ procedure TfrmProVenda.btnImprimirClick(Sender: TObject);
 var
   Relatorio: TfrmRelProVenda;
 begin
-  // Cria o formulário do relatório
   Relatorio := TfrmRelProVenda.Create(nil);
   try
-    // Define o parâmetro para a venda específica
-    Relatorio.QryVenda.ParamByName('VendaId').AsInteger := oVenda.VendaId;
+    Relatorio.QryVenda.Close;
     Relatorio.QryVenda.Open;
 
-    Relatorio.QryVendasItens.ParamByName('VendaId').AsInteger := oVenda.VendaId;
-    Relatorio.QryVendasItens.Open;
-
-    // Prepara o relatório para visualização e impressão
     if Relatorio.Relatorio.Prepare then
     begin
-      // Exibe uma pré-visualização do relatório com as informações do cliente e seus itens de compra
-      Relatorio.Relatorio.PreviewModal;
+      Relatorio.Relatorio.Preview;
+
+      if MessageDlg('Deseja imprimir este relatório?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        Relatorio.Relatorio.Print;
+      end;
     end
     else
     begin
-      ShowMessage('Falha ao preparar o relatório.');
+      ShowMessage('Falha ao preparar o relatório. Verifique os dados e tente novamente.');
     end;
-
   finally
-    // Fecha as queries e libera o formulário de relatório
     Relatorio.QryVenda.Close;
-    Relatorio.QryVendasItens.Close;
     Relatorio.Free;
   end;
 end;
+
 
 procedure TfrmProVenda.btnNovoClick(Sender: TObject);
 begin

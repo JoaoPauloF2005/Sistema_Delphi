@@ -5,13 +5,10 @@
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 892
-      ExplicitHeight = 532
       inherited grdListagem: TDBGrid
-        Left = 3
-        Top = 42
+        Top = 41
+        Height = 491
+        Align = alClient
         DataSource = dtsListagem
         Columns = <
           item
@@ -38,12 +35,13 @@
             Visible = True
           end>
       end
+      inherited Panel6: TPanel
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 892
+      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 892
-      ExplicitHeight = 532
       object Label1: TLabel
         Left = 169
         Top = 25
@@ -119,6 +117,10 @@
       Size = 30
     end
   end
+  inherited ImageList1: TImageList
+    Left = 847
+    Top = 177
+  end
   inherited SaveDialog: TSaveDialog
     Left = 816
     Top = 131
@@ -128,8 +130,8 @@
     SQL.Strings = (
       'Select categoriaId, descricao from categorias')
     Params = <>
-    Left = 720
-    Top = 259
+    Left = 851
+    Top = 238
     object QryCategoriacategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
@@ -143,7 +145,7 @@
   end
   object dtsCategoria: TDataSource
     DataSet = QryCategoria
-    Left = 932
-    Top = 248
+    Left = 850
+    Top = 285
   end
 end

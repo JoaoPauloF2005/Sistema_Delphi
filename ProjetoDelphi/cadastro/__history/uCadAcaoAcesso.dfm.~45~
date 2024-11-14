@@ -16,10 +16,8 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       ExplicitWidth = 715
       ExplicitHeight = 354
       inherited grdListagem: TDBGrid
-        Top = 41
-        Width = 715
-        Height = 313
-        Align = alClient
+        Width = 712
+        Height = 354
         DataSource = dtsListagem
         Columns = <
           item
@@ -51,16 +49,13 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
         Top = 126
         ExplicitLeft = 277
         ExplicitTop = 126
-      end
-      inherited Panel6: TPanel
-        Width = 715
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 715
-        inherited SearchBox1: TSearchBox
-          Top = 11
-          ExplicitTop = 11
+        inherited Panel5: TPanel
+          ExplicitLeft = 11
+          ExplicitTop = 23
         end
+      end
+      inherited SearchBox1: TSearchBox
+        OnChange = SearchBox1Change
       end
     end
     inherited tabManutencao: TTabSheet

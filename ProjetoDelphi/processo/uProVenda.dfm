@@ -10,16 +10,17 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 555
-    ActivePage = tabListagem
+    ActivePage = tabManutencao
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
       ExplicitWidth = 903
       ExplicitHeight = 527
       inherited grdListagem: TDBGrid
-        Left = -2
+        Top = 41
         Width = 903
-        Height = 527
+        Height = 486
+        Align = alClient
         DataSource = dtsListagem
         Columns = <
           item
@@ -61,8 +62,11 @@ inherited frmProVenda: TfrmProVenda
         ExplicitLeft = 350
         ExplicitTop = 195
       end
-      inherited SearchBox1: TSearchBox
-        OnChange = SearchBox1Change
+      inherited Panel6: TPanel
+        Width = 903
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 903
       end
     end
     inherited tabManutencao: TTabSheet
@@ -304,11 +308,13 @@ inherited frmProVenda: TfrmProVenda
           end
         end
         object dbGridItensVenda: TDBGrid
-          Left = -2
-          Top = 89
-          Width = 903
-          Height = 288
-          Align = alCustom
+          Left = 1
+          Top = 97
+          Width = 901
+          Height = 286
+          Margins.Top = 0
+          Margins.Right = 10
+          Align = alClient
           Color = clBtnFace
           Ctl3D = True
           DataSource = dtmVenda.dtsItensVenda
@@ -365,13 +371,25 @@ inherited frmProVenda: TfrmProVenda
               Visible = True
             end>
         end
-        object SearchBox2: TSearchBox
-          Left = -2
-          Top = 62
-          Width = 311
-          Height = 21
+        object Panel1: TPanel
+          Left = 1
+          Top = 56
+          Width = 901
+          Height = 41
+          Align = alTop
+          BevelOuter = bvNone
           TabOrder = 3
-          OnChange = SearchBox2Change
+          ExplicitLeft = 380
+          ExplicitTop = 107
+          ExplicitWidth = 185
+          object SearchBox2: TSearchBox
+            Left = 0
+            Top = 12
+            Width = 311
+            Height = 21
+            TabOrder = 0
+            OnChange = SearchBox2Change
+          end
         end
       end
     end

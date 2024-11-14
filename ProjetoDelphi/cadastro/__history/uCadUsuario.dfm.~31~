@@ -1,75 +1,60 @@
-inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
-  Caption = 'Cadastro de A'#231#227'o de Acesso'
-  ClientHeight = 437
-  ClientWidth = 853
+inherited frmCadUsuario: TfrmCadUsuario
+  Caption = 'Cadastro de Usu'#225'rio'
+  ClientHeight = 507
+  ClientWidth = 840
   Position = poScreenCenter
-  ExplicitWidth = 859
-  ExplicitHeight = 466
+  ExplicitWidth = 846
+  ExplicitHeight = 536
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 723
-    Height = 382
-    ExplicitWidth = 723
-    ExplicitHeight = 382
+    Width = 710
+    Height = 452
+    ExplicitWidth = 710
+    ExplicitHeight = 452
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 715
-      ExplicitHeight = 354
+      ExplicitWidth = 702
+      ExplicitHeight = 424
       inherited grdListagem: TDBGrid
-        Top = 41
-        Width = 715
-        Height = 313
-        Align = alClient
+        Width = 754
+        Height = 424
         DataSource = dtsListagem
         Columns = <
           item
             Alignment = taCenter
             Expanded = False
-            FieldName = 'acaoAcessoId'
+            FieldName = 'usuarioID'
             Title.Alignment = taCenter
             Visible = True
           end
           item
             Alignment = taCenter
             Expanded = False
-            FieldName = 'descricao'
+            FieldName = 'nome'
             Title.Alignment = taCenter
-            Width = 359
-            Visible = True
-          end
-          item
-            Alignment = taCenter
-            Expanded = False
-            FieldName = 'chave'
-            Title.Alignment = taCenter
-            Width = 253
+            Width = 641
             Visible = True
           end>
       end
       inherited pExportar: TPanel
-        Left = 277
-        Top = 126
-        ExplicitLeft = 277
-        ExplicitTop = 126
+        Left = 269
+        Top = 84
+        ExplicitLeft = 269
+        ExplicitTop = 84
       end
-      inherited Panel6: TPanel
-        Width = 715
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 715
-        inherited SearchBox1: TSearchBox
-          Top = 11
-          ExplicitTop = 11
-        end
+      inherited SearchBox1: TSearchBox
+        OnChange = SearchBox1Change
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 715
-      ExplicitHeight = 354
-      object edtAcaoAcessoId: TLabeledEdit
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 702
+      ExplicitHeight = 424
+      object edtUsuarioId: TLabeledEdit
         Tag = 1
         Left = 11
-        Top = 40
+        Top = 35
         Width = 121
         Height = 21
         EditLabel.Width = 33
@@ -77,87 +62,84 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
         EditLabel.Caption = 'C'#243'digo'
         MaxLength = 10
         NumbersOnly = True
+        ReadOnly = True
         TabOrder = 0
       end
-      object edtDescricao: TLabeledEdit
-        Tag = 2
+      object edtNome: TLabeledEdit
         Left = 11
-        Top = 96
-        Width = 566
+        Top = 87
+        Width = 465
         Height = 21
-        EditLabel.Width = 46
+        EditLabel.Width = 36
         EditLabel.Height = 13
-        EditLabel.Caption = 'Descri'#231#227'o'
-        MaxLength = 100
+        EditLabel.Caption = 'Usu'#225'rio'
+        MaxLength = 50
         TabOrder = 1
       end
-      object edtChave: TLabeledEdit
-        Tag = 2
+      object edtSenha: TLabeledEdit
         Left = 11
-        Top = 152
-        Width = 423
+        Top = 138
+        Width = 247
         Height = 21
-        EditLabel.Width = 31
+        EditLabel.Width = 30
         EditLabel.Height = 13
-        EditLabel.Caption = 'Chave'
-        MaxLength = 60
+        EditLabel.Caption = 'Senha'
+        MaxLength = 40
+        PasswordChar = '*'
         TabOrder = 2
       end
     end
   end
   inherited pnlRodape: TPanel
-    Top = 382
-    Width = 853
-    ExplicitTop = 382
-    ExplicitWidth = 853
+    Top = 452
+    Width = 840
+    ExplicitTop = 452
+    ExplicitWidth = 840
   end
   inherited Panel2: TPanel
-    Left = 723
-    Height = 382
-    ExplicitLeft = 723
-    ExplicitHeight = 382
+    Left = 710
+    Height = 452
+    ExplicitLeft = 710
+    ExplicitHeight = 452
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 328
+      Top = 395
       ExplicitLeft = 12
-      ExplicitTop = 328
+      ExplicitTop = 395
     end
   end
   inherited QryListagem: TZQuery
     SQL.Strings = (
-      'SELECT acaoAcessoId,'
-      '       descricao,'
-      '       chave'
-      '  FROM acaoAcesso')
-    Left = 478
-    Top = 137
-    object QryListagemacaoAcessoId: TIntegerField
+      'SELECT usuarioID,'
+      '       nome,'
+      '       Senha'
+      'FROM usuarios')
+    Left = 504
+    Top = 120
+    object QryListagemusuarioID: TIntegerField
       DisplayLabel = 'C'#243'digo'
-      FieldName = 'acaoAcessoId'
+      FieldName = 'usuarioID'
       ReadOnly = True
     end
-    object QryListagemdescricao: TWideStringField
-      DisplayLabel = 'Descri'#231#227'o'
-      FieldName = 'descricao'
+    object QryListagemnome: TWideStringField
+      DisplayLabel = 'Usu'#225'rio'
+      FieldName = 'nome'
       Required = True
-      Size = 100
+      Size = 50
     end
-    object QryListagemchave: TWideStringField
-      DisplayLabel = 'Chave'
-      FieldName = 'chave'
+    object QryListagemSenha: TWideStringField
+      FieldName = 'Senha'
       Required = True
-      Size = 60
+      Size = 40
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 317
-    Top = 32
+    Left = 595
+    Top = 121
   end
   inherited ImageList1: TImageList
     Height = 32
     Width = 32
-    Left = 693
-    Top = 176
     Bitmap = {
       494C010102000500040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
@@ -693,13 +675,5 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
-  end
-  inherited PrintDialog: TPrintDialog
-    Left = 633
-    Top = 182
-  end
-  inherited SaveDialog: TSaveDialog
-    Left = 668
-    Top = 236
   end
 end

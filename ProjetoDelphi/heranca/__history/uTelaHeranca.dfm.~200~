@@ -24,18 +24,18 @@ object frmTelaHeranca: TfrmTelaHeranca
     Top = 0
     Width = 900
     Height = 560
-    ActivePage = tabListagem
+    ActivePage = tabManutencao
     Align = alClient
     TabOrder = 0
     object tabListagem: TTabSheet
       Caption = 'Listagem'
       object grdListagem: TDBGrid
         Left = 0
-        Top = 0
+        Top = 56
         Width = 892
-        Height = 532
+        Height = 476
         ParentCustomHint = False
-        Align = alLeft
+        Align = alCustom
         Color = clBtnFace
         DrawingStyle = gdsGradient
         FixedColor = clWhite
@@ -67,9 +67,9 @@ object frmTelaHeranca: TfrmTelaHeranca
       end
       object pExportar: TPanel
         Left = 316
-        Top = 148
+        Top = 147
         Width = 184
-        Height = 302
+        Height = 215
         Color = 15395049
         ParentBackground = False
         TabOrder = 1
@@ -95,7 +95,6 @@ object frmTelaHeranca: TfrmTelaHeranca
           Color = clWhite
           ParentBackground = False
           TabOrder = 1
-          ExplicitWidth = 183
           object btnFecharPanel: TSpeedButton
             Left = 156
             Top = 1
@@ -141,67 +140,49 @@ object frmTelaHeranca: TfrmTelaHeranca
             OnClick = btnFecharPanelClick
           end
         end
-        object btnImprimirRetrato: TButton
-          Left = 7
-          Top = 124
-          Width = 170
-          Height = 36
-          Caption = 'Imprimir - Retrato'
-          HotImageIndex = 1
-          ImageIndex = 2
-          ImageMargins.Left = 10
-          Images = ImageList1
-          TabOrder = 2
-          OnClick = btnImprimirRetratoClick
-        end
         object btnExportarHTML: TButton
-          Left = 7
-          Top = 166
-          Width = 170
+          Left = 9
+          Top = 120
+          Width = 169
           Height = 36
           Caption = 'Exportar para HTML'
           ImageIndex = 3
           ImageMargins.Left = 10
           Images = ImageList1
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnExportarHTMLClick
         end
         object btnExportarCSV: TButton
-          Left = 7
-          Top = 208
-          Width = 170
+          Left = 9
+          Top = 162
+          Width = 169
           Height = 36
           Caption = 'Exportar para CSV'
           ImageIndex = 3
           ImageMargins.Left = 10
           Images = ImageList1
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnExportarCSVClick
         end
-        object btnCopiar: TButton
-          Left = 7
-          Top = 250
-          Width = 170
-          Height = 36
-          Caption = 'Ctrl + C'
-          ImageIndex = 3
-          ImageMargins.Left = 10
-          Images = ImageList1
-          TabOrder = 5
-          OnClick = btnCopiarClick
-        end
-        object btnImprimirPaisagem: TButton
+        object btnImprimir: TButton
           Left = 9
           Top = 77
           Width = 169
-          Height = 39
-          Caption = 'Imprimir - Paisagem'
+          Height = 36
+          Caption = 'Imprimir '
           ImageIndex = 2
           ImageMargins.Left = 10
           Images = ImageList1
-          TabOrder = 6
-          OnClick = btnImprimirPaisagemClick
+          TabOrder = 4
+          OnClick = btnImprimirClick
         end
+      end
+      object SearchBox1: TSearchBox
+        Left = 0
+        Top = 15
+        Width = 311
+        Height = 21
+        TabOrder = 2
       end
     end
     object tabManutencao: TTabSheet
@@ -464,7 +445,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Left = 846
     Top = 172
     Bitmap = {
-      494C010105000900040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010105000900040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000767676007676760076767600767676007676760076767600767676007676
@@ -732,7 +713,8 @@ object frmTelaHeranca: TfrmTelaHeranca
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000}
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000}
   end
   object PrintDialog: TPrintDialog
     Copies = 1

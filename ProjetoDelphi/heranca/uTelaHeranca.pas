@@ -37,7 +37,8 @@ type
     PrintDialog: TPrintDialog;
     SaveDialog: TSaveDialog;
     btnImprimir: TButton;
-    SearchBox1: TSearchBox; // R�tulo para exibir o �ndice atual
+    SearchBox1: TSearchBox;
+    Panel6: TPanel; // R�tulo para exibir o �ndice atual
     // Declara��o de m�todos (procedures) que tratam eventos como cliques de bot�es
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);

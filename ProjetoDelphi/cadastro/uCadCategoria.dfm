@@ -10,16 +10,16 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     Width = 825
     Height = 431
-    ExplicitWidth = 758
+    ExplicitWidth = 825
     ExplicitHeight = 431
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 750
+      ExplicitWidth = 817
       ExplicitHeight = 403
       inherited grdListagem: TDBGrid
-        Width = 974
-        Height = 403
+        Top = 41
+        Width = 817
+        Height = 362
+        Align = alClient
         BorderStyle = bsNone
         DataSource = dtsListagem
         Columns = <
@@ -36,7 +36,7 @@ inherited frmCadCategoria: TfrmCadCategoria
             Expanded = False
             FieldName = 'descricao'
             Title.Alignment = taCenter
-            Width = 555
+            Width = 708
             Visible = True
           end>
       end
@@ -46,14 +46,20 @@ inherited frmCadCategoria: TfrmCadCategoria
         ExplicitLeft = 262
         ExplicitTop = 112
       end
-      inherited SearchBox1: TSearchBox
-        OnChange = SearchBox1Change
+      inherited Panel6: TPanel
+        Width = 817
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 817
+        inherited SearchBox1: TSearchBox
+          Top = 11
+          OnChange = SearchBox1Change
+          ExplicitTop = 11
+        end
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 22
-      ExplicitWidth = 750
+      ExplicitWidth = 817
       ExplicitHeight = 403
       object edtDescricao: TLabeledEdit
         Tag = 2
@@ -86,12 +92,12 @@ inherited frmCadCategoria: TfrmCadCategoria
     Top = 431
     Width = 955
     ExplicitTop = 431
-    ExplicitWidth = 888
+    ExplicitWidth = 955
   end
   inherited Panel2: TPanel
     Left = 825
     Height = 431
-    ExplicitLeft = 758
+    ExplicitLeft = 825
     ExplicitHeight = 431
     inherited btnFechar: TBitBtn
       Left = 12

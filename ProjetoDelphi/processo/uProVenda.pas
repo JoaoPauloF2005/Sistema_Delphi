@@ -36,6 +36,7 @@ type
     dbGridItensVenda: TDBGrid;
     SearchBox2: TSearchBox;
     QryRelatorio: TZQuery;
+    Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbGridItensVendaKeyDown(Sender: TObject; var Key: Word;

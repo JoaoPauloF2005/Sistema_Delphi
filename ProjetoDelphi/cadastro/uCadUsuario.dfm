@@ -16,8 +16,10 @@ inherited frmCadUsuario: TfrmCadUsuario
       ExplicitWidth = 702
       ExplicitHeight = 424
       inherited grdListagem: TDBGrid
-        Width = 754
-        Height = 424
+        Top = 41
+        Width = 702
+        Height = 383
+        Align = alClient
         DataSource = dtsListagem
         Columns = <
           item
@@ -42,13 +44,17 @@ inherited frmCadUsuario: TfrmCadUsuario
         ExplicitLeft = 269
         ExplicitTop = 84
       end
-      inherited SearchBox1: TSearchBox
-        OnChange = SearchBox1Change
+      inherited Panel6: TPanel
+        Width = 702
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 702
+        inherited SearchBox1: TSearchBox
+          OnChange = SearchBox1Change
+        end
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 702
       ExplicitHeight = 424
       object edtUsuarioId: TLabeledEdit

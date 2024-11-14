@@ -10,15 +10,14 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 555
-    ActivePage = tabManutencao
+    ActivePage = tabListagem
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       inherited grdListagem: TDBGrid
+        Left = -2
         Width = 903
         Height = 527
         DataSource = dtsListagem
@@ -62,10 +61,11 @@ inherited frmProVenda: TfrmProVenda
         ExplicitLeft = 350
         ExplicitTop = 195
       end
+      inherited SearchBox1: TSearchBox
+        OnChange = SearchBox1Change
+      end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       object Label4: TLabel
@@ -371,6 +371,7 @@ inherited frmProVenda: TfrmProVenda
           Width = 311
           Height = 21
           TabOrder = 3
+          OnChange = SearchBox2Change
         end
       end
     end
@@ -429,5 +430,42 @@ inherited frmProVenda: TfrmProVenda
   inherited dtsListagem: TDataSource
     Left = 432
     Top = 11
+  end
+  object QryRelatorio: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'SELECT '
+      '    c.nome AS NomeCliente,'
+      '    v.dataVenda AS DataVenda,'
+      '    v.totalVenda AS TotalVenda,'
+      '    p.nome AS NomeProduto,'
+      '    vi.valorUnitario AS ValorUnitario,'
+      '    vi.quantidade AS Quantidade,'
+      '    vi.totalProduto AS TotalProduto'
+      'FROM '
+      '    vendas v'
+      'INNER JOIN '
+      '    clientes c ON c.clienteId = v.clienteId'
+      'INNER JOIN '
+      '    vendasItens vi ON vi.vendaId = v.vendaId'
+      'INNER JOIN '
+      '    produtos p ON p.produtoId = vi.produtoId'
+      'WHERE '
+      '    v.vendaId = :VendaId')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'VendaId'
+        ParamType = ptUnknown
+      end>
+    DataSource = dtmVenda.dtsCliente
+    Left = 777
+    Top = 399
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'VendaId'
+        ParamType = ptUnknown
+      end>
   end
 end
