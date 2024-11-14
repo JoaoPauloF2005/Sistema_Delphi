@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,cAcaoAcesso, cCadUsuario, uEnum, uDTMConexao,
-  System.ImageList, Vcl.ImgList;
+  System.ImageList, Vcl.ImgList, Vcl.WinXCtrls;
 
 type
   TfrmCadUsuario = class(TfrmTelaHeranca)
@@ -22,6 +22,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure grdListagemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure SearchBox1Change(Sender: TObject);
   private
     { Private declarations }
     oUsuario:TUsuario;
@@ -64,7 +65,40 @@ begin
 
 end;
 
-procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
+procedure TfrmCadUsuario.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT * FROM Usuarios ' +
+      'WHERE nome LIKE :SearchText ';
+
+    // Adiciona o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text := 'SELECT * FROM Usuarios';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
+
+end;
+
+Procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
 begin
   if oUsuario.Selecionar(QryListagem.FieldByName('usuarioID').AsInteger) then begin
      edtUsuarioId.Text := IntToStr(oUsuario.codigo);

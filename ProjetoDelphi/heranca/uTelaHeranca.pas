@@ -323,8 +323,6 @@ begin
   EstadoDoCadastro := ecNenhum;
 end;
 
-
-
 // A��o do bot�o "Cancelar" para cancelar uma opera��o em andamento
 procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
 begin

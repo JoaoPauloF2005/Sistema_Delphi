@@ -42,8 +42,13 @@ inherited frmCadUsuario: TfrmCadUsuario
         ExplicitLeft = 269
         ExplicitTop = 84
       end
+      inherited SearchBox1: TSearchBox
+        OnChange = SearchBox1Change
+      end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 702
       ExplicitHeight = 424
       object edtUsuarioId: TLabeledEdit
