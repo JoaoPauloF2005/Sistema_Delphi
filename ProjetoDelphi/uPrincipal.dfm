@@ -3,8 +3,8 @@ object frmPrincipal: TfrmPrincipal
   Top = 0
   BorderWidth = 1
   Caption = 'Menu Principal'
-  ClientHeight = 653
-  ClientWidth = 1098
+  ClientHeight = 649
+  ClientWidth = 1094
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object frmPrincipal: TfrmPrincipal
   TextHeight = 13
   object StbPrincipal: TStatusBar
     Left = 0
-    Top = 634
-    Width = 1098
+    Top = 630
+    Width = 1094
     Height = 19
     Panels = <
       item
@@ -30,9 +30,9 @@ object frmPrincipal: TfrmPrincipal
   end
   object Panel1: TPanel
     Left = 0
-    Top = 41
+    Top = 42
     Width = 222
-    Height = 593
+    Height = 588
     Align = alLeft
     BevelInner = bvSpace
     BevelKind = bkFlat
@@ -44,7 +44,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 1
       Top = 1
       Width = 237
-      Height = 587
+      Height = 582
       Align = alLeft
       BevelInner = bvNone
       BiDiMode = bdLeftToRight
@@ -56,8 +56,8 @@ object frmPrincipal: TfrmPrincipal
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -12
-      Font.Name = 'Microsoft Sans Serif'
-      Font.Style = []
+      Font.Name = 'Segoe UI Semibold'
+      Font.Style = [fsBold]
       Images = ImageList1
       Indent = 20
       ParentBiDiMode = False
@@ -114,17 +114,17 @@ object frmPrincipal: TfrmPrincipal
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1098
-    Height = 41
+    Width = 1094
+    Height = 42
     Align = alTop
-    Color = 16621645
+    Color = 14803425
     ParentBackground = False
     TabOrder = 2
     object btnFechar: TSpeedButton
-      Left = 1058
+      Left = 1054
       Top = 1
       Width = 39
-      Height = 39
+      Height = 40
       Align = alRight
       Flat = True
       Glyph.Data = {
@@ -266,7 +266,7 @@ object frmPrincipal: TfrmPrincipal
       ExplicitHeight = 32
     end
     object btnVenda: TSpeedButton
-      Left = 93
+      Left = 115
       Top = 1
       Width = 39
       Height = 39
@@ -408,7 +408,7 @@ object frmPrincipal: TfrmPrincipal
       OnClick = btnVendaClick
     end
     object btnProduto: TSpeedButton
-      Left = 46
+      Left = 68
       Top = 2
       Width = 39
       Height = 39
@@ -550,11 +550,11 @@ object frmPrincipal: TfrmPrincipal
       OnClick = btnProdutoClick
     end
     object btnCliente: TSpeedButton
-      Left = 1
+      Left = 18
       Top = 1
       Width = 39
       Height = 39
-      Align = alLeft
+      Align = alCustom
       Flat = True
       Glyph.Data = {
         42100000424D4210000000000000420000002800000020000000200000000100
@@ -690,8 +690,6 @@ object frmPrincipal: TfrmPrincipal
         000000000000}
       Transparent = False
       OnClick = btnClienteClick
-      ExplicitLeft = 9
-      ExplicitTop = 2
     end
   end
   object ImageList1: TImageList

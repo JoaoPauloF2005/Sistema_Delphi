@@ -73,9 +73,20 @@ uses uDTMConexao, uPrincipal;
 {$region 'Override'}
 function TfrmCadProduto.Apagar: Boolean;
 begin
-  if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
-    Result := oProduto.Apagar;
+  try
+    // Seleciona o produto e tenta apagá-lo
+    if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
+      Result := oProduto.Apagar;
+  except
+    on E: Exception do
+    begin
+      // Exibe a mensagem amigável ao usuário
+      ShowMessage(E.Message);
+      Result := False;
+    end;
+  end;
 end;
+
 
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin

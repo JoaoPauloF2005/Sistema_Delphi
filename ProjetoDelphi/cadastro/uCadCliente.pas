@@ -93,9 +93,19 @@ uses uDTMConexao;
 {$region 'Override'}
 function TfrmCadCliente.Apagar: Boolean;
 begin
-  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
-    Result := oCliente.Apagar;
+  try
+    if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
+      Result := oCliente.Apagar;
+  except
+    on E: Exception do
+    begin
+      ShowMessage(E.Message); // Exibe a mensagem simplificada gerada no método Apagar
+      Result := False;
+    end;
+  end;
 end;
+
+
 
 function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin

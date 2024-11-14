@@ -64,35 +64,40 @@ end;
 
 {$region 'CRUD'}
 function TProduto.Apagar: Boolean;
-var Qry:TZQuery;
+var
+  Qry: TZQuery;
 begin
-  if MessageDlg('Apagar o Registro: '+#13+#13+
-                'Código: '+IntToStr(F_produtoId)+#13+
-                'Descrição: '+F_nome,mtConfirmation,[mbYes, mbNo],0)=mrNo then begin
-     Result:=false;
-     abort;
-  end;
+  Result := False;
+
+  // Confirmação para exclusão
+  if MessageDlg('Deseja realmente apagar o produto "' + F_nome + '"?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    Exit;
 
   try
-    Result:=true;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
-    Qry.SQL.Clear;
-    Qry.SQL.Add('DELETE FROM produtos '+
-                ' WHERE produtoId =:produtoId ');
-    Qry.ParamByName('produtoId').AsInteger :=F_produtoId;
-    Try
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Text := 'DELETE FROM produtos WHERE produtoId = :produtoId';
+    Qry.ParamByName('produtoId').AsInteger := F_produtoId;
+
+    try
       ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       ConexaoDB.Commit;
-    Except
-      ConexaoDB.Rollback;
-      Result:=false;
-    End;
+      Result := True;
+    except
+      on E: Exception do
+      begin
+        ConexaoDB.Rollback;
 
+        // Verifica se o erro é de chave estrangeira
+        if Pos('FK_', E.Message) > 0 then
+          raise Exception.Create('Não é possível excluir este produto porque ele está vinculado a outros registros.')
+        else
+          raise Exception.Create('Erro ao excluir o produto: ' + E.Message);
+      end;
+    end;
   finally
-    if Assigned(Qry) then
-       FreeAndNil(Qry);
+    Qry.Free;
   end;
 end;
 

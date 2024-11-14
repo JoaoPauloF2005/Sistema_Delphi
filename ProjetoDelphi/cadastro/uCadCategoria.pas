@@ -44,10 +44,20 @@ implementation
 {$REGION 'Override'}
 function TfrmCadCategoria.Apagar: Boolean;
 begin
-  if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then begin
-  Result:=oCategoria.Apagar;
+  try
+    // Seleciona a categoria e tenta apagar
+    if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then
+      Result := oCategoria.Apagar;
+  except
+    on E: Exception do
+    begin
+      // Exibe a mensagem amigável ao usuário
+      ShowMessage(E.Message);
+      Result := False;
+    end;
   end;
 end;
+
 
 function TfrmCadCategoria.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin

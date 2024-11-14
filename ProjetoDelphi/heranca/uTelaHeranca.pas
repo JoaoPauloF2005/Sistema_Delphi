@@ -231,8 +231,17 @@ end;
 {$REGION 'M�TODOS VIRTUAIS'}
 function TfrmTelaHeranca.Apagar: Boolean;
 begin
-  ShowMessage('DELETADO');
-  Result:=True;
+  try
+    // Lógica de exclusão do registro
+    QryListagem.Delete; // Exemplo de exclusão via dataset
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      // Relança a exceção para o método chamador
+      raise Exception.Create(E.Message);
+    end;
+  end;
 end;
 
 function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean;
@@ -286,27 +295,35 @@ end;
 // A��o do bot�o "Apagar" para Apagar um registro
 procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
 begin
-  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
-    begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome +', não tem permissão de acesso',mtWarning,[mbOK], 0);
+  if not TenhoAcesso(oUsuarioLogado.codigo, Self.Name + '_' + TBitBtn(Sender).Name, dtmPrincipal.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: ' + oUsuarioLogado.nome + ', não tem permissão de acesso', mtWarning, [mbOK], 0);
     Abort;
   end;
 
-  Try
-    if (Apagar) then begin
-    // Restaura a interface ao estado padr�o ap�s a exclus�o
-    ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, pgcPrincipal, true);
+  try
+    if Apagar then
+    begin
+      ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar, pgcPrincipal, True);
       ControlarIndiceTab(pgcPrincipal, 0);
       LimparEdits;
       QryListagem.Refresh;
-    end
-    else begin
-      MessageDlg('Erro na Exclusão', mtError, [mbOK], 0);
     end;
-  Finally
-    EstadoDoCadastro:=ecNenhum;
-  End;
+  except
+    on E: Exception do
+    begin
+      // Verifica se é um erro de chave estrangeira
+      if Pos('foreign key', LowerCase(E.Message)) > 0 then
+        MessageDlg('O registro não pode ser excluído porque está vinculado a outros dados.', mtWarning, [mbOK], 0)
+      else
+        MessageDlg('Erro ao tentar apagar o registro: ' + E.Message, mtError, [mbOK], 0);
+    end;
+  end;
+
+  EstadoDoCadastro := ecNenhum;
 end;
+
+
 
 // A��o do bot�o "Cancelar" para cancelar uma opera��o em andamento
 procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);

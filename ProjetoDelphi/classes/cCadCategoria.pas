@@ -77,38 +77,42 @@ end;
 
 function TCategoria.Apagar: Boolean;
 var
-  Qry : TZQuery;
+  Qry: TZQuery;
 begin
-  if MessageDlg('Apagar o Registro: '+#13+#13+
-              'Código: '+IntToStr(F_categoriaId)+#13+
-              'Descrição: '+F_descricao,mtConfirmation,[mbYes, mbNo], 0)=mrNo then begin
-    Result:=False;
-    Abort;
-  end;
+  Result := False;
+
+  // Solicita confirmação ao usuário antes de apagar o registro
+  if MessageDlg('Deseja realmente apagar a categoria "' + F_descricao + '"?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    Exit;
 
   try
-    Result:=True;
-    Qry:=TZQuery.Create(nil);
-    Qry.Connection:=ConexaoDB;
-    Qry.SQL.Clear;
-    Qry.SQL.Add('DELETE FROM categorias WHERE categoriaId = :categoriaId');
-    Qry.ParamByName('categoriaId').AsInteger :=F_categoriaId;
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Text := 'DELETE FROM categorias WHERE categoriaId = :categoriaId';
+    Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
 
     try
-    	ConexaoDB.StartTransaction;
+      ConexaoDB.StartTransaction;
       Qry.ExecSQL;
       ConexaoDB.Commit;
+      Result := True;
     except
-    	ConexaoDB.Rollback;
-      Result:=False;
+      on E: Exception do
+      begin
+        ConexaoDB.Rollback;
+
+        // Verifica se o erro é de chave estrangeira
+        if Pos('FK_', E.Message) > 0 then
+          raise Exception.Create('Não é possível excluir esta categoria porque ela está vinculada a outros registros.')
+        else
+          raise Exception.Create('Erro ao excluir a categoria: ' + E.Message);
+      end;
     end;
-
   finally
-    if Assigned(Qry) then
-      FreeAndNil(Qry);
+    Qry.Free;
   end;
+end;
 
-  end;
 
 
 function TCategoria.Atualizar: Boolean;

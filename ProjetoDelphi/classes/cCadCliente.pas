@@ -31,7 +31,8 @@ type
     F_cep: String;             // CEP do cliente.
     F_telefone: String;        // Telefone do cliente.
     F_email: String;           // E-mail do cliente.
-    F_dataNascimento: TDateTime; // Data de nascimento do cliente.
+    F_dataNascimento: TDateTime;
+    function VerificarDuplicidade: Boolean; // Data de nascimento do cliente.
 
   public
     constructor Create(aConexao: TZConnection); // Construtor para inicializar a conexão.
@@ -76,41 +77,57 @@ end;
 
 {$region 'CRUD'}
 function TCliente.Apagar: Boolean;
-var Qry: TZQuery;  // Declara uma variável para armazenar a query.
+var
+  Qry: TZQuery;
 begin
-  // Exibe uma mensagem de confirmação antes de apagar o registro.
-  if MessageDlg('Apagar o Registro: ' + #13#13 +
-                'Código: ' + IntToStr(F_clienteId) + #13 +
-                'Descrição: ' + F_nome, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-  begin
-    Result := False;  // Cancela a operação se o usuário escolher "Não".
-    Abort;  // Aborta a execução.
-  end;
+  Result := False;
+
+  // Solicita confirmação ao usuário antes de apagar o registro
+  if MessageDlg('Deseja realmente apagar o cliente "' + F_nome + '"?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    Exit;
 
   try
-    Result := True;  // Define o resultado como verdadeiro por padrão.
-    Qry := TZQuery.Create(nil);  // Cria a query.
-    Qry.Connection := ConexaoDB;  // Associa a conexão.
-    Qry.SQL.Clear;  // Limpa comandos SQL anteriores.
-    Qry.SQL.Add('DELETE FROM clientes WHERE clienteId=:clienteId');  // SQL de exclusão.
-    Qry.ParamByName('clienteId').AsInteger := F_clienteId;  // Define o parâmetro.
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Text := 'DELETE FROM clientes WHERE clienteId = :clienteId';
+    Qry.ParamByName('clienteId').AsInteger := F_clienteId;
 
     try
-      ConexaoDB.StartTransaction;  // Inicia uma transação.
-      Qry.ExecSQL;  // Executa o comando SQL.
-      ConexaoDB.Commit;  // Confirma a transação.
+      ConexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      ConexaoDB.Commit;
+      Result := True;
     except
-      ConexaoDB.Rollback;  // Desfaz a transação em caso de erro.
-      Result := False;
+      on E: Exception do
+      begin
+        ConexaoDB.Rollback;
+
+        // Verifica se o erro é de chave estrangeira
+        if Pos('FK_', E.Message) > 0 then
+          raise Exception.Create('Não é possível excluir este cliente porque ele está vinculado a outros registros.')
+        else
+          raise Exception.Create('Erro ao excluir o cliente: ' + E.Message);
+      end;
     end;
   finally
-    FreeAndNil(Qry);  // Libera a memória alocada para a query.
+    Qry.Free;
   end;
 end;
+
+
 
 function TCliente.Atualizar: Boolean;
 var Qry: TZQuery;
 begin
+
+  if VerificarDuplicidade then
+  begin
+    raise Exception.Create('Cliente já cadastrado com o mesmo CPF ou nome.');
+    Exit(False);
+  end;
+
+   Result := True;
+
   try
     Result := True;
     Qry := TZQuery.Create(nil);
@@ -151,8 +168,16 @@ end;
 function TCliente.Inserir: Boolean;
 var Qry: TZQuery;
 begin
+
+ if VerificarDuplicidade then
+  begin
+    raise Exception.Create('Cliente já cadastrado com o mesmo CPF ou nome.');
+    Exit(False);
+  end;
+
+   Result := True;
+
   try
-    Result := True;
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
@@ -227,6 +252,28 @@ begin
   end;
 end;
 {$endregion}
+
+function TCliente.VerificarDuplicidade: Boolean;
+var
+  Qry: TZQuery;
+begin
+  Result := False; // Assume que não há duplicidade por padrão
+  Qry := TZQuery.Create(nil);
+  try
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Text := 'SELECT clienteId FROM clientes WHERE (cpfCnpj = :cpfCnpj OR nome = :nome) AND clienteId <> :clienteId';
+    Qry.ParamByName('cpfCnpj').AsString := F_cpfCnpj;
+    Qry.ParamByName('nome').AsString := F_nome;
+    Qry.ParamByName('clienteId').AsInteger := F_clienteId; // Exclui o cliente atual (em caso de atualização)
+    Qry.Open;
+
+    if not Qry.IsEmpty then
+      Result := True; // Indica que há duplicidade
+  finally
+    Qry.Free;
+  end;
+end;
+
 
 
 end.
