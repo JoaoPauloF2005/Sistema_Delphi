@@ -10,14 +10,22 @@ inherited frmCadProduto: TfrmCadProduto
   inherited pgcPrincipal: TPageControl
     Width = 1328
     Height = 538
+    ActivePage = tabListagem
     ExplicitWidth = 1328
     ExplicitHeight = 538
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1320
       ExplicitHeight = 510
       inherited grdListagem: TDBGrid
-        Width = 1015
-        Height = 510
+        AlignWithMargins = True
+        Top = 40
+        Width = 1023
+        Height = 470
+        Margins.Left = 0
+        Margins.Top = 40
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alClient
         DataSource = dtsListagem
         Columns = <
           item
@@ -89,10 +97,11 @@ inherited frmCadProduto: TfrmCadProduto
         ExplicitTop = 7
       end
       object panelImagem: TPanel
-        Left = 1021
+        Left = 1023
         Top = 0
         Width = 297
-        Height = 323
+        Height = 510
+        Align = alRight
         TabOrder = 1
         object imgProdutoPreview: TImage
           Left = 0
@@ -233,7 +242,6 @@ inherited frmCadProduto: TfrmCadProduto
         Height = 21
         KeyField = 'categoriaId'
         ListField = 'descricao'
-        ListSource = dtsCategoria
         TabOrder = 2
       end
       object btnCarregarImagem: TBitBtn
@@ -437,8 +445,7 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   object dtsCategoria: TDataSource
-    DataSet = QryCategoria
-    Left = 930
+    Left = 932
     Top = 248
   end
 end

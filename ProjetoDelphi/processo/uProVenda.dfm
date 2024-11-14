@@ -10,11 +10,10 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 555
+    ActivePage = tabListagem
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       inherited grdListagem: TDBGrid
@@ -67,8 +66,6 @@ inherited frmProVenda: TfrmProVenda
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       object Label4: TLabel
@@ -350,18 +347,21 @@ inherited frmProVenda: TfrmProVenda
               Alignment = taCenter
               Expanded = False
               FieldName = 'quantidade'
+              Width = 64
               Visible = True
             end
             item
               Alignment = taCenter
               Expanded = False
               FieldName = 'valorUnitario'
+              Width = 64
               Visible = True
             end
             item
               Alignment = taCenter
               Expanded = False
               FieldName = 'valorTotalProduto'
+              Width = 64
               Visible = True
             end>
         end

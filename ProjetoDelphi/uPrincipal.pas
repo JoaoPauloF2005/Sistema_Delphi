@@ -62,7 +62,7 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico, uRelProVenda;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico, uRelProVenda, uCadSubCategoria;
 {$R *.dfm}
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
@@ -134,6 +134,10 @@ begin
     else if TreeView1.Selected.Text = 'Cadastro de Categorias' then
     begin
       CriarForm(TfrmCadCategoria);
+    end
+    else if TreeView1.Selected.Text = 'Cadastro de SubCategorias' then
+    begin
+      CriarForm(TfrmCadSubCategoria);
     end
     else if TreeView1.Selected.Text = 'Cadastro de Produtos' then
     begin
@@ -357,6 +361,7 @@ begin
       AtualizacaoBancoDados(frmAtualizaDB);
 
       TAcaoAcesso.CriarAcoes(TfrmCadCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadSubCategoria, dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmCadCliente,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmCadProduto,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmCadUsuario,dtmPrincipal.ConexaoDB);

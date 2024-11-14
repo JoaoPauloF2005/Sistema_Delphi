@@ -1,0 +1,11 @@
+unit cCadSubCategoria;
+
+interface
+
+uses
+  System.Classes, Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, ZAbstractConnection, ZConnection,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, System.SysUtils; // Lista de units necessárias
+
+implementation
+
+end.

@@ -24,7 +24,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Top = 0
     Width = 900
     Height = 560
-    ActivePage = tabListagem
+    ActivePage = tabManutencao
     Align = alClient
     TabOrder = 0
     object tabListagem: TTabSheet
@@ -188,10 +188,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     object tabManutencao: TTabSheet
       Caption = 'Cadastrar'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object pnlRodape: TPanel

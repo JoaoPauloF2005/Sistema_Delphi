@@ -41,7 +41,9 @@ uses
   cAcaoAcesso in 'classes\cAcaoAcesso.pas',
   uCadAcaoAcesso in 'cadastro\uCadAcaoAcesso.pas' {frmCadAcaoAcesso},
   uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes},
-  uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule};
+  uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule},
+  uCadSubCategoria in 'cadastro\uCadSubCategoria.pas' {frmCadSubCategoria},
+  cCadSubCategoria in 'classes\cCadSubCategoria.pas';
 
 {$R *.res}
 

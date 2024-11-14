@@ -23,4 +23,4 @@ implementation
 
 {$R *.dfm}
 
-end.
+End.

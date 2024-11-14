@@ -1,0 +1,33 @@
+unit cCadSubCategoria;
+
+interface
+
+uses
+  System.Classes, Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, ZAbstractConnection, ZConnection,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, System.SysUtils;
+
+  type
+  TSubCategoria = class
+    private
+    ConexaoDB: TZConnection;
+    public
+    constructor Create(aConexao: TZConnection);
+    destructor Destroy; override;
+    published
+  end;
+
+implementation
+
+constructor TSubCategoria.Create(aConexao: TZConnection);
+begin
+  // Inicializa a conexão recebida no parâmetro
+  ConexaoDB := aConexao;
+end;
+
+destructor TSubCategoria.Destroy;
+begin
+  // Executa procedimentos de limpeza (caso necessário) e chama o destrutor da classe pai
+  inherited;
+end
+
+end.

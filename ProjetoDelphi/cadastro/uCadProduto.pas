@@ -27,10 +27,6 @@ type
     Label3: TLabel;
     edtQuantidade: TCurrencyEdit;
     lkpCategoria: TDBLookupComboBox;
-    QryCategoria: TZQuery;
-    QryCategoriacategoriaId: TIntegerField;
-    QryCategoriadescricao: TWideStringField;
-    dtsCategoria: TDataSource;
     Label4: TLabel;
     Label5: TLabel;
     btnCarregarImagem: TBitBtn;
@@ -42,6 +38,10 @@ type
     imgProdutoPreview: TImage;
     Label6: TLabel;
     Panel3: TPanel;
+    QryCategoria: TZQuery;
+    QryCategoriacategoriaId: TIntegerField;
+    QryCategoriadescricao: TWideStringField;
+    dtsCategoria: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);

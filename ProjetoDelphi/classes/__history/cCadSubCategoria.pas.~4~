@@ -1,0 +1,73 @@
+unit cCadSubCategoria;
+
+interface
+
+uses
+  System.Classes, Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, ZAbstractConnection, ZConnection,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, System.SysUtils;
+
+  type
+  TSubCategoria = class
+    private
+    ConexaoDB: TZConnection;
+    function Apagar: Boolean;
+    public
+    constructor Create(aConexao: TZConnection);
+    destructor Destroy; override;
+    published
+  end;
+
+implementation
+
+constructor TSubCategoria.Create(aConexao: TZConnection);
+begin
+  // Inicializa a conexão recebida no parâmetro
+  ConexaoDB := aConexao;
+end;
+
+destructor TSubCategoria.Destroy;
+begin
+  // Executa procedimentos de limpeza (caso necessário) e chama o destrutor da classe pai
+  inherited;
+end;
+
+function TSubCategoria.Apagar: Boolean;
+var
+  Qry: TZQuery;
+begin
+  Result := False;
+
+  // Solicita confirmação ao usuário antes de apagar o registro
+  if MessageDlg('Deseja realmente apagar a categoria "' + F_descricao + '"?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    Exit;
+
+  try
+    Qry := TZQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+    Qry.SQL.Text := 'DELETE FROM subCategorias WHERE categoriaId = :categoriaId';
+    Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
+
+    try
+      ConexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      ConexaoDB.Commit;
+      Result := True;
+    except
+      on E: Exception do
+      begin
+        ConexaoDB.Rollback;
+
+        // Verifica se o erro é de chave estrangeira
+        if Pos('FK_', E.Message) > 0 then
+          raise Exception.Create('Não é possível excluir esta categoria porque ela está vinculada a outros registros.')
+        else
+          raise Exception.Create('Erro ao excluir a categoria: ' + E.Message);
+      end;
+    end;
+  finally
+    Qry.Free;
+  end;
+end;
+
+
+end.

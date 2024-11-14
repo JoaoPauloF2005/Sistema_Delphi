@@ -1,18 +1,20 @@
 inherited frmCadCategoria: TfrmCadCategoria
   Caption = 'Cadastro de Categorias'
   ClientHeight = 486
-  ClientWidth = 888
+  ClientWidth = 955
   Position = poScreenCenter
-  ExplicitWidth = 894
+  ExplicitWidth = 961
   ExplicitHeight = 515
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 758
+    Width = 825
     Height = 431
     ExplicitWidth = 758
     ExplicitHeight = 431
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 750
       ExplicitHeight = 403
       inherited grdListagem: TDBGrid
@@ -49,6 +51,8 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 2
+      ExplicitTop = 22
       ExplicitWidth = 750
       ExplicitHeight = 403
       object edtDescricao: TLabeledEdit
@@ -80,12 +84,12 @@ inherited frmCadCategoria: TfrmCadCategoria
   end
   inherited pnlRodape: TPanel
     Top = 431
-    Width = 888
+    Width = 955
     ExplicitTop = 431
     ExplicitWidth = 888
   end
   inherited Panel2: TPanel
-    Left = 758
+    Left = 825
     Height = 431
     ExplicitLeft = 758
     ExplicitHeight = 431
@@ -99,8 +103,8 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited QryListagem: TZQuery
     SQL.Strings = (
       'SELECT categoriaId, descricao FROM categorias')
-    Left = 453
-    Top = 132
+    Left = 482
+    Top = 130
     object intgrfldQryListagemcategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'

@@ -100,7 +100,7 @@ implementation
 
 {$R *.dfm} // Diretiva que associa o arquivo de design visual (DFM) ao c�digo
 
-uses uPrincipal, IniFiles;
+uses uPrincipal;
 
  		{$region 'OBSERVA��ES'}
  //TAG:1 - CHAVE PRIMARIA PK
