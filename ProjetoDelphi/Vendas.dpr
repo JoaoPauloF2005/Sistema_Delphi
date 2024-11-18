@@ -43,7 +43,8 @@ uses
   uUsuarioVsAcoes in 'login\uUsuarioVsAcoes.pas' {frmUsuarioVsAcoes},
   uDTMGrafico in 'datamodule\uDTMGrafico.pas' {DTMGrafico: TDataModule},
   uCadSubCategoria in 'cadastro\uCadSubCategoria.pas' {frmCadSubCategoria},
-  cCadSubCategoria in 'classes\cCadSubCategoria.pas';
+  cCadSubCategoria in 'classes\cCadSubCategoria.pas',
+  uReceitaCNPJ in 'API\uReceitaCNPJ.pas' {frmReceitaCNPJ};
 
 {$R *.res}
 
@@ -52,5 +53,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TDTMGrafico, DTMGrafico);
+  Application.CreateForm(TfrmReceitaCNPJ, frmReceitaCNPJ);
   Application.Run;
 end.

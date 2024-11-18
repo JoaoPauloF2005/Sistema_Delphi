@@ -8,7 +8,8 @@ uses
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,
   uEnum, cCadCliente, uPrincipal, RxToolEdit, System.ImageList, Vcl.ImgList, Vcl.Clipbrd, uRelCadCliente, Printers,
-  Vcl.WinXCtrls;
+  Vcl.WinXCtrls, uReceitaCNPJ, IdHTTP, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, System.JSON, IdSSLOpenSSL,
+  IdAuthentication;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -50,6 +51,11 @@ type
     Image5: TImage;
     Label8: TLabel;
     ImageListStatus: TImageList;
+    btnBuscarCNPJ: TButton;
+    pnlPesquisarCNPJ: TPanel;
+    edtCNPJPesquisa: TLabeledEdit;
+    btnConfirmarCNPJ: TBitBtn;
+    IdHTTP1: TIdHTTP;
 
     procedure btnAlterarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -64,6 +70,10 @@ type
     procedure QryListagemcpfCnpjGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure btnImprimirClick(Sender: TObject);
     procedure SearchBox1Change(Sender: TObject);
+    procedure btnBuscarCNPJClick(Sender: TObject);
+    procedure btnConfirmarCNPJClick(Sender: TObject);
+    procedure IdHTTP1Authorization(Sender: TObject; Authentication: TIdAuthentication; var Handled: Boolean);
+    procedure edtCNPJPesquisaChange(Sender: TObject);
 
   private
     oCliente: TCliente;
@@ -75,6 +85,7 @@ type
     function MascaraTelefone(const AValue: string): string;
     function ValidarCPF(const CPF: string): Boolean;
     function ValidarCNPJ(const CNPJ: string): Boolean;
+     procedure PreencherCamposCliente(ReceitaCNPJ: TfrmReceitaCNPJ);
   public
     { Public declarations }
   end;
@@ -193,6 +204,31 @@ begin
   end;
 end;
 
+procedure TfrmCadCliente.IdHTTP1Authorization(Sender: TObject; Authentication: TIdAuthentication; var Handled: Boolean);
+var
+  HTTP: TIdHTTP;
+  SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
+begin
+  HTTP := TIdHTTP.Create(nil);
+  SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
+  try
+    // Configura o SSL para usar TLS 1.2
+    SSLHandler.SSLOptions.Method := sslvTLSv1_2;
+    SSLHandler.SSLOptions.SSLVersions := [sslvTLSv1_2];
+
+    HTTP.IOHandler := SSLHandler;
+    HTTP.Request.ContentType := 'application/json';
+
+    // Faz a requisição
+    ShowMessage(HTTP.Get('https://www.receitaws.com.br/v1/cnpj/12345678000195'));
+
+  finally
+    HTTP.Free;
+    SSLHandler.Free;
+  end;
+end;
+
+
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
@@ -229,6 +265,89 @@ begin
   end;
 
   inherited;
+end;
+
+procedure TfrmCadCliente.btnBuscarCNPJClick(Sender: TObject);
+begin
+  // Exibe o painel para digitar o CNPJ
+  pnlPesquisarCNPJ.Visible := True;
+  edtCNPJPesquisa.SetFocus;
+end;
+
+procedure TfrmCadCliente.btnConfirmarCNPJClick(Sender: TObject);
+var
+  frmReceitaCNPJ: TfrmReceitaCNPJ;
+  JSONResponse: string;
+  JSONObj: TJSONObject;
+  HTTP: TIdHTTP;
+  SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
+begin
+  // Verifica se o campo CNPJ está preenchido
+  if Trim(edtCNPJPesquisa.Text) = '' then
+  begin
+    ShowMessage('Por favor, digite o CNPJ para pesquisa.');
+    Exit;
+  end;
+
+  // Configura o HTTP e SSL Handler para a API
+  HTTP := TIdHTTP.Create(nil);
+  SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
+  try
+    HTTP.IOHandler := SSLHandler;
+    SSLHandler.SSLOptions.Method := sslvTLSv1_2;
+    SSLHandler.SSLOptions.SSLVersions := [sslvTLSv1_2];
+
+    try
+      // Realiza a requisição à API
+      JSONResponse := HTTP.Get('https://www.receitaws.com.br/v1/cnpj/' + Trim(SomenteNumeros(edtCNPJPesquisa.Text)));
+      JSONObj := TJSONObject.ParseJSONValue(JSONResponse) as TJSONObject;
+
+      if Assigned(JSONObj) then
+      begin
+        // Cria o formulário uReceitaCNPJ e preenche os campos com os dados retornados
+        frmReceitaCNPJ := TfrmReceitaCNPJ.Create(Self);
+        try
+          frmReceitaCNPJ.PreencherCampos(JSONObj); // Método no uReceitaCNPJ
+          if frmReceitaCNPJ.ShowModal = mrOk then
+          begin
+            // Transfere os dados do uReceitaCNPJ para os campos do cliente
+            edtNome.Text := frmReceitaCNPJ.edtNome.Caption;
+            edtcpfCnpj.Text := frmReceitaCNPJ.edtCnpj.Caption;
+            edtEndereco.Text := frmReceitaCNPJ.edtEndereco.Caption;
+            edtBairro.Text := frmReceitaCNPJ.edtBairro.Caption;
+            edtCidade.Text := frmReceitaCNPJ.edtCidade.Caption;
+            cbEstado.Text := frmReceitaCNPJ.edtEstado.Caption;
+            edtCEP.Text := frmReceitaCNPJ.edtCep.Caption;
+            edtTelefone.Text := frmReceitaCNPJ.edtTelefone.Caption;
+            cbTipoPessoa.ItemIndex := cbTipoPessoa.Items.IndexOf('Jurídica');
+          end;
+        finally
+          frmReceitaCNPJ.Free; // Libera o formulário após o uso
+        end;
+      end
+      else
+        ShowMessage('Erro ao processar os dados retornados da API.');
+    except
+      on E: Exception do
+        ShowMessage('Erro ao acessar a API: ' + E.Message);
+    end;
+  finally
+    HTTP.Free;
+    SSLHandler.Free;
+    pnlPesquisarCNPJ.Visible := False;
+  end;
+end;
+
+procedure TfrmCadCliente.PreencherCamposCliente(ReceitaCNPJ: TfrmReceitaCNPJ);
+begin
+  edtNome.Text := ReceitaCNPJ.edtNome.Caption;
+  edtEndereco.Text := ReceitaCNPJ.edtEndereco.Caption;
+  edtBairro.Text := ReceitaCNPJ.edtBairro.Caption;
+  edtCidade.Text := ReceitaCNPJ.edtCidade.Caption;
+  cbEstado.Text := ReceitaCNPJ.edtEstado.Caption;
+  edtCEP.Text := ReceitaCNPJ.edtCEP.Caption;
+  edtTelefone.Text := MascaraTelefone(ReceitaCNPJ.edtTelefone.Caption);
+  cbTipoPessoa.ItemIndex := cbTipoPessoa.Items.IndexOf('Jurídica');
 end;
 
 procedure TfrmCadCliente.btnImprimirClick(Sender: TObject);
@@ -313,6 +432,27 @@ begin
 end;
 
 {$region 'Funções de Formatação'}
+
+procedure TfrmCadCliente.edtCNPJPesquisaChange(Sender: TObject);
+var
+  Value: string;
+begin
+  // Remove todos os caracteres não numéricos
+  Value := SomenteNumeros(edtCNPJPesquisa.Text);
+
+  // Aplica a máscara de CNPJ
+  case Length(Value) of
+    1..2: edtCNPJPesquisa.Text := Value;
+    3..5: edtCNPJPesquisa.Text := Format('%s.%s', [Copy(Value, 1, 2), Copy(Value, 3, Length(Value) - 2)]);
+    6..8: edtCNPJPesquisa.Text := Format('%s.%s.%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, Length(Value) - 5)]);
+    9..12: edtCNPJPesquisa.Text := Format('%s.%s.%s/%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, 3), Copy(Value, 9, Length(Value) - 8)]);
+    13..14: edtCNPJPesquisa.Text := Format('%s.%s.%s/%s-%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, 3), Copy(Value, 9, 4), Copy(Value, 13, Length(Value) - 12)]);
+  end;
+
+  // Ajusta o cursor para o final do texto
+  edtCNPJPesquisa.SelStart := Length(edtCNPJPesquisa.Text);
+end;
+
 
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var

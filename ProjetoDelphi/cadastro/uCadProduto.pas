@@ -95,7 +95,6 @@ begin
   end;
 end;
 
-
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   oProduto.codigo := StrToIntDef(edtProdutoId.Text, 0);
@@ -134,7 +133,6 @@ begin
   end;
 end;
 
-
 procedure TfrmCadProduto.QryListagemAfterScroll(DataSet: TDataSet);
 var
   Picture: TPicture;
@@ -161,7 +159,6 @@ begin
     panelImagem.Visible := False; // Esconde o painel se não houver imagem
   end;
 end;
-
 
 procedure TfrmCadProduto.SearchBox1Change(Sender: TObject);
 var
