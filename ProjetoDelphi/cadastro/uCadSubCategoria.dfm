@@ -4,6 +4,7 @@
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
+    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
       inherited grdListagem: TDBGrid
         Top = 41
@@ -35,13 +36,12 @@
             Visible = True
           end>
       end
-      inherited Panel6: TPanel
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 892
-      end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 892
+      ExplicitHeight = 532
       object Label1: TLabel
         Left = 169
         Top = 25
@@ -116,6 +116,9 @@
       FieldName = 'Descri'#231#227'oCategoria'
       Size = 30
     end
+  end
+  inherited dtsListagem: TDataSource
+    Top = 32
   end
   inherited ImageList1: TImageList
     Left = 847

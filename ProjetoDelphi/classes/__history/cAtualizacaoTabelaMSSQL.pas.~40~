@@ -29,6 +29,7 @@ type
     procedure Usuario;
     procedure AcaoAcesso;
     procedure UsuariosAcaoAcesso;
+    procedure SubCategoria;
 
   protected
 
@@ -112,6 +113,23 @@ begin
   end;
 end;
 
+procedure TAtualizacaoTabelaMSSQL.SubCategoria;
+begin
+  if not TabelaExiste('subCategorias') then
+  begin
+    ExecutaDiretoBancoDeDados(
+   'CREATE TABLE subCategorias (' +
+      ' subCategoriaId INT IDENTITY(1,1) NOT NULL,' +
+      ' descricao VARCHAR(30) NULL,' +
+      ' categoriaId INT NOT NULL,' +
+      ' PRIMARY KEY (subCategoriaId),' +
+      ' CONSTRAINT FK_SubCategoriasCategorias FOREIGN KEY (categoriaId)' +
+      ' REFERENCES categorias(categoriaId) ON DELETE CASCADE ON UPDATE CASCADE)'
+    );
+  end;
+end;
+
+
 procedure TAtualizacaoTabelaMSSQL.Cliente;
 begin
   if not TabelaExiste('clientes') then
@@ -120,6 +138,7 @@ begin
   		'CREATE TABLE clientes( '+
     	'clienteId int IDENTITY(1,1) NOT NULL, '+
     	'nome varchar(60) NULL, '+
+      'status varchar(20) null '+
       'tipoPessoa varchar(10) null '+
       'cpfCnpj varchar(14) null '+
      	'endereco varchar(60) null, '+
@@ -147,6 +166,7 @@ begin
       'descricao varchar(255) null, '+
       'valor decimal(18,5) default 0.00000 null, '+
       'quantidade decimal(18,5) default 0.00000 null, '+
+      'imagem BLOB null,'+
       'categoriaId int null, '+
       'PRIMARY KEY (produtoId), '+
       'CONSTRAINT FK_ProdutosCategorias '+

@@ -10,6 +10,7 @@ inherited frmCadUsuario: TfrmCadUsuario
   inherited pgcPrincipal: TPageControl
     Width = 710
     Height = 452
+    ActivePage = tabManutencao
     ExplicitWidth = 710
     ExplicitHeight = 452
     inherited tabListagem: TTabSheet
@@ -46,8 +47,6 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
       inherited Panel6: TPanel
         Width = 702
-        ExplicitLeft = 0
-        ExplicitTop = 0
         ExplicitWidth = 702
         inherited SearchBox1: TSearchBox
           OnChange = SearchBox1Change
@@ -55,6 +54,8 @@ inherited frmCadUsuario: TfrmCadUsuario
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 702
       ExplicitHeight = 424
       object edtUsuarioId: TLabeledEdit

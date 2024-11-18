@@ -155,7 +155,7 @@ begin
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
     Qry.SQL.Add('INSERT INTO produtos (nome, descricao, valor, quantidade, categoriaId, subCategoriaId, imagem) ' +
-                'VALUES (:nome, :descricao, :valor, :quantidade, :categoriaId,  :subCategoriaId, :imagem)');
+                'VALUES (:nome, :descricao, :valor, :quantidade, :categoriaId, ;subCategoriaId, :imagem)');
 
     Qry.ParamByName('nome').AsString := F_nome;
     Qry.ParamByName('descricao').AsString := F_descricao;

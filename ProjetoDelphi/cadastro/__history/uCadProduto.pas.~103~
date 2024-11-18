@@ -7,17 +7,10 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.Grids, Vcl.DBGrids,
   Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uCadCategoria, System.ImageList, Vcl.ImgList, uRelCadProduto;
+  RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uCadCategoria, System.ImageList, Vcl.ImgList, uRelCadProduto, Vcl.WinXCtrls;
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)
-    QryListagemprodutoId: TIntegerField;
-    QryListagemnome: TWideStringField;
-    QryListagemdescricao: TWideStringField;
-    QryListagemvalor: TFloatField;
-    QryListagemquantidade: TFloatField;
-    QryListagemcategoriaId: TIntegerField;
-    QryListagemDescricaoCategoria: TWideStringField;
     edtProdutoId: TLabeledEdit;
     edtNome: TLabeledEdit;
     edtDescricao: TMemo;
@@ -27,21 +20,35 @@ type
     Label3: TLabel;
     edtQuantidade: TCurrencyEdit;
     lkpCategoria: TDBLookupComboBox;
-    QryCategoria: TZQuery;
-    QryCategoriacategoriaId: TIntegerField;
-    QryCategoriadescricao: TWideStringField;
-    dtsCategoria: TDataSource;
     Label4: TLabel;
     Label5: TLabel;
     btnCarregarImagem: TBitBtn;
     btnRemoverImagem: TBitBtn;
     Panel1: TPanel;
     imgProduto: TImage;
-    QryListagemimagem: TBlobField;
     panelImagem: TPanel;
     imgProdutoPreview: TImage;
     Label6: TLabel;
     Panel3: TPanel;
+    QryCategoria: TZQuery;
+    QryCategoriacategoriaId: TIntegerField;
+    QryCategoriadescricao: TWideStringField;
+    dtsCategoria: TDataSource;
+    lkpSubCategoria: TDBLookupComboBox;
+    Label7: TLabel;
+    QrySubCategoria: TZQuery;
+    dtsSubCategoria: TDataSource;
+    QrySubCategoriasubCategoriaId: TIntegerField;
+    QrySubCategoriadescricao: TWideStringField;
+    QrySubCategoriacategoriaId: TIntegerField;
+    QryListagemprodutoId: TIntegerField;
+    QryListagemnome: TWideStringField;
+    QryListagemdescricao: TWideStringField;
+    QryListagemvalor: TFloatField;
+    QryListagemquantidade: TFloatField;
+    QryListagemCategoria: TWideStringField;
+    QryListagemSubCategoria: TWideStringField;
+    QryListagemimagem: TBlobField;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -51,6 +58,7 @@ type
     procedure btnRemoverImagemClick(Sender: TObject);
     procedure QryListagemAfterScroll(DataSet: TDataSet);
     procedure btnImprimirClick(Sender: TObject);
+    procedure SearchBox1Change(Sender: TObject);
   private
     { Private declarations }
     oProduto: TProduto;
@@ -72,9 +80,20 @@ uses uDTMConexao, uPrincipal;
 {$region 'Override'}
 function TfrmCadProduto.Apagar: Boolean;
 begin
-  if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
-    Result := oProduto.Apagar;
+  try
+    // Seleciona o produto e tenta apagá-lo
+    if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
+      Result := oProduto.Apagar;
+  except
+    on E: Exception do
+    begin
+      // Exibe a mensagem amigável ao usuário
+      ShowMessage(E.Message);
+      Result := False;
+    end;
+  end;
 end;
+
 
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
@@ -82,6 +101,7 @@ begin
   oProduto.nome := edtNome.Text;
   oProduto.descricao := edtDescricao.Text;
   oProduto.categoriaId := lkpCategoria.KeyValue;
+  oProduto.subCategoriaId := lkpSubCategoria.KeyValue;
   oProduto.valor := edtValor.Value;
   oProduto.quantidade := edtQuantidade.Value;
 
@@ -131,6 +151,44 @@ begin
 end;
 
 
+procedure TfrmCadProduto.SearchBox1Change(Sender: TObject);
+var
+  SearchText: string;
+begin
+  inherited;
+
+  // Obtém o texto digitado pelo usuário
+  SearchText := Trim(TSearchBox(Sender).Text);
+
+  // Desabilita a query para ajuste do SQL
+  QryListagem.Close;
+
+  // Ajusta o SQL dinamicamente para aplicar o filtro em todos os campos
+  if SearchText <> '' then
+  begin
+    QryListagem.SQL.Text :=
+      'SELECT * FROM Produtos ' +
+      'WHERE nome LIKE :SearchText ' +
+      'OR descricaoCategoria LIKE :SearchText ' +
+      'OR valor LIKE :SearchText ' +
+      'OR quantidade LIKE :SearchText ' +
+      'OR produtoId LIKE :SearchText ' +
+      'OR categoriaId LIKE :SearchText ';
+
+
+    // Adiciona o parâmetro para o texto de pesquisa
+    QryListagem.ParamByName('SearchText').AsString := '%' + SearchText + '%';
+  end
+  else
+  begin
+    // Restaura o SQL original sem filtro
+    QryListagem.SQL.Text := 'SELECT * FROM Produtos';
+  end;
+
+  // Reabre a query para atualizar a grid
+  QryListagem.Open;
+end;
+
 {$endregion}
 
 procedure TfrmCadProduto.btnAlterarClick(Sender: TObject);
@@ -143,6 +201,7 @@ begin
     edtNome.Text := oProduto.nome;
     edtDescricao.Text := oProduto.descricao;
     lkpCategoria.KeyValue := oProduto.categoriaId;
+    lkpSubCategoria.KeyValue := oProduto.subCategoriaId;
     edtValor.Value := oProduto.valor;
     edtQuantidade.Value := oProduto.quantidade;
 
@@ -170,7 +229,6 @@ begin
   inherited;
 end;
 
-
 procedure TfrmCadProduto.btnCarregarImagemClick(Sender: TObject);
 var
   OpenDialog: TOpenDialog;
@@ -187,6 +245,7 @@ begin
   end;
 end;
 
+
 procedure TfrmCadProduto.btnImprimirClick(Sender: TObject);
 var
   Relatorio: TfrmRelCadProduto;
@@ -195,18 +254,24 @@ begin
   Relatorio := TfrmRelCadProduto.Create(nil);
   try
     // Abre a conexão com os dados do cliente
+    Relatorio.QryProdutos.Close;
     Relatorio.QryProdutos.Open;
 
     // Prepara o relatório para impressão
     if Relatorio.Relatorio.Prepare then
     begin
       // Exibe a caixa de diálogo de impressão e imprime o relatório
-      Relatorio.Relatorio.Print;
+      Relatorio.Relatorio.Preview;
+      if MessageDlg('Deseja imprimir este relatório?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        Relatorio.Relatorio.Print;
+      end;
     end
     else
     begin
-      ShowMessage('Falha ao preparar o relatório.');
+      ShowMessage('Falha ao preparar o relatório. Verifique os dados e tente novamente.');
     end;
+
 
   finally
     // Fecha a conexão com os dados e libera o formulário

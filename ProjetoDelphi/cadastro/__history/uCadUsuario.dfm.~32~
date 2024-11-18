@@ -1,23 +1,25 @@
 inherited frmCadUsuario: TfrmCadUsuario
   Caption = 'Cadastro de Usu'#225'rio'
-  ClientHeight = 390
-  ClientWidth = 715
+  ClientHeight = 507
+  ClientWidth = 840
   Position = poScreenCenter
-  ExplicitWidth = 721
-  ExplicitHeight = 419
+  ExplicitWidth = 846
+  ExplicitHeight = 536
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    Width = 585
-    Height = 335
-    ExplicitWidth = 585
-    ExplicitHeight = 335
+    Width = 710
+    Height = 452
+    ExplicitWidth = 710
+    ExplicitHeight = 452
     inherited tabListagem: TTabSheet
-      ExplicitWidth = 577
-      ExplicitHeight = 307
+      ExplicitWidth = 702
+      ExplicitHeight = 424
       inherited grdListagem: TDBGrid
-        Width = 754
-        Height = 307
+        Top = 41
+        Width = 702
+        Height = 383
+        Align = alClient
         DataSource = dtsListagem
         Columns = <
           item
@@ -37,19 +39,24 @@ inherited frmCadUsuario: TfrmCadUsuario
           end>
       end
       inherited pExportar: TPanel
-        Left = 208
-        Top = 89
-        ExplicitLeft = 208
-        ExplicitTop = 89
-        inherited Panel5: TPanel
-          ExplicitLeft = 1
-          ExplicitTop = 1
+        Left = 269
+        Top = 84
+        ExplicitLeft = 269
+        ExplicitTop = 84
+      end
+      inherited Panel6: TPanel
+        Width = 702
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 702
+        inherited SearchBox1: TSearchBox
+          OnChange = SearchBox1Change
         end
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitWidth = 577
-      ExplicitHeight = 307
+      ExplicitWidth = 702
+      ExplicitHeight = 424
       object edtUsuarioId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -90,21 +97,21 @@ inherited frmCadUsuario: TfrmCadUsuario
     end
   end
   inherited pnlRodape: TPanel
-    Top = 335
-    Width = 715
-    ExplicitTop = 335
-    ExplicitWidth = 715
+    Top = 452
+    Width = 840
+    ExplicitTop = 452
+    ExplicitWidth = 840
   end
   inherited Panel2: TPanel
-    Left = 585
-    Height = 335
-    ExplicitLeft = 585
-    ExplicitHeight = 335
+    Left = 710
+    Height = 452
+    ExplicitLeft = 710
+    ExplicitHeight = 452
     inherited btnFechar: TBitBtn
       Left = 12
-      Top = 285
+      Top = 395
       ExplicitLeft = 12
-      ExplicitTop = 285
+      ExplicitTop = 395
     end
   end
   inherited QryListagem: TZQuery
@@ -137,6 +144,8 @@ inherited frmCadUsuario: TfrmCadUsuario
     Top = 121
   end
   inherited ImageList1: TImageList
+    Height = 32
+    Width = 32
     Bitmap = {
       494C010102000500040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040

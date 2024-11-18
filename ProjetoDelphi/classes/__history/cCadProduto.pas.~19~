@@ -155,14 +155,13 @@ begin
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
     Qry.SQL.Add('INSERT INTO produtos (nome, descricao, valor, quantidade, categoriaId, subCategoriaId, imagem) ' +
-                'VALUES (:nome, :descricao, :valor, :quantidade, :categoriaId,  :subCategoriaId, :imagem)');
+                'VALUES (:nome, :descricao, :valor, :quantidade, :categoriaId, ;subCategoriaId, :imagem)');
 
     Qry.ParamByName('nome').AsString := F_nome;
     Qry.ParamByName('descricao').AsString := F_descricao;
     Qry.ParamByName('valor').AsFloat := F_valor;
     Qry.ParamByName('quantidade').AsFloat := F_quantidade;
     Qry.ParamByName('categoriaId').AsInteger := F_categoriaId;
-    Qry.ParamByName('subCategoriaId').AsInteger := F_subCategoriaId;
 
     if F_imagem.Size > 0 then
     begin
@@ -195,7 +194,7 @@ begin
     Qry := TZQuery.Create(nil);
     Qry.Connection := ConexaoDB;
     Qry.SQL.Clear;
-    Qry.SQL.Add('SELECT produtoId, nome, descricao, valor, quantidade, categoriaId, subCategoriaId, imagem ' +
+    Qry.SQL.Add('SELECT produtoId, nome, descricao, valor, quantidade, categoriaId, imagem ' +
                 'FROM produtos WHERE produtoId = :produtoId');
     Qry.ParamByName('produtoId').AsInteger := id;
 
@@ -208,7 +207,6 @@ begin
       F_valor := Qry.FieldByName('valor').AsFloat;
       F_quantidade := Qry.FieldByName('quantidade').AsFloat;
       F_categoriaId := Qry.FieldByName('categoriaId').AsInteger;
-      F_subCategoriaId := Qry.FieldByName('subCategoriaId').AsInteger;
 
       // Carrega a imagem do banco de dados, se disponível
       F_imagem.Clear;

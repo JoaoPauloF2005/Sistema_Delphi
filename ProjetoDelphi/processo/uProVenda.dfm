@@ -10,7 +10,6 @@ inherited frmProVenda: TfrmProVenda
   inherited pgcPrincipal: TPageControl
     Width = 911
     Height = 555
-    ActivePage = tabManutencao
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
@@ -64,12 +63,12 @@ inherited frmProVenda: TfrmProVenda
       end
       inherited Panel6: TPanel
         Width = 903
-        ExplicitLeft = 0
-        ExplicitTop = 0
         ExplicitWidth = 903
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       object Label4: TLabel
@@ -379,9 +378,6 @@ inherited frmProVenda: TfrmProVenda
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 3
-          ExplicitLeft = 380
-          ExplicitTop = 107
-          ExplicitWidth = 185
           object SearchBox2: TSearchBox
             Left = 0
             Top = 12

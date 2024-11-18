@@ -10,18 +10,17 @@ inherited frmCadProduto: TfrmCadProduto
   inherited pgcPrincipal: TPageControl
     Width = 1328
     Height = 538
+    ActivePage = tabManutencao
     ExplicitWidth = 1328
     ExplicitHeight = 538
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       inherited grdListagem: TDBGrid
         AlignWithMargins = True
-        Top = 40
+        Top = 81
         Width = 1023
-        Height = 470
+        Height = 429
         Margins.Left = 0
         Margins.Top = 40
         Margins.Right = 0
@@ -30,59 +29,44 @@ inherited frmCadProduto: TfrmCadProduto
         DataSource = dtsListagem
         Columns = <
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'produtoId'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
-            Title.Alignment = taCenter
-            Width = 347
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'valor'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'quantidade'
-            Title.Alignment = taCenter
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
-            FieldName = 'categoriaId'
-            Title.Alignment = taCenter
-            Visible = False
+            FieldName = 'Categoria'
+            Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
-            FieldName = 'DescricaoCategoria'
-            Visible = False
+            FieldName = 'SubCategoria'
+            Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'imagem'
-            Visible = False
+            Visible = True
           end>
       end
       inherited pExportar: TPanel
@@ -92,16 +76,20 @@ inherited frmCadProduto: TfrmCadProduto
         ExplicitLeft = 357
         ExplicitTop = 116
       end
-      inherited SearchBox1: TSearchBox
-        Top = 7
-        OnChange = SearchBox1Change
-        ExplicitTop = 7
+      inherited Panel6: TPanel
+        Width = 1320
+        ExplicitWidth = 1320
+        inherited SearchBox1: TSearchBox
+          Top = 7
+          OnChange = SearchBox1Change
+          ExplicitTop = 7
+        end
       end
       object panelImagem: TPanel
         Left = 1023
-        Top = 0
+        Top = 41
         Width = 297
-        Height = 510
+        Height = 469
         Align = alRight
         TabOrder = 1
         object imgProdutoPreview: TImage
@@ -141,8 +129,8 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
+      ExplicitLeft = 2
+      ExplicitTop = 22
       ExplicitWidth = 1320
       ExplicitHeight = 510
       object Label1: TLabel
@@ -180,6 +168,13 @@ inherited frmCadProduto: TfrmCadProduto
         Height = 13
         Caption = 'Foto'
       end
+      object Label7: TLabel
+        Left = 729
+        Top = 25
+        Width = 65
+        Height = 13
+        Caption = 'SubCategoria'
+      end
       object edtProdutoId: TLabeledEdit
         Tag = 1
         Left = 11
@@ -210,7 +205,7 @@ inherited frmCadProduto: TfrmCadProduto
       object edtDescricao: TMemo
         Left = 12
         Top = 101
-        Width = 867
+        Width = 894
         Height = 89
         Ctl3D = True
         DoubleBuffered = False
@@ -241,11 +236,10 @@ inherited frmCadProduto: TfrmCadProduto
       object lkpCategoria: TDBLookupComboBox
         Left = 534
         Top = 40
-        Width = 344
+        Width = 177
         Height = 21
         KeyField = 'categoriaId'
         ListField = 'descricao'
-        ListSource = dtsCategoria
         TabOrder = 2
       end
       object btnCarregarImagem: TBitBtn
@@ -342,6 +336,15 @@ inherited frmCadProduto: TfrmCadProduto
           Stretch = True
         end
       end
+      object lkpSubCategoria: TDBLookupComboBox
+        Left = 729
+        Top = 40
+        Width = 177
+        Height = 21
+        KeyField = 'subCategoriaId'
+        ListField = 'descricao'
+        TabOrder = 9
+      end
     end
   end
   inherited pnlRodape: TPanel
@@ -365,54 +368,49 @@ inherited frmCadProduto: TfrmCadProduto
   inherited QryListagem: TZQuery
     AfterScroll = QryListagemAfterScroll
     SQL.Strings = (
-      'SELECT p.produtoId,'
-      #9'     p.nome,'
-      #9'     p.descricao,'
-      #9'     p.valor,'
-      #9'     p.quantidade,'
-      '                     p.imagem,'
-      #9'     p.categoriaId,'
-      #9'     c.descricao As DescricaoCategoria'
-      'From produtos as p'
-      #9'LEFT JOIN categorias as c on c.categoriaId = p.categoriaId')
+      'SELECT '
+      '    p.produtoId,'
+      '    p.nome,'
+      '    p.descricao,'
+      '    p.valor,'
+      '    p.quantidade,'
+      '    p.imagem,'
+      '    c.descricao AS Categoria,'
+      '    sc.descricao AS SubCategoria'
+      'FROM '
+      '    Produtos p'
+      'LEFT JOIN '
+      '    Categorias c ON p.categoriaId = c.categoriaId'
+      'LEFT JOIN '
+      '    SubCategorias sc ON p.subCategoriaId = sc.subCategoriaId;')
     Left = 775
     Top = 140
     object QryListagemprodutoId: TIntegerField
-      DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
       ReadOnly = True
     end
     object QryListagemnome: TWideStringField
-      DisplayLabel = 'Nome'
       FieldName = 'nome'
-      Required = True
       Size = 60
     end
     object QryListagemdescricao: TWideStringField
-      DisplayLabel = 'Descri'#231#227'o'
       FieldName = 'descricao'
       Size = 255
     end
     object QryListagemvalor: TFloatField
-      DisplayLabel = 'Valor'
       FieldName = 'valor'
-      Required = True
-      DisplayFormat = 'R$ #,##0.00'
     end
     object QryListagemquantidade: TFloatField
-      DisplayLabel = 'Quantidade'
       FieldName = 'quantidade'
-      Required = True
     end
-    object QryListagemcategoriaId: TIntegerField
-      DisplayLabel = 'Cod. Categoria'
-      FieldName = 'categoriaId'
-      Required = True
-    end
-    object QryListagemDescricaoCategoria: TWideStringField
-      DisplayLabel = 'Descri'#231#227'o da Categoria'
-      FieldName = 'DescricaoCategoria'
+    object QryListagemCategoria: TWideStringField
+      FieldName = 'Categoria'
       Size = 30
+    end
+    object QryListagemSubCategoria: TWideStringField
+      FieldName = 'SubCategoria'
+      Required = True
+      Size = 100
     end
     object QryListagemimagem: TBlobField
       FieldName = 'imagem'
@@ -436,7 +434,7 @@ inherited frmCadProduto: TfrmCadProduto
       'Select categoriaId, descricao from categorias')
     Params = <>
     Left = 720
-    Top = 260
+    Top = 259
     object QryCategoriacategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
@@ -452,5 +450,38 @@ inherited frmCadProduto: TfrmCadProduto
     DataSet = QryCategoria
     Left = 932
     Top = 248
+  end
+  object QrySubCategoria: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    AfterScroll = QryListagemAfterScroll
+    SQL.Strings = (
+      'SELECT '
+      '  subCategoriaId, '
+      '  descricao, '
+      '  categoriaId '
+      'FROM '
+      '  subCategorias '
+      '')
+    Params = <>
+    Left = 790
+    Top = 376
+    object QrySubCategoriasubCategoriaId: TIntegerField
+      FieldName = 'subCategoriaId'
+      ReadOnly = True
+    end
+    object QrySubCategoriadescricao: TWideStringField
+      FieldName = 'descricao'
+      Required = True
+      Size = 100
+    end
+    object QrySubCategoriacategoriaId: TIntegerField
+      FieldName = 'categoriaId'
+      Required = True
+    end
+  end
+  object dtsSubCategoria: TDataSource
+    DataSet = QrySubCategoria
+    Left = 911
+    Top = 347
   end
 end

@@ -159,22 +159,26 @@ procedure TAtualizacaoTabelaMSSQL.Produto;
 begin
   if not TabelaExiste('produtos') then
   begin
-  	ExecutaDiretoBancoDeDados(
-      'CREATE TABLE produtos( '+
-      'produtoId int IDENTITY(1,1) NOT NULL, '+
-      'nome varchar(60) NULL, '+
-      'descricao varchar(255) null, '+
-      'valor decimal(18,5) default 0.00000 null, '+
-      'quantidade decimal(18,5) default 0.00000 null, '+
-      'imagem BLOB null,'+
-      'categoriaId int null, '+
-      'PRIMARY KEY (produtoId), '+
-      'CONSTRAINT FK_ProdutosCategorias '+
-      'FOREIGN KEY (categoriaId) references categorias(categoriaId) '+
-  		')'
+    ExecutaDiretoBancoDeDados(
+      'CREATE TABLE produtos( ' +
+      'produtoId int IDENTITY(1,1) NOT NULL, ' +
+      'nome varchar(60) NULL, ' +
+      'descricao varchar(255) null, ' +
+      'valor decimal(18,5) default 0.00000 null, ' +
+      'quantidade decimal(18,5) default 0.00000 null, ' +
+      'imagem BLOB null, ' +
+      'categoriaId int null, ' +
+      'subCategoriaId int null, ' +
+      'PRIMARY KEY (produtoId), ' +
+      'CONSTRAINT FK_ProdutosCategorias ' +
+      'FOREIGN KEY (categoriaId) references categorias(categoriaId), ' +
+      'CONSTRAINT FK_ProdutosSubCategorias ' +
+      'FOREIGN KEY (subCategoriaId) references subCategorias(subCategoriaId) ' +
+      ')'
     );
   end;
 end;
+
 
 procedure TAtualizacaoTabelaMSSQL.Vendas;
 begin

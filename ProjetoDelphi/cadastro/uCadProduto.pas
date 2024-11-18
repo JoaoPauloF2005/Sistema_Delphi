@@ -11,13 +11,6 @@ uses
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)
-    QryListagemprodutoId: TIntegerField;
-    QryListagemnome: TWideStringField;
-    QryListagemdescricao: TWideStringField;
-    QryListagemvalor: TFloatField;
-    QryListagemquantidade: TFloatField;
-    QryListagemcategoriaId: TIntegerField;
-    QryListagemDescricaoCategoria: TWideStringField;
     edtProdutoId: TLabeledEdit;
     edtNome: TLabeledEdit;
     edtDescricao: TMemo;
@@ -33,7 +26,6 @@ type
     btnRemoverImagem: TBitBtn;
     Panel1: TPanel;
     imgProduto: TImage;
-    QryListagemimagem: TBlobField;
     panelImagem: TPanel;
     imgProdutoPreview: TImage;
     Label6: TLabel;
@@ -42,6 +34,21 @@ type
     QryCategoriacategoriaId: TIntegerField;
     QryCategoriadescricao: TWideStringField;
     dtsCategoria: TDataSource;
+    lkpSubCategoria: TDBLookupComboBox;
+    Label7: TLabel;
+    QrySubCategoria: TZQuery;
+    dtsSubCategoria: TDataSource;
+    QrySubCategoriasubCategoriaId: TIntegerField;
+    QrySubCategoriadescricao: TWideStringField;
+    QrySubCategoriacategoriaId: TIntegerField;
+    QryListagemprodutoId: TIntegerField;
+    QryListagemnome: TWideStringField;
+    QryListagemdescricao: TWideStringField;
+    QryListagemvalor: TFloatField;
+    QryListagemquantidade: TFloatField;
+    QryListagemCategoria: TWideStringField;
+    QryListagemSubCategoria: TWideStringField;
+    QryListagemimagem: TBlobField;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -52,6 +59,7 @@ type
     procedure QryListagemAfterScroll(DataSet: TDataSet);
     procedure btnImprimirClick(Sender: TObject);
     procedure SearchBox1Change(Sender: TObject);
+    procedure lkpCategoriaCloseUp(Sender: TObject);
   private
     { Private declarations }
     oProduto: TProduto;
@@ -94,6 +102,7 @@ begin
   oProduto.nome := edtNome.Text;
   oProduto.descricao := edtDescricao.Text;
   oProduto.categoriaId := lkpCategoria.KeyValue;
+  oProduto.subCategoriaId := lkpSubCategoria.KeyValue;
   oProduto.valor := edtValor.Value;
   oProduto.quantidade := edtQuantidade.Value;
 
@@ -114,6 +123,17 @@ begin
   else if EstadoDoCadastro = ecAlterar then
     Result := oProduto.Atualizar;
 end;
+
+procedure TfrmCadProduto.lkpCategoriaCloseUp(Sender: TObject);
+begin
+  if not VarIsNull(lkpCategoria.KeyValue) then
+  begin
+    QrySubCategoria.Close;
+    QrySubCategoria.ParamByName('categoriaId').AsInteger := lkpCategoria.KeyValue;
+    QrySubCategoria.Open;
+  end;
+end;
+
 
 procedure TfrmCadProduto.QryListagemAfterScroll(DataSet: TDataSet);
 var
@@ -193,6 +213,13 @@ begin
     edtNome.Text := oProduto.nome;
     edtDescricao.Text := oProduto.descricao;
     lkpCategoria.KeyValue := oProduto.categoriaId;
+
+    // Carrega as subcategorias correspondentes à categoria selecionada
+    QrySubCategoria.Close;
+    QrySubCategoria.ParamByName('categoriaId').AsInteger := oProduto.categoriaId;
+    QrySubCategoria.Open;
+
+    lkpSubCategoria.KeyValue := oProduto.subCategoriaId;
     edtValor.Value := oProduto.valor;
     edtQuantidade.Value := oProduto.quantidade;
 
@@ -219,6 +246,7 @@ begin
 
   inherited;
 end;
+
 
 procedure TfrmCadProduto.btnCarregarImagemClick(Sender: TObject);
 var
@@ -305,7 +333,9 @@ procedure TfrmCadProduto.FormShow(Sender: TObject);
 begin
   inherited;
   QryCategoria.Open;
+  QrySubCategoria.Close;
 end;
+
 
 end.
 

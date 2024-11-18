@@ -11,13 +11,6 @@ uses
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)
-    QryListagemprodutoId: TIntegerField;
-    QryListagemnome: TWideStringField;
-    QryListagemdescricao: TWideStringField;
-    QryListagemvalor: TFloatField;
-    QryListagemquantidade: TFloatField;
-    QryListagemcategoriaId: TIntegerField;
-    QryListagemDescricaoCategoria: TWideStringField;
     edtProdutoId: TLabeledEdit;
     edtNome: TLabeledEdit;
     edtDescricao: TMemo;
@@ -27,21 +20,35 @@ type
     Label3: TLabel;
     edtQuantidade: TCurrencyEdit;
     lkpCategoria: TDBLookupComboBox;
-    QryCategoria: TZQuery;
-    QryCategoriacategoriaId: TIntegerField;
-    QryCategoriadescricao: TWideStringField;
-    dtsCategoria: TDataSource;
     Label4: TLabel;
     Label5: TLabel;
     btnCarregarImagem: TBitBtn;
     btnRemoverImagem: TBitBtn;
     Panel1: TPanel;
     imgProduto: TImage;
-    QryListagemimagem: TBlobField;
     panelImagem: TPanel;
     imgProdutoPreview: TImage;
     Label6: TLabel;
     Panel3: TPanel;
+    QryCategoria: TZQuery;
+    QryCategoriacategoriaId: TIntegerField;
+    QryCategoriadescricao: TWideStringField;
+    dtsCategoria: TDataSource;
+    lkpSubCategoria: TDBLookupComboBox;
+    Label7: TLabel;
+    QrySubCategoria: TZQuery;
+    dtsSubCategoria: TDataSource;
+    QrySubCategoriasubCategoriaId: TIntegerField;
+    QrySubCategoriadescricao: TWideStringField;
+    QrySubCategoriacategoriaId: TIntegerField;
+    QryListagemprodutoId: TIntegerField;
+    QryListagemnome: TWideStringField;
+    QryListagemdescricao: TWideStringField;
+    QryListagemvalor: TFloatField;
+    QryListagemquantidade: TFloatField;
+    QryListagemCategoria: TWideStringField;
+    QryListagemSubCategoria: TWideStringField;
+    QryListagemimagem: TBlobField;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -73,9 +80,20 @@ uses uDTMConexao, uPrincipal;
 {$region 'Override'}
 function TfrmCadProduto.Apagar: Boolean;
 begin
-  if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
-    Result := oProduto.Apagar;
+  try
+    // Seleciona o produto e tenta apagá-lo
+    if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then
+      Result := oProduto.Apagar;
+  except
+    on E: Exception do
+    begin
+      // Exibe a mensagem amigável ao usuário
+      ShowMessage(E.Message);
+      Result := False;
+    end;
+  end;
 end;
+
 
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
@@ -83,6 +101,7 @@ begin
   oProduto.nome := edtNome.Text;
   oProduto.descricao := edtDescricao.Text;
   oProduto.categoriaId := lkpCategoria.KeyValue;
+  oProduto.subCategoriaId := lkpSubCategoria.KeyValue;
   oProduto.valor := edtValor.Value;
   oProduto.quantidade := edtQuantidade.Value;
 
@@ -150,7 +169,7 @@ begin
     QryListagem.SQL.Text :=
       'SELECT * FROM Produtos ' +
       'WHERE nome LIKE :SearchText ' +
-      'OR descricao LIKE :SearchText ' +
+      'OR descricaoCategoria LIKE :SearchText ' +
       'OR valor LIKE :SearchText ' +
       'OR quantidade LIKE :SearchText ' +
       'OR produtoId LIKE :SearchText ' +
@@ -182,6 +201,7 @@ begin
     edtNome.Text := oProduto.nome;
     edtDescricao.Text := oProduto.descricao;
     lkpCategoria.KeyValue := oProduto.categoriaId;
+    lkpSubCategoria.KeyValue := oProduto.subCategoriaId;
     edtValor.Value := oProduto.valor;
     edtQuantidade.Value := oProduto.quantidade;
 
@@ -234,18 +254,24 @@ begin
   Relatorio := TfrmRelCadProduto.Create(nil);
   try
     // Abre a conexão com os dados do cliente
+    Relatorio.QryProdutos.Close;
     Relatorio.QryProdutos.Open;
 
     // Prepara o relatório para impressão
     if Relatorio.Relatorio.Prepare then
     begin
       // Exibe a caixa de diálogo de impressão e imprime o relatório
-      Relatorio.Relatorio.Print;
+      Relatorio.Relatorio.Preview;
+      if MessageDlg('Deseja imprimir este relatório?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        Relatorio.Relatorio.Print;
+      end;
     end
     else
     begin
-      ShowMessage('Falha ao preparar o relatório.');
+      ShowMessage('Falha ao preparar o relatório. Verifique os dados e tente novamente.');
     end;
+
 
   finally
     // Fecha a conexão com os dados e libera o formulário
@@ -288,6 +314,7 @@ procedure TfrmCadProduto.FormShow(Sender: TObject);
 begin
   inherited;
   QryCategoria.Open;
+  QrySubCategoria.Open;
 end;
 
 end.
