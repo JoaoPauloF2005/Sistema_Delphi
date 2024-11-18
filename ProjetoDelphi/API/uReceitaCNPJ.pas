@@ -58,7 +58,6 @@ begin
   edtEstado.Caption := JSON.GetValue<string>('uf', '');
 end;
 
-
 procedure TfrmReceitaCNPJ.btnAcessarClick(Sender: TObject);
 var
   JSONResponse: string;

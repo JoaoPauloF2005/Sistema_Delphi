@@ -3,9 +3,9 @@ object frmReceitaCNPJ: TfrmReceitaCNPJ
   Top = 0
   BiDiMode = bdLeftToRight
   BorderStyle = bsDialog
-  Caption = 'Consulta de Dados'
+  Caption = 'frmReceitaCNPJ'
   ClientHeight = 258
-  ClientWidth = 387
+  ClientWidth = 393
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -188,13 +188,12 @@ object frmReceitaCNPJ: TfrmReceitaCNPJ
   object Panel1: TPanel
     Left = 0
     Top = 190
-    Width = 387
+    Width = 393
     Height = 68
     Align = alBottom
     Color = 14342874
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 393
     object Label9: TLabel
       Left = 131
       Top = 5

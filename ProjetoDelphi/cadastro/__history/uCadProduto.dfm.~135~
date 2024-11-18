@@ -34,36 +34,43 @@ inherited frmCadProduto: TfrmCadProduto
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'valor'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'quantidade'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'Categoria'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'SubCategoria'
             Visible = True
           end
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'imagem'
             Visible = True
@@ -238,11 +245,11 @@ inherited frmCadProduto: TfrmCadProduto
         Top = 40
         Width = 177
         Height = 21
-        DataSource = dtsCategoria
         KeyField = 'categoriaId'
         ListField = 'descricao'
         ListSource = dtsCategoria
         TabOrder = 2
+        OnCloseUp = lkpCategoriaCloseUp
       end
       object btnCarregarImagem: TBitBtn
         Tag = 99
@@ -343,7 +350,6 @@ inherited frmCadProduto: TfrmCadProduto
         Top = 40
         Width = 177
         Height = 21
-        DataSource = dtsSubCategoria
         KeyField = 'subCategoriaId'
         ListField = 'descricao'
         ListSource = dtsSubCategoria
@@ -390,21 +396,28 @@ inherited frmCadProduto: TfrmCadProduto
     Left = 775
     Top = 140
     object QryListagemprodutoId: TIntegerField
+      Alignment = taCenter
+      DisplayLabel = 'C'#243'digo'
       FieldName = 'produtoId'
       ReadOnly = True
     end
     object QryListagemnome: TWideStringField
+      DisplayLabel = 'Nome'
       FieldName = 'nome'
       Size = 60
     end
     object QryListagemdescricao: TWideStringField
+      DisplayLabel = 'Descri'#231#227'o'
       FieldName = 'descricao'
       Size = 255
     end
     object QryListagemvalor: TFloatField
+      DisplayLabel = 'Valor'
       FieldName = 'valor'
+      EditFormat = 'R$ #,##0.00'
     end
     object QryListagemquantidade: TFloatField
+      DisplayLabel = 'Quantidade'
       FieldName = 'quantidade'
     end
     object QryListagemCategoria: TWideStringField
@@ -417,6 +430,7 @@ inherited frmCadProduto: TfrmCadProduto
       Size = 100
     end
     object QryListagemimagem: TBlobField
+      DisplayLabel = 'Imagem'
       FieldName = 'imagem'
     end
   end
@@ -451,7 +465,8 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   object dtsCategoria: TDataSource
-    Left = 932
+    DataSet = QryCategoria
+    Left = 933
     Top = 248
   end
   object QrySubCategoria: TZQuery
@@ -496,7 +511,7 @@ inherited frmCadProduto: TfrmCadProduto
   end
   object dtsSubCategoria: TDataSource
     DataSet = QrySubCategoria
-    Left = 911
+    Left = 912
     Top = 347
   end
 end

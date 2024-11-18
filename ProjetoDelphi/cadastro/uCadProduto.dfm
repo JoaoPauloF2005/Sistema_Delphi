@@ -10,7 +10,6 @@ inherited frmCadProduto: TfrmCadProduto
   inherited pgcPrincipal: TPageControl
     Width = 1328
     Height = 538
-    ActivePage = tabManutencao
     ExplicitWidth = 1328
     ExplicitHeight = 538
     inherited tabListagem: TTabSheet
@@ -34,37 +33,31 @@ inherited frmCadProduto: TfrmCadProduto
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'nome'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'valor'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'quantidade'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'Categoria'
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'SubCategoria'
             Visible = True
@@ -136,8 +129,8 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 22
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       object Label1: TLabel
@@ -402,29 +395,35 @@ inherited frmCadProduto: TfrmCadProduto
       ReadOnly = True
     end
     object QryListagemnome: TWideStringField
+      Alignment = taCenter
       DisplayLabel = 'Nome'
       FieldName = 'nome'
       Size = 60
     end
     object QryListagemdescricao: TWideStringField
+      Alignment = taCenter
       DisplayLabel = 'Descri'#231#227'o'
       FieldName = 'descricao'
       Size = 255
     end
     object QryListagemvalor: TFloatField
+      Alignment = taCenter
       DisplayLabel = 'Valor'
       FieldName = 'valor'
-      EditFormat = 'R$ #,##0.00'
+      DisplayFormat = 'R$ #,##0.00'
     end
     object QryListagemquantidade: TFloatField
+      Alignment = taCenter
       DisplayLabel = 'Quantidade'
       FieldName = 'quantidade'
     end
     object QryListagemCategoria: TWideStringField
+      Alignment = taCenter
       FieldName = 'Categoria'
       Size = 30
     end
     object QryListagemSubCategoria: TWideStringField
+      Alignment = taCenter
       FieldName = 'SubCategoria'
       Required = True
       Size = 100

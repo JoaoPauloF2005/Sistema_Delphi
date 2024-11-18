@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
-  Vcl.Buttons, System.JSON, IdSSLOpenSSL;
+  Vcl.Buttons, System.JSON, IdSSLOpenSSL, Vcl.ExtCtrls;
 
 type
   TfrmReceitaCNPJ = class(TForm)
@@ -28,13 +28,13 @@ type
     edtBairro: TLabel;
     edtCidade: TLabel;
     edtEstado: TLabel;
+    Panel1: TPanel;
+    Label9: TLabel;
     procedure btnFecharClick(Sender: TObject);
-     procedure PreencherCampos(JSON: TJSONObject);
+    procedure PreencherCampos(JSON: TJSONObject);
     procedure btnAcessarClick(Sender: TObject);
   private
     function SomenteNumeros(const AValue: string): string;
-    { Private declarations }
-
   public
     { Public declarations }
   end;
@@ -48,15 +48,16 @@ implementation
 
 procedure TfrmReceitaCNPJ.PreencherCampos(JSON: TJSONObject);
 begin
-  edtNome.Text := JSON.GetValue<string>('nome', '');
-  edtCnpj.Text  := JSON.GetValue<string>('cnpj', '');
-  edtTelefone.Text := JSON.GetValue<string>('telefone', '');
-  edtCep.Text := JSON.GetValue<string>('cep', '');
-  edtEndereco.Text := JSON.GetValue<string>('logradouro', '');
-  edtBairro.Text := JSON.GetValue<string>('bairro', '');
-  edtCidade.Text := JSON.GetValue<string>('municipio', '');
-  edtEstado.Text := JSON.GetValue<string>('uf', '');
+  edtNome.Caption := JSON.GetValue<string>('nome', '');
+  edtCnpj.Caption := JSON.GetValue<string>('cnpj', '');
+  edtTelefone.Caption := JSON.GetValue<string>('telefone', '');
+  edtCep.Caption := JSON.GetValue<string>('cep', '');
+  edtEndereco.Caption := JSON.GetValue<string>('logradouro', '');
+  edtBairro.Caption := JSON.GetValue<string>('bairro', '');
+  edtCidade.Caption := JSON.GetValue<string>('municipio', '');
+  edtEstado.Caption := JSON.GetValue<string>('uf', '');
 end;
+
 
 procedure TfrmReceitaCNPJ.btnAcessarClick(Sender: TObject);
 var
@@ -65,7 +66,7 @@ var
   HTTP: TIdHTTP;
   SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
 begin
-  if Trim(edtCNPJ.Text) = '' then
+  if Trim(edtCnpj.Caption) = '' then
   begin
     ShowMessage('Digite o CNPJ para consulta.');
     Exit;
@@ -78,18 +79,13 @@ begin
     SSLHandler.SSLOptions.Method := sslvTLSv1_2;
     SSLHandler.SSLOptions.SSLVersions := [sslvTLSv1_2];
 
-    JSONResponse := HTTP.Get('https://www.receitaws.com.br/v1/cnpj/' + Trim(SomenteNumeros(edtCNPJ.Text)));
+    // Realiza a requisição HTTP
+    JSONResponse := HTTP.Get('https://www.receitaws.com.br/v1/cnpj/' + Trim(SomenteNumeros(edtCnpj.Caption)));
     JSONObj := TJSONObject.ParseJSONValue(JSONResponse) as TJSONObject;
 
     if Assigned(JSONObj) then
     begin
-      edtNome.Text := JSONObj.GetValue<string>('nome', '');
-      edtEndereco.Text := JSONObj.GetValue<string>('logradouro', '');
-      edtBairro.Text := JSONObj.GetValue<string>('bairro', '');
-      edtCidade.Text := JSONObj.GetValue<string>('municipio', '');
-      edtEstado.Text := JSONObj.GetValue<string>('uf', '');
-      edtCEP.Text := JSONObj.GetValue<string>('cep', '');
-      edtTelefone.Text := JSONObj.GetValue<string>('telefone', '');
+      PreencherCampos(JSONObj);
     end
     else
       ShowMessage('Erro ao processar os dados da API.');
@@ -99,6 +95,7 @@ begin
   end;
   HTTP.Free;
   SSLHandler.Free;
+  ModalResult := mrOk;
 end;
 
 function TfrmReceitaCNPJ.SomenteNumeros(const AValue: string): string;
@@ -116,12 +113,12 @@ begin
   end;
 end;
 
-
 procedure TfrmReceitaCNPJ.btnFecharClick(Sender: TObject);
 begin
-  ModalResult := mrOk;
+  ModalResult := mrCancel; // Fecha o formulário sem preencher os dados
 end;
 
-end.
 
+
+end.
 
