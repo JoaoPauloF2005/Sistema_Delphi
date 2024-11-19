@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
-  Vcl.Buttons, System.JSON, IdSSLOpenSSL;
+  Vcl.Buttons, System.JSON, IdSSLOpenSSL, Vcl.ExtCtrls;
 
 type
   TfrmReceitaCNPJ = class(TForm)
@@ -28,6 +28,8 @@ type
     edtBairro: TLabel;
     edtCidade: TLabel;
     edtEstado: TLabel;
+    Panel1: TPanel;
+    Label9: TLabel;
     procedure btnFecharClick(Sender: TObject);
     procedure PreencherCampos(JSON: TJSONObject);
     procedure btnAcessarClick(Sender: TObject);
@@ -74,20 +76,15 @@ begin
   try
     HTTP.IOHandler := SSLHandler;
     SSLHandler.SSLOptions.Method := sslvTLSv1_2;
-    SSLHandler.SSLOpenSSLPath := sslvTLSv1_2;
+    SSLHandler.SSLOptions.SSLVersions := [sslvTLSv1_2];
 
+    // Realiza a requisição HTTP
     JSONResponse := HTTP.Get('https://www.receitaws.com.br/v1/cnpj/' + Trim(SomenteNumeros(edtCnpj.Caption)));
     JSONObj := TJSONObject.ParseJSONValue(JSONResponse) as TJSONObject;
 
     if Assigned(JSONObj) then
     begin
-      edtNome.Caption := JSONObj.GetValue<string>('nome', '');
-      edtEndereco.Caption := JSONObj.GetValue<string>('logradouro', '');
-      edtBairro.Caption := JSONObj.GetValue<string>('bairro', '');
-      edtCidade.Caption := JSONObj.GetValue<string>('municipio', '');
-      edtEstado.Caption := JSONObj.GetValue<string>('uf', '');
-      edtCEP.Caption := JSONObj.GetValue<string>('cep', '');
-      edtTelefone.Caption := JSONObj.GetValue<string>('telefone', '');
+      PreencherCampos(JSONObj);
     end
     else
       ShowMessage('Erro ao processar os dados da API.');
@@ -97,6 +94,7 @@ begin
   end;
   HTTP.Free;
   SSLHandler.Free;
+  ModalResult := mrOk;
 end;
 
 function TfrmReceitaCNPJ.SomenteNumeros(const AValue: string): string;
@@ -116,8 +114,10 @@ end;
 
 procedure TfrmReceitaCNPJ.btnFecharClick(Sender: TObject);
 begin
-  ModalResult := mrOk;
+  ModalResult := mrCancel; // Fecha o formulário sem preencher os dados
 end;
+
+
 
 end.
 

@@ -185,9 +185,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitLeft = 354
-        ExplicitTop = 246
-        ExplicitWidth = 185
         object SearchBox1: TSearchBox
           Left = 0
           Top = 15

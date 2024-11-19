@@ -14,6 +14,8 @@ inherited frmCadCliente: TfrmCadCliente
     ExplicitWidth = 874
     ExplicitHeight = 439
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 866
       ExplicitHeight = 411
       inherited grdListagem: TDBGrid
@@ -142,6 +144,8 @@ inherited frmCadCliente: TfrmCadCliente
       end
       inherited Panel6: TPanel
         Width = 866
+        ExplicitLeft = 0
+        ExplicitTop = 0
         ExplicitWidth = 866
         inherited SearchBox1: TSearchBox
           OnChange = SearchBox1Change
@@ -149,8 +153,8 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 22
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 866
       ExplicitHeight = 411
       object Label1: TLabel
@@ -352,11 +356,13 @@ inherited frmCadCliente: TfrmCadCliente
         OnClick = btnBuscarCNPJClick
       end
       object pnlPesquisarCNPJ: TPanel
-        Left = 268
-        Top = 251
+        Left = 277
+        Top = 244
         Width = 285
         Height = 112
         Align = alCustom
+        BiDiMode = bdLeftToRight
+        ParentBiDiMode = False
         TabOrder = 14
         Visible = False
         object edtCNPJPesquisa: TLabeledEdit
@@ -751,7 +757,7 @@ inherited frmCadCliente: TfrmCadCliente
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 696
+    Left = 697
   end
   object ImageListStatus: TImageList [5]
     ColorDepth = cd32Bit
@@ -1030,8 +1036,8 @@ inherited frmCadCliente: TfrmCadCliente
       000000000000}
   end
   inherited ImageList1: TImageList
-    Left = 605
-    Top = 185
+    Left = 638
+    Top = 204
     Bitmap = {
       494C010104000900040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
@@ -1303,6 +1309,10 @@ inherited frmCadCliente: TfrmCadCliente
       000001FC8241000000000000FE7F000000000000F81F00000000CFF3F81F0000
       0000CFF3F81F00000000C003FC3F000000000000000000000000000000000000
       000000000000}
+  end
+  inherited PrintDialog: TPrintDialog
+    Left = 780
+    Top = 201
   end
   object IdHTTP1: TIdHTTP
     AllowCookies = True

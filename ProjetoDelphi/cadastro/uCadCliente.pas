@@ -116,8 +116,6 @@ begin
   end;
 end;
 
-
-
 function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   oCliente.codigo := StrToIntDef(edtClienteId.Text, 0);
@@ -228,7 +226,6 @@ begin
   end;
 end;
 
-
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
@@ -323,6 +320,7 @@ begin
           end;
         finally
           frmReceitaCNPJ.Free; // Libera o formulário após o uso
+          pnlPesquisarCNPJ.Visible := False;
         end;
       end
       else
@@ -334,7 +332,7 @@ begin
   finally
     HTTP.Free;
     SSLHandler.Free;
-    pnlPesquisarCNPJ.Visible := False;
+
   end;
 end;
 
@@ -384,7 +382,6 @@ begin
     Relatorio.Free;
   end;
 end;
-
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
@@ -452,7 +449,6 @@ begin
   // Ajusta o cursor para o final do texto
   edtCNPJPesquisa.SelStart := Length(edtCNPJPesquisa.Text);
 end;
-
 
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var

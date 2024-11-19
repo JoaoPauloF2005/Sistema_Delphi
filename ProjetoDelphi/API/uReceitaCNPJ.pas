@@ -117,7 +117,5 @@ begin
   ModalResult := mrCancel; // Fecha o formulário sem preencher os dados
 end;
 
-
-
 end.
 
