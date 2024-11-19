@@ -13,13 +13,13 @@ inherited frmProVenda: TfrmProVenda
     ExplicitWidth = 911
     ExplicitHeight = 555
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 903
       ExplicitHeight = 527
       inherited grdListagem: TDBGrid
+        Top = 41
         Width = 903
-        Height = 527
+        Height = 486
+        Align = alClient
         DataSource = dtsListagem
         Columns = <
           item
@@ -61,8 +61,9 @@ inherited frmProVenda: TfrmProVenda
         ExplicitLeft = 350
         ExplicitTop = 195
       end
-      inherited SearchBox1: TSearchBox
-        OnChange = SearchBox1Change
+      inherited Panel6: TPanel
+        Width = 903
+        ExplicitWidth = 903
       end
     end
     inherited tabManutencao: TTabSheet
@@ -306,11 +307,13 @@ inherited frmProVenda: TfrmProVenda
           end
         end
         object dbGridItensVenda: TDBGrid
-          Left = -2
-          Top = 89
-          Width = 903
-          Height = 288
-          Align = alCustom
+          Left = 1
+          Top = 97
+          Width = 901
+          Height = 286
+          Margins.Top = 0
+          Margins.Right = 10
+          Align = alClient
           Color = clBtnFace
           Ctl3D = True
           DataSource = dtmVenda.dtsItensVenda
@@ -367,13 +370,22 @@ inherited frmProVenda: TfrmProVenda
               Visible = True
             end>
         end
-        object SearchBox2: TSearchBox
-          Left = -2
-          Top = 62
-          Width = 311
-          Height = 21
+        object Panel1: TPanel
+          Left = 1
+          Top = 56
+          Width = 901
+          Height = 41
+          Align = alTop
+          BevelOuter = bvNone
           TabOrder = 3
-          OnChange = SearchBox2Change
+          object SearchBox2: TSearchBox
+            Left = 0
+            Top = 12
+            Width = 311
+            Height = 21
+            TabOrder = 0
+            OnChange = SearchBox2Change
+          end
         end
       end
     end
@@ -432,5 +444,42 @@ inherited frmProVenda: TfrmProVenda
   inherited dtsListagem: TDataSource
     Left = 432
     Top = 11
+  end
+  object QryRelatorio: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'SELECT '
+      '    c.nome AS NomeCliente,'
+      '    v.dataVenda AS DataVenda,'
+      '    v.totalVenda AS TotalVenda,'
+      '    p.nome AS NomeProduto,'
+      '    vi.valorUnitario AS ValorUnitario,'
+      '    vi.quantidade AS Quantidade,'
+      '    vi.totalProduto AS TotalProduto'
+      'FROM '
+      '    vendas v'
+      'INNER JOIN '
+      '    clientes c ON c.clienteId = v.clienteId'
+      'INNER JOIN '
+      '    vendasItens vi ON vi.vendaId = v.vendaId'
+      'INNER JOIN '
+      '    produtos p ON p.produtoId = vi.produtoId'
+      'WHERE '
+      '    v.vendaId = :VendaId')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'VendaId'
+        ParamType = ptUnknown
+      end>
+    DataSource = dtmVenda.dtsCliente
+    Left = 777
+    Top = 399
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'VendaId'
+        ParamType = ptUnknown
+      end>
   end
 end

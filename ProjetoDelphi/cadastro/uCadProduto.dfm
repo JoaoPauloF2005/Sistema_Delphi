@@ -16,10 +16,9 @@ inherited frmCadProduto: TfrmCadProduto
       ExplicitWidth = 1320
       ExplicitHeight = 510
       inherited grdListagem: TDBGrid
-        AlignWithMargins = True
-        Top = 81
+        Top = 41
         Width = 1023
-        Height = 429
+        Height = 469
         Margins.Left = 0
         Margins.Top = 40
         Margins.Right = 0
@@ -66,7 +65,7 @@ inherited frmCadProduto: TfrmCadProduto
             Alignment = taCenter
             Expanded = False
             FieldName = 'imagem'
-            Visible = True
+            Visible = False
           end>
       end
       inherited pExportar: TPanel
@@ -129,8 +128,6 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       object Label1: TLabel

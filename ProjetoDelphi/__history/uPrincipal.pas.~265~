@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao,cCadCliente, Enter, ufrmAtualizaDB, cUsuarioLogado,
   Vcl.ComCtrls, ZDbcIntfs, cAtualizacaoBancoDeDados, cAcaoAcesso, RLReport, Vcl.ExtCtrls, Vcl.StdCtrls, VclTee.TeeGDIPlus,
   Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart,
-  VCLTee.Series, System.ImageList, Vcl.ImgList, Vcl.Buttons;
+  VCLTee.Series, System.ImageList, Vcl.ImgList, Vcl.Buttons, Vcl.Imaging.pngimage;
 
 type
   TfrmPrincipal = class(TForm)
@@ -16,10 +16,10 @@ type
     TreeView1: TTreeView;
     ImageList1: TImageList;
     Panel2: TPanel;
-    SpeedButton1: TSpeedButton;
-    btnVenda: TSpeedButton;
     btnProduto: TSpeedButton;
     btnCliente: TSpeedButton;
+    btnFechar: TImage;
+    btnVenda: TImage;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -43,6 +43,7 @@ type
     procedure btnClienteClick(Sender: TObject);
     procedure btnProdutoClick(Sender: TObject);
     procedure btnVendaClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
     oCliente: TCliente;
@@ -61,7 +62,7 @@ var
 implementation
 
 uses uCadCategoria, uCadCliente, uCadProduto, uProVenda, uRelCategoria, uRelCadCliente, uRelCadClienteFicha, uRelCadProduto, uRelCadProdutoComGrupoCategoria, uSelecionarData, uRelVendaPorData,
-  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico;
+  uCadUsuario, uLogin, uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uUsuarioVsAcoes, uTelaHeranca, uDTMGrafico, uRelProVenda, uCadSubCategoria;
 {$R *.dfm}
 
 procedure TfrmPrincipal.CATEGORIA1Click(Sender: TObject);
@@ -134,6 +135,10 @@ begin
     begin
       CriarForm(TfrmCadCategoria);
     end
+    else if TreeView1.Selected.Text = 'Cadastro de SubCategorias' then
+    begin
+      CriarForm(TfrmCadSubCategoria);
+    end
     else if TreeView1.Selected.Text = 'Cadastro de Produtos' then
     begin
       CriarForm(TfrmCadProduto);
@@ -178,34 +183,39 @@ begin
     begin
       CriarRelatorio(TfrmRelCadProdutoComGrupoCategoria);
     end
+
     else if TreeView1.Selected.Text = 'Relatório de Venda por Data' then
     begin
-    Try
-    // Abre o formulário de seleção de data
-    frmSelecionarData := TfrmSelecionarData.Create(Self);
-
-    // Exibe o formulário para selecionar as datas
-    if frmSelecionarData.ShowModal = mrOk then
-    begin
-      // Abre o relatório com as datas selecionadas
-      frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
       Try
-        frmRelVendaPorData.QryVenda.Close;
-        frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
-        frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
-        frmRelVendaPorData.QryVenda.Open;
+      // Abre o formulário de seleção de data
+      frmSelecionarData := TfrmSelecionarData.Create(Self);
 
-        // Exibe o relatório em modo de visualização
-        frmRelVendaPorData.Relatorio.PreviewModal;
+      // Exibe o formulário para selecionar as datas
+      if frmSelecionarData.ShowModal = mrOk then
+      begin
+        // Abre o relatório com as datas selecionadas
+        frmRelVendaPorData := TfrmRelVendaPorData.Create(Self);
+        Try
+          frmRelVendaPorData.QryVenda.Close;
+          frmRelVendaPorData.QryVenda.ParamByName('DataInicio').AsDate := frmSelecionarData.EdtDataInicio.Date;
+          frmRelVendaPorData.QryVenda.ParamByName('DataFim').AsDate := frmSelecionarData.EdtDataFinal.Date;
+          frmRelVendaPorData.QryVenda.Open;
+
+          // Exibe o relatório em modo de visualização
+          frmRelVendaPorData.Relatorio.PreviewModal;
+        Finally
+          frmRelVendaPorData.Release;
+        End;
+      end;
+
       Finally
-        frmRelVendaPorData.Release;
+        frmSelecionarData.Release;
       End;
-    end;
-
-    Finally
-      frmSelecionarData.Release;
-    End;
-end;
+    end
+   else if TreeView1.Selected.Text = 'Relatório de Vendas' then
+    begin
+      CriarRelatorio(TfrmRelProVenda);
+    end
 
   end;
 end;
@@ -283,6 +293,11 @@ begin
   CriarForm(TfrmCadCliente);
 end;
 
+procedure TfrmPrincipal.btnFecharClick(Sender: TObject);
+begin
+   Application.Terminate;
+end;
+
 procedure TfrmPrincipal.btnProdutoClick(Sender: TObject);
 begin
   CriarForm(TfrmCadProduto);
@@ -346,6 +361,7 @@ begin
       AtualizacaoBancoDados(frmAtualizaDB);
 
       TAcaoAcesso.CriarAcoes(TfrmCadCategoria,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmCadSubCategoria, dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmCadCliente,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmCadProduto,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmCadUsuario,dtmPrincipal.ConexaoDB);
@@ -357,6 +373,7 @@ begin
       TAcaoAcesso.CriarAcoes(TfrmRelCadCliente,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadProdutoComGrupoCategoria,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadProduto,dtmPrincipal.ConexaoDB);
+      TAcaoAcesso.CriarAcoes(TfrmRelProVenda,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmRelCadCategoria,dtmPrincipal.ConexaoDB);
       TAcaoAcesso.CriarAcoes(TfrmUsuarioVsAcoes, dtmPrincipal.ConexaoDB);
 

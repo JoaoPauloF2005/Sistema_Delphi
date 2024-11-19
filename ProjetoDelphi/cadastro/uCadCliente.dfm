@@ -10,12 +10,9 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 874
     Height = 439
-    ActivePage = tabManutencao
     ExplicitWidth = 874
     ExplicitHeight = 439
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 866
       ExplicitHeight = 411
       inherited grdListagem: TDBGrid
@@ -144,8 +141,6 @@ inherited frmCadCliente: TfrmCadCliente
       end
       inherited Panel6: TPanel
         Width = 866
-        ExplicitLeft = 0
-        ExplicitTop = 0
         ExplicitWidth = 866
         inherited SearchBox1: TSearchBox
           OnChange = SearchBox1Change
@@ -153,8 +148,6 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 866
       ExplicitHeight = 411
       object Label1: TLabel
