@@ -120,8 +120,6 @@ begin
   StbPrincipal.Panels[0].Text := 'USUÁRIO: Não Logado';
 end;
 
-
-
 procedure TfrmPrincipal.TreeView1DblClick(Sender: TObject);
 begin
   if Assigned(TreeView1.Selected) then

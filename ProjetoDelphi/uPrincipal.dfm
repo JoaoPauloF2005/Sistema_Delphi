@@ -252,6 +252,7 @@ object frmPrincipal: TfrmPrincipal
       Height = 32
       Align = alCustom
       AutoSize = True
+      DragCursor = crHandPoint
       Picture.Data = {
         0954506E67496D61676589504E470D0A1A0A0000000D49484452000000200000
         00200806000000737A7AF40000000970485973000000EC000000EC01792871BD
@@ -323,6 +324,7 @@ object frmPrincipal: TfrmPrincipal
       Height = 32
       Align = alCustom
       AutoSize = True
+      DragCursor = crHandPoint
       Picture.Data = {
         0954506E67496D61676589504E470D0A1A0A0000000D49484452000000200000
         00200806000000737A7AF40000000473424954080808087C0864880000000970

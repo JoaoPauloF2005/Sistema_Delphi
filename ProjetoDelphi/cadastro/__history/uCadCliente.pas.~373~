@@ -73,6 +73,7 @@ type
     procedure btnBuscarCNPJClick(Sender: TObject);
     procedure btnConfirmarCNPJClick(Sender: TObject);
     procedure IdHTTP1Authorization(Sender: TObject; Authentication: TIdAuthentication; var Handled: Boolean);
+    procedure edtCNPJPesquisaChange(Sender: TObject);
 
   private
     oCliente: TCliente;
@@ -114,8 +115,6 @@ begin
     end;
   end;
 end;
-
-
 
 function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
@@ -227,7 +226,6 @@ begin
   end;
 end;
 
-
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
@@ -318,9 +316,11 @@ begin
             cbEstado.Text := frmReceitaCNPJ.edtEstado.Caption;
             edtCEP.Text := frmReceitaCNPJ.edtCep.Caption;
             edtTelefone.Text := frmReceitaCNPJ.edtTelefone.Caption;
+            cbTipoPessoa.ItemIndex := cbTipoPessoa.Items.IndexOf('Jurídica');
           end;
         finally
           frmReceitaCNPJ.Free; // Libera o formulário após o uso
+          pnlPesquisarCNPJ.Visible := False;
         end;
       end
       else
@@ -332,11 +332,9 @@ begin
   finally
     HTTP.Free;
     SSLHandler.Free;
+
   end;
 end;
-
-
-
 
 procedure TfrmCadCliente.PreencherCamposCliente(ReceitaCNPJ: TfrmReceitaCNPJ);
 begin
@@ -346,10 +344,9 @@ begin
   edtCidade.Text := ReceitaCNPJ.edtCidade.Caption;
   cbEstado.Text := ReceitaCNPJ.edtEstado.Caption;
   edtCEP.Text := ReceitaCNPJ.edtCEP.Caption;
-  edtTelefone.Text := ReceitaCNPJ.edtTelefone.Caption;
+  edtTelefone.Text := MascaraTelefone(ReceitaCNPJ.edtTelefone.Caption);
+  cbTipoPessoa.ItemIndex := cbTipoPessoa.Items.IndexOf('Jurídica');
 end;
-
-
 
 procedure TfrmCadCliente.btnImprimirClick(Sender: TObject);
 var
@@ -385,7 +382,6 @@ begin
     Relatorio.Free;
   end;
 end;
-
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
@@ -433,6 +429,26 @@ begin
 end;
 
 {$region 'Funções de Formatação'}
+
+procedure TfrmCadCliente.edtCNPJPesquisaChange(Sender: TObject);
+var
+  Value: string;
+begin
+  // Remove todos os caracteres não numéricos
+  Value := SomenteNumeros(edtCNPJPesquisa.Text);
+
+  // Aplica a máscara de CNPJ
+  case Length(Value) of
+    1..2: edtCNPJPesquisa.Text := Value;
+    3..5: edtCNPJPesquisa.Text := Format('%s.%s', [Copy(Value, 1, 2), Copy(Value, 3, Length(Value) - 2)]);
+    6..8: edtCNPJPesquisa.Text := Format('%s.%s.%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, Length(Value) - 5)]);
+    9..12: edtCNPJPesquisa.Text := Format('%s.%s.%s/%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, 3), Copy(Value, 9, Length(Value) - 8)]);
+    13..14: edtCNPJPesquisa.Text := Format('%s.%s.%s/%s-%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, 3), Copy(Value, 9, 4), Copy(Value, 13, Length(Value) - 12)]);
+  end;
+
+  // Ajusta o cursor para o final do texto
+  edtCNPJPesquisa.SelStart := Length(edtCNPJPesquisa.Text);
+end;
 
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
