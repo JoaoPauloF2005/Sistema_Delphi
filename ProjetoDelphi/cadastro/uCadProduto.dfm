@@ -13,6 +13,8 @@ inherited frmCadProduto: TfrmCadProduto
     ExplicitWidth = 1328
     ExplicitHeight = 538
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       inherited grdListagem: TDBGrid
@@ -29,36 +31,43 @@ inherited frmCadProduto: TfrmCadProduto
           item
             Expanded = False
             FieldName = 'produtoId'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'nome'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'descricao'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'valor'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'quantidade'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'Categoria'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'SubCategoria'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
@@ -128,6 +137,8 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 1320
       ExplicitHeight = 510
       object Label1: TLabel

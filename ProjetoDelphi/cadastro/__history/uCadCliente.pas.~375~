@@ -116,8 +116,6 @@ begin
   end;
 end;
 
-
-
 function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   oCliente.codigo := StrToIntDef(edtClienteId.Text, 0);
@@ -228,7 +226,6 @@ begin
   end;
 end;
 
-
 {$endregion}
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
@@ -281,14 +278,18 @@ var
   JSONObj: TJSONObject;
   HTTP: TIdHTTP;
   SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
+  CNPJ: string;
 begin
-  // Verifica se o campo CNPJ está preenchido
-  if Trim(edtCNPJPesquisa.Text) = '' then
+  // Obtém o CNPJ digitado e remove caracteres não numéricos
+  CNPJ := SomenteNumeros(edtCNPJPesquisa.Text);
+
+  // Valida o CNPJ antes de prosseguir
+  if not ValidarCNPJ(CNPJ) then
   begin
-    ShowMessage('Por favor, digite o CNPJ para pesquisa.');
+    ShowMessage('CNPJ inválido! Por favor, digite um número válido.');
+    edtCNPJPesquisa.SetFocus;
     Exit;
   end;
-
   // Configura o HTTP e SSL Handler para a API
   HTTP := TIdHTTP.Create(nil);
   SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
@@ -319,9 +320,11 @@ begin
             cbEstado.Text := frmReceitaCNPJ.edtEstado.Caption;
             edtCEP.Text := frmReceitaCNPJ.edtCep.Caption;
             edtTelefone.Text := frmReceitaCNPJ.edtTelefone.Caption;
+            cbTipoPessoa.ItemIndex := cbTipoPessoa.Items.IndexOf('Jurídica');
           end;
         finally
           frmReceitaCNPJ.Free; // Libera o formulário após o uso
+          pnlPesquisarCNPJ.Visible := False;
         end;
       end
       else
@@ -333,12 +336,9 @@ begin
   finally
     HTTP.Free;
     SSLHandler.Free;
-    pnlPesquisarCNPJ.Visible := False;
+
   end;
 end;
-
-
-
 
 procedure TfrmCadCliente.PreencherCamposCliente(ReceitaCNPJ: TfrmReceitaCNPJ);
 begin
@@ -348,10 +348,9 @@ begin
   edtCidade.Text := ReceitaCNPJ.edtCidade.Caption;
   cbEstado.Text := ReceitaCNPJ.edtEstado.Caption;
   edtCEP.Text := ReceitaCNPJ.edtCEP.Caption;
-  edtTelefone.Text := ReceitaCNPJ.edtTelefone.Caption;
+  edtTelefone.Text := MascaraTelefone(ReceitaCNPJ.edtTelefone.Caption);
+  cbTipoPessoa.ItemIndex := cbTipoPessoa.Items.IndexOf('Jurídica');
 end;
-
-
 
 procedure TfrmCadCliente.btnImprimirClick(Sender: TObject);
 var
@@ -387,7 +386,6 @@ begin
     Relatorio.Free;
   end;
 end;
-
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
 begin
@@ -438,22 +436,24 @@ end;
 
 procedure TfrmCadCliente.edtCNPJPesquisaChange(Sender: TObject);
 var
-  Value: string;
+  CNPJ: string;
 begin
-  // Remove todos os caracteres não numéricos
-  Value := SomenteNumeros(edtCNPJPesquisa.Text);
+  // Remove caracteres não numéricos e aplica a máscara
+  CNPJ := SomenteNumeros(edtCNPJPesquisa.Text);
+  edtCNPJPesquisa.Text := MascaraCnpj(CNPJ);
 
-  // Aplica a máscara de CNPJ
-  case Length(Value) of
-    1..2: edtCNPJPesquisa.Text := Value;
-    3..5: edtCNPJPesquisa.Text := Format('%s.%s', [Copy(Value, 1, 2), Copy(Value, 3, Length(Value) - 2)]);
-    6..8: edtCNPJPesquisa.Text := Format('%s.%s.%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, Length(Value) - 5)]);
-    9..12: edtCNPJPesquisa.Text := Format('%s.%s.%s/%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, 3), Copy(Value, 9, Length(Value) - 8)]);
-    13..14: edtCNPJPesquisa.Text := Format('%s.%s.%s/%s-%s', [Copy(Value, 1, 2), Copy(Value, 3, 3), Copy(Value, 6, 3), Copy(Value, 9, 4), Copy(Value, 13, Length(Value) - 12)]);
-  end;
-
-  // Ajusta o cursor para o final do texto
+  // Reposiciona o cursor no final do texto
   edtCNPJPesquisa.SelStart := Length(edtCNPJPesquisa.Text);
+
+  // Valida o CNPJ quando atingir o comprimento completo
+  if Length(CNPJ) = 14 then
+  begin
+    if not ValidarCNPJ(CNPJ) then
+    begin
+      ShowMessage('CNPJ inválido! Verifique o número digitado.');
+      edtCNPJPesquisa.SetFocus;
+    end;
+  end;
 end;
 
 

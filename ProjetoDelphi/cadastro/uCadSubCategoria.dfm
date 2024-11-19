@@ -4,8 +4,11 @@
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcPrincipal: TPageControl
-    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 892
+      ExplicitHeight = 532
       inherited grdListagem: TDBGrid
         Top = 41
         Height = 491
@@ -16,23 +19,27 @@
             Alignment = taCenter
             Expanded = False
             FieldName = 'subCategoriaId'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Alignment = taCenter
             Expanded = False
             FieldName = 'descricao'
+            Title.Alignment = taCenter
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'categoriaId'
+            Title.Alignment = taCenter
             Visible = False
           end
           item
             Alignment = taCenter
             Expanded = False
             FieldName = 'Descri'#231#227'oCategoria'
+            Title.Alignment = taCenter
             Visible = True
           end>
       end

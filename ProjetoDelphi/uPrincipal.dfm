@@ -183,13 +183,12 @@ object frmPrincipal: TfrmPrincipal
         AFA025C534E6EFA3B80EA5D7FDE262F17BFE2385FA2C797C2C18B51F1AE4F1F8
         F2F9EEBF1C5A51890D9086A10000000049454E44AE426082}
       OnClick = btnFecharClick
-      ExplicitLeft = 1051
-      ExplicitTop = 2
-      ExplicitHeight = 38
+      ExplicitTop = 6
+      ExplicitHeight = 32
     end
     object btnVenda: TImage
       Left = 116
-      Top = 7
+      Top = 6
       Width = 32
       Height = 32
       Align = alCustom
@@ -242,12 +241,10 @@ object frmPrincipal: TfrmPrincipal
         56C4DF6B2ACAAE85EA96E4AA5D8CFC07F48F4362FB9106020000000049454E44
         AE426082}
       OnClick = btnVendaClick
-      ExplicitLeft = 113
-      ExplicitTop = 4
     end
     object btnProduto: TImage
       Left = 68
-      Top = 7
+      Top = 6
       Width = 32
       Height = 32
       Align = alCustom
@@ -319,7 +316,7 @@ object frmPrincipal: TfrmPrincipal
     end
     object btnCliente: TImage
       Left = 20
-      Top = 7
+      Top = 6
       Width = 32
       Height = 32
       Align = alCustom

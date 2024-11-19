@@ -456,7 +456,6 @@ begin
   end;
 end;
 
-
 procedure TfrmCadCliente.edtcpfCnpjChange(Sender: TObject);
 var
   Value: string;
